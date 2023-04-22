@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LogIn from './GenralComps/LogIn';
 import Create_Business_Pro from './Create_Business_Pro';
 import { TouchableOpacity } from 'react-native';
-import { Professional_Registration } from './FunctionAPICode';
+import { Professional_Registration } from './obj/FunctionAPICode';
 
 // http://proj.ruppin.ac.il/cgroup93/prod/api/
 

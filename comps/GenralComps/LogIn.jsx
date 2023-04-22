@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ForgotPassword from './ForgotPassword';
 import Professional_registration from '../Professional_registration';
 import GenralReg from '../GenralReg';
-import { LogInF } from '../FunctionAPICode';
+import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
 
 

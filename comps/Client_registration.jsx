@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
-import { Cli_Registration } from './FunctionAPICode';
+import { Cli_Registration } from './obj/FunctionAPICode';
 
 
 const Client_registration = () => {
