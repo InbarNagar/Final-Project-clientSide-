@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, View, TextInput, Button, Text, marginRight, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LogIn from './LogIn';
+
 import { TouchableOpacity } from 'react-native';
+import LogIn from './LogIn';
+import LogIn_Client from '../LogIn_Client';
 
 
 
@@ -11,24 +13,26 @@ import { TouchableOpacity } from 'react-native';
 const ScreenOne = (props) => {
 
     return (
-        <View >
-            <Text style={style.wel} color='#fff8dc'>ברוכים הבאים </Text>
+
+        <View style={{flex: 1}}>
+           
+            <Text style={style.wel} >Beuaty Me</Text>
 
             <View >
-          
-                <TouchableOpacity onPress={() => {
-                    props.navigation.navigate('LogIn');
+
+                <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro',})
                 }}>
-                <View style={style.viewS}>
-                    <Text style={style.titleText} color="#a0522d">בעלי עסקים</Text>
-               </View>
+                    <View style={style.viewS}>
+                        <Text style={style.titleText}>בעלי עסקים</Text>
+                    </View>
 
                 </TouchableOpacity>
 
-                    <TouchableOpacity onPress={()=>{props.navigation.navigate('LogIn')}}> 
-               <View style={style.viewS}>
-                <Text style={style.titleText} >לקוחות</Text>
-                </View>
+                <TouchableOpacity onPress={() => { props.navigation.navigate('LogIn',{userType:'Cli',})
+             }}>
+                    <View style={style.viewS}>
+                        <Text style={style.titleText} >לקוחות</Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
@@ -36,13 +40,12 @@ const ScreenOne = (props) => {
 }
 
 const style = StyleSheet.create({
-   
-    wel:{
-        textAlign:"center",
-        fontSize:70,
-       color:'#b8860b',
-        paddingTop:50,
-       
+
+    wel: {
+        textAlign: "center",
+        fontSize: 70,
+        paddingTop: 50,
+        color:'#9acd32',
     },
 
     titleText: {
@@ -50,19 +53,19 @@ const style = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         textAlign: 'center',
-        borderRadius:40,
-        backgroundColor:'burlywood',
-       color:'#f0f8ff',
-    
-    },
-    viewS:{
-        borderRadius:62,
-        flexDirection: 'column',
-        textAlign: 'center',
-        padding:15,
-        
+        borderRadius: 40,
+        backgroundColor:'#9acd32',
+         color: '#f0f8ff',
+        opacity: 0.5,
         
 
+    },
+    viewS: {
+        borderRadius: 62,
+        flexDirection: 'column',
+        textAlign: 'center',
+        padding: 15,
+        
     }
 })
 
