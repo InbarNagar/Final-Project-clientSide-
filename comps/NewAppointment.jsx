@@ -91,6 +91,7 @@ const NewAppointment = () => {
   return (
     <View style={styles.container}>
         <Header text="הוספת תור חדש" color="red" />
+
     <TextInput
      style={styles.input}
      onChangeText={setBusinessNumber}

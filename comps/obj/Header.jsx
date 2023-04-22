@@ -2,11 +2,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Header = (props) => {
-    const{text, color, fontSize} = props
+    const {text, color, fontSize} = props
 
   return (
     <View style={styles.header}>
         <Text style={styles.headerText}>{text}</Text>
+        {/* <Text style={[styles.headerText, { color, fontSize }]}>{text}</Text> */}
     </View>
   );
 };
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
   header: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "red",
+    backgroundColor: '#fff',
     height: 80,
     paddingTop: 38,
     shadowColor: '#000',

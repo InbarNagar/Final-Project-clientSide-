@@ -15,6 +15,7 @@ import Search from './comps/Search';
 import AddTratment from './comps/AddTratment';
 import LogIn_Client from './comps/LogIn_Client';
 import NewAppointment from './comps/NewAppointment';
+import Calendar_professional from './comps/Calendar_professional';
 // import TabbedPageNavigator from './comps/GenralComps/TabbedPage';
 // import MaterialTabbedPage from './comps/GenralComps/MaterialTabbedP
 
@@ -32,7 +33,9 @@ function App() {
   
       <NavigationContainer>
         <Stack.Navigator initialRouteName="ScreenOne" >
-        <Stack.Screen name="NewAppointment" component={NewAppointment} />
+        <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+
+        {/* <Stack.Screen name="NewAppointment" component={NewAppointment} /> */}
        {/* <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="ScreenOne" component={ScreenOne} />
          <Stack.Screen name="LogIn" component={LogIn} />
