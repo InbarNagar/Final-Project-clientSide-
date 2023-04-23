@@ -6,38 +6,8 @@ import NewAppointment from '../NewAppointment';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Menu_professional = () => {
+const Menu_professional = (props) => {
 
-    const Stack = createNativeStackNavigator();
-
-    const handleCalendar = () => {
-        console.log("1");  // בדיקה
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-            </Stack.Navigator>
-        </NavigationContainer>
-        console.log("11"); // בדיקה
-    }
-
-    const handleAddNewAppointment = () => {
-        console.log("2");  // בדיקה
-        <NavigationContainer>
-            <Stack.Navigator>
-                <Stack.Screen name="NewAppointment" component={NewAppointment} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    }
-
-    //// צריך להוסיף פה את העמוד של הפרופיל האישי אחרי שאני אעשה אותו
-    // const handleProfile = () => {
-    //     console.log("3");  
-    //     <NavigationContainer>
-    //         <Stack.Navigator>
-    //             <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-    //         </Stack.Navigator>
-    //     </NavigationContainer>
-    // }
 
   return (
     <View style={styles.menu}>
@@ -47,12 +17,13 @@ const Menu_professional = () => {
         <Text style={styles.menuText}>Profile</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.menuItem} onPress={handleAddNewAppointment}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => { props.navigation.navigate('NewAppointment')}}>
         <Ionicons name="add-circle-outline" size={24} color="black" />
         <Text style={styles.menuText}>Add</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={handleCalendar}>
+      {/* <TouchableOpacity style={styles.menuItem} onPress={handleCalendar}> */}
+      <TouchableOpacity style={styles.menuItem} onPress={() => { props.navigation.navigate('Calendar_professional')}}>
         <Ionicons name="calendar-outline" size={24} color="black" />
         <Text style={styles.menuText}>Calendar</Text>
       </TouchableOpacity>

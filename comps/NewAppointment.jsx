@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet } from 'rea
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DateTimePicker from '@react-native-community/datetimepicker';
-// import Menu_treatment_registration from './Menu_treatment_registration';
+import Menu_treatment_registration from './Menu_treatment_registration';
 import Button from './obj/Button';
 import {NewAppointmentPost} from './obj/FunctionAPICode';
 import { Header } from 'react-native-elements';
@@ -56,35 +56,43 @@ const NewAppointment = () => {
       Appointment_status: Appointment_status
     };
 
-//         fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/NewAppointment', {
-//       method: 'POST',
-//       headers: new Headers({
-//         "Content-type": "application/json; charset=UTF-8", 
-//         'Accept': "application/json; charset=UTF-8",
-//     }),
-//       body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//       console.log('Success:', result);
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     })
-//     .then(<NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-//         </Stack.Navigator>
-//       </NavigationContainer>);
-//   };
+        fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/NewAppointment', {
+      method: 'POST',
+      headers: new Headers({
+        "Content-type": "application/json; charset=UTF-8", 
+        'Accept': "application/json; charset=UTF-8",
+    }),
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      console.log('Success:', result);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    })
+    // .then(<NavigationContainer>
+    //     <Stack.Navigator>
+    //       <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+    //     </Stack.Navigator>
+    //   </NavigationContainer>);
+       .then(navigation.navigate('Menu_treatment_registration'));
+
+  };
     
-    NewAppointmentPost(data).then((result) => {
-        console.log('yes', result)
+    // NewAppointmentPost(data).then((result) => {
+    //     console.log('yes', result)
   
-      }, (error) => {
-        console.log('error', error)
-      });
-    };
+    //   }, (error) => {
+    //     console.log('error', error)
+    //   })
+    //   .then(<NavigationContainer>
+    //             <Stack.Navigator>
+    //                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+    //             </Stack.Navigator>
+    //            </NavigationContainer>);
+    //            console.log(1);
+    // };
   
 
 

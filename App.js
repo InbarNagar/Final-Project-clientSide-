@@ -34,9 +34,10 @@ function App() {
   
       <NavigationContainer>
         <Stack.Navigator initialRouteName="ScreenOne" >
+        <Stack.Screen name="Menu_professional" component={Menu_professional} />
+        <Stack.Screen name="NewAppointment" component={NewAppointment} />
         <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-
-        {/* <Stack.Screen name="NewAppointment" component={NewAppointment} /> */}
+        
        {/* <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="ScreenOne" component={ScreenOne} />
         <Stack.Screen name="LogIn" component={LogIn} />
@@ -46,7 +47,7 @@ function App() {
         <Stack.Screen name='Professional_registration' component={Professional_registration} />
         <Stack.Screen name='Client_registration' component={Client_registration} />
         <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
-        <Stack.Screen name='AddTratment' component={AddTratment} />
+  <Stack.Screen name='AddTratment' component={AddTratment} />*/}
 
       </Stack.Navigator>
     </NavigationContainer>
