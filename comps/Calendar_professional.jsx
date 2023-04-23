@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import Header from "./obj/Header";
 import Button from "./obj/Button";
-
+//מסך ראשי בעל עסק
 const allAppointment = [
   {
     "Date": "5/5/2023",

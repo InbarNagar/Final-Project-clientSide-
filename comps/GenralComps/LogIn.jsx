@@ -7,6 +7,7 @@ import Professional_registration from '../Professional_registration';
 import GenralReg from '../GenralReg';
 import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
+import Search from '../Search';
 
 
 
@@ -16,6 +17,7 @@ export default function LogIn(props) {
   const { navigation, route } = props
   let userType = route.params.userType
   console.log({ userType })
+
   const handleLogin = () => {
 
     if (userType == 'Cli') {
@@ -30,7 +32,16 @@ export default function LogIn(props) {
     }
     else {
       console.log('professional')
+      LogInPro(ID_number, password).then((result) => {
+        console.log('yes', result)
+       navigation.navigate('Search')
+        console.log('i am here')
+      }, (error) => {
+        console.log('error', error)
+      })
+
     }
+
     // const response = await  fetch('http://localhost:53758/api/Client/OneClient', {
     //   method: 'POST',
     //   headers:({
