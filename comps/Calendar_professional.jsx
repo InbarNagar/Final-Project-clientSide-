@@ -1,7 +1,14 @@
 import { View } from "react-native";
 import Header from "./obj/Header";
 import Button from "./obj/Button";
+<<<<<<< HEAD
+import Menu_professional from "./obj/Menu_professional";
+import { ScrollView } from 'react-native';
 
+
+=======
+//מסך ראשי בעל עסק
+>>>>>>> aca57614071ba934ef2b5813cfc7bbb2f0e8ad91
 const allAppointment = [
   {
     "Date": "5/5/2023",
@@ -27,7 +34,7 @@ const Calendar_professional = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <Header titleText="יומן" />
       <View>
         <Button onPress={handleSubmit} text="כל התורים" color="#ffffff" />
@@ -35,7 +42,8 @@ const Calendar_professional = () => {
         <Button onPress={handleSubmit} text="תורים שנקבעו" color="#FF6961" />
         <Button onPress={handleSubmit} text="תורים שנגמרו" color="#87CEFA" />
       </View>
-    </View>
+      <Menu_professional/>
+    </ScrollView>
   );
 };
 

@@ -84,3 +84,5 @@
 // }
 
 // export default Menu_treatment_registration;
+
+

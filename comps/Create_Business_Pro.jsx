@@ -7,9 +7,6 @@ import Professional_registration from './Professional_registration';
 import Menu_treatment_registration from './Menu_treatment_registration';
 
 const Create_Business_Pro = (props) => {
-
-
-
   const [Name, setName] = useState('');
   const [AddressStreet, setStreet] = useState('');
   const [AddressHouseNumber, setHouseNumber] = useState('');
@@ -17,32 +14,53 @@ const Create_Business_Pro = (props) => {
   const [Is_client_house, setLocation] = useState('');
   const [Professional_ID_number, setIdPro] = useState('');
 
+  const { navigation, route } = props
+  let Id_Pro = route.params.ID
 
   const handleRegistrationB = () => {
 
-    fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Business/NewBusiness', {
-      method: 'POST',
-      headers: new Headers({
-        "Content-type": "application/json; charset=UTF-8",
-        'Accept': "application/json; charset=UTF-8",
-      }),
-      body: JSON.stringify({
+    { setIdPro(Id_Pro) }
+    const data = {
 
-        Name,
-        AddressStreet,
-        AddressHouseNumber,
-        AddressCity,
-        Is_client_house,
-        Professional_ID_number,
+      Name: Name,
+      Is_client_house: Is_client_house,
+      AddressStreet: AddressStreet,
+      AddressHouseNumber: AddressHouseNumber,
+      AddressCity: AddressCity,
+      Professional_ID_number: Professional_ID_number
 
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+    }
 
-      .catch((error) => console.error(error));
+    Professional_Business(data).then((result) => {
+      console.log('yes', result)
+      navigation.navigate('AddTratment')
 
-    props.navigation.navigate('AddTratment')
+    }, (error) => {
+      console.log('error', error)
+    });
+    // fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Business/NewBusiness', {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     "Content-type": "application/json; charset=UTF-8",
+    //     'Accept': "application/json; charset=UTF-8",
+    //   }),
+    //   body: JSON.stringify({
+
+    //     Name,
+    //     AddressStreet,
+    //     AddressHouseNumber,
+    //     AddressCity,
+    //     Is_client_house,
+    //     Professional_ID_number,
+
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data))
+
+    //   .catch((error) => console.error(error));
+
+    // props.navigation.navigate('AddTratment')
 
   };
 
@@ -96,13 +114,17 @@ const Create_Business_Pro = (props) => {
         />
       </View>
 
-      <View style={styles.inp}>
+
+      <View>
+        <Text>{Id_Pro}</Text>
+      </View>
+      {/* <View style={styles.inp}>
         <TextInput style={styles.textInputS}
           placeholder="תעודת זהות בעל עסק"
           value={Professional_ID_number}
           onChangeText={(text) => setIdPro(text)}
         />
-      </View>
+      </View> */}
 
       <View>
 

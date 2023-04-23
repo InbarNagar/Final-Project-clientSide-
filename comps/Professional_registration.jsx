@@ -39,7 +39,7 @@ const Professional_registration = (props) => {
     }
     Professional_Registration(data).then((result) => {
       console.log('yes', result)
-
+      props.navigation.navigate('Create_Business_Pro',{ID:ID_number,})
     }, (error) => {
       console.log('error', error)
     });
