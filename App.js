@@ -26,20 +26,18 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
 
-    //   <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="Search" >
-    //     <Stack.Screen name="Search" component={Search} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+  //   <NavigationContainer>
+  //   <Stack.Navigator initialRouteName="Search" >
+  //     <Stack.Screen name="Search" component={Search} />
+  //   </Stack.Navigator>
+  // </NavigationContainer>
+  
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="ScreenOne" >
+        <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
 
-    <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="ScreenOne" >
-              {/* <Stack.Screen name="Menu_professional" component={Menu_professional} /> */}
-
-        {/* <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
-      {/* 
-        <Stack.Screen name="NewAppointment" component={NewAppointment} /> */}
-       <Stack.Navigator initialRouteName="ScreenOne" >
+        {/* <Stack.Screen name="NewAppointment" component={NewAppointment} /> */}
+       {/* <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="ScreenOne" component={ScreenOne} />
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="Search" component={Search} />

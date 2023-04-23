@@ -2,10 +2,14 @@ import { View } from "react-native";
 import Header from "./obj/Header";
 import Button from "./obj/Button";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Menu_professional from "./obj/Menu_professional";
 import { ScrollView } from 'react-native';
 
 
+=======
+//מסך ראשי בעל עסק
+>>>>>>> aca57614071ba934ef2b5813cfc7bbb2f0e8ad91
 =======
 //מסך ראשי בעל עסק
 >>>>>>> aca57614071ba934ef2b5813cfc7bbb2f0e8ad91
