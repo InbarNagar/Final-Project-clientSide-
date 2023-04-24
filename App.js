@@ -38,6 +38,7 @@ function App() {
         <Stack.Screen name="Menu_professional" component={Menu_professional} />
         <Stack.Screen name="NewAppointment" component={NewAppointment} />
         <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+        <Stack.Screen name="Search" component={Search}/>
         
        {/* <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="ScreenOne" component={ScreenOne} />

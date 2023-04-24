@@ -6,7 +6,6 @@ import LocationPicker from './GenralComps/LocationCom/LocationPicker';
 
 export default function Search2() {
     
-      const[locationObj,setLocationObj]=useState();
       const [selectedCategory, setSelectedCategory] = useState('הכל');
       const [selectedSort, setSelectedSort] = useState('דירוג גבוהה תחילה');
     
@@ -31,12 +30,7 @@ export default function Search2() {
         setSelectedSort(itemValue);
       };
       function searchForAppointment(){
-        console.log(city,selectedCategory,selectedSort,sexChecked,housechecked,location.coords.latitude)
-      }
-      const handleLocation=(data)=>{
-        console.log("מידע מקומפוננטת ממיקום:");
-        setLocationObj(data);
-        console.log(locationObj);
+        console.log(city,selectedCategory,selectedSort,sexChecked,housechecked)
       }
       return (
         <View style={styles.body} >
