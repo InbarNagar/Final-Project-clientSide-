@@ -15,6 +15,8 @@ import AddTratment from './comps/AddTratment';
 import LogIn_Client from './comps/LogIn_Client';
 import NewAppointment from './comps/NewAppointment';
 import Calendar_professional from './comps/Calendar_professional';
+import Menu_professional from './comps/obj/Menu_professional';
+import LocationPicker from './comps/LocationHandler/Location';
 // import TabbedPageNavigator from './comps/GenralComps/TabbedPage';
 // import MaterialTabbedPage from './comps/GenralComps/MaterialTabbedP
 
@@ -24,18 +26,20 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
 
-    //   <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="Search" >
-    //     <Stack.Screen name="Search" component={Search} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
-
-    <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="ScreenOne" >
-        {/* <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
-      {/* 
-        <Stack.Screen name="NewAppointment" component={NewAppointment} /> */}
-       <Stack.Navigator initialRouteName="ScreenOne" >
+  //   <NavigationContainer>
+  //   <Stack.Navigator initialRouteName="Search" >
+  //     <Stack.Screen name="Search" component={Search} />
+  //   </Stack.Navigator>
+  // </NavigationContainer>
+  
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="ScreenOne" >
+        <Stack.Screen name="Menu_professional" component={Menu_professional} />
+        <Stack.Screen name="NewAppointment" component={NewAppointment} />
+        <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+        <Stack.Screen name="Search" component={Search}/>
+        
+       {/* <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="ScreenOne" component={ScreenOne} />
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="Search" component={Search} />
@@ -43,7 +47,7 @@ function App() {
         <Stack.Screen name='Professional_registration' component={Professional_registration} />
         <Stack.Screen name='Client_registration' component={Client_registration} />
         <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
-        <Stack.Screen name='AddTratment' component={AddTratment} />
+  <Stack.Screen name='AddTratment' component={AddTratment} />*/}
 
       </Stack.Navigator>
     </NavigationContainer>

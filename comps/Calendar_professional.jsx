@@ -1,6 +1,10 @@
 import { View } from "react-native";
 import Header from "./obj/Header";
 import Button from "./obj/Button";
+import Menu_professional from "./obj/Menu_professional";
+import { ScrollView } from 'react-native';
+
+
 //מסך ראשי בעל עסק
 const allAppointment = [
   {
@@ -27,7 +31,7 @@ const Calendar_professional = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <Header titleText="יומן" />
       <View>
         <Button onPress={handleSubmit} text="כל התורים" color="#ffffff" />
@@ -35,7 +39,8 @@ const Calendar_professional = () => {
         <Button onPress={handleSubmit} text="תורים שנקבעו" color="#FF6961" />
         <Button onPress={handleSubmit} text="תורים שנגמרו" color="#87CEFA" />
       </View>
-    </View>
+      <Menu_professional/>
+    </ScrollView>
   );
 };
 
