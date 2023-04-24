@@ -5,9 +5,12 @@ import Calendar_professional from '../Calendar_professional';
 import NewAppointment from '../NewAppointment';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-const Menu_professional = (props) => {
 
+const Menu_professional = () => {
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.menu}>
@@ -17,13 +20,12 @@ const Menu_professional = (props) => {
         <Text style={styles.menuText}>Profile</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.menuItem} onPress={() => { props.navigation.navigate('NewAppointment')}}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewAppointment')}>
         <Ionicons name="add-circle-outline" size={24} color="black" />
         <Text style={styles.menuText}>Add</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity style={styles.menuItem} onPress={handleCalendar}> */}
-      <TouchableOpacity style={styles.menuItem} onPress={() => { props.navigation.navigate('Calendar_professional')}}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Calendar_professional')}>
         <Ionicons name="calendar-outline" size={24} color="black" />
         <Text style={styles.menuText}>Calendar</Text>
       </TouchableOpacity>
