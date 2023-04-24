@@ -17,6 +17,7 @@ import LogIn_Client from './comps/LogIn_Client';
 import NewAppointment from './comps/NewAppointment';
 import Calendar_professional from './comps/Calendar_professional';
 import Menu_professional from './comps/obj/Menu_professional';
+import LocationPicker from './comps/LocationHandler/Location';
 // import TabbedPageNavigator from './comps/GenralComps/TabbedPage';
 // import MaterialTabbedPage from './comps/GenralComps/MaterialTabbedP
 
