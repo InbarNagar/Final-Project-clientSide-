@@ -2,10 +2,9 @@ import {React, useState} from 'react'
 import { View, Text, StyleSheet, TextInput,Button } from 'react-native';
 import { RadioButton } from 'react-native-paper';
 import { Picker } from '@react-native-picker/picker';
-import LocationPicker from './GenralComps/LocationCom/LocationPicker';
 
-export default function Search2() {
-    
+export default function Search() {
+    const [obj,setObj]=useState('');
       const [selectedCategory, setSelectedCategory] = useState('הכל');
       const [selectedSort, setSelectedSort] = useState('דירוג גבוהה תחילה');
     
@@ -30,8 +29,14 @@ export default function Search2() {
         setSelectedSort(itemValue);
       };
       function searchForAppointment(){
-        console.log(city,selectedCategory,selectedSort,sexChecked,housechecked)
-      }
+        setObj({
+          city:{city},
+          category:{selectedCategory},
+          sort:{selectedSort},
+          sex:{sexChecked},
+          huose:{housechecked},
+        })
+        console.log(obj);      }
       return (
         <View style={styles.body} >
           <View >
