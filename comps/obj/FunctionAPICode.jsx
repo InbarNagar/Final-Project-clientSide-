@@ -35,9 +35,15 @@ export const Professional_Business = (body) => {
 
 }
 
-
+//פונקצייה להוספת תור חדש דרך פונקציית פוסט בשרת.
 export const NewAppointmentPost = (body) => {
-    return Axios(`Appointment/NewAppointment`, 'post', body) //פונקצייה להוספת תור חדש דרך פונקציית פוסט בשרת.
+    return Axios(`Appointment/NewAppointment`, 'post', body) 
 
+}
+
+//התחברות בעל עסק
+export const Type_treatment_for_businnes = (businnes_number) => {
+    console.log(`Business_can_give_treatmentController/All_the_treatments_appointment_can_give${businnes_number}/${password}`)
+    return Fetch(`Professional/OneProfessional`, 'post')
 }
 

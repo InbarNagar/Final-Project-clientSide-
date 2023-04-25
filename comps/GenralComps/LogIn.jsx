@@ -8,6 +8,7 @@ import GenralReg from '../GenralReg';
 import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
 import Search from '../Search';
+import AsyncStorage from '@react-native-community/async-storage';
 
 
 
@@ -15,15 +16,35 @@ export default function LogIn(props) {
   const [ID_number, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { navigation, route } = props
+  const [idNumber_client, setidNumber_client] = useState('');
+  const [idNumber_professional, setidNumber_professional] = useState('');
+
+
   let userType = route.params.userType
   console.log({ userType })
 
-  const handleLogin = () => {
+  const handleidNumber = (text) => {
+    if (userType == "Cli"){
+      setidNumber_client(text);
+    }
+    else{
+      setidNumber_professional(text);
+    }
+  };
+  // const handleidNumber_client = (text) => {
+  //   setidNumber_client(text);
+  // };
 
+  // const handleidNumber_professional = (text) => {
+  //   setidNumber_professional(text);
+  // };
+
+  const handleLogin =  async () => {
     if (userType == 'Cli') {
+      await AsyncStorage.setItem('idNumber_client', idNumber_client);
       console.log('cli')
       LogInF(ID_number, password).then((result) => {
-        console.log('yes', result)
+        console.log('yes', result);
         navigation.navigate('Search')
 
       }, (error) => {
@@ -31,6 +52,7 @@ export default function LogIn(props) {
       })
     }
     else {
+      await AsyncStorage.setItem('idNumber_professional', idNumber_professional);
       console.log('professional')
       LogInPro(ID_number, password).then((result) => {
         console.log('yes', result)
@@ -90,6 +112,7 @@ export default function LogIn(props) {
         autoCapitalize="none"
         keyboardType="email-address"
         autoCompleteType="email"
+        onBlur={handleidNumber}
       />
       <View style={styles.inp}>
         <TextInput
