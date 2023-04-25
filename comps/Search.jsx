@@ -8,6 +8,15 @@
     
 //       const [selectedCategory, setSelectedCategory] = useState('הכל');
 //       const [selectedSort, setSelectedSort] = useState('דירוג גבוהה תחילה');
+import {React, useState} from 'react'
+import { View, Text, StyleSheet, TextInput,Button } from 'react-native';
+import { RadioButton } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
+
+export default function Search() {
+    const [obj,setObj]=useState('');
+      const [selectedCategory, setSelectedCategory] = useState('הכל');
+      const [selectedSort, setSelectedSort] = useState('דירוג גבוהה תחילה');
     
 //       const categories = ['הכל', 'ציפורניים', 'מספרה', 'קוסמטיקה','איפור','טיפול פנים'];
 //       const sorts = ['דירוג גבוהה תחילה', 'דירוג נמוך תחילה'];
@@ -38,6 +47,24 @@
 //             <View >
 //               <Text >קטגוריה:</Text>
 //               <Picker
+      const handleSortChange = (itemValue) => {
+        setSelectedSort(itemValue);
+      };
+      function searchForAppointment(){
+        setObj({
+          city:{city},
+          category:{selectedCategory},
+          sort:{selectedSort},
+          sex:{sexChecked},
+          huose:{housechecked},
+        })
+        console.log(obj);      }
+      return (
+        <View style={styles.body} >
+          <View >
+            <View >
+              <Text >קטגוריה:</Text>
+              <Picker
                 
 //                 selectedValue={selectedCategory}
 //                 onValueChange={handleCategoryChange}>

@@ -16,7 +16,6 @@ const AddTratment = () => {
     const options = ['קוסמטיקה', 'הסרת שיער', 'ציפורניים', 'שיער', 'איפור'];
 
 
-
     const renderOptionItems = () => {
         return categories.map(option => (
             <TouchableOpacity
@@ -71,7 +70,7 @@ const AddTratment = () => {
                 </View>
             </View>
 
-       
+
 
             <View style={styles.inp}>
                 <TextInput style={styles.textInputS}

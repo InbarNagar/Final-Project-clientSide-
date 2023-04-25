@@ -8,7 +8,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ForgotPassword from './comps/GenralComps/ForgotPassword';
 import Professional_registration from './comps/Professional_registration';
-import GenralReg from './comps/GenralReg';
 import Client_registration from './comps/Client_registration';
 import Create_Business_Pro from './comps/Create_Business_Pro';
 import Search from './comps/Search';
@@ -45,7 +44,6 @@ function App() {
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="Search" component={Search} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen name='GenralReg' component={GenralReg} />
         <Stack.Screen name='Professional_registration' component={Professional_registration} />
         <Stack.Screen name='Client_registration' component={Client_registration} />
         <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />

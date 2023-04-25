@@ -4,7 +4,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ForgotPassword from './ForgotPassword';
 import Professional_registration from '../Professional_registration';
-import GenralReg from '../GenralReg';
 import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
 import Search from '../Search';
@@ -60,8 +59,43 @@ export default function LogIn(props) {
         console.log('i am here')
       }, (error) => {
         console.log('error', error)
+      //option 1 - less
+      const userData = { ID_number: ID_number, password: password }
+      let url = 'http://proj.ruppin.ac.il/cgroup93/prod/api/Professional/GetProfessional'
+      const response = fetch(url, {
+        method: 'POST',
+        headers: ({
+          "Content-type": "application/json",
+          'Accept': "application/json"
+        }),
+        body: JSON.stringify(userData),
       })
+        .then((response) => {
+          if (response.status === 200)
+            return response.json()
+          else return null
+        })
+        .then((json) => {
+          if (json === null)
+            alert('login faild')
+          else
+            alert('login ok')
+          navigation.navigate('Search', { user: json })
+        }).catch((error) => {
+          Alert.alert('Login Failed');
+          console.log(error);
+        }
+        );
 
+      //option 2 - fav
+      // console.log('professional')
+      // LogInPro(ID_number, password).then((result) => {
+      //   console.log('yes', result)
+      //   navigation.navigate('Search')
+      //   console.log('i am here')
+      // }, (error) => {
+      //   console.log('error', error)
+      // })
     }
 
     // const response = await  fetch('http://localhost:53758/api/Client/OneClient', {
@@ -85,12 +119,22 @@ export default function LogIn(props) {
     //   Alert.alert('Login failed', data.message);
     // }
 
+  }
+
+  const Registration = () => {
+    console.log(userType)
+    if (userType === 'Cli') {
+      navigation.navigate(Client_registration)
+    }
+    else {
+      navigation.navigate(Professional_registration)
+    }
 
   };
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.inp}>
+      <View style={styles.inp}>
 
         <TextInput
           style={styles.input}
@@ -102,8 +146,8 @@ export default function LogIn(props) {
           autoCompleteType="email"
         />
         <Text style={styles.title}>תעודת זהות</Text>
-      </View> */}
-      <Input
+      </View>
+      {/* <Input
         styleContainer={styles.inp}
         style={styles.input}
         placeholder="תעודת זהות"
@@ -114,6 +158,7 @@ export default function LogIn(props) {
         autoCompleteType="email"
         onBlur={handleidNumber}
       />
+      /> */}
       <View style={styles.inp}>
         <TextInput
           style={styles.input}
@@ -134,11 +179,19 @@ export default function LogIn(props) {
       </TouchableOpacity>
 
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+      {/* <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>התחברות</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate(GenralReg) }}>
+
+      <Button color='#9acd32' text="התחברות" onPress={handleLogin} />
+
+
+      {/* <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate(GenralReg) }}>
+        <Text style={styles.buttonText}>עדיין לא נרשמתם? לחצו כאן</Text>
+      </TouchableOpacity> */}
+
+      <TouchableOpacity style={styles.button} onPress={Registration}>
         <Text style={styles.buttonText}>עדיין לא נרשמתם? לחצו כאן</Text>
       </TouchableOpacity>
 

@@ -11,13 +11,13 @@ export const LogInF = (ID_number, password) => {
 //התחברות בעל עסק
 export const LogInPro = (ID_number, password) => {
     console.log(`Professional/OneProfessional/${ID_number}/${password}`)
-    return Fetch(`Professional/OneProfessional`, 'post')
+    return Fetch(`Professional/OneProfessional/${ID_number}/${password}`, 'get')
 }
 
 //הרשמת לקוח -פרטיים אישים
 export const Professional_Registration = (body) => {
 
-    return Axios(`Professional/NewProfessional`, 'post',body)
+    return Axios(`Professional/NewProfessional`,'post',body)
 
 }
 
