@@ -6,7 +6,7 @@ import ForgotPassword from './ForgotPassword';
 import Professional_registration from '../Professional_registration';
 import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
-import Search from '../Search';
+// import Search from '../Search';
 import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
 import { Title } from 'react-native-paper';
@@ -20,80 +20,57 @@ export default function LogIn(props) {
   let userType = route.params.userType
   console.log({ userType })
 
-  const handleLogin = () => {
+ // export default function LogIn_Client(props) {
+//   const [ID_number, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
 
-    if (userType == 'Cli') {
-      console.log('cli')
-      LogInF(ID_number, password).then((result) => {
-        console.log('yes', result)
-        navigation.navigate('Search')
-
-      }, (error) => {
-        console.log('error', error)
-      })
-    }
-    else {
-      //option 1 - less
-      const userData = { ID_number: ID_number, password: password }
-      let url = 'http://proj.ruppin.ac.il/cgroup93/prod/api/Professional/GetProfessional'
-      const response = fetch(url, {
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Client/OneClient', {
         method: 'POST',
-        headers: ({
-          "Content-type": "application/json",
-          'Accept': "application/json"
-        }),
-        body: JSON.stringify(userData),
-      })
-        .then((response) => {
-          if (response.status === 200)
-            return response.json()
-          else return null
-        })
-        .then((json) => {
-          if (json === null)
-            alert('login faild')
-          else
-            alert('login ok')
-          navigation.navigate('Search', { user: json })
-        }).catch((error) => {
-          Alert.alert('Login Failed');
-          console.log(error);
-        }
-        );
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ID_number, password })
+      });
 
-      //option 2 - fav
-      // console.log('professional')
-      // LogInPro(ID_number, password).then((result) => {
-      //   console.log('yes', result)
-      //   navigation.navigate('Search')
-      //   console.log('i am here')
-      // }, (error) => {
-      //   console.log('error', error)
-      // })
+      const data = await response.json();
+
+      if (data.success) {
+        Alert.alert('Login successful');
+        // navigate to the next screen
+        props.navigation.navigate('Search')
+      } else {
+        Alert.alert('Login failed', data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Login failed', 'An error occurred while logging in');
+    }
+  };
+
+    const response = await  fetch('http://localhost:53758/api/Client/OneClient', {
+      method: 'POST',
+      headers:({
+        "Content-type": "application/json",
+        'Accept': "application/json"
+      }),
+      body: JSON.stringify({ "ID_number":ID_number,"password": password }),
+    })
+
+    const data = await response.json();
+
+    if (data.success) {
+      Alert.alert('Login successful');
+      // navigate to the next screen
+      props.navigation.navigate('Search')
+    } 
+
+    else {
+      Alert.alert('Login failed', data.message);
     }
 
-    // const response = await  fetch('http://localhost:53758/api/Client/OneClient', {
-    //   method: 'POST',
-    //   headers:({
-    //     "Content-type": "application/json",
-    //     'Accept': "application/json"
-    //   }),
-    //   body: JSON.stringify({ "ID_number":ID_number,"password": password }),
-    // })
-
-    // const data = await response.json();
-
-    // if (data.success) {
-    //   Alert.alert('Login successful');
-    //   // navigate to the next screen
-    //   props.navigation.navigate('Search')
-    // } 
-
-    // else {
-    //   Alert.alert('Login failed', data.message);
-    // }
-
-  }
+  
 
   const Registration = () => {
     console.log(userType)
@@ -172,8 +149,8 @@ export default function LogIn(props) {
 
 
   );
-}
 
+    }
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',

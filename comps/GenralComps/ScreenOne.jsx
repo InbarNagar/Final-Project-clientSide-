@@ -5,15 +5,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TouchableOpacity } from 'react-native';
 import LogIn from './LogIn';
-import LogIn_Client from '../LogIn_Client';
-
-
-
 
 const ScreenOne = (props) => {
 
     return (
-//gggggg
+
         <View style={{flex: 1}}>
            
             <Text style={style.wel} >Beuaty Me</Text>
