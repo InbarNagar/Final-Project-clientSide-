@@ -6,147 +6,60 @@ import ForgotPassword from './ForgotPassword';
 import Professional_registration from '../Professional_registration';
 import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
-// import Search from '../Search';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import NewAppointment from '../NewAppointment';
-// import { AsyncStorage } from 'react-native';
+import Search from '../Search';
+import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
-import {LogInPro} from '../obj/FunctionAPICode';
-import { LogInProo } from '../obj/FunctionAPICode';
-
-
-
+import { Title } from 'react-native-paper';
+import { LogInPro } from '../obj/FunctionAPICode';
 
 
 export default function LogIn(props) {
-  const [ID_number, setID_number] = useState('');
+  const [ID_number, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { navigation, route } = props
-  const [idNumber_client, setidNumber_client] = useState('');
-  const [idNumber_professional, setidNumber_professional] = useState('');
-
-
   let userType = route.params.userType
   console.log({ userType })
 
-  const handleidNumber = (text) => {
-    if (userType == "Cli"){
-      setidNumber_client(text);
-    }
-    else{
-      setidNumber_professional(text);
-    }
-  };
-  // const handleidNumber_client = (text) => {
-  //   setidNumber_client(text);
-  // };
+  const handleLogin = () => {
 
-  // const handleidNumber_professional = (text) => {
-  //   setidNumber_professional(text);
-  // };
-
-  const handleLogin =  async () => {
     if (userType == 'Cli') {
-      await AsyncStorage.setItem('idNumber_client', idNumber_client);
       console.log('cli')
-      const dataa = {
-        ID_number: ID_number,
-        password: password,
-      } 
-      LogInF(dataa).then((result) => {
-        console.log('yes', result);
-        // navigation.navigate('Search')
+      LogInF(ID_number, password).then((result) => {
+        console.log('yes', result)
+        navigation.navigate('Search')
 
       }, (error) => {
         console.log('error', error)
       })
     }
     else {
-      console.log(ID_number)
-      await AsyncStorage.setItem('idNumber_professional', ID_number);
-      console.log('professional')
-      const storedIdNumber = await AsyncStorage.getItem('idNumber_professional');
-    console.log('Stored idNumber_professional:', storedIdNumber);
-      const data = {
-        ID_number: ID_number,
-        password: password,
-      } 
-      console.log(ID_number)
-      console.log(password)
-      console.log(data)
-      LogInProo(data).then((result) => {
-      // LogInPro(ID_number, password).then((result) => {
-        console.log('yes', result)
-       navigation.navigate('NewAppointment')
-        console.log('i am here')
-      }, (error) => {
-        console.log('error', error)
-      })
-    }
-  }
-  // const handleLogin =  async () => {
-  //   if (userType == 'Cli') {
-  //     await AsyncStorage.setItem('idNumber_client', idNumber_client);
-  //     console.log('cli')
-  //     
-  //     LogInF(ID_number, password).then((result) => {
-  //       console.log('yes', result);
-  //       // navigation.navigate('Search')
-
-  //     }, (error) => {
-  //       console.log('error', error)
-  //     })
-  //   }
-  //   else {
-  //     console.log(ID_number)
-  //     await AsyncStorage.setItem('idNumber_professional', ID_number);
-  //     console.log('professional')
-  //     const storedIdNumber = await AsyncStorage.getItem('idNumber_professional');
-  //   console.log('Stored idNumber_professional:', storedIdNumber);
-  //     const data = {
-  //       ID_number: ID_number,
-  //       password: password,
-  //     } 
-  //     console.log(ID_number)
-  //     console.log(password)
-  //     console.log(data)
-  //     LogInProo(data).then((result) => {
-  //     // LogInPro(ID_number, password).then((result) => {
-  //       console.log('yes', result)
-  //      navigation.navigate('NewAppointment')
-  //       console.log('i am here')
-  //     }, (error) => {
-  //       console.log('error', error)
-  //     })
-  //   }
-  // }
       //option 1 - less
-      // const userData = { ID_number: ID_number, password: password }
-      // let url = 'http://proj.ruppin.ac.il/cgroup93/prod/api/Professional/GetProfessional'
-      // const response = fetch(url, {
-      //   method: 'POST',
-      //   headers: ({
-      //     "Content-type": "application/json",
-      //     'Accept': "application/json"
-      //   }),
-      //   body: JSON.stringify(userData),
-      // })
-      //   .then((response) => {
-      //     if (response.status === 200)
-      //       return response.json()
-      //     else return null
-      //   })
-      //   .then((json) => {
-      //     if (json === null)
-      //       alert('login faild')
-      //     else
-      //       alert('login ok')
-      //     navigation.navigate('Search', { user: json })
-      //   }).catch((error) => {
-      //     Alert.alert('Login Failed');
-      //     console.log(error);
-      //   }
-      //   );
+      const userData = { ID_number: ID_number, password: password }
+      let url = 'http://proj.ruppin.ac.il/cgroup93/prod/api/Professional/GetProfessional'
+      const response = fetch(url, {
+        method: 'POST',
+        headers: ({
+          "Content-type": "application/json",
+          'Accept': "application/json"
+        }),
+        body: JSON.stringify(userData),
+      })
+        .then((response) => {
+          if (response.status === 200)
+            return response.json()
+          else return null
+        })
+        .then((json) => {
+          if (json === null)
+            alert('login faild')
+          else
+            alert('login ok')
+          navigation.navigate('Search', { user: json })
+        }).catch((error) => {
+          Alert.alert('Login Failed');
+          console.log(error);
+        }
+        );
 
       //option 2 - fav
       // console.log('professional')
@@ -157,7 +70,7 @@ export default function LogIn(props) {
       // }, (error) => {
       //   console.log('error', error)
       // })
-    
+    }
 
     // const response = await  fetch('http://localhost:53758/api/Client/OneClient', {
     //   method: 'POST',
@@ -180,7 +93,7 @@ export default function LogIn(props) {
     //   Alert.alert('Login failed', data.message);
     // }
 
-  
+  }
 
   const Registration = () => {
     console.log(userType)
@@ -195,18 +108,16 @@ export default function LogIn(props) {
 
   return (
     <View style={styles.container}>
-
       <View style={styles.inp}>
+
         <TextInput
           style={styles.input}
           placeholder="תעודת זהות"
           value={ID_number}
-          onChangeText={setID_number} //????????????????????????????????????????????
+          onChangeText={setEmail}
           autoCapitalize="none"
           keyboardType="email-address"
           autoCompleteType="email"
-          onblur={handleidNumber}
-
         />
         <Text style={styles.title}>תעודת זהות</Text>
       </View>
@@ -215,13 +126,11 @@ export default function LogIn(props) {
         style={styles.input}
         placeholder="תעודת זהות"
         value={ID_number}
-        onChangeText={setID_number}
+        onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
         autoCompleteType="email"
-        onBlur={handleidNumber}
       /> */}
-      
       <View style={styles.inp}>
         <TextInput
           style={styles.input}
