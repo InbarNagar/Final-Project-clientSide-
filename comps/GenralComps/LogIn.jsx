@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,11 +6,11 @@ import ForgotPassword from './ForgotPassword';
 import Professional_registration from '../Professional_registration';
 import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
-import Search from '../Search';
 import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
 import { Title } from 'react-native-paper';
 import { LogInPro } from '../obj/FunctionAPICode';
+import Maps_test from '../Maps_test';
 
 
 export default function LogIn(props) {
@@ -19,14 +19,16 @@ export default function LogIn(props) {
   const { navigation, route } = props
   let userType = route.params.userType
   console.log({ userType })
-
+  useEffect(()=>{
+          navigation.navigate('Maps_test')
+  },[])
   const handleLogin = () => {
 
     if (userType == 'Cli') {
       console.log('cli')
       LogInF(ID_number, password).then((result) => {
         console.log('yes', result)
-        navigation.navigate('Search')
+        navigation.navigate('Search3')
 
       }, (error) => {
         console.log('error', error)
@@ -54,10 +56,12 @@ export default function LogIn(props) {
             alert('login faild')
           else
             alert('login ok')
-          navigation.navigate('Search', { user: json })
+          navigation.navigate('Search3', { user: json })
         }).catch((error) => {
           Alert.alert('Login Failed');
           console.log(error);
+
+
         }
         );
 
@@ -65,7 +69,7 @@ export default function LogIn(props) {
       // console.log('professional')
       // LogInPro(ID_number, password).then((result) => {
       //   console.log('yes', result)
-      //   navigation.navigate('Search')
+      //   navigation.navigate('Search3')
       //   console.log('i am here')
       // }, (error) => {
       //   console.log('error', error)

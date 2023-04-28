@@ -40,4 +40,15 @@ export const NewAppointmentPost = (body) => {
     return Axios(`Appointment/NewAppointment`, 'post', body) //פונקצייה להוספת תור חדש דרך פונקציית פוסט בשרת.
 
 }
+                // חיפוש תור
+export const Search_post = (body) => {
+
+    return Axios(`Search/Searchh`, 'post',body) 
+
+}
+// סוגי הטיפולים לרשימה נגללת במסך חיפוש
+export const Treatment_type_GET = () => {
+    console.log(`Type_Treatment/AllCategory`)
+    return Fetch(`Type_Treatment/AllCategory`,'get')
+}
 

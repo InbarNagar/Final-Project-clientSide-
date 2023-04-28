@@ -24,7 +24,7 @@ export default function LogInC(props) {
       if (data.success) {
         Alert.alert('Login successful');
         // navigate to the next screen
-        props.navigation.navigate('Search')
+        props.navigation.navigate('Search3')
       } else {
         Alert.alert('Login failed', data.message);
       }
@@ -34,55 +34,56 @@ export default function LogInC(props) {
     }
   };
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.inp}>
 
-        <TextInput
-          style={styles.input}
-          placeholder="מייל"
-          value={ID_number}
-          onChangeText={setEmail}
-          autoCapitalize="none"
-          keyboardType="email-address"
-          autoCompleteType="email"
-        />
-        <Text style={styles.title}>מייל</Text>
-      </View>
+    // <View style={styles.container}>
+    //   <View style={styles.inp}>
 
-      <View style={styles.inp}>
-        <TextInput
-          style={styles.input}
-          placeholder="סיסמא"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={true}
-          autoCompleteType="password"
-        />
-        <Text style={styles.title}>סיסמא</Text>
+    //     <TextInput
+    //       style={styles.input}
+    //       placeholder="מייל"
+    //       value={ID_number}
+    //       onChangeText={setEmail}
+    //       autoCapitalize="none"
+    //       keyboardType="email-address"
+    //       autoCompleteType="email"
+    //     />
+    //     <Text style={styles.title}>מייל</Text>
+    //   </View>
 
-      </View>
+    //   <View style={styles.inp}>
+    //     <TextInput
+    //       style={styles.input}
+    //       placeholder="סיסמא"
+    //       value={password}
+    //       onChangeText={setPassword}
+    //       secureTextEntry={true}
+    //       autoCompleteType="password"
+    //     />
+    //     <Text style={styles.title}>סיסמא</Text>
 
-      <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate(ForgetPas)}}>
-      <View > 
-        <Text>שכחתי סיסמא</Text>
-      </View>
-      </TouchableOpacity>
+    //   </View>
+
+    //   <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate(ForgetPas)}}>
+    //   <View > 
+    //     <Text>שכחתי סיסמא</Text>
+    //   </View>
+    //   </TouchableOpacity>
 
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>התחברות</Text>
-      </TouchableOpacity>
+    //   <TouchableOpacity style={styles.button} onPress={handleLogin}>
+    //     <Text style={styles.buttonText}>התחברות</Text>
+    //   </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate(Client_registration)}}>
-        <Text >עדיין לא נרשמתם? לחצו כאן</Text>
-      </TouchableOpacity>
+    //   <TouchableOpacity style={styles.button} onPress={()=>{props.navigation.navigate(Client_registration)}}>
+    //     <Text >עדיין לא נרשמתם? לחצו כאן</Text>
+    //   </TouchableOpacity>
 
-    </View>
+    // </View>
      
     
     
-  );
+  // );
+  
 }
 
 const styles = StyleSheet.create({
