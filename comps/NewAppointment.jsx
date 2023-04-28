@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,10 +7,6 @@ import Menu_treatment_registration from './Menu_treatment_registration';
 import Button from './obj/Button';
 import {NewAppointmentPost} from './obj/FunctionAPICode';
 import { Header } from 'react-native-elements';
-// import { AsyncStorage } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
 
 
 const Stack = createNativeStackNavigator();
@@ -25,35 +21,13 @@ const NewAppointment = () => {
   const [showEndTimePicker, setShowEndTimePicker] = useState(false);
   const [businessNumber, setBusinessNumber] = useState('');
   const [Appointment_status, setAppointment_status] = useState('not available');
-  const [idNumber, setIdNumber] = useState(''); // ללוקאלסטורג
-   
-    const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
-      try {
-        const id = await AsyncStorage.getItem('idNumber_professional');
-        console.log('idNumber loaded successfully', id);
-        setIdNumber(id || '');
-      } catch (error) {
-        console.log('Failed to load idNumber from AsyncStorage', error);
-      }
-    }
-
-    const printAsyncStorageKeys = async () => { // פונקציה שכל מטרתה הוא לבדוק איזה מפתחות יש בלוקאלסטורג ואיך קוראים להם
-      const keys = await AsyncStorage.getAllKeys();
-      console.log("AsyncStorage keys: ", keys);
-    }
-
-    useEffect(() => {
-      printAsyncStorageKeys()
-      handelLocalstorage()
-    }, []);
-     
+ 
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShowDatePicker(false);
     setDate(currentDate);
   };
-  
 
   const handleStartTimeChange = (event, selectedTime) => {
     const currentTime = selectedTime || startTime;
@@ -71,7 +45,7 @@ const NewAppointment = () => {
     return value ? 'YES' : 'NO';
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     const data = {
       Date: date,
       Start_time: startTime.toLocaleTimeString(),
@@ -106,42 +80,21 @@ const NewAppointment = () => {
 
 //   };
     
+    NewAppointmentPost(data).then((result) => {
+        console.log('yes', result)
+  
+      }, (error) => {
+        console.log('error', error)
+      })
+      .then(<NavigationContainer>
+                <Stack.Navigator>
+                   <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+                </Stack.Navigator>
+               </NavigationContainer>);
+               console.log(1);
+    };
+  
 
-
-
-//ככה עובד לי בלי להכניס ללוקאל סטורג
-    // NewAppointmentPost(data).then((result) => {
-    //     // console.log('yes', result)
-    //     console.log('yes', result.appointmentId);
-    //   }, (error) => {
-    //     console.log('error', error)
-    //   })
-    //   .then(<NavigationContainer>
-    //             <Stack.Navigator>
-    //                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-    //             </Stack.Navigator>
-    //            </NavigationContainer>);
-    //            console.log(1);
-
-
-    // ככה מנסה עם לשמור בלוקאל סטורג... צריל לבדוק שזה עובד!
-               try {
-                const result = await NewAppointmentPost(data);
-                console.log(data);
-                console.log(NewAppointmentPost(data));
-                console.log(result);
-                console.log('yes', result.appointmentId);
-                await AsyncStorage.setItem('appointmentId', result.appointmentId);
-                navigation.navigate('Menu_treatment_registration');
-              } catch (error) {
-                console.log('error', error);
-              }
-            
-              console.log(1);
-            };
-            
-            
-         
 
   return (
     <View style={styles.container}>
