@@ -36,9 +36,13 @@ function App() {
   
       <NavigationContainer>
        <Stack.Navigator initialRouteName="ScreenOne" >
-       <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
+       {/* <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
         <Stack.Screen name="LogIn" component={LogIn} />
-                <Stack.Screen name="NewAppointment" component={NewAppointment} /> 
+                <Stack.Screen name="NewAppointment" component={NewAppointment} />  */}
+                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} /> 
+                <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> 
+
+
 
         {/*  <Stack.Screen name="Search" component={Search} />  */}
         {/* <Stack.Screen name="ForgotPassword" component={ForgotPassword} /> */}

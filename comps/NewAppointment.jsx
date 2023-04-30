@@ -9,11 +9,14 @@ import {NewAppointmentPost} from './obj/FunctionAPICode';
 import { Header } from 'react-native-elements';
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 
 
 const Stack = createNativeStackNavigator();
+
 
 const NewAppointment = () => {
   const [date, setDate] = useState(new Date());
@@ -26,6 +29,9 @@ const NewAppointment = () => {
   const [businessNumber, setBusinessNumber] = useState('');
   const [Appointment_status, setAppointment_status] = useState('not available');
   const [idNumber, setIdNumber] = useState(''); // ללוקאלסטורג
+
+  const navigation = useNavigation();
+
    
     const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
       try {
@@ -82,63 +88,23 @@ const NewAppointment = () => {
       Appointment_status: Appointment_status
     };
 
-//         fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/NewAppointment', {
-//       method: 'POST',
-//       headers: new Headers({
-//         "Content-type": "application/json; charset=UTF-8", 
-//         'Accept': "application/json; charset=UTF-8",
-//     }),
-//       body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//       console.log('Success:', result);
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     })
-//     .then(<NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-//         </Stack.Navigator>
-//       </NavigationContainer>);
-       
-
-//   };
-    
-
-
-
-//ככה עובד לי בלי להכניס ללוקאל סטורג
-    // NewAppointmentPost(data).then((result) => {
-    //     // console.log('yes', result)
-    //     console.log('yes', result.appointmentId);
-    //   }, (error) => {
-    //     console.log('error', error)
-    //   })
-    //   .then(<NavigationContainer>
-    //             <Stack.Navigator>
-    //                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-    //             </Stack.Navigator>
-    //            </NavigationContainer>);
-    //            console.log(1);
-
-
     // ככה מנסה עם לשמור בלוקאל סטורג... צריל לבדוק שזה עובד!
-               try {
-                const result = await NewAppointmentPost(data);
-                console.log(data);
-                console.log(NewAppointmentPost(data));
-                console.log(result);
-                console.log('yes', result.appointmentId);
-                await AsyncStorage.setItem('appointmentId', result.appointmentId);
-                navigation.navigate('Menu_treatment_registration');
-              } catch (error) {
-                console.log('error', error);
-              }
-            
-              console.log(1);
-            };
+    try {
+    const result = await NewAppointmentPost(data);
+    console.log(data);
+    // console.log(NewAppointmentPost(data));
+    console.log("999");
+    console.log(result);
+    console.log('yes', result.data.appointmentId);
+    await AsyncStorage.setItem('appointmentId', result.data.appointmentId.toString());
+    navigation.navigate('Menu_treatment_registration');
+    } 
+    catch (error) {
+      console.log('error', error);
+    }
+
+    console.log(1);
+};
             
             
          
@@ -196,7 +162,6 @@ const NewAppointment = () => {
       <Switch value={canGoToClient} onValueChange={setCanGoToClient} />
     </View>
 
-    
    
     <Button onPress={handleSubmit} text="הוספת התור" color="#98FB98" />
       {/* <TouchableOpacity style={styles.button} onPress={handleSubmit}>
@@ -252,3 +217,44 @@ const NewAppointment = () => {
 export default NewAppointment ;
 
 
+
+//         fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/NewAppointment', {
+//       method: 'POST',
+//       headers: new Headers({
+//         "Content-type": "application/json; charset=UTF-8", 
+//         'Accept': "application/json; charset=UTF-8",
+//     }),
+//       body: JSON.stringify(data)
+//     })
+//     .then(response => response.json())
+//     .then(result => {
+//       console.log('Success:', result);
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     })
+//     .then(<NavigationContainer>
+//         <Stack.Navigator>
+//           <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+//         </Stack.Navigator>
+//       </NavigationContainer>);
+       
+
+//   };
+    
+
+
+
+//ככה עובד לי בלי להכניס ללוקאל סטורג
+    // NewAppointmentPost(data).then((result) => {
+    //     // console.log('yes', result)
+    //     console.log('yes', result.appointmentId);
+    //   }, (error) => {
+    //     console.log('error', error)
+    //   })
+    //   .then(<NavigationContainer>
+    //             <Stack.Navigator>
+    //                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+    //             </Stack.Navigator>
+    //            </NavigationContainer>);
+    //            console.log(1);

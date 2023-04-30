@@ -1,115 +1,338 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-// import { TableContainer, Paper, Table, TableHead, TableRow, TableCell, TableBody, Checkbox } from '@material-ui/core';
-
-// import { CheckBox } from 'react-native';
+import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import {BussinesCanGiveTreatment} from './obj/FunctionAPICode';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {All_treatment_in_appointment} from './obj/FunctionAPICode';
+import Button from './obj/Button';
+import { useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Notificationss from './obj/Notificationss';
+import { Alert } from 'react-native';
 
 
 
 
 const Menu_treatment_registration = () => {
+
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedTreatments, setSelectedTreatments] = useState([]);
-  const [idNumber, setIdNumber] = useState(''); // ללוקאלסטורג
-  const [appointment_num, setAppointment_num] = useState('');
-  const [businessData, setBusinessData] = useState([]);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [professionalID, setIdNumber] = useState('');
+  const [appointmentID, setAppointment_num] = useState('');
+  const [BusinessData, setBusinessData] = useState([]);  //מערך על כל סוגי הטיפולים האפשריים לעסק הספציפי
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [select_treatment_for_appointment, setSelect_treatment_for_appointment] = useState([]) // מערך עם כל סוגי הטיפולים האפשריים לתור הספציפי לפי מה שבחר בעל העסק
+
+  const navigation = useNavigation();
+
+  const handelLocalstorage = async () => {
+    try {
+      const professionalID = await AsyncStorage.getItem('idNumber_professional');
+      const appointmentID = await AsyncStorage.getItem('appointmentId');
+      setIdNumber(professionalID || '');
+      setAppointment_num(appointmentID || '');
+    } catch (error) {
+      console.log('Failed to load from AsyncStorage', error);
+    }
+  }
+
+  const printAsyncStorageKeys = async () => {
+    const keys = await AsyncStorage.getAllKeys();
+    console.log("AsyncStorage keys: ", keys);
+  }
+
+  useEffect(() => {
+    setSelect_treatment_for_appointment([]);
+    setBusinessData([]);
+    printAsyncStorageKeys();
+    handelLocalstorage();
+    const fetchBusinessData = async () => {
+      try {
+        const Business_Numberr = "4";
+        const data = await BussinesCanGiveTreatment(Business_Numberr);
+        const BusinessData = data.data.map((item) => {
+          return {
+            Type_treatment_Number: item['Type_treatment_Number'],
+            Price: item['Price'],
+            Treatment_duration: item['Treatment_duration']
+          };
+        });
+        setBusinessData(BusinessData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchBusinessData();
+  },[]);
+
+  const handleAddTreatments = () => {
+    select_treatment_for_appointment.forEach(item => {
+      const data = {
+        Number_appointment: appointmentID,
+        Type_treatment_Number: item,
+      };
+      console.log(data)
+      console.log("4444")
+      // const axios = All_treatment_in_appointment(data)
+      All_treatment_in_appointment(data).then(result => {
+        console.log(result.data)
+        console.log(result.status)
+      if(result.status==200){
+        console.log("111")
+        // Notificationss("OK", "התור נוסף בהצלחה") 
+        Alert.alert(
+          'OK',
+          'התור נוסף בהצלחה',
+          [
+            { text: 'OK', onPress: () => navigation.navigate('Calendar_professional') },
+          ],
+          { cancelable: false }
+        );
+        // navigation.navigate('Calendar_professional');
+        console.log("222")
+      }
+    }).catch(error => {
+        console.log(error);
+    });
+    });
+  };
+
+  const handleRowPress = (Type_treatment_Number) => {
+    if (select_treatment_for_appointment.includes(Type_treatment_Number)) {
+      setSelect_treatment_for_appointment(select_treatment_for_appointment.filter((num) => num !== Type_treatment_Number));
+    } else {
+      setSelect_treatment_for_appointment([...select_treatment_for_appointment, Type_treatment_Number]);
+    }
+  };
+  
+
+  const UserRow = ({ Type_treatment_Number, Price, Treatment_duration }, index) => (
+    <TouchableOpacity onPress={() => handleRowPress(Type_treatment_Number)}>
+      <View style={[styles.userRow, select_treatment_for_appointment.includes(Type_treatment_Number) && styles.selectedUserRow, { flexDirection: 'row', padding: 10 }]}>
+        <Text style={{ flex: 1, ...styles.userRowText }}>{Type_treatment_Number}</Text>
+        <Text style={{ flex: 1, ...styles.userRowText }}>{Price}</Text>
+        <Text style={{ flex: 1, ...styles.userRowText }}>{Treatment_duration}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+
+
+  return (
+    <View >
+      <View >
+        <Text style={styles.label}>טיפולים זמינים:</Text>
+        <FlatList
+          data={BusinessData}
+          keyExtractor={(item) => item.Type_treatment_Number}
+          renderItem={({ item, index }) => (
+            <UserRow
+              Type_treatment_Number={item.Type_treatment_Number}
+              Price={item.Price}
+              Treatment_duration={item.Treatment_duration}
+              // isSelected={item.isSelected}
+              index={index}
+            />
+          )}
+          ListHeaderComponent={() => (
+            <View style={{ flexDirection: 'row', padding: 10 }}>
+              <Text style={{ flex: 1, fontWeight: 'bold' }}>סוג טיפול</Text>
+              <Text style={{ flex: 1, fontWeight: 'bold' }}>מחיר</Text>
+              <Text style={{ flex: 1, fontWeight: 'bold' }}>משך הטיפול</Text>
+            </View>
+          )}
+        />
+      </View>
+      
+      
+        <Button onPress={handleAddTreatments} text="הוסף טיפולים"  color="#98FB98" />
+      
+    </View>
+  );
+
+          }
+
+
+          // style={styles.container}
+          // style={styles.inputContainer}
+
+
+// import React, { useState, useEffect } from 'react';
+// import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+// import {BussinesCanGiveTreatment} from './obj/FunctionAPICode';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import Table_all_treatments_of_bussines from './obj/Table_all_treatments_of_bussines';
+// import {UserRow} from './obj/Table_all_treatments_of_bussines';
+
+
+
+
+
+// const Menu_treatment_registration = () => {
+//   const [treatments, setTreatments] = useState([]);
+//   const [categories, setCategories] = useState([]);
+//   const [selectedTreatments, setSelectedTreatments] = useState([]);
+//   const [professionalID, setIdNumber] = useState(''); // ללוקאלסטורג
+//   const [appointmentID, setAppointment_num] = useState('');
+//   const [BusinessData, setBusinessData] = useState([]);
+//   const [selectedOption, setSelectedOption] = useState('');
 
 
   
-  // const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
-  //   try {
-  //     const professionalID = await AsyncStorage.getItem('idNumber_professional');
-  //     const appointmentID = await AsyncStorage.getItem('appointmentId');
-  //     console.log(professionalID, appointmentID);
-  //     setIdNumber(professionalID || '');
-  //     setAppointment_num(appointmentID || '');
-  //   } catch (error) {
-  //     console.log('Failed to load from AsyncStorage', error);
-  //   }
-  // }
+//   const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
+//     try {
+//       const professionalID = await AsyncStorage.getItem('idNumber_professional');
+//       const appointmentID = await AsyncStorage.getItem('appointmentId');
+//       console.log(professionalID, appointmentID);
+//       setIdNumber(professionalID || '');
+//       setAppointment_num(appointmentID || '');
+//     } catch (error) {
+//       console.log('Failed to load from AsyncStorage', error);
+//     }
+//   }
 
-  // const printAsyncStorageKeys = async () => { // פונקציה שכל מטרתה הוא לבדוק איזה מפתחות יש בלוקאלסטורג ואיך קוראים להם
-  //   const keys = await AsyncStorage.getAllKeys();
-  //   console.log("AsyncStorage keys: ", keys);
-  // }
+//   const printAsyncStorageKeys = async () => { // פונקציה שכל מטרתה הוא לבדוק איזה מפתחות יש בלוקאלסטורג ואיך קוראים להם
+//     const keys = await AsyncStorage.getAllKeys();
+//     console.log("AsyncStorage keys: ", keys);
+//   }
 //   useEffect(() => {
+//       printAsyncStorageKeys()
+//       handelLocalstorage()
 //   const fetchBusinessData = async () => {
 //     try {
 //       console.log("22");
-//       console.log(BussinesCanGiveTreatment("53"));
-//       // const data = await BussinesCanGiveTreatment(appointmentID);
-//       const data = await BussinesCanGiveTreatment("53");
-//       console.log("33");
+//       console.log(appointmentID);
+//       const Business_Numberr = "4";
+//       const data = await BussinesCanGiveTreatment(Business_Numberr);
+//       console.log(Business_Numberr);
+//       console.log(data.data);
+//       console.log(JSON.stringify(data))
+
+//       console.log("333333");
 //       console.log(data);
-//       const formattedData = data.map((item) => {
+//       const BusinessData = data.data.map((item) => {
 //         return {
-//           id: item['שם הטיפול'],
-//           treatmentType: item['סוג טיפול'],
-//           price: item['מחיר'],
-//           duration: item['משך זמן']
+//           Type_treatment_Number: item['Type_treatment_Number'],
+//           Price: item['Price'],
+//           Treatment_duration: item['Treatment_duration']
 //         };
 //       });
-//       setBusinessData(formattedData);
+//       console.log("66666")
+//       console.log(BusinessData)
+//       setBusinessData(BusinessData)
+//       console.log(BusinessData)
+//       console.log("5555555")
 //     } catch (error) {
 //       console.error(error);
 //     }
 //   };
-// })
+//   fetchBusinessData();
+//   console.log("77777")
+//   },[]); 
+
+//   const UserRow = ({ Type_treatment_Number, Price, Treatment_duration }) => (
+//     <TouchableOpacity>
+//       <View style={{ flexDirection: 'row', padding: 10 }}>
+//         <Text style={{ flex: 1 }}>{Type_treatment_Number}</Text>
+//         <Text style={{ flex: 1 }}>{Price}</Text>
+//         <Text style={{ flex: 1 }}>{Treatment_duration}</Text>
+//       </View>
+//     </TouchableOpacity>
+//   );
+
+
   
-  useEffect(() => {
-    // printAsyncStorageKeys()
-    // handelLocalstorage()
-    console.log("11");
-    const fetchBusinessData = async () => {
-      console.log("22");
-      // console.log(BussinesCanGiveTreatment(""));
-      // const data = await BussinesCanGiveTreatment(appointmentID);
-      const data = await BussinesCanGiveTreatment(4);
-      console.log("33");
-      console.log(data + "4444");
-      const formattedData = data.map((item) => {
-        return {
-          Type_treatment_Number: item['שם הטיפול'],
-          Price: item['מחיר'],
-          Treatment_duration: item['משך זמן']
-        };
-      });
-      setBusinessData(formattedData);
-    };
-    fetchBusinessData();
-  },["4"]); 
-  // [appointmentNum]);
+  
 
-  const renderOptionItems = () => {
-    return businessData.map(option => (
-        <TouchableOpacity
-            key={option}
-            style={[styles.optionItem, selectedOption === option ? styles.selectedOption : null]}
-            onPress={() => setSelectedOption(option)}
-        >
-            <Text style={[styles.optionText, selectedOption === option ? styles.selectedOptionText : null]}>
-                {option}
-            </Text>
-        </TouchableOpacity>
-    ));
-};
 
-  return (
+// return(
+// <FlatList
+// data={BusinessData}
+// renderItem={({ item }) => (
+//   <UserRow
+//     Type_treatment_Number={item.Type_treatment_Number}
+//     Price={item.Price}
+//     Treatment_duration={item.Treatment_duration}
+//   />
+// )}
+// // keyExtractor={(item) => item.id.toString()}
+// ListHeaderComponent={() => (
+//   <View style={{ flexDirection: 'row', padding: 10 }}>
+//     <Text style={{ flex: 1, fontWeight: 'bold' }}>סוג טיפול</Text>
+//     <Text style={{ flex: 1, fontWeight: 'bold' }}>מחיר</Text>
+//     <Text style={{ flex: 1, fontWeight: 'bold' }}>משך הטיפול</Text>
+//   </View>
+// )}
+// />
+// )
+// }
+
 
     
-            <View>
-                <View>
-                    <Text>בחר קטגוריה</Text>
-                    <View >{renderOptionItems()}</View>
-                    <TouchableOpacity  >
-                        <Text >בחר</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+
+    // <View>
+    //   {BusinessData.map((item, index) => (
+    //     <UserRow
+    //       key={index}
+    //       Type_treatment_Number={item.Type_treatment_Number}
+    //       Price={item.Price}
+    //       Treatment_duration={item.Treatment_duration}
+    //       // isChecked={item.isChecked}
+    //       // onToggle={() => console.log(`Toggle item at index ${index}`)}
+    //     />
+    //   ))}
+    // </View>
+
+    //   const renderOptionItems = () => {
+//     return BusinessData.map(option => (
+//         <TouchableOpacity
+//             key={option}
+//             style={[styles.optionItem, selectedOption === option ? styles.selectedOption : null]}
+//             onPress={() => setSelectedOption(option)}
+//         >
+//             <Text style={[styles.optionText, selectedOption === option ? styles.selectedOptionText : null]}>
+//                 {option}
+//             </Text>
+//         </TouchableOpacity>
+//     ));
+// };
+    // <View>
+    //             <View>
+    //                 <Text>בחר קטגוריה</Text>
+    //                 <View >{renderOptionItems()}</View>
+    //                 <TouchableOpacity  >
+    //                     <Text >בחר</Text>
+    //                 </TouchableOpacity>
+    //             </View>
+    //         </View>
+    
+            
+            //  );
+            // };
+            
+// useEffect(() => {
+  //   // printAsyncStorageKeys()
+  //   // handelLocalstorage()
+  //   console.log("11");
+  //   const fetchBusinessData = async () => {
+  //     console.log("22");
+  //     // console.log(BussinesCanGiveTreatment(""));
+  //     // const data = await BussinesCanGiveTreatment(appointmentID);
+  //     const data = await BussinesCanGiveTreatment(4);
+  //     console.log("33");
+  //     console.log(data + "4444");
+  //     const formattedData = data.map((item) => {
+  //       return {
+  //         Type_treatment_Number: item['שם הטיפול'],
+  //         Price: item['מחיר'],
+  //         Treatment_duration: item['משך זמן']
+  //       };
+  //     });
+  //     setBusinessData(formattedData);
+  //   };
+  //   fetchBusinessData();
+  // },["4"]); 
+  // // [appointmentNum]);
+
 
     // <TableContainer component={Paper}>
       // <Table>
@@ -176,9 +399,7 @@ const Menu_treatment_registration = () => {
 
 
 
-  );
-};
-
+ 
 
 
     
