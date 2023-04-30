@@ -12,7 +12,7 @@ import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
 import Search3 from './comps/Search3';
 import AddTratment from './comps/AddTratment';
-
+import Menu_treatment_forAppointment from './comps/Menu_treatment_forAppointment';
 import NewAppointment from './comps/NewAppointment';
 import Calendar_professional from './comps/Calendar_professional';
 import Menu_professional from './comps/obj/Menu_professional';
@@ -21,7 +21,22 @@ import Menu_professional from './comps/obj/Menu_professional';
 import Maps_test from './comps/Maps_test'; 
 import { loginHook ,UserContext} from './comps/UserDietails';
 import React from 'react';
+import Menu_treatment_registration from './comps/Menu_treatment_registration';
+// import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
+// PushNotificationIOS.requestPermissions();
+
+// PushNotificationIOS.addEventListener('register', (token) => {
+//   console.log('Device registered for push notifications: ', token);
+// });
+
+// PushNotificationIOS.addEventListener('registrationError', (error) => {
+//   console.error('Error registering for push notifications: ', error);
+// });
+
+// PushNotificationIOS.addEventListener('notification', (notification) => {
+//   console.log('Received push notification: ', notification);
+// });
 
 
 const Stack = createNativeStackNavigator();
@@ -40,17 +55,16 @@ function App() {
       <NavigationContainer>
        <Stack.Navigator initialRouteName="ScreenOne" >
        {/* <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
-        <Stack.Screen name="LogIn" component={LogIn} />
-                <Stack.Screen name="NewAppointment" component={NewAppointment} />  */}
-                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} /> 
+        <Stack.Screen name="LogIn" component={LogIn} /> */}
+                <Stack.Screen name="NewAppointment" component={NewAppointment} /> 
+                <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
                 <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> 
+                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
 
 
-
-
-          <Stack.Screen name="ScreenOne" component={ScreenOne} />
+          {/* <Stack.Screen name="ScreenOne" component={ScreenOne} />
           <Stack.Screen name="LogIn" component={LogIn} />
-          <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+          <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
 
 
           {/* <Stack.Screen name="Search" component={Search} /> */}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -10,6 +10,7 @@ import { Header } from 'react-native-elements';
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+
 
 
 
@@ -27,7 +28,7 @@ const NewAppointment = () => {
   const [showStartTimePicker, setShowStartTimePicker] = useState(false);
   const [showEndTimePicker, setShowEndTimePicker] = useState(false);
   const [businessNumber, setBusinessNumber] = useState('');
-  const [Appointment_status, setAppointment_status] = useState('not available');
+  const [Appointment_status, setAppointment_status] = useState('In process');
   const [idNumber, setIdNumber] = useState(''); // ללוקאלסטורג
 
   const navigation = useNavigation();
@@ -96,7 +97,7 @@ const NewAppointment = () => {
     console.log(result);
     console.log('yes', result.data.appointmentId);
     await AsyncStorage.setItem('appointmentId', result.data.appointmentId.toString());
-    navigation.navigate('Menu_treatment_registration');
+    navigation.navigate('Menu_treatment_forAppointment');
     } 
     catch (error) {
       console.log('error', error);
@@ -109,6 +110,7 @@ const NewAppointment = () => {
          
 
   return (
+    <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
     <View style={styles.container}>
         <Header text="הוספת תור חדש" color="red" />
 
@@ -167,6 +169,8 @@ const NewAppointment = () => {
         <Text style={styles.buttonText}>Add Appointment</Text>
       </TouchableOpacity> */}
     </View>
+    </TouchableOpacity>
+
   );
   };
 
