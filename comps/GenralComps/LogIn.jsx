@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useState ,useEffect, useContext} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,15 +7,16 @@ import ForgotPassword from './ForgotPassword';
 import Professional_registration from '../Professional_registration';
 import { LogInF } from '../obj/FunctionAPICode';
 import Input from '../Input';
+import Client_registration from '../Client_registration';
+import Button from '../obj/Button';
+import Maps_test from '../Maps_test';
 // import Search from '../Search';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+//import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewAppointment from '../NewAppointment';
 // import { AsyncStorage } from 'react-native';
-import Button from '../obj/Button';
 import {LogInPro} from '../obj/FunctionAPICode';
 import { LogInProo } from '../obj/FunctionAPICode';
-
-
+import { UserContext } from '../../comps/UserDietails'
 
 
 
@@ -25,9 +27,11 @@ export default function LogIn(props) {
   const [idNumber_client, setidNumber_client] = useState('');
   const [idNumber_professional, setidNumber_professional] = useState('');
 
+   const { userDetails, setUserDetails } = useContext(UserContext);
 
   let userType = route.params.userType
   console.log({ userType })
+
 
   const handleidNumber = (text) => {
     if (userType == "Cli"){
@@ -45,28 +49,41 @@ export default function LogIn(props) {
   //   setidNumber_professional(text);
   // };
 
+  useEffect(()=>{
+if(userDetails){
+  console.log('########',userDetails)
+  if (userType == 'Cli') {
+    navigation.navigate('Search3')
+  }
+  else {
+    //navigation.navigate('NewAppointment')
+    navigation.navigate('Calendar_professional')
+  }
+}
+  },[userDetails])
   const handleLogin =  async () => {
     if (userType == 'Cli') {
-      await AsyncStorage.setItem('idNumber_client', idNumber_client);
+     // await AsyncStorage.setItem('idNumber_client', idNumber_client);
       console.log('cli')
+
       const dataa = {
         ID_number: ID_number,
         password: password,
       } 
       LogInF(dataa).then((result) => {
-        console.log('yes', result);
-        // navigation.navigate('Search')
-
+        console.log('yes', result.data);
+         setUserDetails(result.data)
+  
       }, (error) => {
         console.log('error', error)
       })
     }
     else {
       console.log(ID_number)
-      await AsyncStorage.setItem('idNumber_professional', ID_number);
+     // await AsyncStorage.setItem('idNumber_professional', ID_number);
       console.log('professional')
-      const storedIdNumber = await AsyncStorage.getItem('idNumber_professional');
-    console.log('Stored idNumber_professional:', storedIdNumber);
+     // const storedIdNumber = await AsyncStorage.getItem('idNumber_professional');
+   // console.log('Stored idNumber_professional:', storedIdNumber);
       const data = {
         ID_number: ID_number,
         password: password,
@@ -77,7 +94,8 @@ export default function LogIn(props) {
       LogInProo(data).then((result) => {
       // LogInPro(ID_number, password).then((result) => {
         console.log('yes', result)
-       navigation.navigate('NewAppointment')
+         setUserDetails(result.data)
+       
         console.log('i am here')
       }, (error) => {
         console.log('error', error)
@@ -152,7 +170,7 @@ export default function LogIn(props) {
       // console.log('professional')
       // LogInPro(ID_number, password).then((result) => {
       //   console.log('yes', result)
-      //   navigation.navigate('Search')
+      //   navigation.navigate('Search3')
       //   console.log('i am here')
       // }, (error) => {
       //   console.log('error', error)
@@ -309,5 +327,3 @@ const styles = StyleSheet.create({
     width: "100%",
   },
 });
-
-

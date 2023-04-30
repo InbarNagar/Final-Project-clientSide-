@@ -5,22 +5,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TouchableOpacity } from 'react-native';
 import LogIn from './LogIn';
-import LogIn_Client from '../LogIn_Client';
-
-
-
 
 const ScreenOne = (props) => {
 
     return (
-//gggggg
+
         <View style={{flex: 1}}>
            
             <Text style={style.wel} >Beuaty Me</Text>
 
             <View >
 
-                <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro',})
+                <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro'})
                 }}>
                     <View style={style.viewS}>
                         <Text style={style.titleText}>בעלי עסקים</Text>
@@ -28,7 +24,7 @@ const ScreenOne = (props) => {
 
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { props.navigation.navigate('LogIn',{userType:'Cli',})
+                <TouchableOpacity onPress={() => { props.navigation.navigate('LogIn',{userType:'Cli'})
              }}>
                     <View style={style.viewS}>
                         <Text style={style.titleText} >לקוחות</Text>

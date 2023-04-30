@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import {BussinesCanGiveTreatment} from './obj/FunctionAPICode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,6 +9,10 @@ import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Notificationss from './obj/Notificationss';
 import { Alert } from 'react-native';
+=======
+import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { CheckBox } from 'react-native';
+>>>>>>> 972bb437273e55a610d33b25976a07d57642dde1
 
 
 
@@ -17,6 +22,7 @@ const Menu_treatment_registration = () => {
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedTreatments, setSelectedTreatments] = useState([]);
+<<<<<<< HEAD
   const [professionalID, setIdNumber] = useState('');
   const [appointmentID, setAppointment_num] = useState('');
   const [BusinessData, setBusinessData] = useState([]);  //מערך על כל סוגי הטיפולים האפשריים לעסק הספציפי
@@ -491,6 +497,96 @@ const Menu_treatment_registration = () => {
 //     </View>
 //   );
 // }
+=======
+
+  useEffect(() => {
+    // Fetch treatments and categories from the database
+    Promise.all([
+      fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Type_Treatment/AllCategory'),
+      fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Category/AllCategory')
+    ])
+      .then(([treatmentsResponse, categoriesResponse]) => Promise.all([treatmentsResponse.json(), categoriesResponse.json()]))
+      .then(([treatmentsData, categoriesData]) => {
+        setTreatments(treatmentsData);
+        setCategories(categoriesData);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const handleSelectTreatment = (treatment) => {
+    const isTreatmentSelected = selectedTreatments.some((selectedTreatment) => selectedTreatment.treatment_id === treatment.treatment_id);
+    if (isTreatmentSelected) {
+      setSelectedTreatments(selectedTreatments.filter((selectedTreatment) => selectedTreatment.treatment_id !== treatment.treatment_id));
+    } else {
+      setSelectedTreatments([...selectedTreatments, treatment]);
+    }
+  };
+
+  const handleSubmit = () => {
+    // Send selected treatments to the server
+    selectedTreatments.forEach((treatment) => {
+      fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment_can_give_treatment/NewAppointment_can_give_treatment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8', 'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          category_id: treatment.category_id,
+          treatment_id: treatment.treatment_id,
+          price: treatment.price,
+          duration: treatment.duration,
+        }),
+      })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error(error));
+    });
+  };
+
+  return (
+    
+      console.table(treatments),
+    
+    <View style={styles.container}>
+      <Text style={styles.heading}>Treatment Form</Text>
+      <ScrollView>
+        <View style={styles.tableRow}>
+          <Text style={styles.tableHeader}>Treatment Name</Text>
+          <Text style={styles.tableHeader}>Price</Text>
+          <Text style={styles.tableHeader}>Duration</Text>
+          <Text style={styles.tableHeader}>Select</Text>
+        </View>
+        {treatments.map(treatment => (
+          <View style={styles.tableRow} key={treatment.id}>
+            <Text style={styles.tableCell}>{treatment.treatment_name}</Text>
+            <Text style={styles.tableCell}>{treatment.price}</Text>
+            <Text style={styles.tableCell}>{treatment.duration}</Text>
+            <CheckBox
+              value={formData.some(form => form.treatment === treatment.id)}
+              onValueChange={value =>
+                value
+                  ? setFormData([
+                      ...formData,
+                      {
+                        treatment: treatment.id,
+                        category: '',
+                        price: treatment.price,
+                        duration: treatment.duration,
+                      },
+                    ])
+                  : setFormData(formData.filter(form => form.treatment !== treatment.id))
+              }
+            />
+          </View>
+        ))}
+      </ScrollView>
+      <View style={styles.footer}>
+        <Button title="Submit" onPress={handleSubmit} />
+      </View>
+    </View>
+  );
+}
+>>>>>>> 972bb437273e55a610d33b25976a07d57642dde1
 
 
 const styles = StyleSheet.create({

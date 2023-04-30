@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -59,7 +59,6 @@ const NewAppointment = () => {
     setShowDatePicker(false);
     setDate(currentDate);
   };
-  
 
   const handleStartTimeChange = (event, selectedTime) => {
     const currentTime = selectedTime || startTime;
