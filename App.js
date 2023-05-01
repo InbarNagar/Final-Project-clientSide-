@@ -11,7 +11,6 @@ import Client_registration from './comps/Client_registration';
 import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
 import Search3 from './comps/Search3';
-==
 import AddTratment from './comps/AddTratment';
 
 import NewAppointment from './comps/NewAppointment';
@@ -22,6 +21,7 @@ import Menu_professional from './comps/obj/Menu_professional';
 import Maps_test from './comps/Maps_test'; 
 import { loginHook ,UserContext} from './comps/UserDietails';
 import React from 'react';
+import SearchOnMap from './comps/SearchOnMap';
 
 
 
@@ -42,13 +42,14 @@ function App() {
         {/* <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="Menu_professional" component={Menu_professional} />
         <Stack.Screen name="NewAppointment" component={NewAppointment} />
-        <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-        <Stack.Screen name="Search" component={Search}/> */}
+        <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
 
 
         <Stack.Navigator initialRouteName="ScreenOne" >
           <Stack.Screen name="ScreenOne" component={ScreenOne} />
           <Stack.Screen name="LogIn" component={LogIn} />
+          <Stack.Screen name="Search3" component={Search3}/>
+          <Stack.Screen name="SearchOnMap" component={SearchOnMap}/>
           <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
 
 

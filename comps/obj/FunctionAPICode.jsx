@@ -56,8 +56,12 @@ export const Treatment_type_GET = () => {
 export const Type_treatment_for_businnes = (businnes_number) => {
     console.log(`Business_can_give_treatmentController/All_the_treatments_appointment_can_give${businnes_number}/${password}`)
     return Fetch(`Professional/OneProfessional`, 'post')
-
-
+}
+//שינוי התור מתורים פתוחים לתורים עתידיים
+//appointment => future_apointment
+export const New_Future_Apointment = (body) => {
+    
+    return Axios(`Future_Appointment/NewFuture_Appointment`, 'post',body)
 }
 
 // //התחברות בעל עסק

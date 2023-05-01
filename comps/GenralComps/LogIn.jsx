@@ -10,7 +10,7 @@ import Input from '../Input';
 import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
 import Maps_test from '../Maps_test';
-// import Search from '../Search';
+import Search3 from '../Search3';
 //import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewAppointment from '../NewAppointment';
 // import { AsyncStorage } from 'react-native';

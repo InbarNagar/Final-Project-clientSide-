@@ -8,7 +8,7 @@ import * as Location from 'expo-location';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-export default function Maps_test() {
+export default function Maps_test(props) {
   const [location, setLocation] = useState();
   const [distance, setDistance] = useState(0)
   const [loading, setLoading] = useState(true);
@@ -45,7 +45,7 @@ export default function Maps_test() {
       console.log("apiKey",apiKey)
       setLoading(false)
       setLocation(location)
-      console.log(location);
+      console.log("location: " +location);
       setRegion({
         latitude: Number(location.coords.latitude),
         longitude: Number(location.coords.longitude),
@@ -126,7 +126,7 @@ console.log('location',location)
           title="I'm Here !" />
         <Marker
           coordinate={pin}
-          pinColor='blue'
+          pinColor='red'
           draggable={true}
           onDragStart={(e) => { console.log("Drag start:", Number(e.nativeEvent.coordinate)); }}
           onDragEnd={(e) => {
