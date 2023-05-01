@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TouchableOpacity } from 'react-native';
 import LogIn from './LogIn';
+import Header from '../obj/Header';
 
 const ScreenOne = (props) => {
 

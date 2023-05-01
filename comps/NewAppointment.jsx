@@ -123,8 +123,9 @@ const NewAppointment = () => {
   return (
     <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
     <View style={styles.container}>
-        <Header text="הוספת תור חדש" color="red" />
 
+    <Header text="הוספת תור חדש" />
+    
     {/* <TextInput
      style={styles.input}
      onChangeText={setBusinessNumber}

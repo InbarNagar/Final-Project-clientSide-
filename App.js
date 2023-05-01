@@ -52,7 +52,7 @@ function App() {
       
       <NavigationContainer>
 
-         <Stack.Navigator initialRouteName="ScreenOne" > 
+         <Stack.Navigator initialRouteName="ScreenOne"> 
         <Stack.Screen name="Menu_professional" component={Menu_professional} />
         <Stack.Screen name="NewAppointment" component={NewAppointment} />
         <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
