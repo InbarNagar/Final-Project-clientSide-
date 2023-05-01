@@ -8,6 +8,7 @@ import { useState } from "react";
 import { UserContext } from '../comps/UserDietails';
 import React, { useContext } from "react";
 import { FutureAppointmenB } from "./obj/FunctionAPICode";
+import AppointmentCard_forProfessional_Calendar from "./obj/AppointmentCard_forProfessional_Calendar";
 //מסך ראשי בעל עסק
 export default function Calendar_professional() {
 
@@ -41,23 +42,6 @@ export default function Calendar_professional() {
 
   }
 
-  // const handleSubmit2 = () => {
-
-  //     allApoB(BussinesNumber).then((result) => {
-  //       if (result.data)
-
-  //       setallAppointment(result.data)
-
-  //   const filteredNumbers = allAppointment.filter((x) =>
-  //       x.Appointment_status =="Available"  
-  // );
-  //    setallAppointmentAvilable(filteredNumbers)
-  // console.log(allAppointmentAvilable.length,"************************")
-  //     }, (error) => {
-  //       console.log('error', error)
-  //     })
-  //   }
-
 
   const handleSubmit2 = () => {
 
@@ -66,7 +50,7 @@ export default function Calendar_professional() {
       if (result.data) {
         setallAppointmentAvilable(result.data)
       }
-      console.log(allAppointmentAvilable.length, "***********")
+      console.log(allAppointmentAvilable.length, "*****")
 
     }, (error) => {
       console.log('error', error)
@@ -96,7 +80,7 @@ export default function Calendar_professional() {
       if (result.data)
         console.log(result.data)
       setFutureAppointment(result.data)
-      console.log("********",FutureAppointment.length)
+      console.log("****",FutureAppointment.length)
     }, (error) => {
       console.log('error', error)
     })
@@ -107,9 +91,11 @@ export default function Calendar_professional() {
   return (
     <ScrollView>
       <View style={styles.view}>
+      <Header text="היומן שלי" color='#9acd32' fontSize='35' />
         <ScrollView horizontal={true}>
           <View style={styles.container}>
-            <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="#ffffff" />
+        
+            <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="#ff8c00" />
             <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="#98FB98" />
             <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="#FF6961" />
             <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="#87CEFA" />
@@ -117,169 +103,73 @@ export default function Calendar_professional() {
         </ScrollView>
 
 
-        <View style={styles.view1}>
+        {showText2 &&<View style={styles.view1}>
           {allAppointment && allAppointment.length > 0 &&
             allAppointment.map(x => {
               console.log(x.Date)
               return (
-                <View> 
-                  {showText2 &&
-                  <Text>
-                    {moment(x.Date).format('DD/MM/YYYY')}
-                  </Text>}
-
-                  {showText2 && <Text>
-                    {x.Start_time}
-                  </Text>}
-
-                  {showText2 && <Text>
-                  
-                    {x.End_time}
-                  </Text>}
-
-                  {showText2 && <Text>
-                    {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
-                  </Text>}
-
-                  {showText2 && <Text>
-                    {x.Appointment_status == "available" ? "זמין" : "לא זמין"}
-                  </Text>}
-                </View>
+              <AppointmentCard_forProfessional_Calendar
+                backgroundColor={"#ff8c00"}
+                // Treatment_Type= 
+                status={x.Appointment_status}
+                Date={x.Date}
+                Start_time={x.Start_time}
+                End_time={x.End_time}
+               
+              />
            )})}
-        </View>
+        </View>}
 
-        <View style={styles.view1}>
+        {showText &&  <View style={styles.view1}>
           {allAppointmentAvilable &&
             allAppointmentAvilable.map(x => {
-              if (x.Appointment_status == "available"||x.Appointment_status=="available")
+              if (x.Appointment_status == "Available"||x.Appointment_status=="available")
                 return (
-                  <View>
-                  {showText3 &&  <Text>
-                      תאריך
-                      {moment(x.Date).format('DD/MM/YYYY')}
-                    </Text>}
-
-                    {showText && <Text>
-                      שעת התחלה
-                      {x.Start_time}
-                     </Text>}
-
-                     {showText &&  <Text>
-                      שעת סיום
-                      {x.End_time}
-                    </Text>}
-
-
-                    {showText &&  <Text>
-
-                      {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
-                    </Text> }
-
-
-                    {showText && <Text>
-                      {x.Appointment_status == "Available" ? "זמין" : ""}
-                    </Text>}
-                  </View>
+                  <AppointmentCard_forProfessional_Calendar
+                  backgroundColor={"#98FB98"}
+                  status={x.Appointment_status}
+                  Date={x.Date}
+                  Start_time={x.Start_time}
+                  End_time={x.End_time}
+                />
                 )
             })}
-        </View>
+        </View>}
 
 
-        <View style={styles.view1}>
+        {showText4 &&  <View>
           {allAppointmentEnd && allAppointmentEnd.length > 0 &&
             allAppointmentEnd.map(x => {
               if (x.Appointment_status == "Appointment_ended")
                 return (
-                  <View>
-                    {showText4 && <Text>
-                      תאריך
-                      {moment(x.Date).format('DD/MM/YYYY')}
-                    </Text>}
-
-                    {showText4 &&<Text>
-                      שעת התחלה
-                      {x.Start_time}
-                    </Text>}
-
-                    {showText4 &&   <Text>
-                      שעת סיום
-                      {x.End_time}
-                    </Text>}
-
-
-                    {showText4 &&    <Text>
-
-                      {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
-                    </Text>}
-
-
-                    {showText4 &&  <Text>
-
-                      {x.Appointment_status == "Appointment_ended" ? "תור שנגמר" : ""}
-                    </Text>}
-                  </View>
+                  <AppointmentCard_forProfessional_Calendar
+                  backgroundColor={"#87CEFA"}
+                  status={x.Appointment_status}
+                  Date={x.Date}
+                  Start_time={x.Start_time}
+                  End_time={x.End_time}
+                />
                 )
             })}
-        </View>
+        </View>}
 
 
-        <View style={styles.view1}>
+        {showText3 && <View style={styles.view1}>
           {FutureAppointment && FutureAppointment.length > 0 &&
             FutureAppointment.map(x => {
               return (
-                <View>
-                 {showText3 &&  <Text>
-                    עיר:
-                    {x.AddressCity}
-                  </Text>}
-
-                  {showText3  &&  <Text>
-                    רחוב:
-                    {x.AddressStreet}
-                  </Text>}
-
-                  {showText3  &&  <Text>
-                    מספר בית:
-                    {x.AddressHouseNumber}
-                  </Text>}
-
-                  {showText3  &&   <Text>
-                    תעודת זהות לקוח:
-                    {x.Client_ID_number}
-                  </Text>}
-
-
-                  {showText3 &&    <Text>
-                    תאריך:
-                    {moment(x.Date).format('DD/MM/YYYY')}
-                  </Text>}
-
-                  {showText3  &&  <Text>
-                    שעת התחלה:
-                    {x.Start_time}
-                  </Text>}
-
-                  {showText3  &&  <Text>
-                    שעת סיום:
-                    {x.End_time}
-                  </Text>}
-
-
-                  {showText3  &&   <Text>
-                    שם פרטי:
-                    {x.First_name_client}
-                  </Text>}
-
-
-                  {showText3  &&  <Text>
-                    שם משפחה:
-                    {x.Last_name_client}
-                  </Text>}
-
-                </View>
+                <AppointmentCard_forProfessional_Calendar
+                  backgroundColor={"#FF6961"}
+                  status={x.Appointment_status}
+                  Date={x.Date}
+                  Start_time={x.Start_time}
+                  End_time={x.End_time}
+                  Client_Name= {x.First_name_client}
+                  Client_Last_Name= {x.Last_name_client}
+                />
               )
             })}
-        </View>
+        </View>}
       </View>
 
     </ScrollView>
@@ -291,19 +181,31 @@ const styles = StyleSheet.create({
     flex: 12,
     flexDirection: 'row',
     // alignItems: 'center'
-
+    
   },
 
   view1: {
     flex: 3,
-    flexDirection: 'column',
-    borderColor:"black",
-    borderWidth:2,
+   flexDirection: 'column',
+    alignItems:'stretch',
+    padding:10,
+  //  borderColor:'#9acd32'
+   
   },
   view: {
     flex: 1,
     flexDirection: 'column',
-  }
+  
+  },
+  wel: {
+    textAlign: "center",
+    fontSize: 30,
+    color:'#9acd32',
+},
+text:{
+  textAlign: "center",
+  fontSize: 20,
+}
 
 
 });

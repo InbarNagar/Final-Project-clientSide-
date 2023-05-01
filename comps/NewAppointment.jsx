@@ -6,7 +6,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Menu_treatment_registration from './Menu_treatment_registration';
 import Button from './obj/Button';
 import {NewAppointmentPost} from './obj/FunctionAPICode';
-import { Header } from 'react-native-elements';
+// import { Header } from 'react-native-elements';
+import Header from './obj/Header';
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
@@ -124,8 +125,8 @@ const NewAppointment = () => {
     <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
     <View style={styles.container}>
 
-    <Header text="הוספת תור חדש" />
-    
+    <Header text="הוספת תור חדש" fontSize={50} height={200}/>
+
     {/* <TextInput
      style={styles.input}
      onChangeText={setBusinessNumber}
@@ -134,6 +135,7 @@ const NewAppointment = () => {
      keyboardType="numeric"
    /> */}
 
+<Text>{'\n'}</Text>
       <TouchableOpacity onPress={() => setShowDatePicker(true)}>
         <Text style={styles.label}>Date: {date.toLocaleDateString()}</Text>
       </TouchableOpacity>
@@ -175,8 +177,9 @@ const NewAppointment = () => {
       <Switch value={canGoToClient} onValueChange={setCanGoToClient} />
     </View>
 
-   
-    <Button onPress={handleSubmit} text="הוספת התור" color="#98FB98" />
+    <Text>{'\n'}</Text>
+    
+    <Button onPress={handleSubmit} text="הוספת התור" color="#98FB98" fontSize="30" />
       {/* <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Add Appointment</Text>
       </TouchableOpacity> */}
@@ -190,10 +193,10 @@ const NewAppointment = () => {
   const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
+      padding: 10,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+      // justifyContent: 'center',
     },
     label: {
       fontSize: 18,

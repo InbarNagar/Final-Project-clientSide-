@@ -2,12 +2,13 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Header = (props) => {
-    const {text, color, fontSize, backgroundColor} = props
+    const {text, color, fontSize, backgroundColor, height} = props
 
     Header.defaultProps = {
       backgroundColor: 'transparent',
       fontSize: 30,
-      color: 'black',
+      color: '#9acd32',
+      height: 80,
     };
     
     const styles = StyleSheet.create({
@@ -15,10 +16,10 @@ const Header = (props) => {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: backgroundColor,
-        height: 80,
-        paddingTop: 38,
+        height: height,
+        paddingTop: 10,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
+        shadowOffset: { width: 5, height: 5 },
         shadowOpacity: 0.2,
         elevation: 2,
         position: 'relative'
@@ -29,6 +30,7 @@ const Header = (props) => {
         color: color,
         textAlign: 'center',
       }
+      
     });
 
   return (

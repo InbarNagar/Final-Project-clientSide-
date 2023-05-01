@@ -17,6 +17,8 @@ import NewAppointment from '../NewAppointment';
 import {LogInPro} from '../obj/FunctionAPICode';
 import { LogInProo } from '../obj/FunctionAPICode';
 import { UserContext } from '../../comps/UserDietails'
+import Header from '../obj/Header';
+
 
 
 
@@ -130,6 +132,9 @@ if(userDetails){
   return (
     <View style={styles.container}>
 
+      <Header text="Log In" fontSize={100} height={200}/>
+
+      <Text style={styles.title}>תעודת זהות</Text>
       <View style={styles.inp}>
         <TextInput
           style={styles.input}
@@ -142,7 +147,6 @@ if(userDetails){
           onblur={handleidNumber}
 
         />
-        <Text style={styles.title}>תעודת זהות</Text>
       </View>
       {/* <Input
         styleContainer={styles.inp}
@@ -155,8 +159,10 @@ if(userDetails){
         autoCompleteType="email"
         onBlur={handleidNumber}
       /> */}
-      
+      <Text>{'\n'}</Text>
+      <Text style={styles.title}>סיסמא</Text>
       <View style={styles.inp}>
+        {/* <Text style={styles.label}>סיסמה </Text> */}
         <TextInput
           style={styles.input}
           placeholder="סיסמא"
@@ -165,15 +171,20 @@ if(userDetails){
           secureTextEntry={true}
           autoCompleteType="password"
         />
-        <Text style={styles.title}>סיסמא</Text>
 
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate(ForgotPassword) }}>
+      {/* <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate(ForgotPassword) }}>
         <View >
           <Text style={styles.buttonText}>שכחתי סיסמא</Text>
         </View>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
+
+      <Button color='#9acd32' width={300} fontSize={30} borderRadius={30} text="התחברות" onPress={handleLogin} />
+
+      <Button color='transparent' text="שכחתי סיסמה" onPress={() => { navigation.navigate(ForgotPassword) }} />
+      
+      <Button color='transparent' text="עדיין לא נרשמתם? לחצו כאן" onPress={Registration} /> 
 
 
       {/* <TouchableOpacity style={styles.button} onPress={handleLogin}>
@@ -181,16 +192,16 @@ if(userDetails){
       </TouchableOpacity> */}
 
 
-      <Button color='#9acd32' text="התחברות" onPress={handleLogin} />
 
 
       {/* <TouchableOpacity style={styles.button} onPress={() => { navigation.navigate(GenralReg) }}>
         <Text style={styles.buttonText}>עדיין לא נרשמתם? לחצו כאן</Text>
       </TouchableOpacity> */}
 
-      <TouchableOpacity style={styles.button} onPress={Registration}>
+
+      {/* <TouchableOpacity style={styles.button} onPress={Registration}>
         <Text style={styles.buttonText}>עדיין לא נרשמתם? לחצו כאן</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
     </View>
 
@@ -202,23 +213,43 @@ if(userDetails){
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    padding: 50,
+    padding: 5,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     backgroundColor: '#f8f8ff'
 
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20,
+    // marginBottom: 1,
     alignItems: 'center',
   },
   input: {
     borderWidth: 1,
     borderColor: '#9acd32',
-    width: "80%",
+    width: "100%",
     marginRight: 8,
+    borderRadius: 20,
+    height: 50,
+
+  },
+  inp: {
+    flexDirection: 'row',
+    padding: 2,
+    justifyContent: 'space-between',
+    width: "100%",
+  },
+  label: {
+    position: 'absolute',
+    top: 10,
+    right: 90,
+    backgroundColor: '#FFFFFF',
+    paddingHorizontal: 5,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    alignItems: 'center',
   },
   button: {
     borderRadius: 4,
@@ -234,13 +265,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     alignItems: 'center'
-  },
-
-  inp: {
-    flexDirection: 'row',
-    padding: 20,
-    justifyContent: 'space-between',
-    width: "100%",
   },
 });
 
@@ -341,3 +365,5 @@ const styles = StyleSheet.create({
     // else {
     //   Alert.alert('Login failed', data.message);
     // }
+
+    

@@ -13,7 +13,8 @@ const ScreenOne = (props) => {
 
         <View style={{flex: 1}}>
            
-            <Text style={style.wel} >Beuaty Me</Text>
+            {/* <Text style={style.wel} >Beuaty Me</Text> */}
+            <Header text="BeautyMe" fontSize={75} height={200}/>
 
             <View >
 
@@ -52,7 +53,7 @@ const style = StyleSheet.create({
         textAlign: 'center',
         borderRadius: 40,
         backgroundColor:'#9acd32',
-         color: '#f0f8ff',
+        color: '#f0f8ff',
         opacity: 0.5,
         
 
