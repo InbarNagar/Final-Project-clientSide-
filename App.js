@@ -21,6 +21,7 @@ import Menu_professional from './comps/obj/Menu_professional';
 import Maps_test from './comps/Maps_test'; 
 import { loginHook ,UserContext} from './comps/UserDietails';
 import React from 'react';
+import SearchOnMap from './comps/SearchOnMap';
 import Menu_treatment_registration from './comps/Menu_treatment_registration';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
@@ -53,14 +54,29 @@ function App() {
 // בשביל לשמור את כל המידע על המשתמשים
    <UserContext.Provider value={{ userDetails, setUserDetails }}>
       <NavigationContainer>
+<<<<<<< HEAD
+        {/* <Stack.Navigator initialRouteName="ScreenOne" >
+        <Stack.Screen name="Menu_professional" component={Menu_professional} />
+        <Stack.Screen name="NewAppointment" component={NewAppointment} />
+        <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
+=======
        <Stack.Navigator initialRouteName="ScreenOne" >
-       <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
-        <Stack.Screen name="LogIn" component={LogIn} />
-        <Stack.Screen name="NewAppointment" component={NewAppointment} /> 
-        <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
-        <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> 
-        <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-        <Stack.Screen name="Search3" component={Search3} />
+       {/* <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
+        <Stack.Screen name="LogIn" component={LogIn} /> */}
+                <Stack.Screen name="NewAppointment" component={NewAppointment} /> 
+                <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
+                <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> 
+                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+
+
+          {/* <Stack.Screen name="ScreenOne" component={ScreenOne} />
+          <Stack.Screen name="LogIn" component={LogIn} />
+          <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
+
+
+          {/* <Stack.Screen name="Search" component={Search} /> */}
+          {/* 
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name='Professional_registration' component={Professional_registration} />
         <Stack.Screen name='Client_registration' component={Client_registration} />
         <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
