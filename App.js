@@ -46,36 +46,21 @@ function App() {
    const { userDetails, setUserDetails } = loginHook();
   return (
 
-    //   <NavigationContainer>
-    //   <Stack.Navigator initialRouteName="Search" >
-    //     <Stack.Screen name="Search" component={Search} />
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+ 
 // בשביל לשמור את כל המידע על המשתמשים
    <UserContext.Provider value={{ userDetails, setUserDetails }}>
+      
       <NavigationContainer>
-<<<<<<< HEAD
-        {/* <Stack.Navigator initialRouteName="ScreenOne" >
+
+        <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="Menu_professional" component={Menu_professional} />
         <Stack.Screen name="NewAppointment" component={NewAppointment} />
-        <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
-=======
-       <Stack.Navigator initialRouteName="ScreenOne" >
-       {/* <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
-        <Stack.Screen name="LogIn" component={LogIn} /> */}
-                <Stack.Screen name="NewAppointment" component={NewAppointment} /> 
-                <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
-                <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> 
-                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-
-
-          {/* <Stack.Screen name="ScreenOne" component={ScreenOne} />
-          <Stack.Screen name="LogIn" component={LogIn} />
-          <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
-
-
-          {/* <Stack.Screen name="Search" component={Search} /> */}
-          {/* 
+        <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+       <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
+        <Stack.Screen name="LogIn" component={LogIn} />
+        <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
+        <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+          <Stack.Screen name="Search3" component={Search} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name='Professional_registration' component={Professional_registration} />
         <Stack.Screen name='Client_registration' component={Client_registration} />
