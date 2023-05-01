@@ -11,6 +11,7 @@ import { FutureAppointmenB } from "./obj/FunctionAPICode";
 //מסך ראשי בעל עסק
 export default function Calendar_professional() {
 
+
   const { userDetails, setUserDetails } = useContext(UserContext);
   const BussinesNumber = userDetails.Business_Number;
 
@@ -18,8 +19,15 @@ export default function Calendar_professional() {
   const [allAppointmentAvilable, setallAppointmentAvilable] = useState([])
   const [allAppointmentEnd, setallAppointmentEnd] = useState([])
   const [FutureAppointment, setFutureAppointment] = useState([])
+
+  const [showText, setShowText] = useState(false);
+  const [showText2, setShowText2] = useState(false);
+  const [showText3, setShowText3] = useState(false);
+  const [showText4, setShowText4] = useState(false);
+
   const handleSubmit = () => {
     console.log(allAppointment, allAppointment.length)
+
     allApoB(BussinesNumber).then((result) => {
 
       if (result.data)
@@ -28,18 +36,43 @@ export default function Calendar_professional() {
     }, (error) => {
       console.log('error', error)
     })
+
+    setShowText2(!showText2);
+
   }
 
+  // const handleSubmit2 = () => {
+
+  //     allApoB(BussinesNumber).then((result) => {
+  //       if (result.data)
+
+  //       setallAppointment(result.data)
+
+  //   const filteredNumbers = allAppointment.filter((x) =>
+  //       x.Appointment_status =="Available"  
+  // );
+  //    setallAppointmentAvilable(filteredNumbers)
+  // console.log(allAppointmentAvilable.length,"************************")
+  //     }, (error) => {
+  //       console.log('error', error)
+  //     })
+  //   }
+
+
   const handleSubmit2 = () => {
-    console.log(allAppointmentAvilable, allAppointmentAvilable.length)
+
     allApoB(BussinesNumber).then((result) => {
 
-      if (result.data)
+      if (result.data) {
         setallAppointmentAvilable(result.data)
+      }
+      console.log(allAppointmentAvilable.length, "***********")
 
     }, (error) => {
       console.log('error', error)
     })
+
+    setShowText(!showText);
   }
 
   const handleSubmit4 = () => {
@@ -52,6 +85,8 @@ export default function Calendar_professional() {
     }, (error) => {
       console.log('error', error)
     })
+
+    setShowText4(!showText4);
   }
 
   const handleSubmit3 = () => {
@@ -61,220 +96,214 @@ export default function Calendar_professional() {
       if (result.data)
         console.log(result.data)
       setFutureAppointment(result.data)
-      console.log("****")
+      console.log("********",FutureAppointment.length)
     }, (error) => {
       console.log('error', error)
     })
+
+    setShowText3(!showText3);
   }
 
   return (
-    <>
     <ScrollView>
       <View style={styles.view}>
         <ScrollView horizontal={true}>
           <View style={styles.container}>
-            <Button onPress={handleSubmit} text="כל התורים" color="#ffffff" />
-            <Button onPress={handleSubmit2} text="תורים פנויים" color="#98FB98" />
-            <Button onPress={handleSubmit3} text="תורים שנקבעו" color="#FF6961" />
-            <Button onPress={handleSubmit4} text="תורים שנגמרו" color="#87CEFA" />
+            <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="#ffffff" />
+            <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="#98FB98" />
+            <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="#FF6961" />
+            <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="#87CEFA" />
           </View>
         </ScrollView>
 
 
-        <View >
+        <View style={styles.view1}>
           {allAppointment && allAppointment.length > 0 &&
             allAppointment.map(x => {
               console.log(x.Date)
               return (
-                <View>
+                <View> 
+                  {showText2 &&
                   <Text>
-                    תאריך
                     {moment(x.Date).format('DD/MM/YYYY')}
-                  </Text>
+                  </Text>}
 
-                  <Text>
-                    שעת התחלה
+                  {showText2 && <Text>
                     {x.Start_time}
-                  </Text>
+                  </Text>}
 
-                  <Text>
-                    שעת סיום
+                  {showText2 && <Text>
+                  
                     {x.End_time}
-                  </Text>
+                  </Text>}
 
-
-                  <Text>
-
+                  {showText2 && <Text>
                     {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
-                  </Text>
+                  </Text>}
 
-
-                  <Text>
-
+                  {showText2 && <Text>
                     {x.Appointment_status == "available" ? "זמין" : "לא זמין"}
-                  </Text>
+                  </Text>}
                 </View>
-              )
-            })}
+           )})}
         </View>
 
-        <View >
-          {allAppointmentAvilable && allAppointmentAvilable.length > 0 &&
+        <View style={styles.view1}>
+          {allAppointmentAvilable &&
             allAppointmentAvilable.map(x => {
-              console.log(x.Date)
-              return (
-                <View>
-                  <Text>
-                    תאריך
-                    {moment(x.Date).format('DD/MM/YYYY')}
-                  </Text>
+              if (x.Appointment_status == "available"||x.Appointment_status=="available")
+                return (
+                  <View>
+                  {showText3 &&  <Text>
+                      תאריך
+                      {moment(x.Date).format('DD/MM/YYYY')}
+                    </Text>}
 
-                  <Text>
-                    שעת התחלה
-                    {x.Start_time}
-                  </Text>
+                    {showText && <Text>
+                      שעת התחלה
+                      {x.Start_time}
+                     </Text>}
 
-                  <Text>
-                    שעת סיום
-                    {x.End_time}
-                  </Text>
-
-
-                  <Text>
-
-                    {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
-                  </Text>
+                     {showText &&  <Text>
+                      שעת סיום
+                      {x.End_time}
+                    </Text>}
 
 
-                  <Text>
+                    {showText &&  <Text>
 
-                    {x.Appointment_status == "available" ? "זמין" : ""}
-                  </Text>
-                </View>
-              )
+                      {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
+                    </Text> }
+
+
+                    {showText && <Text>
+                      {x.Appointment_status == "Available" ? "זמין" : ""}
+                    </Text>}
+                  </View>
+                )
             })}
         </View>
 
 
-        <View >
+        <View style={styles.view1}>
           {allAppointmentEnd && allAppointmentEnd.length > 0 &&
             allAppointmentEnd.map(x => {
-              console.log(x.Date)
-              return (
-                <View>
-                  <Text>
-                    תאריך
-                    {moment(x.Date).format('DD/MM/YYYY')}
-                  </Text>
+              if (x.Appointment_status == "Appointment_ended")
+                return (
+                  <View>
+                    {showText4 && <Text>
+                      תאריך
+                      {moment(x.Date).format('DD/MM/YYYY')}
+                    </Text>}
 
-                  <Text>
-                    שעת התחלה
-                    {x.Start_time}
-                  </Text>
+                    {showText4 &&<Text>
+                      שעת התחלה
+                      {x.Start_time}
+                    </Text>}
 
-                  <Text>
-                    שעת סיום
-                    {x.End_time}
-                  </Text>
-
-
-                  <Text>
-
-                    {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
-                  </Text>
+                    {showText4 &&   <Text>
+                      שעת סיום
+                      {x.End_time}
+                    </Text>}
 
 
-                  <Text>
+                    {showText4 &&    <Text>
 
-                    {x.Appointment_status == "Appointment_ended" ? "תור שנגמר" : ""}
-                  </Text>
-                </View>
-              )
+                      {x.Is_client_house == "NO" ? "בבית העסק" : "בבית הלקוח"}
+                    </Text>}
+
+
+                    {showText4 &&  <Text>
+
+                      {x.Appointment_status == "Appointment_ended" ? "תור שנגמר" : ""}
+                    </Text>}
+                  </View>
+                )
             })}
         </View>
 
 
-        <View >
+        <View style={styles.view1}>
           {FutureAppointment && FutureAppointment.length > 0 &&
             FutureAppointment.map(x => {
-
               return (
                 <View>
-                  <Text>
+                 {showText3 &&  <Text>
                     עיר:
                     {x.AddressCity}
-                  </Text>
+                  </Text>}
 
-                  <Text>
+                  {showText3  &&  <Text>
                     רחוב:
                     {x.AddressStreet}
-                  </Text>
+                  </Text>}
 
-                  <Text>
+                  {showText3  &&  <Text>
                     מספר בית:
                     {x.AddressHouseNumber}
-                  </Text>
+                  </Text>}
 
-                  <Text>
+                  {showText3  &&   <Text>
                     תעודת זהות לקוח:
                     {x.Client_ID_number}
-                  </Text>
+                  </Text>}
 
 
-                  <Text>
+                  {showText3 &&    <Text>
                     תאריך:
                     {moment(x.Date).format('DD/MM/YYYY')}
-                  </Text>
+                  </Text>}
 
-                  <Text>
+                  {showText3  &&  <Text>
                     שעת התחלה:
                     {x.Start_time}
-                  </Text>
+                  </Text>}
 
-                  <Text>
+                  {showText3  &&  <Text>
                     שעת סיום:
                     {x.End_time}
-                  </Text>
+                  </Text>}
 
 
-                  <Text>
+                  {showText3  &&   <Text>
                     שם פרטי:
                     {x.First_name_client}
-                  </Text>
+                  </Text>}
 
 
-                  <Text>
+                  {showText3  &&  <Text>
                     שם משפחה:
                     {x.Last_name_client}
-                  </Text>
+                  </Text>}
 
                 </View>
               )
             })}
         </View>
-
-
-
-
       </View>
 
     </ScrollView>
-    <Menu_professional/>
-    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 12,
     flexDirection: 'row',
     // alignItems: 'center'
 
   },
 
+  view1: {
+    flex: 3,
+    flexDirection: 'column',
+    borderColor:"black",
+    borderWidth:2,
+  },
   view: {
     flex: 1,
     flexDirection: 'column',
   }
+
 
 });
