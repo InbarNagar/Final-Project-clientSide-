@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -7,9 +7,17 @@ import Menu_treatment_registration from './Menu_treatment_registration';
 import Button from './obj/Button';
 import {NewAppointmentPost} from './obj/FunctionAPICode';
 import { Header } from 'react-native-elements';
+// import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+
+
+
+
 
 
 const Stack = createNativeStackNavigator();
+
 
 const NewAppointment = () => {
   const [date, setDate] = useState(new Date());
@@ -20,8 +28,32 @@ const NewAppointment = () => {
   const [showStartTimePicker, setShowStartTimePicker] = useState(false);
   const [showEndTimePicker, setShowEndTimePicker] = useState(false);
   const [businessNumber, setBusinessNumber] = useState('');
-  const [Appointment_status, setAppointment_status] = useState('not available');
- 
+  const [Appointment_status, setAppointment_status] = useState('In process');
+  const [idNumber, setIdNumber] = useState(''); // ללוקאלסטורג
+
+  const navigation = useNavigation();
+
+   
+    const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
+      try {
+        const id = await AsyncStorage.getItem('idNumber_professional');
+        console.log('idNumber loaded successfully', id);
+        setIdNumber(id || '');
+      } catch (error) {
+        console.log('Failed to load idNumber from AsyncStorage', error);
+      }
+    }
+
+    const printAsyncStorageKeys = async () => { // פונקציה שכל מטרתה הוא לבדוק איזה מפתחות יש בלוקאלסטורג ואיך קוראים להם
+      const keys = await AsyncStorage.getAllKeys();
+      console.log("AsyncStorage keys: ", keys);
+    }
+
+    useEffect(() => {
+      printAsyncStorageKeys()
+      handelLocalstorage()
+    }, []);
+     
 
   const handleDateChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -45,7 +77,7 @@ const NewAppointment = () => {
     return value ? 'YES' : 'NO';
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const data = {
       Date: date,
       Start_time: startTime.toLocaleTimeString(),
@@ -56,47 +88,29 @@ const NewAppointment = () => {
       Appointment_status: Appointment_status
     };
 
-//         fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/NewAppointment', {
-//       method: 'POST',
-//       headers: new Headers({
-//         "Content-type": "application/json; charset=UTF-8", 
-//         'Accept': "application/json; charset=UTF-8",
-//     }),
-//       body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(result => {
-//       console.log('Success:', result);
-//     })
-//     .catch(error => {
-//       console.error('Error:', error);
-//     })
-//     .then(<NavigationContainer>
-//         <Stack.Navigator>
-//           <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-//         </Stack.Navigator>
-//       </NavigationContainer>);
-       
+    // ככה מנסה עם לשמור בלוקאל סטורג... צריל לבדוק שזה עובד!
+    try {
+    const result = await NewAppointmentPost(data);
+    console.log(data);
+    // console.log(NewAppointmentPost(data));
+    console.log("999");
+    console.log(result);
+    console.log('yes', result.data.appointmentId);
+    await AsyncStorage.setItem('appointmentId', result.data.appointmentId.toString());
+    navigation.navigate('Menu_treatment_forAppointment');
+    } 
+    catch (error) {
+      console.log('error', error);
+    }
 
-//   };
-    
-    NewAppointmentPost(data).then((result) => {
-        console.log('yes', result)
-  
-      }, (error) => {
-        console.log('error', error)
-      })
-      .then(<NavigationContainer>
-                <Stack.Navigator>
-                   <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-                </Stack.Navigator>
-               </NavigationContainer>);
-               console.log(1);
-    };
-  
-
+    console.log(1);
+};
+            
+            
+         
 
   return (
+    <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
     <View style={styles.container}>
         <Header text="הוספת תור חדש" color="red" />
 
@@ -149,13 +163,14 @@ const NewAppointment = () => {
       <Switch value={canGoToClient} onValueChange={setCanGoToClient} />
     </View>
 
-    
    
     <Button onPress={handleSubmit} text="הוספת התור" color="#98FB98" />
       {/* <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Add Appointment</Text>
       </TouchableOpacity> */}
     </View>
+    </TouchableOpacity>
+
   );
   };
 
@@ -205,3 +220,44 @@ const NewAppointment = () => {
 export default NewAppointment ;
 
 
+
+//         fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/NewAppointment', {
+//       method: 'POST',
+//       headers: new Headers({
+//         "Content-type": "application/json; charset=UTF-8", 
+//         'Accept': "application/json; charset=UTF-8",
+//     }),
+//       body: JSON.stringify(data)
+//     })
+//     .then(response => response.json())
+//     .then(result => {
+//       console.log('Success:', result);
+//     })
+//     .catch(error => {
+//       console.error('Error:', error);
+//     })
+//     .then(<NavigationContainer>
+//         <Stack.Navigator>
+//           <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+//         </Stack.Navigator>
+//       </NavigationContainer>);
+       
+
+//   };
+    
+
+
+
+//ככה עובד לי בלי להכניס ללוקאל סטורג
+    // NewAppointmentPost(data).then((result) => {
+    //     // console.log('yes', result)
+    //     console.log('yes', result.appointmentId);
+    //   }, (error) => {
+    //     console.log('error', error)
+    //   })
+    //   .then(<NavigationContainer>
+    //             <Stack.Navigator>
+    //                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+    //             </Stack.Navigator>
+    //            </NavigationContainer>);
+    //            console.log(1);

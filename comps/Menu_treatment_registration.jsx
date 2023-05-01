@@ -1,277 +1,230 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { CheckBox } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, Input } from 'react-native-elements';
+import DropDownPicker from 'react-native-dropdown-picker';
+import {Treatment_type_GET} from './obj/FunctionAPICode';
+import {Category_GET} from './obj/FunctionAPICode';
+import {NewTreatmentForBussines} from './obj/FunctionAPICode';
+import Calendar_professional from './Calendar_professional';
+import { useNavigation } from '@react-navigation/native';
+import { Alert } from 'react-native';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 
 
 
-const Menu_treatment_registration = () => {
-  const [treatments, setTreatments] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedTreatments, setSelectedTreatments] = useState([]);
 
-  useEffect(() => {
-    // Fetch treatments and categories from the database
-    Promise.all([
-      fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Type_Treatment/AllCategory'),
-      fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Category/AllCategory')
-    ])
-      .then(([treatmentsResponse, categoriesResponse]) => Promise.all([treatmentsResponse.json(), categoriesResponse.json()]))
-      .then(([treatmentsData, categoriesData]) => {
-        setTreatments(treatmentsData);
-        setCategories(categoriesData);
-      })
-      .catch(error => console.error(error));
-  }, []);
 
-  const handleSelectTreatment = (treatment) => {
-    const isTreatmentSelected = selectedTreatments.some((selectedTreatment) => selectedTreatment.treatment_id === treatment.treatment_id);
-    if (isTreatmentSelected) {
-      setSelectedTreatments(selectedTreatments.filter((selectedTreatment) => selectedTreatment.treatment_id !== treatment.treatment_id));
-    } else {
-      setSelectedTreatments([...selectedTreatments, treatment]);
-    }
-  };
+const Menu_treatment_registration = () =>{
 
-  const handleSubmit = () => {
-    // Send selected treatments to the server
-    selectedTreatments.forEach((treatment) => {
-      fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment_can_give_treatment/NewAppointment_can_give_treatment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8', 'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          category_id: treatment.category_id,
-          treatment_id: treatment.treatment_id,
-          price: treatment.price,
-          duration: treatment.duration,
-        }),
-      })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error(error));
-    });
-  };
+    const [treatments, setTreatments] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedTreatment, setSelectedTreatment] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    const [price, setPrice] = useState(null);
+    const [durationn, setDurationn] = useState(null);
+    const [duration, setduration] = useState(false);
+    const [durationTime, setdurationTime] = useState(new Date());
+    const [durationTimePicker, setdurationTimePicker] = useState(false);
+    const [isPickerVisible, setIsPickerVisible] = useState(false);
+    // const [duration, setDuration] = useState(null);
 
-  return (
+    const [openC, setOpenC] = useState(false);
+    const [openT, setOpenT] = useState(false);
+
+
+    const navigation = useNavigation();
+
+
+const bus = 1;
+    useEffect(() => {
+        fetchTreatments();
+        fetchCategories();
+        // PushNotificationIOS.localNotification({
+        //     alertTitle: "New message",
+        //     alertBody: "You have a new message!",
+        //     userInfo: { messageId: "123" },
+        //   });
+      }, []);
+
+      const fetchTreatments = async () => {
+        try {
+            console.log("222")
+          const response = await Treatment_type_GET();
+          console.log(response);
+        //   const data = await response.json();
+        //   console.log(data);
+          console.log("111");
+          setTreatments(response);
+          console.log("333");
+          console.log(treatments);
+        } catch (error) {
+          console.error(error);
+        }
+      };
     
-      console.table(treatments),
+      const fetchCategories = async () => {
+        try {
+            console.log("444")
+         const responseCategory = await Category_GET();
+          console.log("777");
+          console.log(responseCategory);
+        //   const data = await response.json();
+        //   console.log(data);
+          console.log("555");
+          setCategories(responseCategory);
+          console.log("666");
+          console.log(categories);
+        } catch (error) {
+          console.error(error);
+        }
+      };
     
-    <View style={styles.container}>
-      <Text style={styles.heading}>Treatment Form</Text>
-      <ScrollView>
-        <View style={styles.tableRow}>
-          <Text style={styles.tableHeader}>Treatment Name</Text>
-          <Text style={styles.tableHeader}>Price</Text>
-          <Text style={styles.tableHeader}>Duration</Text>
-          <Text style={styles.tableHeader}>Select</Text>
-        </View>
-        {treatments.map(treatment => (
-          <View style={styles.tableRow} key={treatment.id}>
-            <Text style={styles.tableCell}>{treatment.treatment_name}</Text>
-            <Text style={styles.tableCell}>{treatment.price}</Text>
-            <Text style={styles.tableCell}>{treatment.duration}</Text>
-            <CheckBox
-              value={formData.some(form => form.treatment === treatment.id)}
-              onValueChange={value =>
-                value
-                  ? setFormData([
-                      ...formData,
-                      {
-                        treatment: treatment.id,
-                        category: '',
-                        price: treatment.price,
-                        duration: treatment.duration,
-                      },
-                    ])
-                  : setFormData(formData.filter(form => form.treatment !== treatment.id))
-              }
-            />
-          </View>
-        ))}
-      </ScrollView>
-      <View style={styles.footer}>
-        <Button title="Submit" onPress={handleSubmit} />
-      </View>
-    </View>
-  );
-}
+      const addTreatment = () => {
+        if (!selectedTreatment || !selectedCategory || !price || !duration) {
+          return;
+        }
+        const newTreatment = {
+            Type_treatment_Number: selectedTreatment,
+            Category_Number: selectedCategory,
+            Business_Number: bus,
+            Price: Number(price),
+            Treatment_duration: durationTime.toLocaleTimeString(),
+          };
+          console.log(newTreatment);
+          NewTreatmentForBussines(newTreatment).then(result => {
+            console.log(result.data)
+            console.log(result.status)
+          if(result.status==200){
+            // Notificationss("OK", "התור נוסף בהצלחה") 
+            Alert.alert(
+               'העסק נוסף בהצלחה',
+              'שמחים שהצטרפתם למשפחת Beauty Me',
+              [
+                { text: 'ייאאלה בואו נתחיל', onPress: () => navigation.navigate('Calendar_professional') },
+              ],
+              { cancelable: false }
+            );
+          }
+        }).catch(error => {
+            console.log(error);
+        });
+        };
+
+        const handledurationTime = (event, selectedTime) => {
+            const currentTime = selectedTime || startTime;
+            setdurationTimePicker(false);
+            setdurationTime(currentTime);
+          };
+
+        // const handleConfirm = (selectedDate) => {
+        //     setDuration(selectedDate.getMinutes());
+        //     setIsPickerVisible(false);
+        //   };
+      
+        //   setTreatments([...treatments, newTreatment]);
+        //   setSelectedTreatment('');
+        //   setSelectedCategory('');
+        //   setPrice('');
+        //   setDuration('');
+        
 
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)',
-    padding: '20px 40px',
-    margin: 20,
-    maxWidth: 500,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.16,
-    shadowRadius: 6,
-    padding: 20,
-    margin: 20,
-    maxWidth: 500,
-  },
+        return (
+            <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
+            <View style={styles.container}>
+              <Text style={styles.title}>צור תפריט טיפולים</Text>
+        
+              <DropDownPicker
+                open={openT}
+                items={treatments.map(treatment => ({ label: treatment.Name, value: treatment.Type_treatment_Number }))}
+                setOpen={setOpenT}
+                setValue={setSelectedTreatment}
+                placeholder="בחר טיפול"
+                value={selectedTreatment}
+                containerStyle={{ height: 40 }}
+                onChangeItem={item => setSelectedTreatment(item.value)}
+                searchable={true} // ניתן לחפש באמצעות טקסט
+                style={{ zIndex: 9999 }} // סגנון נוסף לרשימה הנגללת
+                />
+                <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+                <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
 
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  subtitle: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#007bff',
-    color: '#fff',
-    fontWeight: 'bold',
-    padding: '10px 20px',
-    borderRadius: 5,
-    cursor: 'pointer',
-  },
-});
+              <DropDownPicker
+                open={openC}
+                items={categories.map(category => ({ label: category.Name, value: category.Category_Number }))}
+                setOpen={setOpenC}
+                setValue={setSelectedCategory}
+                placeholder="בחר קטגוריה"
+                value={selectedCategory}
+                containerStyle={{ height: 40 }}
+                onChangeItem={item => setSelectedCategory(item.value)}
+                searchable={true} // ניתן לחפש באמצעות טקסט
+                style={{ zIndex: 9999 }} // סגנון נוסף לרשימה הנגללת
+              />
+                
+              <Input
+                placeholder="מחיר"
+                keyboardType="numeric"
+                value={price}
+                onChangeText={setPrice}
+                />
 
-
-
-export default Menu_treatment_registration;
-
-
-
-
-
-
+{/* // דקות.... עובד אבל הוא נותן רק עד 59 דקות... כלומר אי אפשר לעשות שעה וחצי נגיד... */}
+                {/* <TouchableOpacity onPress={() => setIsPickerVisible(true)}>
+                        <Text style={styles.label}>Treatment Duration: {duration} minutes</Text>
+                    </TouchableOpacity>
+                    <DateTimePickerModal
+                        isVisible={isPickerVisible}
+                        mode="time"
+                        onConfirm={handleConfirm}
+                        onCancel={() => setIsPickerVisible(false)}
+                    /> */}
 
 
+                <TouchableOpacity onPress={() => setduration(true)}>
+                        <Text style={styles.label}>משך הטיפול: {durationTime.toLocaleTimeString()}</Text>
+                    </TouchableOpacity>
+                    {duration && (
+                        <DateTimePicker
+                        value={durationTime}
+                        mode="time"
+                        display="default"
+                        onChange={handledurationTime}
+                        />
+                    )}
+
+                <Button
+                title="צור תפריט טיפולים"
+                onPress={addTreatment}
+                disabled={!selectedTreatment || !selectedCategory || !price || !duration}
+                />
+
+                {/* <Button
+                title="+"
+                type="clear"
+                onPress={() => }
+                /> */}
+
+                </View>
+                </TouchableOpacity>
+
+                );
+                };
+
+                const styles = StyleSheet.create({
+                container: {
+                padding: 20,
+                backgroundColor: '#fff',
+                },
+                title: {
+                fontSize: 20,
+                fontWeight: 'bold',
+                marginBottom: 10,
+                },
+                });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
-
-// const Menu_treatment_registration = () => {
-//   const [treatments, setTreatments] = useState([]);
-//   const [categories, setCategories] = useState([]);
-//   const [formData, setFormData] = useState([{ treatment: '', category: '', price: '', duration: '' }]);
-
-//   useEffect(() => {
-//     // Fetch treatments from the database
-//     fetch('https://localhost:53758/api/Type_Treatment/AllCategory')
-//       .then(response => response.json())
-//       .then(data => setTreatments(data))
-//       .catch(error => console.error(error));
-//     // Fetch categories from the database
-//     fetch('https://localhost:53758/api/Category/AllCategory')
-//       .then(response => response.json())
-//       .then(data => setCategories(data))
-//       .catch(error => console.error(error));
-//   }, []);
-
-//   const handleAddForm = () => {
-//     setFormData([...formData, { treatment: '', category: '', price: '', duration: '' }]);
-//   };
-
-//   const handleFormChange = (index, field, value) => {
-//     const newFormData = [...formData];
-//     newFormData[index][field] = value;
-//     setFormData(newFormData);
-//   };
-
-//   const handleSubmit = () => {
-//     // Send form data to the server
-//     formData.forEach(form => {
-//       const { category, treatment, price, duration } = form;
-//       fetch('https://localhost:53758/api/treatments', {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json; charset=UTF-8', 'Accept': 'application/json'
-//         },
-//         body: JSON.stringify({
-//           category_id: category,
-//           treatment_id: treatment,
-//           price: price,
-//           duration: duration,
-//         }),
-//       })
-//         .then(response => response.json())
-//         .then(data => console.log(data))
-//         .catch(error => console.error(error));
-//     });
-//   };
-
-//   return (
-//     <ScrollView >
-//       <Text >Treatment Form</Text>
-//       {formData.map((form, index) => (
-//         <View key={index}>
-//           <Text >סוג טיפול {index + 1}</Text>
-//           <View >
-//             <Text>Treatment:</Text>
-//             <TextInput
-
-//               value={form.treatment}
-//               onChangeText={value => handleFormChange(index, 'treatment', value)}
-//               placeholder="הזן סוג טיפול "
-//             />
-//             <Button title="Choose" onPress={() => console.log('Choose treatment')} />
-//           </View>
-//           <View >
-//             <Text>Category:</Text>
-//             <TextInput
-
-//               value={form.category}
-//               onChangeText={value => handleFormChange(index, 'category', value)}
-//               placeholder="Select a category"
-//             />
-//             <Button title="Choose" onPress={() => console.log('Choose category')} />
-//           </View>
-//         </View>
-//       )
-//       )
-//       }</ScrollView>)
-// }
-
-// export default Menu_treatment_registration;
-
-
+                export default Menu_treatment_registration

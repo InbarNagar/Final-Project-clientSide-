@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native';
 import Professional_registration from './Professional_registration';
-import Menu_treatment_registration from './Menu_treatment_registration';
+import Menu_treatment_registration from './Menu_treatment_forAppointment';
 import { Professional_Business } from './obj/FunctionAPICode';
 
 const Create_Business_Pro = (props) => {

@@ -12,7 +12,7 @@ import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
 import Search3 from './comps/Search3';
 import AddTratment from './comps/AddTratment';
-
+import Menu_treatment_forAppointment from './comps/Menu_treatment_forAppointment';
 import NewAppointment from './comps/NewAppointment';
 import Calendar_professional from './comps/Calendar_professional';
 import Menu_professional from './comps/obj/Menu_professional';
@@ -21,8 +21,26 @@ import Menu_professional from './comps/obj/Menu_professional';
 import Maps_test from './comps/Maps_test'; 
 import { loginHook ,UserContext} from './comps/UserDietails';
 import React from 'react';
+<<<<<<< HEAD
 import SearchOnMap from './comps/SearchOnMap';
+=======
+import Menu_treatment_registration from './comps/Menu_treatment_registration';
+// import PushNotificationIOS from '@react-native-community/push-notification-ios';
+>>>>>>> 400b9652c3d799e22ec7692600020114cb722bbc
 
+// PushNotificationIOS.requestPermissions();
+
+// PushNotificationIOS.addEventListener('register', (token) => {
+//   console.log('Device registered for push notifications: ', token);
+// });
+
+// PushNotificationIOS.addEventListener('registrationError', (error) => {
+//   console.error('Error registering for push notifications: ', error);
+// });
+
+// PushNotificationIOS.addEventListener('notification', (notification) => {
+//   console.log('Received push notification: ', notification);
+// });
 
 
 const Stack = createNativeStackNavigator();
@@ -39,18 +57,31 @@ function App() {
 // בשביל לשמור את כל המידע על המשתמשים
    <UserContext.Provider value={{ userDetails, setUserDetails }}>
       <NavigationContainer>
+<<<<<<< HEAD
         {/* <Stack.Navigator initialRouteName="ScreenOne" >
         <Stack.Screen name="Menu_professional" component={Menu_professional} />
         <Stack.Screen name="NewAppointment" component={NewAppointment} />
         <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
+=======
+       <Stack.Navigator initialRouteName="ScreenOne" >
+       {/* <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
+        <Stack.Screen name="LogIn" component={LogIn} /> */}
+                <Stack.Screen name="NewAppointment" component={NewAppointment} /> 
+                <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
+                <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> 
+                <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+>>>>>>> 400b9652c3d799e22ec7692600020114cb722bbc
 
 
-        <Stack.Navigator initialRouteName="ScreenOne" >
-          <Stack.Screen name="ScreenOne" component={ScreenOne} />
+          {/* <Stack.Screen name="ScreenOne" component={ScreenOne} />
           <Stack.Screen name="LogIn" component={LogIn} />
+<<<<<<< HEAD
           <Stack.Screen name="Search3" component={Search3}/>
           <Stack.Screen name="SearchOnMap" component={SearchOnMap}/>
           <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+=======
+          <Stack.Screen name="Calendar_professional" component={Calendar_professional} /> */}
+>>>>>>> 400b9652c3d799e22ec7692600020114cb722bbc
 
 
           {/* <Stack.Screen name="Search" component={Search} /> */}
