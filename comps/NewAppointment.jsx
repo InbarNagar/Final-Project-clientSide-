@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,6 +10,7 @@ import { Header } from 'react-native-elements';
 // import { AsyncStorage } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../comps/UserDietails';
 
 
 
@@ -20,6 +21,11 @@ const Stack = createNativeStackNavigator();
 
 
 const NewAppointment = () => {
+
+    const {userDetails, setUserDetails} = useContext(UserContext);
+    const BussinesNumberuseContext = userDetails.Business_Number;
+    const professional_id = userDetails.ID_number;
+
   const [date, setDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
   const [endTime, setEndTime] = useState(new Date());
@@ -32,6 +38,8 @@ const NewAppointment = () => {
   const [idNumber, setIdNumber] = useState(''); // ללוקאלסטורג
 
   const navigation = useNavigation();
+
+
 
    
     const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
@@ -52,6 +60,9 @@ const NewAppointment = () => {
     useEffect(() => {
       printAsyncStorageKeys()
       handelLocalstorage()
+      console.log(userDetails + "999999")
+      console.log(BussinesNumberuseContext + " 999999")
+
     }, []);
      
 
@@ -84,7 +95,7 @@ const NewAppointment = () => {
       End_time: endTime.toLocaleTimeString(),
       Is_client_house: getYesNoFromSwitchValue(canGoToClient),
     //   Is_client_house: canGoToClient,
-      Business_Number: businessNumber,
+      Business_Number: BussinesNumberuseContext,
       Appointment_status: Appointment_status
     };
 
@@ -114,13 +125,13 @@ const NewAppointment = () => {
     <View style={styles.container}>
         <Header text="הוספת תור חדש" color="red" />
 
-    <TextInput
+    {/* <TextInput
      style={styles.input}
      onChangeText={setBusinessNumber}
      value={businessNumber}
      placeholder="Business Number"
      keyboardType="numeric"
-   />
+   /> */}
 
       <TouchableOpacity onPress={() => setShowDatePicker(true)}>
         <Text style={styles.label}>Date: {date.toLocaleDateString()}</Text>

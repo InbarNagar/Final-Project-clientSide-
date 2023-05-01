@@ -11,9 +11,7 @@ import { Alert } from 'react-native';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
-
-
+import LogIn from './GenralComps/LogIn'
 
 
 
@@ -103,7 +101,7 @@ const bus = 1;
                'העסק נוסף בהצלחה',
               'שמחים שהצטרפתם למשפחת Beauty Me',
               [
-                { text: 'ייאאלה בואו נתחיל', onPress: () => navigation.navigate('Calendar_professional') },
+                { text: 'ייאאלה בואו נתחיל', onPress: () => navigation.navigate('LogIn') },
               ],
               { cancelable: false }
             );

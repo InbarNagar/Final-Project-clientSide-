@@ -85,3 +85,7 @@ export const allApoB= (Business_Numberr) => {
 export const NewTreatmentForBussines = (body) => {
     return Axios(`Business_can_give_treatment/PostNewTreatmentOfBussines`, 'post', body)
 }
+
+export const FutureAppointmenB = (Business_Numberr) => {
+    return Axios(`Future_Appointment/AllFuture_AppointmentForProfessional/${Business_Numberr}`, 'post')
+}

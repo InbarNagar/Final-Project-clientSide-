@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LogIn from './GenralComps/LogIn';
@@ -77,6 +77,8 @@ const Professional_registration = (props) => {
 
   return (
 
+    <TouchableOpacity onPress={Keyboard.dismiss}>
+      <ScrollView>
     <View style={{ padding: 50, backgroundColor: '#f8f8ff' }}>
       <Text style={styles.title}>איזה כיף שהחלטת להצטרף לקהילת בעלי העסקים שלנו!</Text>
       <Text style={styles.titp}> אנא מלא/י את הפרטים הבאים:</Text>
@@ -191,6 +193,8 @@ const Professional_registration = (props) => {
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
+    </TouchableOpacity>
   )
 }
 

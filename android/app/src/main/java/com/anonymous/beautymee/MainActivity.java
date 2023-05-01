@@ -1,4 +1,4 @@
-package com.beautymee;
+package com.anonymous.beautymee;
 
 import android.os.Build;
 import android.os.Bundle;

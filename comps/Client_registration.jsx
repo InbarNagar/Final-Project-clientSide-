@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput, Button, Text } from 'react-native';
+import { StyleSheet, View, TextInput, Button, Text, Keyboard, TouchableOpacity} from 'react-native';
 import { Cli_Registration } from './obj/FunctionAPICode';
+import Input from './obj/Input';
 
 
 const Client_registration = () => {
@@ -32,49 +33,50 @@ const Client_registration = () => {
       password: password,
     }
     Cli_Registration(data).then((result) => {
+
       console.log('yes', result)
 
-    }, (error) => {
-      console.log('error', error)
+      if(result.status==200){
+        // Notificationss("OK", "התור נוסף בהצלחה") 
+        Alert.alert(
+           'ישששש',
+          'שמחים שהצטרפת למשפחת Beauty Me',
+          [
+            { text: 'ייאאלה בואו נתחיל', onPress: () => navigation.navigate('LogIn') },
+          ],
+          { cancelable: false }
+        );
+      }
+    }).catch(error => {
+        console.log(error);
+        Alert.alert(
+          'אופס',
+         'אחד הפרטים לא נכונים'+ error ,
+         [
+           { text: 'נסה שוב'},
+         ],
+         { cancelable: false }
+       );
     });
-
-    // fetch('http:proj.ruppin.ac.il/cgroup93/prod/api/Client/NewClient', {
-    //   method: 'POST',
-    //   headers: new Headers({
-    //     "Content-type": "application/json; charset=UTF-8",
-    //     'Accept': "application/json; charset=UTF-8",
-    //   }),
-    //   body: JSON.stringify({
-    //     ID_number,
-    //     First_name,
-    //     Last_name,
-    //     birth_date,
-    //     gender,
-    //     phone,
-    //     Email,
-    //     AddressStreet,
-    //     AddressHouseNumber,
-    //     AddressCity,
-    //     password,
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => console.log(data))
-    //   .catch((error) => console.error(error));
+      
+    
   };
 
   return (
+    <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
     <View style={{backgroundColor:'#f8f8ff' }}>
       <Text style={styles.title}>איזה כיף שהחלטת להצטרף לקהילת הלקוחות שלנו!</Text>
       <Text style={styles.titp}> אנא מלא/י את הפרטים הבאים:</Text>
 
+        {/* <Input styleText={styles.title} styleView={styles.inp} styleTextInput={styles.input} placeholder="תעודת זהות" value={ID_number} onBlur={(text) => setid(text)} textt="תעודת זהות:" /> */}
+
       <View style={styles.inp}>
-        <TextInput style={styles.textInputS}
-          placeholder="תעודת זהות"
-          value={ID_number}
-          onChangeText={(text) => setid(text)}
-        />
-        <Text>תעודת זהות:</Text>
+         <TextInput style={styles.textInputS} 
+           placeholder="תעודת זהות"
+           value={ID_number}
+           onChangeText={(text) => setid(text)}
+         />
+         <Text>תעודת זהות:</Text>
       </View>
 
       <View style={styles.inp}>
@@ -171,6 +173,7 @@ const Client_registration = () => {
 
       <Button color='#9acd32' title="סיום הרשמה" onPress={handleRegistrationC} />
     </View>
+    </TouchableOpacity>
   )
 }
 
@@ -201,3 +204,34 @@ const styles = StyleSheet.create({
 
 export default Client_registration;
 
+
+
+//   console.log('yes', result)
+
+    // }, (error) => {
+    //   console.log('error', error)
+    // });
+
+    // fetch('http:proj.ruppin.ac.il/cgroup93/prod/api/Client/NewClient', {
+    //   method: 'POST',
+    //   headers: new Headers({
+    //     "Content-type": "application/json; charset=UTF-8",
+    //     'Accept': "application/json; charset=UTF-8",
+    //   }),
+    //   body: JSON.stringify({
+    //     ID_number,
+    //     First_name,
+    //     Last_name,
+    //     birth_date,
+    //     gender,
+    //     phone,
+    //     Email,
+    //     AddressStreet,
+    //     AddressHouseNumber,
+    //     AddressCity,
+    //     password,
+    //   }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => console.log(data))
+    //   .catch((error) => console.error(error));

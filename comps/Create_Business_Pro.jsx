@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native';
 import Professional_registration from './Professional_registration';
-import Menu_treatment_registration from './Menu_treatment_forAppointment';
+// import Menu_treatment_registration from './Menu_treatment_forAppointment';
 import { Professional_Business } from './obj/FunctionAPICode';
+import Menu_treatment_registration from './Menu_treatment_registration';
 
 const Create_Business_Pro = (props) => {
   const [Name, setName] = useState('');
@@ -34,7 +35,7 @@ const Create_Business_Pro = (props) => {
 
     Professional_Business(data).then((result) => {
       console.log('yes', result)
-      navigation.navigate('AddTratment')
+      navigation.navigate('AMenu_treatment_registration')
 
     }, (error) => {
       console.log('error', error)
@@ -67,7 +68,7 @@ const Create_Business_Pro = (props) => {
 
 
   return (
-
+<TouchableOpacity onPress={Keyboard.dismiss}>
     <View>
 
       <Text>Create_Business_Pro</Text>
@@ -143,6 +144,7 @@ const Create_Business_Pro = (props) => {
 
 
     </View>
+    </TouchableOpacity>
   )
 }
 
