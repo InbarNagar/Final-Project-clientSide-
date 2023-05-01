@@ -52,19 +52,20 @@ function App() {
       
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="ScreenOne" >
+         <Stack.Navigator initialRouteName="ScreenOne" > 
         <Stack.Screen name="Menu_professional" component={Menu_professional} />
         <Stack.Screen name="NewAppointment" component={NewAppointment} />
         <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-       <Stack.Screen name="ScreenOne" component={ScreenOne} /> 
+       <Stack.Screen name="ScreenOne" component={ScreenOne} />  
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
-        <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-          <Stack.Screen name="Search3" component={Search} />
+          <Stack.Screen name="Search3" component={Search3} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name='Professional_registration' component={Professional_registration} />
         <Stack.Screen name='Client_registration' component={Client_registration} />
         <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
+        <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+
         </Stack.Navigator>
       </NavigationContainer>
      </UserContext.Provider>
@@ -74,5 +75,5 @@ function App() {
 
 export default App;
 
- {/* <Stack.Screen name="ForgotPassword" component={ForgotPassword} /> */}
-  {/* <Stack.Screen name='AddTratment' component={AddTratment} />  */}
+//  {/* <Stack.Screen name="ForgotPassword" component={ForgotPassword} /> */}
+//   {/* <Stack.Screen name='AddTratment' component={AddTratment} />  */}

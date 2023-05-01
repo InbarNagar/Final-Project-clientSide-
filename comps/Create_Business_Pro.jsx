@@ -7,6 +7,8 @@ import Professional_registration from './Professional_registration';
 // import Menu_treatment_registration from './Menu_treatment_forAppointment';
 import { Professional_Business } from './obj/FunctionAPICode';
 import Menu_treatment_registration from './Menu_treatment_registration';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Create_Business_Pro = (props) => {
   const [Name, setName] = useState('');
@@ -17,9 +19,12 @@ const Create_Business_Pro = (props) => {
   const [Professional_ID_number, setIdPro] = useState('');
 
   const { navigation, route } = props
-  let Id_Pro = route.params.ID
+  // let Id_Pro = route.params.ID
+  // navigation = useNavigation();
+  // let Id_Pro = 123455555
+  // const idpro=123455555
 
-  const handleRegistrationB = () => {
+  const handleRegistrationB = async () => {
 
     { setIdPro(Id_Pro) }
     const data = {
@@ -29,13 +34,21 @@ const Create_Business_Pro = (props) => {
       AddressStreet: AddressStreet,
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
-      Professional_ID_number: Professional_ID_number
+      Professional_ID_number: Id_Pro
+      // Professional_ID_number: Professional_ID_number
 
     }
 
     Professional_Business(data).then((result) => {
       console.log('yes', result)
-      navigation.navigate('AMenu_treatment_registration')
+      console.log(result.data)
+      console.log(result.data.businessId + "ppppp")
+      const businessId = result.data.businessId.toString();
+      console.log(businessId + "oooooo")
+      AsyncStorage.setItem('businessId', businessId);
+      navigation.navigate('Menu_treatment_registration')
+
+      // navigation.navigate('Menu_treatment_registration', {businessId:result.data.businessId})
 
     }, (error) => {
       console.log('error', error)
@@ -82,6 +95,7 @@ const Create_Business_Pro = (props) => {
           value={Name}
           onChangeText={(text) => setName(text)}
         />
+        <Text>שם העסק</Text>
       </View>
 
       <View style={styles.inp}>
@@ -90,6 +104,7 @@ const Create_Business_Pro = (props) => {
           value={AddressStreet}
           onChangeText={(text) => setStreet(text)}
         />
+          <Text>רחוב</Text>
       </View>
 
       <View style={styles.inp}>
@@ -98,6 +113,7 @@ const Create_Business_Pro = (props) => {
           value={AddressHouseNumber}
           onChangeText={(text) => setHouseNumber(text)}
         />
+          <Text>מספר בית</Text>
       </View>
 
       <View style={styles.inp}>
@@ -106,6 +122,7 @@ const Create_Business_Pro = (props) => {
           value={AddressCity}
           onChangeText={(text) => setCity(text)}
         />
+        <Text>עיר</Text>
       </View>
 
       <View style={styles.inp}>
@@ -114,12 +131,13 @@ const Create_Business_Pro = (props) => {
           value={Is_client_house}
           onChangeText={(text) => setLocation(text)}
         />
+        <Text>האם נותן שירות בבית הלקוח?</Text>
       </View>
 
 
-      <View>
+      {/* <View>
         <Text>{Id_Pro}</Text>
-      </View>
+      </View> */}
       {/* <View style={styles.inp}>
         <TextInput style={styles.textInputS}
           placeholder="תעודת זהות בעל עסק"
@@ -139,10 +157,6 @@ const Create_Business_Pro = (props) => {
 
         </TouchableOpacity>
       </View>
-
-
-
-
     </View>
     </TouchableOpacity>
   )

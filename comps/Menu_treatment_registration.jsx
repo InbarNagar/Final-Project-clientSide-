@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -12,10 +12,13 @@ import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import LogIn from './GenralComps/LogIn'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-const Menu_treatment_registration = () =>{
+
+
+const Menu_treatment_registration = (props) =>{
 
     const [treatments, setTreatments] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -27,24 +30,60 @@ const Menu_treatment_registration = () =>{
     const [durationTime, setdurationTime] = useState(new Date());
     const [durationTimePicker, setdurationTimePicker] = useState(false);
     const [isPickerVisible, setIsPickerVisible] = useState(false);
+    const [idNumberbusiness, setIdNumber] = useState(''); // ללוקאלסטורג
+
     // const [duration, setDuration] = useState(null);
 
     const [openC, setOpenC] = useState(false);
     const [openT, setOpenT] = useState(false);
 
-
     const navigation = useNavigation();
 
+    // const { navigation, route } = props
+    //  let businessID = route.params.businessId
+    //  navigation = useNavigation();
 
 const bus = 1;
+
+
+const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
+  try {
+    console.log("qq")
+    const idbusiness = await AsyncStorage.getItem('businessId');
+    console.log("bb")
+    console.log(idbusiness)
+    console.log('idNumber loaded successfully', idbusiness);
+    setIdNumber(idbusiness || '');
+    console.log(idNumberbusiness)
+  } catch (error) {
+    console.log('Failed to load idNumber from AsyncStorage', error);
+  }
+}
+
+const printAsyncStorageKeys = async () => { // פונקציה שכל מטרתה הוא לבדוק איזה מפתחות יש בלוקאלסטורג ואיך קוראים להם
+  const keys = await AsyncStorage.getAllKeys();
+  console.log("AsyncStorage keys: ", keys);
+}
+
+async function loadData() {
+  await handelLocalstorage();
+  printAsyncStorageKeys();
+  await fetchTreatments();
+  await fetchCategories();
+  console.log("dddd" + idNumberbusiness)
+}
     useEffect(() => {
-        fetchTreatments();
-        fetchCategories();
-        // PushNotificationIOS.localNotification({
-        //     alertTitle: "New message",
-        //     alertBody: "You have a new message!",
-        //     userInfo: { messageId: "123" },
-        //   });
+      loadData();
+      // handelLocalstorage();
+      // printAsyncStorageKeys();
+      //   fetchTreatments();
+      //   fetchCategories();
+      //   console.log("dddd" + idbusiness)
+      //   // PushNotificationIOS.localNotification({
+      //   //     alertTitle: "New message",
+      //   //     alertBody: "You have a new message!",
+      //   //     userInfo: { messageId: "123" },
+      //   //   });
       }, []);
 
       const fetchTreatments = async () => {
@@ -87,7 +126,7 @@ const bus = 1;
         const newTreatment = {
             Type_treatment_Number: selectedTreatment,
             Category_Number: selectedCategory,
-            Business_Number: bus,
+            Business_Number: idNumberbusiness,
             Price: Number(price),
             Treatment_duration: durationTime.toLocaleTimeString(),
           };

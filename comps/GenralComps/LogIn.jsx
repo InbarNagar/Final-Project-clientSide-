@@ -11,9 +11,9 @@ import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
 import Maps_test from '../Maps_test';
 import Search3 from '../Search3';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewAppointment from '../NewAppointment';
-// import { AsyncStorage } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import {LogInPro} from '../obj/FunctionAPICode';
 import { LogInProo } from '../obj/FunctionAPICode';
 import { UserContext } from '../../comps/UserDietails'
