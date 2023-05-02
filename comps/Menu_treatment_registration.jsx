@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Treatment_type_GET} from './obj/FunctionAPICode';
@@ -13,6 +13,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import LogIn from './GenralComps/LogIn'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Header from './obj/Header';
+
 
 
 
@@ -173,7 +175,8 @@ async function loadData() {
         return (
             <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
             <View style={styles.container}>
-              <Text style={styles.title}>צור תפריט טיפולים</Text>
+              {/* <Text style={styles.title}>צור תפריט טיפולים</Text> */}
+              <Header text="צור את תפריט הטיפולים שלך" fontSize={50} height={200}/>
         
               <DropDownPicker
                 open={openT}
@@ -182,13 +185,16 @@ async function loadData() {
                 setValue={setSelectedTreatment}
                 placeholder="בחר טיפול"
                 value={selectedTreatment}
-                containerStyle={{ height: 40 }}
+                containerStyle={{ height: 40}}
                 onChangeItem={item => setSelectedTreatment(item.value)}
                 searchable={true} // ניתן לחפש באמצעות טקסט
                 style={{ zIndex: 9999 }} // סגנון נוסף לרשימה הנגללת
+                dropDownContainerStyle={{backgroundColor: '#FFFFFF'}}
+                listMode="SCROLLVIEW"
+                positionFixed={true}
                 />
-                <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
-                <Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text><Text></Text>
+
+              <Text>{'\n'}</Text>
 
               <DropDownPicker
                 open={openC}
@@ -201,14 +207,30 @@ async function loadData() {
                 onChangeItem={item => setSelectedCategory(item.value)}
                 searchable={true} // ניתן לחפש באמצעות טקסט
                 style={{ zIndex: 9999 }} // סגנון נוסף לרשימה הנגללת
+                dropDownContainerStyle={{backgroundColor: '#FFFFFF'}}
+                listMode="SCROLLVIEW"
+                positionFixed={true}
               />
-                
-              <Input
+                              <Text>{'\n'}</Text>
+
+              {/* <Text
                 placeholder="מחיר"
                 keyboardType="numeric"
                 value={price}
                 onChangeText={setPrice}
-                />
+                /> */}
+
+            <Text style={styles.title}>מחיר</Text>
+                  <View style={styles.inp}>
+                    {/* <Text style={styles.label}>סיסמה </Text> */}
+                    <TextInput
+                      style={styles.input}
+                      placeholder="מחיר"
+                      value={price}
+                      onChangeText={setPrice}
+                    />
+
+      </View>
 
 {/* // דקות.... עובד אבל הוא נותן רק עד 59 דקות... כלומר אי אפשר לעשות שעה וחצי נגיד... */}
                 {/* <TouchableOpacity onPress={() => setIsPickerVisible(true)}>
@@ -222,9 +244,13 @@ async function loadData() {
                     /> */}
 
 
+              <Text>{'\n'}</Text>
+
                 <TouchableOpacity onPress={() => setduration(true)}>
-                        <Text style={styles.label}>משך הטיפול: {durationTime.toLocaleTimeString()}</Text>
+                        <Text style={styles.label}>משך הטיפול:</Text>
+                        {/* <Text style={styles.label}>משך הטיפול: {durationTime.toLocaleTimeString()}</Text> */}
                     </TouchableOpacity>
+                    <Text>{'\n'}</Text>
                     {duration && (
                         <DateTimePicker
                         value={durationTime}
@@ -233,6 +259,7 @@ async function loadData() {
                         onChange={handledurationTime}
                         />
                     )}
+              <Text>{'\n'}</Text>
 
                 <Button
                 title="צור תפריט טיפולים"
@@ -256,11 +283,32 @@ async function loadData() {
                 container: {
                 padding: 20,
                 backgroundColor: '#fff',
+                alignItems: 'center',
+        // justifyContent: 'center'
                 },
                 title: {
                 fontSize: 20,
                 fontWeight: 'bold',
                 marginBottom: 10,
+                },
+                label: {
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                },
+                input: {
+                  borderWidth: 1,
+                  borderColor: '#9acd32',
+                  width: "100%",
+                  marginRight: 8,
+                  borderRadius: 20,
+                  height: 50,
+              
+                },
+                inp: {
+                  flexDirection: 'row',
+                  padding: 2,
+                  justifyContent: 'space-between',
+                  width: "100%",
                 },
                 });
 

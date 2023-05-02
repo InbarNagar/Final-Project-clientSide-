@@ -65,6 +65,8 @@ function App() {
         <Stack.Screen name='Client_registration' component={Client_registration} />
         <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
         <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+        <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
+
 
         </Stack.Navigator>
       </NavigationContainer>
