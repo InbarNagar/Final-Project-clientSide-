@@ -13,8 +13,8 @@ const ScreenOne = (props) => {
 
         <View style={{flex: 1}}>
            
-            {/* <Text style={style.wel} >Beuaty Me</Text> */}
-            <Header text="BeautyMe" fontSize={75} height={200}/>
+            <Text style={style.wel} >Beuaty Me</Text>
+            {/* <Header text="BeautyMe" fontSize={75} height={200}/> */}
 
             <View >
 

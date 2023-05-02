@@ -89,6 +89,8 @@ export default function Calendar_professional() {
   }
 
   return (
+    <>
+    
     <ScrollView>
       <View style={styles.view}>
       <Header text="היומן שלי" color='#9acd32' fontSize='35' />
@@ -173,6 +175,8 @@ export default function Calendar_professional() {
       </View>
 
     </ScrollView>
+    <Menu_professional/>
+    </>
   );
 };
 
