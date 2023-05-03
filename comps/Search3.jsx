@@ -11,6 +11,7 @@ import moment from "moment";
 import { NavigationActions } from "react-navigation";
 import { UserContext } from "../comps/UserDietails";
 import { Button } from "react-native-elements";
+import searchOnMap from '../comps/UserDietails'
 
 export default function Search3(props) {
   const [showSection, setShowSection] = useState(false); //להסתיר את הכפתור של תצוגת מפה
@@ -137,8 +138,8 @@ export default function Search3(props) {
           </Picker>
         </View>
         <View>
-          <TextInput style={{fontSize:25,borderColor:'black',borderWidth:2}}
-            placeholder="עיר"
+        <TextInput style={{fontSize:25,borderColor:'black',borderWidth:2}}            
+        placeholder="עיר"
             value={AddressCity}
             onChangeText={(value) => setAddressCity(value)}
           />

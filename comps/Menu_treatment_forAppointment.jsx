@@ -8,6 +8,9 @@ import { useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Notificationss from './obj/Notificationss';
 import { Alert } from 'react-native';
+import Header from './obj/Header';
+import { color } from 'react-native-reanimated';
+
 
 
 
@@ -116,9 +119,10 @@ const Menu_treatment_forAppointment = () => {
 
 
   return (
-    <View >
+    <View  >
       <View >
-        <Text style={styles.label}>טיפולים זמינים:</Text>
+      <Header text="סוגי טיפולים" fontSize={50} height={200}/>
+        <Text style={styles.title}>{"\n"}בחרי את סוגי הטיפולים האפשריים לתור זה:</Text>
         <FlatList
           data={BusinessData}
           keyExtractor={(item) => item.Type_treatment_Number}
@@ -132,10 +136,10 @@ const Menu_treatment_forAppointment = () => {
             />
           )}
           ListHeaderComponent={() => (
-            <View style={{ flexDirection: 'row', padding: 10 }}>
-              <Text style={{ flex: 1, fontWeight: 'bold' }}>סוג טיפול</Text>
-              <Text style={{ flex: 1, fontWeight: 'bold' }}>מחיר</Text>
-              <Text style={{ flex: 1, fontWeight: 'bold' }}>משך הטיפול</Text>
+            <View style={{ flexDirection: 'row' }}>
+              <Text style={{ flex: 1, fontWeight: 'bold'}}>סוג טיפול</Text>
+              <Text style={{ flex: 1, fontWeight: 'bold'}}>מחיר</Text>
+              <Text style={{ flex: 1, fontWeight: 'bold'}}>משך הטיפול</Text>
             </View>
           )}
         />
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)',
     padding: '20px 40px',
-    margin: 20,
+    margin: 1,
     maxWidth: 500,
     shadowColor: '#000',
     shadowOffset: {
@@ -178,6 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center'
   },
   subtitle: {
     fontSize: 18,

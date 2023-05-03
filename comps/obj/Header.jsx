@@ -2,7 +2,36 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Header = (props) => {
-    const {text, color, fontSize} = props
+    const {text, color, fontSize, backgroundColor, height} = props
+
+    Header.defaultProps = {
+      backgroundColor: 'transparent',
+      fontSize: 30,
+      color: '#9acd32',
+      height: 80,
+    };
+    
+    const styles = StyleSheet.create({
+      header: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: backgroundColor,
+        height: height,
+        paddingTop: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 5, height: 5 },
+        shadowOpacity: 0.2,
+        elevation: 2,
+        position: 'relative'
+      },
+      headerText: {
+        fontSize:fontSize,
+        fontWeight: 'bold',
+        color: color,
+        textAlign: 'center',
+      }
+      
+    });
 
   return (
     <View style={styles.header}>
@@ -12,25 +41,7 @@ const Header = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    height: 80,
-    paddingTop: 38,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    elevation: 2,
-    position: 'relative'
-  },
-  headerText: {
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'center',
-  }
-});
+
 
 export default Header;
 

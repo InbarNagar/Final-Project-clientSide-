@@ -2,7 +2,34 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 const Button = (props) => {
-    const { onPress, text, color } = props
+    const { onPress, text, color, fontSize, colortext, borderRadius, width } = props
+
+    Button.defaultProps = {
+      backgroundColor: "#98FB98",
+      fontSize: 16,
+      color: 'white',
+      borderRadius: 10 
+    };
+
+    const styles = StyleSheet.create({
+      button: (color) => ({
+        alignItems: 'center',
+        backgroundColor: color,
+        padding: 15,
+        borderRadius: borderRadius,
+        margin: 10,
+        marginTop: 20,
+        width: width,
+      }),
+      buttonText: {
+        fontSize: fontSize,
+        fontWeight: 'bold',
+        color: colortext,
+        textAlign: 'center',
+        opacity: 0.5,
+      }
+    });
+
   return (
     <TouchableOpacity 
       onPress={onPress} 
@@ -12,22 +39,26 @@ const Button = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
-  button: (color) => ({
-    alignItems: 'center',
-    backgroundColor: color,
-    padding: 15,
-    borderRadius: 10,
-    margin: 10,
-    marginTop: 20,
-  }),
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    textAlign: 'center',
-  },
-});
+
 
 export default Button;
 
+
+
+// const styles = StyleSheet.create({
+//   button: (color) => ({
+//     alignItems: 'center',
+//     backgroundColor: color,
+//     padding: 15,
+//     borderRadius: borderRadius,
+//     margin: 10,
+//     marginTop: 20,
+//   }),
+//   buttonText: {
+//     fontSize: fontSize,
+//     fontWeight: 'bold',
+//     color: colortext,
+//     textAlign: 'center',
+//     opacity: 0.5,
+//   },
+// });
