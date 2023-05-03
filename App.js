@@ -11,6 +11,7 @@ import Client_registration from './comps/Client_registration';
 import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
 import Search3 from './comps/Search3';
+import Search from './comps/Search';
 import AddTratment from './comps/AddTratment';
 import Menu_treatment_forAppointment from './comps/Menu_treatment_forAppointment';
 import NewAppointment from './comps/NewAppointment';
@@ -60,7 +61,8 @@ function App() {
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
         <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-          <Stack.Screen name="Search3" component={Search} />
+          <Stack.Screen name="Search3" component={Search3} />
+          <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name='Professional_registration' component={Professional_registration} />
         <Stack.Screen name='Client_registration' component={Client_registration} />

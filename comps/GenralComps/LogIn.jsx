@@ -11,7 +11,8 @@ import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
 import Maps_test from '../Maps_test';
 import Search3 from '../Search3';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import Search from '../Search';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewAppointment from '../NewAppointment';
 // import { AsyncStorage } from 'react-native';
 import {LogInPro} from '../obj/FunctionAPICode';
@@ -75,6 +76,7 @@ if(userDetails){
       LogInF(dataa).then((result) => {
         console.log('yes', result.data);
          setUserDetails(result.data)
+
   
       }, (error) => {
         console.log('error', error)

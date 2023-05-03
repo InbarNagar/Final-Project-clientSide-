@@ -1,132 +1,118 @@
-import { React, useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
-import { RadioButton } from "react-native-paper";
-// import { Picker } from '@react-native-picker/picker';
-// import LocationPicker from './LocationHandler/LocationPicker';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 
-export default function Search() {
-  const [cityText, setCityText] = useState("");
-  const [obj, setObj] = useState({
-    city: "",
-    category: "הכל",
-    sort: "דירוג גבוהה תחילה",
-    sex: "",
-    house: "",
-  });
+export default function Search(){
+  const [textInputValue, setTextInputValue] = useState('');
+  const [radio1Selected, setRadio1Selected] = useState(true);
+  const [radio2Selected, setRadio2Selected] = useState(false);
+  const [radio3Selected, setRadio3Selected] = useState(true);
+  const [radio4Selected, setRadio4Selected] = useState(false);
 
-  // const[categories,setCategories]=useState(['']);
-  const categories = [
-    "הכל",
-    "ציפורניים",
-    "מספרה",
-    "קוסמטיקה",
-    "איפור",
-    "טיפול פנים",
-  ];
-  const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
-
-  const handleInputChange = (key, value) => {
-    setObj({ ...obj, [key]: value });
-  };
-  function btnSearch() {
-    console.log(obj);
-  }
   return (
-    <View style={styles.body}>
-      <View>
-        <View>
-          <Text>קטגוריה:</Text>
-          {/* <Picker
-                selectedValue={obj.category}
-                onValueChange={(value) => handleInputChange('category', value)}>
-                {categories.map((category) => (
-                  <Picker.Item label={category} value={category} key={category} />
-                ))}
-              </Picker> */}
-          <TextInput
-            placeholder="עיר"
-            value={obj.name}
-            onChangeText={(value) => handleInputChange("city", value)}
-          />
-        </View>
-        <View>
-          <Text>מיון לפי:</Text>
-          {/* <Picker
-                selectedValue={obj.sort}
-                onValueChange={(value) => handleInputChange('sort', value)}
-              >
-                {sorts.map((s) => (
-                  <Picker.Item label={s} value={s} key={s} />
-                ))}
-              </Picker> */}
-        </View>
-        <View style={styles.sortView}>
-          <Text>מין בעל המקצוע:</Text>
-          <View style={styles.fixToText}>
-            <View>
-              <Text>זכר</Text>
-              <RadioButton
-                value="זכר"
-                status={obj.sex === "זכר" ? "checked" : "unchecked"}
-                onPress={() => handleInputChange("sex", "זכר")}
-              />
-            </View>
-            <View>
-              <Text>נקבה</Text>
-              <RadioButton
-                value="נקבה"
-                status={obj.sex === "נקבה" ? "checked" : "unchecked"}
-                onPress={() => handleInputChange("sex", "נקבה")}
-              />
-            </View>
-          </View>
-          <Text>טיפול בביתהלקוח ?</Text>
-          <View style={styles.fixToText}>
-            <View>
-              <Text>כן</Text>
-              <RadioButton
-                value="כן"
-                status={obj.house === "כן" ? "checked" : "unchecked"}
-                onPress={() => handleInputChange("house", "כן")}
-              />
-            </View>
-            <View>
-              <Text>לא</Text>
-              <RadioButton
-                value="לא"
-                status={obj.house === "לא" ? "checked" : "unchecked"}
-                onPress={() => handleInputChange("house", "לא")}
-              />
-            </View>
-          </View>
-          <Button title="חפש" onPress={btnSearch} />
-        </View>
-        {/* <LocationPicker/> */}
+    <View style={styles.container}>
+      <Text style={styles.title}>Search</Text>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Enter a search term..."
+        onChangeText={(value) => setTextInputValue(value)}
+        value={textInputValue}
+      />
+      <View style={styles.radioContainer}>
+        <TouchableOpacity
+          style={[styles.radio, radio1Selected && styles.selected]}
+          onPress={() => {
+            setRadio1Selected(true);
+            setRadio2Selected(false);
+          }}
+        >
+          <Text style={styles.radioText}>Option 1</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.radio, radio2Selected && styles.selected]}
+          onPress={() => {
+            setRadio1Selected(false);
+            setRadio2Selected(true);
+          }}
+        >
+          <Text style={styles.radioText}>Option 2</Text>
+        </TouchableOpacity>
       </View>
-      <View style={styles.resultsView}></View>
+      <View style={styles.radioContainer}>
+        <TouchableOpacity
+          style={[styles.radio, radio3Selected && styles.selected]}
+          onPress={() => {
+            setRadio3Selected(true);
+            setRadio4Selected(false);
+          }}
+        >
+          <Text style={styles.radioText}>Option 3</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.radio, radio4Selected && styles.selected]}
+          onPress={() => {
+            setRadio3Selected(false);
+            setRadio4Selected(true);
+          }}
+        >
+          <Text style={styles.radioText}>Option 4</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Search</Text>
+      </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  sortView: {
-    flexDirection: "row-reverse",
-    justifyContent: "space-between",
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40%',
+    borderRadius: 10,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 0.29,
+    shadowRadius: 4.65,
+    elevation: 7,
   },
-  inp: {
-    flexDirection: "row",
-    padding: 10,
-    justifyContent: "space-between",
-    color: "red",
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
   },
-  resultsView: {
-    flexDirection: "column",
-    width: "100%",
+  textInput: {
+    height: 50,
+    width: '100%',
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    fontSize: 16,
   },
-  fixToText: {
-    flexDirection: "row-reverse",
-    justifyContent: "space-end",
+  radioContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 10,
   },
-});
+  radio: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  selected: {
+    backgroundColor: '#4CAF50',
+  }});
 
-
+  
