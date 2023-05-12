@@ -36,6 +36,7 @@ export default function LogIn(props) {
   console.log({ userType })
 
 
+  
   const handleidNumber = (text) => {
     if (userType == "Cli"){
       setidNumber_client(text);
