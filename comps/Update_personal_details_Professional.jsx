@@ -44,32 +44,37 @@ export default function Update_personal_details_Professional(Props) {
     //     setGender(userDetails.gender)
     // })
 
-    const CheckInput =(name,value)=> {
+    const CheckInput = (name, value) => {
         console.log((!value.includes('@')))
         switch (name) {
-            case"Email":
-            if(!value.includes('@')) return false;
-            if(!value.endsWith(".com")&&!value.endsWith(".co.il")) return false;
+            case "Email":
+                if (!value.includes('@')) return false;
+                if (!value.endsWith(".com") && !value.endsWith(".co.il")) return false;
                 break;
-        
+
             default:
                 break;
-                
+
         }return true;
     }
 
     const Update_Diteails = () => {
         var data = {}
-
         if (Email != userDetails.Email)
             data['Email'] = Email;
-        if (AddressCity !=userDetails.AddressCity)
-         data['AddressCity']=AddressCity;
-         if(AddressStreet!=userDetails.AddressStreet)
-         data['AddressStreet']=AddressStreet;
-         if(AddressHouseNumber!=userDetails.AddressHouseNumber)
-        data['AddressHouseNumber']=AddressHouseNumber;
+        if (AddressCity != userDetails.AddressCity)
+            data['AddressCity'] = AddressCity;
+        if (AddressStreet != userDetails.AddressStreet)
+            data['AddressStreet'] = AddressStreet;
+        if (AddressHouseNumber != userDetails.AddressHouseNumber)
+            data['AddressHouseNumber'] = AddressHouseNumber;
+        if(phone!=userDetails.phone)   
+        data['phone']=phone;
         
+         
+        
+
+
         // console.log({ data });
         // console.log("**********************************");
         // alert("העדכון עבר בהצלחה");
@@ -86,11 +91,11 @@ export default function Update_personal_details_Professional(Props) {
 
 
                     <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(CheckInput('Email',Email))}
+                        <TextInput style={styles.textInputS(CheckInput('Email', Email))}
                             placeholder={userDetails.Email}
                             placeholderTextColor="#92a2bd"
                             value={Email}
-                            onChangeText={(text) => {setEmail(text)}}
+                            onChangeText={(text) => { setEmail(text) }}
                         />
                     </View>
 
@@ -178,20 +183,20 @@ const styles = StyleSheet.create({
 
 
     },
-    textInputS: (borderColor)=>{
-        return{
-        // height: 40,
-        // width: "80%",
-        // margin: 10,
-        borderWidth: 1,
-        // padding: 10,
-        color: '#808080',
-        borderColor:borderColor?'green':'red',
-        // height: 50,
-        fontSize: 25,
-        textAlign: 'right',
-        fontWeight: 'bold',
-        opacity: 0.5,
+    textInputS: (borderColor) => {
+        return {
+            // height: 40,
+            // width: "80%",
+            // margin: 10,
+            borderWidth: 1,
+            // padding: 10,
+            color: '#808080',
+            borderColor: borderColor ? 'green' : 'red',
+            // height: 50,
+            fontSize: 25,
+            textAlign: 'right',
+            fontWeight: 'bold',
+            opacity: 0.5,
         }
 
     },
