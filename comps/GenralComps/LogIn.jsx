@@ -11,6 +11,7 @@ import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
 import Maps_test from '../Maps_test';
 import Search3 from '../Search3';
+import Search from '../Search';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewAppointment from '../NewAppointment';
 // import { AsyncStorage } from 'react-native';
@@ -35,6 +36,7 @@ export default function LogIn(props) {
   console.log({ userType })
 
 
+  
   const handleidNumber = (text) => {
     if (userType == "Cli"){
       setidNumber_client(text);
@@ -76,6 +78,7 @@ if(userDetails){
       LogInF(dataa).then((result) => {
         console.log('yes', result.data);
          setUserDetails(result.data)
+
   
       }, (error) => {
         console.log('error', error)

@@ -11,6 +11,7 @@ import Client_registration from './comps/Client_registration';
 import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
 import Search3 from './comps/Search3';
+import Search from './comps/Search';
 import AddTratment from './comps/AddTratment';
 import Menu_treatment_forAppointment from './comps/Menu_treatment_forAppointment';
 import NewAppointment from './comps/NewAppointment';

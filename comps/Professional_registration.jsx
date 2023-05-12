@@ -294,7 +294,6 @@ const styles = StyleSheet.create({
   },
 
 });
-
 export default Professional_registration;
 
 

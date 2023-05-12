@@ -147,7 +147,8 @@ export default function Search3(props) {
           </Picker>
         </View>
         <View>
-        <TextInput style={{fontSize:25,borderColor:'black',borderWidth:2}}            placeholder="עיר"
+        <TextInput style={{fontSize:25,borderColor:'black',borderWidth:2}}            
+        placeholder="עיר"
             value={AddressCity}
             onChangeText={(value) => setAddressCity(value)}
           />
