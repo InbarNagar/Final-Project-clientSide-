@@ -4,6 +4,7 @@ import Menu_professional from './obj/Menu_professional';
 import { UserContext } from './UserDietails';
 import { useState, useEffect, useContext } from 'react';
 import Header from './obj/Header';
+import Alert from './Alert';
 
 export default function Update_personal_details_Professional(Props) {
     const userDetails = {
@@ -34,7 +35,9 @@ export default function Update_personal_details_Professional(Props) {
     const [AddressHouseNumber, setHouseNumber] = useState(userDetails.AddressHouseNumber);
     const [AddressCity, setCity] = useState(userDetails.AddressCity);
     const [password, setPassword] = useState(userDetails.password);
+    const Business_Number = userDetails.Business_Number;
 
+    const [alert, setAlert] = useState()
     // useEffect(() => {
     //     if (userDetails)
     //     setid(userDetails.ID_number)
@@ -59,20 +62,57 @@ export default function Update_personal_details_Professional(Props) {
     }
 
     const Update_Diteails = () => {
-        var data = {}
-        if (Email != userDetails.Email)
-            data['Email'] = Email;
-        if (AddressCity != userDetails.AddressCity)
-            data['AddressCity'] = AddressCity;
-        if (AddressStreet != userDetails.AddressStreet)
-            data['AddressStreet'] = AddressStreet;
-        if (AddressHouseNumber != userDetails.AddressHouseNumber)
-            data['AddressHouseNumber'] = AddressHouseNumber;
-        if(phone!=userDetails.phone)   
-        data['phone']=phone;
-        
-         
-        
+
+        // if (!First_name || !Last_name || !birth_date || !phone || !Email || !AddressStreet || !AddressHouseNumber ||
+        //     !AddressCity || !password || !Business_Number) {
+        //     return
+        // }
+        if (!CheckInput("Email", Email)) {
+            setAlert(<Alert
+                text='האיימיל אינו תקין'
+                type='worng'
+                time={3000}
+                bottom={100}
+            />)
+            return
+        }
+        const data = {
+            "ID_number": ID_number,
+            "First_name": First_name,
+            "Last_name": Last_name,
+            "birth_date": birth_date,
+            "gender": gender,
+            "phone": phone,
+            "Email": Email,
+            "AddressStreet": AddressStreet,
+            "AddressHouseNumber": AddressHouseNumber,
+            "AddressCity": AddressCity,
+            "password": password,
+            "Business_Number": Business_Number,
+            // "userType": 
+        }
+
+        console.log(data)
+        UpdateProffesional(data).then(
+            (res) => {
+                if (res.status == 200) {
+                    //setUserDetails(data)
+                    setAlert(<Alert
+                        text="השינוים נשמרו"
+                        type='succes'
+                        time={3000}
+                        bottom={100}
+                    />)
+                } else {
+                    setAlert(<Alert
+                        text='  השינוים לא נשמרו, נסו שוב'
+                        type='worng'
+                        time={3000}
+                        bottom={100}
+                    />)
+                }
+            }
+        )
 
 
         // console.log({ data });
@@ -81,7 +121,9 @@ export default function Update_personal_details_Professional(Props) {
     }
 
     return (
+
         <>
+            {alert && alert}
             <ScrollView>
                 <View style={styles.container}>
                     <Header text="עריכת פרטים אישים " color='#9acd32' fontSize={35} />
