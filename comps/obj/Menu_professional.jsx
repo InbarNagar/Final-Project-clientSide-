@@ -7,7 +7,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
-
+// onPress={() => navigation.navigate('Profil_pro')}
 const Menu_professional = () => {
 
   const navigation = useNavigation();
@@ -15,7 +15,7 @@ const Menu_professional = () => {
   return (
     <View style={styles.menu}>
     
-    <TouchableOpacity style={styles.menuItem} >
+    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Profil_pro')}>
         <Ionicons name="person-outline" size={24} color="black" />
         <Text style={styles.menuText}>Profile</Text>
       </TouchableOpacity>

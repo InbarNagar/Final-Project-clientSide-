@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { Button, StyleSheet, Text, TextInput, View, Keyboard ,ScrollView} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -8,7 +8,7 @@ import Professional_registration from './Professional_registration';
 import { Professional_Business } from './obj/FunctionAPICode';
 import Menu_treatment_registration from './Menu_treatment_registration';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+// import { BussinessContext } from './UserDietails';
 
 const Create_Business_Pro = (props) => {
   const [Name, setName] = useState('');
@@ -17,6 +17,8 @@ const Create_Business_Pro = (props) => {
   const [AddressCity, setCity] = useState('');
   const [Is_client_house, setLocation] = useState('');
   const [Professional_ID_number, setIdPro] = useState('');
+
+  // const {BussinessDetails , setBussinessDetails} = useContext(BussinessContext);**********
 
   const { navigation, route } = props
   let Id_Pro = route.params.ID
@@ -46,7 +48,7 @@ const Create_Business_Pro = (props) => {
       console.log(businessId + "oooooo")
       AsyncStorage.setItem('businessId', businessId);
       navigation.navigate('Menu_treatment_registration')
-
+      // setBussinessDetails(result.data)****************************
       // navigation.navigate('Menu_treatment_registration', {businessId:result.data.businessId})
 
     }, (error) => {

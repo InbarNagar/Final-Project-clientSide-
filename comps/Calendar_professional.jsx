@@ -177,7 +177,7 @@ export default function Calendar_professional() {
     </ScrollView>
     <Menu_professional/>
     </>
-  );
+  )
 };
 
 const styles = StyleSheet.create({

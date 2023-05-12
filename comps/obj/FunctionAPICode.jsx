@@ -2,13 +2,11 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { Fetch, Axios, AxiosNum } from './Fetch'
 
-
 // התחברות בעל עסק פונקציית POST עם FROMBODY...... לא דרך נכונה... צריך לשנות את זה לגט... אבל לבנתיים....................
 export const LogInProo = (body) => {
 
     return Axios(`Professional/OneProfessional`, 'post',body) 
 }
-
 
 export const BussinesCanGiveTreatment = (Business_Numberr) => {
     return Axios(`Business_can_give_treatmentController/All_the_treatments_appointment_can_give/${Business_Numberr}`, 'post')
@@ -18,7 +16,6 @@ export const BussinesCanGiveTreatment = (Business_Numberr) => {
 export const Professional_Registration = (body) => {
 
     return Axios(`Professional/NewProfessional`,'post',body)
-
 }
 
 // הרשמת לקוח
@@ -32,7 +29,6 @@ export const Cli_Registration = (body) => {
 export const Professional_Business = (body) => {
 
     return Axios(`Business/NewBusiness`, 'post',body)
-
 }
 
 //פונקצייה להוספת תור חדש דרך פונקציית פוסט בשרת.
@@ -40,11 +36,10 @@ export const NewAppointmentPost = (body) => {
     return Axios(`Appointment/NewAppointment`, 'post', body) 
 
 }
-                // חיפוש תור
+  // חיפוש תור
 export const Search_post = (body) => {
 
     return Axios(`Search/Searchh`, 'post',body) 
-
 }
 // סוגי הטיפולים לרשימה נגללת במסך חיפוש
 export const Treatment_type_GET = () => {
@@ -92,4 +87,28 @@ export const NewTreatmentForBussines = (body) => {
 
 export const FutureAppointmenB = (Business_Numberr) => {
     return Axios(`Future_Appointment/AllFuture_AppointmentForProfessional/${Business_Numberr}`, 'post')
+}
+
+export const DeleteClient=(clientID_number)=>{
+    return Fetch('Client/DeleteClient','DELETE',clientID_number)
+}
+//מחיקת עסק קיים
+export const DeleteBusiness=(businessNumber)=>{
+    return Fetch('Business/DeleteBusinesss','DELETE',businessNumber)
+}
+//מחיקת בעל עסק
+export const DeleteProffesional=(profssinalID_number)=>{
+    return Fetch('Proffesional/DeleteProffesional','DELETE',profssinalID_number)
+}
+//עדכון פרטי לקוח 
+export const UpdateClient=(body)=>{
+    return Axios(`Client/UpdateClient`, 'post',body)
+}
+//עדכון בעל עסק
+export const UpdateProffesional=(body)=>{
+    return Axios(`Proffesional/UpdateProffesional`, 'post',body)
+}
+//התחברות כללית לשני המשתמשים
+export const LogInUser = (body) => {
+    return Axios(`user/checkUser`, 'post', body)
 }

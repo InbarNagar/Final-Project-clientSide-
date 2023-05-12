@@ -13,12 +13,12 @@ const ScreenOne = (props) => {
 
         <View style={{flex: 1}}>
            
-            <Text style={style.wel} >Beuaty Me</Text>
+            <Text style={style.wel} >Beauty Me</Text>
             {/* <Header text="BeautyMe" fontSize={75} height={200}/> */}
 
             <View >
-
-                <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro'})
+           <Image style={style.image} source={require('../../assets/Studio.png')}/>
+                {/* <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro'})
                 }}>
                     <View style={style.viewS}>
                         <Text style={style.titleText}>בעלי עסקים</Text>
@@ -31,7 +31,7 @@ const ScreenOne = (props) => {
                     <View style={style.viewS}>
                         <Text style={style.titleText} >לקוחות</Text>
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
     )
@@ -64,6 +64,11 @@ const style = StyleSheet.create({
         textAlign: 'center',
         padding: 15,
         
+    },
+    image:{
+    width:100,
+    height:100,
+    padding:20
     }
 })
 

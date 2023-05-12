@@ -60,7 +60,6 @@ if(userDetails){
   else {
     //navigation.navigate('NewAppointment')
 
-
     navigation.navigate('Calendar_professional')
   }
 }

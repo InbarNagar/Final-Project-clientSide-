@@ -91,8 +91,17 @@ export default function Search3(props) {
   function btnBookApiontment(x) {
     //לקבוע תור
     setSelectedTreatment(x);
+    // const pickedApointment = {
+    //   Appointment_status: "available",
+    //   Client_ID_number: IdNumber,
+    //   Type_treatment_Number: chosenTreratmentNum,
+    //   Number_appointment: x.Number_appointment,
+    // };
     const pickedApointment = {
-      Appointment_status: "available",
+      AddressStreet:"ehud",
+      AddressHouseNumber:5,
+      AddressCity:"haifa",
+      Appointment_status: "Available",
       Client_ID_number: IdNumber,
       Type_treatment_Number: chosenTreratmentNum,
       Number_appointment: x.Number_appointment,
@@ -102,7 +111,7 @@ export default function Search3(props) {
       (result) => {
         console.log("yes", result.data);
         if (result.data) {
-          alert(result.data);
+          alert("result.data");
         }
       },
       (error) => {

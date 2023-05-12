@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-
+import Profil_pro from './comps/Profil_pro';
 import ScreenOne from './comps/GenralComps/ScreenOne';
 import LogIn from './comps/GenralComps/LogIn';
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,10 +19,15 @@ import Menu_professional from './comps/obj/Menu_professional';
 // import TabbedPageNavigator from './comps/GenralComps/TabbedPage';
 // import MaterialTabbedPage from './comps/GenralComps/MaterialTabbedP
 import Maps_test from './comps/Maps_test'; 
-import { loginHook ,UserContext} from './comps/UserDietails';
+import { loginHook ,UserContext,loginHook2, BussinessContext} from './comps/UserDietails';
 import React from 'react';
 import SearchOnMap from './comps/SearchOnMap';
 import Menu_treatment_registration from './comps/Menu_treatment_registration';
+import Update_personal_details_Professional from './comps/Update_personal_details_Professional';
+import Update_personal_details_Bussines from './comps/Update_personal_details_Bussines';
+import Set_notifications from './comps/Set_notifications';
+
+
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -44,19 +49,24 @@ const Stack = createNativeStackNavigator();
 
 function App() {
    const { userDetails, setUserDetails } = loginHook();
+  //  const { BussinessDetails,setBussinessDetails }=loginHook2()
   return (
 
- 
+
 // בשביל לשמור את כל המידע על המשתמשים
-   <UserContext.Provider value={{ userDetails, setUserDetails }}>
+   <UserContext.Provider value={{ userDetails, setUserDetails }
+    // && BussinessDetails? {BussinessDetails,setBussinessDetails}:""
+  }>
       
       <NavigationContainer>
 
-         <Stack.Navigator initialRouteName="ScreenOne"> 
-        <Stack.Screen name="Menu_professional" component={Menu_professional} />
+         <Stack.Navigator initialRouteName="Update_personal_details_Professional">  
+         <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional}/>  
+         {/* <Stack.Screen name="ScreenOne" component={ScreenOne} /> */}
+        {/* <Stack.Screen name="Menu_professional" component={Menu_professional} />
         <Stack.Screen name="NewAppointment" component={NewAppointment} />
         <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-       <Stack.Screen name="ScreenOne" component={ScreenOne} />  
+         
         <Stack.Screen name="LogIn" component={LogIn} />
         <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
           <Stack.Screen name="Search3" component={Search3} />
@@ -66,8 +76,9 @@ function App() {
         <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
         <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
         <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
-
-
+        <Stack.Screen name="Profil_pro" component={Profil_pro}/>
+        <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional}/>  
+         {/* <Stack.Screen name="Set_notifications" component={Set_notifications}/>  */}
         </Stack.Navigator>
       </NavigationContainer>
      </UserContext.Provider>
