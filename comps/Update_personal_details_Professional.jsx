@@ -83,6 +83,8 @@ export default function Update_personal_details_Professional(Props) {
                     <Text>  שלום {First_name} {Last_name} </Text>
 
 
+
+
                     <View style={styles.inp}>
                         <TextInput style={styles.textInputS(CheckInput('Email',Email))}
                             placeholder={userDetails.Email}
