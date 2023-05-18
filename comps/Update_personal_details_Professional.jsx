@@ -4,6 +4,7 @@ import Menu_professional from './obj/Menu_professional';
 import { UserContext } from './UserDietails';
 import { useState, useEffect, useContext } from 'react';
 import Header from './obj/Header';
+import Alert from './Alert';
 
 export default function Update_personal_details_Professional(Props) {
     const userDetails = {
@@ -34,7 +35,9 @@ export default function Update_personal_details_Professional(Props) {
     const [AddressHouseNumber, setHouseNumber] = useState(userDetails.AddressHouseNumber);
     const [AddressCity, setCity] = useState(userDetails.AddressCity);
     const [password, setPassword] = useState(userDetails.password);
+    const Business_Number = userDetails.Business_Number;
 
+    const [alert, setAlert] = useState()
     // useEffect(() => {
     //     if (userDetails)
     //     setid(userDetails.ID_number)
@@ -44,51 +47,97 @@ export default function Update_personal_details_Professional(Props) {
     //     setGender(userDetails.gender)
     // })
 
-    const CheckInput =(name,value)=> {
+    const CheckInput = (name, value) => {
         console.log((!value.includes('@')))
         switch (name) {
-            case"Email":
-            if(!value.includes('@')) return false;
-            if(!value.endsWith(".com")&&!value.endsWith(".co.il")) return false;
+            case "Email":
+                if (!value.includes('@')) return false;
+                if (!value.endsWith(".com") && !value.endsWith(".co.il")) return false;
                 break;
-        
+
             default:
                 break;
-                
+
         }return true;
     }
 
     const Update_Diteails = () => {
-        var data = {}
 
-        if (Email != userDetails.Email)
-            data['Email'] = Email;
-        if (AddressCity !=userDetails.AddressCity)
-         data['AddressCity']=AddressCity;
-         if(AddressStreet!=userDetails.AddressStreet)
-         data['AddressStreet']=AddressStreet;
-         if(AddressHouseNumber!=userDetails.AddressHouseNumber)
-        data['AddressHouseNumber']=AddressHouseNumber;
-        
+        // if (!First_name || !Last_name || !birth_date || !phone || !Email || !AddressStreet || !AddressHouseNumber ||
+        //     !AddressCity || !password || !Business_Number) {
+        //     return
+        // }
+        if (!CheckInput("Email", Email)) {
+            setAlert(<Alert
+                text='האיימיל אינו תקין'
+                type='worng'
+                time={3000}
+                bottom={100}
+            />)
+            return
+        }
+        const data = {
+            "ID_number": ID_number,
+            "First_name": First_name,
+            "Last_name": Last_name,
+            "birth_date": birth_date,
+            "gender": gender,
+            "phone": phone,
+            "Email": Email,
+            "AddressStreet": AddressStreet,
+            "AddressHouseNumber": AddressHouseNumber,
+            "AddressCity": AddressCity,
+            "password": password,
+            "Business_Number": Business_Number,
+            // "userType": 
+        }
+
+        console.log(data)
+        UpdateProffesional(data).then(
+            (res) => {
+                if (res.status == 200) {
+                    //setUserDetails(data)
+                    setAlert(<Alert
+                        text="השינוים נשמרו"
+                        type='succes'
+                        time={3000}
+                        bottom={100}
+                    />)
+                } else {
+                    setAlert(<Alert
+                        text='  השינוים לא נשמרו, נסו שוב'
+                        type='worng'
+                        time={3000}
+                        bottom={100}
+                    />)
+                }
+            }
+        )
+
+
         // console.log({ data });
         // console.log("**********************************");
         // alert("העדכון עבר בהצלחה");
     }
 
     return (
+
         <>
+            {alert && alert}
             <ScrollView>
                 <View style={styles.container}>
                     <Header text="עריכת פרטים אישים " color='#9acd32' fontSize={35} />
                     <Text>  שלום {First_name} {Last_name} </Text>
 
 
+
+
                     <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(CheckInput('Email',Email))}
+                        <TextInput style={styles.textInputS(CheckInput('Email', Email))}
                             placeholder={userDetails.Email}
                             placeholderTextColor="#92a2bd"
                             value={Email}
-                            onChangeText={(text) => {setEmail(text)}}
+                            onChangeText={(text) => { setEmail(text) }}
                         />
                     </View>
 
@@ -176,20 +225,20 @@ const styles = StyleSheet.create({
 
 
     },
-    textInputS: (borderColor)=>{
-        return{
-        // height: 40,
-        // width: "80%",
-        // margin: 10,
-        borderWidth: 1,
-        // padding: 10,
-        color: '#808080',
-        borderColor:borderColor?'green':'red',
-        // height: 50,
-        fontSize: 25,
-        textAlign: 'right',
-        fontWeight: 'bold',
-        opacity: 0.5,
+    textInputS: (borderColor) => {
+        return {
+            // height: 40,
+            // width: "80%",
+            // margin: 10,
+            borderWidth: 1,
+            // padding: 10,
+            color: '#808080',
+            borderColor: borderColor ? 'green' : 'red',
+            // height: 50,
+            fontSize: 25,
+            textAlign: 'right',
+            fontWeight: 'bold',
+            opacity: 0.5,
         }
 
     },
