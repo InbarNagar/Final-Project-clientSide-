@@ -75,9 +75,13 @@ export const New_Future_Apointment = (body) => {
 export const LogInF = (body) => {
     return Axios(`Client/OneClient`, 'post', body)
 }
-
+//כל התורים של בעל עסק
 export const allApoB= (Business_Numberr) => {
     return Axios(`Appointment/AllAppointmentForBussines/${Business_Numberr}`, 'post')
+}
+//כל התורים של לקוח
+export const allApoC= (ID_Client) => {
+    return Fetch(`Appointment/AllAppointmentForClient/${ID_Client}`, 'get')
 }
 
 // מכניס סוג טיפול חדש לתפריט טיפולים של עסק
@@ -111,4 +115,8 @@ export const UpdateProffesional=(body)=>{
 //התחברות כללית לשני המשתמשים
 export const LogInUser = (body) => {
     return Axios(`user/checkUser`, 'post', body)
+}
+//עדכון טבלת תורים לתור עתידי (באותה הטבלה)
+export const AppointmentToClient= (body) => {
+    return Axios(`Appointment/ClientToAppointment`, 'post',body)
 }
