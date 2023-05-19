@@ -122,6 +122,7 @@ export const BusinessDetails= (business_num) => {
     return Axios(`Business/OneBusiness/${business_num}`, 'post')
 }
 
+//פונקציה לשים איפה שרוצים לשלוח התראות
 export const  Post_SendPushNotification=(body)=>{
     return Axios( `sendpushnotification`,'POST',body);
   }
@@ -131,3 +132,14 @@ export const AppointmentToClient= (body) => {
     return Axios(`Appointment/ClientToAppointment`, 'post',body)
 }
 
+export const SaveTokenforID= (ID_number,token) => {
+    return Axios(`Client/OneClientToken/${ID_number}/${token}`, 'post',{})
+}
+
+export const SaveTokenforIDPro= (ID_number,token) => {
+    return Axios(`Client/OneProfessionalToken/${ID_number}/${token}`, 'post',{})
+}
+
+export const AllApointemtDetailes= () => {
+    return Axios(`Appointment/AllAppointment`, 'post',{})
+}

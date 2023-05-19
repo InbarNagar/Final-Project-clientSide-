@@ -19,6 +19,7 @@ import {
   Treatment_type_GET,
   New_Future_Apointment,
   allApoC,
+  Post_SendPushNotification,
 } from "./obj/FunctionAPICode";
 import moment from "moment";
 import { NavigationActions } from "react-navigation";
@@ -28,7 +29,7 @@ import { Button } from "react-native-elements";
 
 import searchOnMap from "../comps/UserDietails";
 import AppointmentCard_forClient from "./obj/AppointmentCard_forClient";
-
+import { AllApointemtDetailes } from "./obj/FunctionAPICode";
 export default function Search3(props) {
   const { navigation } = props;
   const [AddressCity, setAddressCity] = useState("");
@@ -39,9 +40,10 @@ export default function Search3(props) {
   const [categories, setCategories] = useState(["קטגוריה"]);
   const [chosenTreratmentNum, setChosenTreratmentNum] = useState(0);
   const [selectedTreatment, setSelectedTreatment] = useState({});
-
+   const [token,settoken]=useState();// ענבר
   const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
   const { userDetails, setUserDetails } = useContext(UserContext);
+  const [apo,setapo]=useState();//inbar
   const [allAppointment, setallAppointment] = useState([
     {
       Number_appointment: 122,
@@ -89,7 +91,31 @@ export default function Search3(props) {
         console.log("error", error);
       }
     );
+    AllApointemtDetailes().then((res)=>{
+    
+      console.log("&&&&&&&&&&&&&&&&&&&&&&",res.data)
+        setapo(res.data)
+      console.log(userDetails.ID_number.toString())
+    });
+
   }, []);
+
+  useEffect(() => {
+    if(token){
+         const body = {
+          "to":  token,
+          "title": "BeautyMe",
+          "body": `${userDetails.First_name} הזמינה תור חדש `,
+          "badge": "0",
+          "ttl": "3",// מספר שניות לשליחה
+          "data": {
+            "to": token
+          }
+        }
+        Post_SendPushNotification(body).then(()=>{})
+    }
+
+  }, [token]);
   // אזור טיפול בהצגה והעלמת אזורים
   const [showSearchSection, setShowSearchSection] = useState(false); //להפעיל תצוגת חיפוש תור
   const handleSearchToggleSection = () => {
@@ -177,31 +203,37 @@ export default function Search3(props) {
     }
   }
 
+
+
   function btnBookApiontment(x) {
+
     //לקבוע תור
     const pickedApointment = {
-
-      AddressStreet: "ehud",
-      AddressHouseNumber: 5,
-      AddressCity: "haifa",
-      Appointment_status: "Available",
-      Client_ID_number: IdNumber,
-      Type_treatment_Number: chosenTreratmentNum,
-
+      
       Appointment_status: x.Appointment_status,
-      ID_Client: IdNumber,
+      ID_Client: ClientData.ID_Client,
 
       Number_appointment: x.Number_appointment,
     };
-    console.log(pickedApointment);
+    console.log("****",pickedApointment);
+    console.log("*************",x);
     AppointmentToClient(pickedApointment).then(
       (result) => {
         console.log("yes", result.data);
-   
+       
+        apo.forEach((apointment)=>{
+           if( pickedApointment.Number_appointment==apointment.Number_appointment){
+            settoken(apointment.token)
+            return
+          }
+        })
+      //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
         if (result.data) {
           alert("result.data");
         }
+     
         Alert.alert(`${x.Number_appointment} מחכה לאישור מבעל העסק }`);
+
       },
       (error) => {
         console.log("error", error);

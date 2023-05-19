@@ -20,7 +20,7 @@ import { LogInProo } from '../obj/FunctionAPICode';
 import { UserContext } from '../../comps/UserDietails'
 import Header from '../obj/Header';
 import PushNofitictaion from '../PushNofitictaion';
-
+import { SaveTokenforID,SaveTokenforIDPro } from '../obj/FunctionAPICode';
 
 
 export default function LogIn(props) {
@@ -41,6 +41,19 @@ export default function LogIn(props) {
      
             let temp = Object.assign({}, userDetails, { Token: token });
             setUserDetails(temp)
+            if (userType == "Cli"){
+
+            SaveTokenforID(userDetails.ID_number,token).then(()=>{
+
+            })
+            }
+            else
+            {
+            SaveTokenforIDPro(userDetails.ID_number,token).then(()=>{
+
+            })
+            }
+           
     
     }).catch((error) => {
         
