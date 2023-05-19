@@ -27,6 +27,7 @@ import Menu_treatment_registration from './comps/Menu_treatment_registration';
 import Update_personal_details_Professional from './comps/Update_personal_details_Professional';
 import Update_personal_details_Bussines from './comps/Update_personal_details_Bussines';
 import Set_notifications from './comps/Set_notifications';
+import ClientProfile from './comps/ClientProfile';
 
 
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -59,6 +60,7 @@ function App() {
 
       <NavigationContainer>
 
+
         <Stack.Navigator initialRouteName="ScreenOne">
 
           <Stack.Screen name="ScreenOne" component={ScreenOne} />
@@ -78,6 +80,7 @@ function App() {
           <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} />
           <Stack.Screen name="Set_notifications" component={Set_notifications} />
           <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
