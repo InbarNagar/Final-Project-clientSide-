@@ -8,7 +8,7 @@ import Professional_registration from './Professional_registration';
 import { Professional_Business } from './obj/FunctionAPICode';
 import Menu_treatment_registration from './Menu_treatment_registration';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { BussinessContext } from './UserDietails';
+ import { UserContext } from './UserDietails';
 
 const Create_Business_Pro = (props) => {
   const [Name, setName] = useState('');
@@ -18,7 +18,7 @@ const Create_Business_Pro = (props) => {
   const [Is_client_house, setLocation] = useState('');
   const [Professional_ID_number, setIdPro] = useState('');
 
-  // const {BussinessDetails , setBussinessDetails} = useContext(BussinessContext);**********
+   
 
   const { navigation, route } = props
   let Id_Pro = route.params.ID
@@ -43,6 +43,7 @@ const Create_Business_Pro = (props) => {
     Professional_Business(data).then((result) => {
       console.log('yes', result)
       console.log(result.data)
+      
       console.log(result.data.businessId + "ppppp")
       const businessId = result.data.businessId.toString();
       console.log(businessId + "oooooo")

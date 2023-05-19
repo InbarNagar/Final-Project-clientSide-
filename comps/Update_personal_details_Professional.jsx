@@ -5,24 +5,24 @@ import { UserContext } from './UserDietails';
 import { useState, useEffect, useContext } from 'react';
 import Header from './obj/Header';
 import Alert from './Alert';
-
+import { UpdateProffesional } from './obj/FunctionAPICode';
 export default function Update_personal_details_Professional(Props) {
-    const userDetails = {
-        "ID_number": "123455555 ",
-        "First_name": "nira",
-        "Last_name": "cohen",
-        "birth_date": "1965-10-12T00:00:00",
-        "gender": "F",
-        "phone": "521212121",
-        "Email": "nira@gmail.com",
-        "AddressStreet": "ehud",
-        "AddressHouseNumber": "5         ",
-        "AddressCity": "haifa",
-        "password": "12333",
-        "Business_Number": 4,
-        "userType": null
-    };
-    // const { userDetails, setUserDetails } = useContext(UserContext);
+    // const userDetails = {
+    //     "ID_number": "123455555 ",
+    //     "First_name": "nira",
+    //     "Last_name": "cohen",
+    //     "birth_date": "1965-10-12T00:00:00",
+    //     "gender": "F",
+    //     "phone": "521212121",
+    //     "Email": "nira@gmail.com",
+    //     "AddressStreet": "ehud",
+    //     "AddressHouseNumber": "5         ",
+    //     "AddressCity": "haifa",
+    //     "password": "12333",
+    //     "Business_Number": 4,
+    //     "userType": null
+    // };
+    const { userDetails, setUserDetails } = useContext(UserContext);
 
     const [ID_number, setid] = useState(userDetails.ID_number);
     const [First_name, setFirstName] = useState(userDetails.First_name);
@@ -36,6 +36,7 @@ export default function Update_personal_details_Professional(Props) {
     const [AddressCity, setCity] = useState(userDetails.AddressCity);
     const [password, setPassword] = useState(userDetails.password);
     const Business_Number = userDetails.Business_Number;
+
 
     const [alert, setAlert] = useState()
     // useEffect(() => {
@@ -63,10 +64,10 @@ export default function Update_personal_details_Professional(Props) {
 
     const Update_Diteails = () => {
 
-        // if (!First_name || !Last_name || !birth_date || !phone || !Email || !AddressStreet || !AddressHouseNumber ||
-        //     !AddressCity || !password || !Business_Number) {
-        //     return
-        // }
+        if (!First_name || !Last_name || !birth_date || !phone || !Email || !AddressStreet || !AddressHouseNumber ||
+            !AddressCity || !password || !Business_Number) {
+            return
+        }
         if (!CheckInput("Email", Email)) {
             setAlert(<Alert
                 text='האיימיל אינו תקין'
@@ -95,121 +96,119 @@ export default function Update_personal_details_Professional(Props) {
         console.log(data)
         UpdateProffesional(data).then(
             (res) => {
-                if (res.status == 200) {
-                    //setUserDetails(data)
-                    setAlert(<Alert
-                        text="השינוים נשמרו"
-                        type='succes'
-                        time={3000}
-                        bottom={100}
-                    />)
-                } else {
-                    setAlert(<Alert
-                        text='  השינוים לא נשמרו, נסו שוב'
-                        type='worng'
-                        time={3000}
-                        bottom={100}
-                    />)
-                }
-            }
-        )
+                setAlert(<Alert
+                    text="השינוים נשמרו"
+                    type='succes'
+                    time={1000}
+                    bottom={100}
+                />)
+                console.log('yes', res)
+                setUserDetails(data)
+                
+            }, (error) => {
+                console.log('error', error)
+                setAlert(<Alert
+                    text='  השינוים לא נשמרו, נסו שוב'
+                    type='worng'
+                    time={1000}
+                    bottom={100}
+                />)
 
+            });
+    
 
-        // console.log({ data });
-        // console.log("**********************************");
-        // alert("העדכון עבר בהצלחה");
-    }
+}
 
-    return (
+return (
 
-        <>
-            {alert && alert}
-            <ScrollView>
-                <View style={styles.container}>
-                    <Header text="עריכת פרטים אישים " color='#9acd32' fontSize={35} />
-                    <Text>  שלום {First_name} {Last_name} </Text>
+    <>
+        {alert && alert}
+        <ScrollView>
+            <View style={styles.container}>
+                <Header text="עריכת פרטים אישים " color='#9acd32' fontSize={35} />
+                <Text>  שלום {First_name} {Last_name} </Text>
 
 
 
 
-                    <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(CheckInput('Email', Email))}
-                            placeholder={userDetails.Email}
-                            placeholderTextColor="#92a2bd"
-                            value={Email}
-                            onChangeText={(text) => { setEmail(text) }}
-                        />
-                    </View>
+                <View style={styles.inp}>
+                    <TextInput style={styles.textInputS(CheckInput('Email', Email))}
+                        placeholder={userDetails.Email}
+                        placeholderTextColor="#92a2bd"
+                        value={Email}
+                        onChangeText={(text) => setEmail(text)}
+                    />
+                </View>
 
 
-                    <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(false)}
-                            placeholder="פלאפון"
-                            placeholderTextColor="#92a2bd"
-                            value={phone}
-                            onChangeText={(text) => setPhone(text)}
-                        />
-
-                    </View>
-
-
-                    <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(false)}
-                            placeholder="רחוב"
-                            placeholderTextColor="#92a2bd"
-                            value={AddressStreet}
-                            onChangeText={(text) => setStreet(text)}
-                        />
-                    </View>
-
-                    <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(false)}
-                            placeholder="עיר"
-                            placeholderTextColor="#92a2bd"
-                            value={AddressCity}
-                            onChangeText={(text) => setCity(text)}
-                        />
-
-                    </View>
-
-
-                    <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(false)}
-                            placeholder="מספר בית"
-                            placeholderTextColor="#92a2bd"
-                            value={AddressHouseNumber}
-                            onChangeText={(text) => setHouseNumber(text)}
-                        />
-
-                    </View>
-
-
-                    <View style={styles.inp}>
-                        <TextInput style={styles.textInputS(false)}
-                            placeholder="סיסמא"
-                            placeholderTextColor="#92a2bd"
-                            value={password}
-                            onChangeText={(text) => setPassword(text)}
-                            secureTextEntry={true}
-                        />
-
-                    </View>
-
-
-                    <View>
-                        <TouchableOpacity style={styles.but} onPress={Update_Diteails}>
-                            <View>
-                                <Text style={styles.thachtext}>עדכן</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-
+                <View style={styles.inp}>
+                    <TextInput style={styles.textInputS(false)}
+                        placeholder="פלאפון"
+                        placeholderTextColor="#92a2bd"
+                        value={phone}
+                        onChangeText={(text) => setPhone(text)}
+                    />
 
                 </View>
-            </ScrollView>
-            <Menu_professional />
-        </>
-    )
+
+
+                <View style={styles.inp}>
+                    <TextInput style={styles.textInputS(false)}
+                        placeholder="רחוב"
+                        placeholderTextColor="#92a2bd"
+                        value={AddressStreet}
+                        onChangeText={(text) => setStreet(text)}
+                    />
+                </View>
+
+                <View style={styles.inp}>
+                    <TextInput style={styles.textInputS(false)}
+                        placeholder="עיר"
+                        placeholderTextColor="#92a2bd"
+                        value={AddressCity}
+                        onChangeText={(text) => setCity(text)}
+                    />
+
+                </View>
+
+
+                <View style={styles.inp}>
+                    <TextInput style={styles.textInputS(false)}
+                        placeholder="מספר בית"
+                        placeholderTextColor="#92a2bd"
+                        value={AddressHouseNumber}
+                        onChangeText={(text) => setHouseNumber(text)}
+                    />
+
+                </View>
+
+
+                <View style={styles.inp}>
+                    <TextInput style={styles.textInputS(false)}
+                        placeholder="סיסמא"
+                        placeholderTextColor="#92a2bd"
+                        value={password}
+                        onChangeText={(text) => setPassword(text)}
+                        secureTextEntry={true}
+                    />
+
+                </View>
+
+
+                <View>
+                    <TouchableOpacity style={styles.but} onPress={Update_Diteails}>
+                        <View>
+                            <Text style={styles.thachtext}>עדכן</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+
+            </View>
+        </ScrollView>
+        <Menu_professional />
+    </>
+)
 }
 
 const styles = StyleSheet.create({

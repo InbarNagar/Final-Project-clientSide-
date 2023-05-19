@@ -112,3 +112,8 @@ export const UpdateProffesional=(body)=>{
 export const LogInUser = (body) => {
     return Axios(`user/checkUser`, 'post', body)
 }
+
+export const BusinessDetails= (business_num) => {
+    return Axios(`Business/OneBusiness/${business_num}`, 'post')
+}
+
