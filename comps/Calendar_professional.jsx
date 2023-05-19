@@ -8,6 +8,7 @@ import { useState } from "react";
 import { UserContext } from '../comps/UserDietails';
 import React, { useContext } from "react";
 import { FutureAppointmenB } from "./obj/FunctionAPICode";
+import { Post_SendPushNotification } from "./obj/FunctionAPICode";
 import AppointmentCard_forProfessional_Calendar from "./obj/AppointmentCard_forProfessional_Calendar";
 //מסך ראשי בעל עסק
 export default function Calendar_professional() {
@@ -26,6 +27,27 @@ export default function Calendar_professional() {
   const [showText3, setShowText3] = useState(false);
   const [showText4, setShowText4] = useState(false);
 
+  const test =()=>{
+    
+    const body = {
+      "to":  userDetails.Token,
+      "title": "BeautyMe",
+      "body": `${userDetails.First_name} הוספת תור חדש`,
+      "badge": "0",
+      "ttl": "3",// מספר שניות לשליחה
+      "data": {
+        "to": userDetails.Token
+      }
+    }
+    console.log({userDetails})
+    Post_SendPushNotification(body).then((res)=>{
+
+    }).catch((error) => {
+      console.log("error", error);
+    })
+
+  }
+
   const handleSubmit = () => {
     console.log(allAppointment, allAppointment.length)
 
@@ -41,7 +63,7 @@ export default function Calendar_professional() {
     setShowText2(!showText2);
 
   }
-
+  
 
   const handleSubmit2 = () => {
 
@@ -101,6 +123,7 @@ export default function Calendar_professional() {
             <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="#98FB98" />
             <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="#FF6961" />
             <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="#87CEFA" />
+            <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" />
           </View>
         </ScrollView>
 

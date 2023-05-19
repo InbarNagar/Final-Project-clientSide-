@@ -12,6 +12,7 @@ import { NavigationActions } from "react-navigation";
 import { UserContext } from "../comps/UserDietails";
 import { Button } from "react-native-elements";
 import searchOnMap from '../comps/UserDietails'
+import { Post_SendPushNotification } from "./obj/FunctionAPICode";
 
 export default function Search3(props) {
   const [showSection, setShowSection] = useState(false); //להסתיר את הכפתור של תצוגת מפה
@@ -46,7 +47,7 @@ export default function Search3(props) {
     );
   }, []);
 
-   function btnSearch() {
+  function btnSearch() {
     let num = 0;
     {
       categories.map((z) => {
@@ -60,7 +61,7 @@ export default function Search3(props) {
           );
         }
       });
-      const obj =  {
+      const obj = {
         AddressCity: AddressCity,
         NameTreatment: NameTreatment,
         // sort: "דירוג גבוהה תחילה",
@@ -98,9 +99,9 @@ export default function Search3(props) {
     //   Number_appointment: x.Number_appointment,
     // };
     const pickedApointment = {
-      AddressStreet:"ehud",
-      AddressHouseNumber:5,
-      AddressCity:"haifa",
+      AddressStreet: "ehud",
+      AddressHouseNumber: 5,
+      AddressCity: "haifa",
       Appointment_status: "Available",
       Client_ID_number: IdNumber,
       Type_treatment_Number: chosenTreratmentNum,
@@ -110,6 +111,7 @@ export default function Search3(props) {
     New_Future_Apointment(pickedApointment).then(
       (result) => {
         console.log("yes", result.data);
+   
         if (result.data) {
           alert("result.data");
         }
@@ -123,104 +125,87 @@ export default function Search3(props) {
   return (
     <View style={styles.container}>
       <ScrollView>
-      <View style={styles.filtersView}>
-        <View style={styles.pickerView}>
-          <Picker
-            selectedValue={NameTreatment}
-            onValueChange={(value) => setNameTreatment(value)}
-          >
-            {categories.map((category,i) => (
-              <Picker.Item
-                label={category.Name}
-                value={category.Name}
-                key={i}
-              />
-            ))}
-          </Picker>
-          <Picker
-            selectedValue={sorts}
+        <View style={styles.filtersView}>
+          <View style={styles.pickerView}>
+            <Picker
+              selectedValue={NameTreatment}
+              onValueChange={(value) => setNameTreatment(value)}
+            >
+              {categories.map((category, i) => (
+                <Picker.Item
+                  label={category.Name}
+                  value={category.Name}
+                  key={i}
+                />
+              ))}
+            </Picker>
+            <Picker
+              selectedValue={sorts}
             // onValueChange={(value) => handleInputChange("sort", value)}
-          >
-            {sorts.map((s) => (
-              <Picker.Item label={s} value={s} key={s} />
-            ))}
-          </Picker>
-        </View>
-        <View>
-        <TextInput style={{fontSize:25,borderColor:'black',borderWidth:2}}            
-        placeholder="עיר"
-            value={AddressCity}
-            onChangeText={(value) => setAddressCity(value)}
-          />
-        </View>
-        <View>
+            >
+              {sorts.map((s) => (
+                <Picker.Item label={s} value={s} key={s} />
+              ))}
+            </Picker>
+          </View>
           <View>
-            <View>
-              <Text>מין מטפל :</Text>
-            </View>
-            <View>
-              <View>
-                <Text>זכר</Text>
-                <RadioButton
-                  value="M"
-                  status={gender === "M" ? "checked" : "unchecked"}
-                  onPress={() => setGender("M")}
-                />
-              </View>
-              <View>
-                <Text>נקבה</Text>
-                <RadioButton
-                  value="F"
-                  status={gender === "F" ? "checked" : "unchecked"}
-                  onPress={() => setGender("F")}
-                />
-              </View>
-            </View>
+            <TextInput style={{ fontSize: 25, borderColor: 'black', borderWidth: 2 }}
+              placeholder="עיר"
+              value={AddressCity}
+              onChangeText={(value) => setAddressCity(value)}
+            />
           </View>
           <View>
             <View>
-              <Text>טיפול ביתי: </Text>
+              <View>
+                <Text>מין מטפל :</Text>
+              </View>
+              <View>
+                <View>
+                  <Text>זכר</Text>
+                  <RadioButton
+                    value="M"
+                    status={gender === "M" ? "checked" : "unchecked"}
+                    onPress={() => setGender("M")}
+                  />
+                </View>
+                <View>
+                  <Text>נקבה</Text>
+                  <RadioButton
+                    value="F"
+                    status={gender === "F" ? "checked" : "unchecked"}
+                    onPress={() => setGender("F")}
+                  />
+                </View>
+              </View>
             </View>
             <View>
               <View>
-                <Text>כן</Text>
-                <RadioButton
-                  value="YES"
-                  status={Is_client_house === "YES" ? "checked" : "unchecked"}
-                  onPress={() => setIs_client_house("YES")}
-                />
+                <Text>טיפול ביתי: </Text>
               </View>
               <View>
-                <Text>לא</Text>
-                <RadioButton
-                  value="NO"
-                  status={Is_client_house === "NO" ? "checked" : "unchecked"}
-                  onPress={() => setIs_client_house("NO")}
-                />
+                <View>
+                  <Text>כן</Text>
+                  <RadioButton
+                    value="YES"
+                    status={Is_client_house === "YES" ? "checked" : "unchecked"}
+                    onPress={() => setIs_client_house("YES")}
+                  />
+                </View>
+                <View>
+                  <Text>לא</Text>
+                  <RadioButton
+                    value="NO"
+                    status={Is_client_house === "NO" ? "checked" : "unchecked"}
+                    onPress={() => setIs_client_house("NO")}
+                  />
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <View style={styles.buttons}>
-          <Button
-            title="חפש"
-            buttonStyle={{
-              backgroundColor: "blue",
-              borderWidth: 2,
-              borderColor: "white",
-              borderRadius: 30,
-            }}
-            containerStyle={{
-              width: 200,
-              marginHorizontal: 50,
-              marginVertical: 10,
-            }}
-            titleStyle={{ fontWeight: "bold" }}
-            onPress={btnSearch}
-          />
-          {showSection && response.length>0 && (
+          <View style={styles.buttons}>
             <Button
-              title="תצוגת מפה"
+              title="חפש"
               buttonStyle={{
                 backgroundColor: "blue",
                 borderWidth: 2,
@@ -233,66 +218,83 @@ export default function Search3(props) {
                 marginVertical: 10,
               }}
               titleStyle={{ fontWeight: "bold" }}
-              onPress={() => {
-                props.navigation.navigate("SearchOnMap", { results: response });
-              }}
+              onPress={btnSearch}
             />
-          )}
+            {showSection && response.length > 0 && (
+              <Button
+                title="תצוגת מפה"
+                buttonStyle={{
+                  backgroundColor: "blue",
+                  borderWidth: 2,
+                  borderColor: "white",
+                  borderRadius: 30,
+                }}
+                containerStyle={{
+                  width: 200,
+                  marginHorizontal: 50,
+                  marginVertical: 10,
+                }}
+                titleStyle={{ fontWeight: "bold" }}
+                onPress={() => {
+                  props.navigation.navigate("SearchOnMap", { results: response });
+                }}
+              />
+            )}
+          </View>
         </View>
-      </View>
-      <View style={styles.resultsView}>
-      <ScrollView>
-        {response &&
-          response.length > 0 &&
-          response.map((x, i) => {
-            return (
-              <View key={i}>
-                <Text>מספר עסק: {x.Business_Number}</Text>
-                <Text>מספר תור: {x.Number_appointment}</Text>
-                <Text>תאריך: {moment(x.Date).format("DD-MM-YYYY")}</Text>
-                <Text>שעת התחלה: {x.Start_time}</Text>
-                <Text>שעת סיום: {x.End_time}</Text>
-                <Text>האם מגיע לבית הלקוח? {x.Is_client_house}</Text>
-                <Button
-                  title="צפה בפרופיל העסק"
-                  buttonStyle={{
-                    backgroundColor: "black",
-                    borderWidth: 2,
-                    borderColor: "white",
-                    borderRadius: 30,
-                  }}
-                  containerStyle={{
-                    width: 200,
-                    marginHorizontal: 50,
-                    marginVertical: 10,
-                  }}
-                  titleStyle={{ fontWeight: "bold" }}
-                  onPress={NavigateToBusiness(x.Business_Number)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
-                />
-                 <Button
-                  title="הזמן תור"
-                  buttonStyle={{
-                    backgroundColor: "black",
-                    borderWidth: 2,
-                    borderColor: "white",
-                    borderRadius: 30,
-                  }}
-                  containerStyle={{
-                    width: 200,
-                    marginHorizontal: 50,
-                    marginVertical: 10,
-                  }}
-                  titleStyle={{ fontWeight: "bold" }}
-                  onPress={() => btnBookApiontment(x)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
-                />
-                <Text>
-                  -----------------------------------------------------------
-                </Text>
-              </View>
-            );
-          })}
-      </ScrollView>
-      </View>
+        <View style={styles.resultsView}>
+          <ScrollView>
+            {response &&
+              response.length > 0 &&
+              response.map((x, i) => {
+                return (
+                  <View key={i}>
+                    <Text>מספר עסק: {x.Business_Number}</Text>
+                    <Text>מספר תור: {x.Number_appointment}</Text>
+                    <Text>תאריך: {moment(x.Date).format("DD-MM-YYYY")}</Text>
+                    <Text>שעת התחלה: {x.Start_time}</Text>
+                    <Text>שעת סיום: {x.End_time}</Text>
+                    <Text>האם מגיע לבית הלקוח? {x.Is_client_house}</Text>
+                    <Button
+                      title="צפה בפרופיל העסק"
+                      buttonStyle={{
+                        backgroundColor: "black",
+                        borderWidth: 2,
+                        borderColor: "white",
+                        borderRadius: 30,
+                      }}
+                      containerStyle={{
+                        width: 200,
+                        marginHorizontal: 50,
+                        marginVertical: 10,
+                      }}
+                      titleStyle={{ fontWeight: "bold" }}
+                      onPress={NavigateToBusiness(x.Business_Number)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
+                    />
+                    <Button
+                      title="הזמן תור"
+                      buttonStyle={{
+                        backgroundColor: "black",
+                        borderWidth: 2,
+                        borderColor: "white",
+                        borderRadius: 30,
+                      }}
+                      containerStyle={{
+                        width: 200,
+                        marginHorizontal: 50,
+                        marginVertical: 10,
+                      }}
+                      titleStyle={{ fontWeight: "bold" }}
+                      onPress={() => btnBookApiontment(x)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
+                    />
+                    <Text>
+                      -----------------------------------------------------------
+                    </Text>
+                  </View>
+                );
+              })}
+          </ScrollView>
+        </View>
       </ScrollView>
     </View>
   );
@@ -300,7 +302,7 @@ export default function Search3(props) {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1
+    flex: 1
   },
   filtersView: {},
   resultsView: {

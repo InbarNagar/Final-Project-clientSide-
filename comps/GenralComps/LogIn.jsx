@@ -19,7 +19,7 @@ import {LogInPro} from '../obj/FunctionAPICode';
 import { LogInProo } from '../obj/FunctionAPICode';
 import { UserContext } from '../../comps/UserDietails'
 import Header from '../obj/Header';
-
+import PushNofitictaion from '../PushNofitictaion';
 
 
 
@@ -31,6 +31,25 @@ export default function LogIn(props) {
   const [idNumber_professional, setidNumber_professional] = useState('');
 
    const { userDetails, setUserDetails } = useContext(UserContext);
+   const [islogin,setlogin]= useState();
+
+   useEffect( () => {
+    // setLoading(true)
+   if(islogin) {PushNofitictaion().then((token) => {
+        let data = { "pushtoken": token };//console.log("data",data);
+        console.log('***',token)
+     
+            let temp = Object.assign({}, userDetails, { Token: token });
+            setUserDetails(temp)
+    
+    }).catch((error) => {
+        
+        console.log("error in function post_pushToken " + error);
+      
+    });
+  }
+}, [islogin])
+
 
   let userType = route.params.userType
   console.log({ userType })
@@ -78,7 +97,7 @@ if(userDetails){
       LogInF(dataa).then((result) => {
         console.log('yes', result.data);
          setUserDetails(result.data)
-
+         setlogin(true);
   
       }, (error) => {
         console.log('error', error)
@@ -100,15 +119,32 @@ if(userDetails){
       console.log(password)
       console.log(data)
       console.log("www")
-      const res = LogInProo(data).then((result) => {
-      // LogInPro(ID_number, password).then((result) => {
-        console.log('yes', result)        
-         setUserDetails(result.data)
+
+
+      // const res = LogInProo(data).then((result) => {
+      // // LogInPro(ID_number, password).then((result) => {
+      //   console.log('yes', result)        
+         setUserDetails( {
+              "ID_number": "123455555 ",
+              "First_name": "nira",
+              "Last_name": "cohen",
+              "birth_date": "1965-10-12T00:00:00",
+              "gender": "F",
+              "phone": "521212121",
+              "Email": "nira@gmail.com",
+              "AddressStreet": "ehud",
+              "AddressHouseNumber": "5         ",
+              "AddressCity": "haifa",
+              "password": "12333",
+              "Business_Number": 4,
+              "userType": null
+          })
+          setlogin(true);
        
-        console.log('i am here')
-      }, (error) => {
-        console.log('error', error)
-      })
+      //   console.log('i am here')
+      // }, (error) => {
+      //   console.log('error', error)
+      // })
     //   console.log("yyy" + res);
     //   console.log("mmm" + res.Business_Number);
 

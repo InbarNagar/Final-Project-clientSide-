@@ -19,8 +19,8 @@ import Calendar_professional from './comps/Calendar_professional';
 import Menu_professional from './comps/obj/Menu_professional';
 // import TabbedPageNavigator from './comps/GenralComps/TabbedPage';
 // import MaterialTabbedPage from './comps/GenralComps/MaterialTabbedP
-import Maps_test from './comps/Maps_test'; 
-import { loginHook ,UserContext,loginHook2, BussinessContext} from './comps/UserDietails';
+import Maps_test from './comps/Maps_test';
+import { loginHook, UserContext } from './comps/UserDietails';
 import React from 'react';
 import SearchOnMap from './comps/SearchOnMap';
 import Menu_treatment_registration from './comps/Menu_treatment_registration';
@@ -49,40 +49,38 @@ import Set_notifications from './comps/Set_notifications';
 const Stack = createNativeStackNavigator();
 
 function App() {
-   const { userDetails, setUserDetails } = loginHook();
-  //  const { BussinessDetails,setBussinessDetails }=loginHook2()
+  const { userDetails, setUserDetails } = loginHook();
+
   return (
 
 
-// בשביל לשמור את כל המידע על המשתמשים
-   <UserContext.Provider value={{ userDetails, setUserDetails }
-    // && BussinessDetails? {BussinessDetails,setBussinessDetails}:""
-  }>
-      
+    // בשביל לשמור את כל המידע על המשתמשים
+    <UserContext.Provider value={{ userDetails, setUserDetails }}>
+
       <NavigationContainer>
 
-         <Stack.Navigator initialRouteName="Update_personal_details_Professional">  
-         <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional}/>  
-         {/* <Stack.Screen name="ScreenOne" component={ScreenOne} /> */}
-        {/* <Stack.Screen name="Menu_professional" component={Menu_professional} />
-        <Stack.Screen name="NewAppointment" component={NewAppointment} />
-        <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-         
-        <Stack.Screen name="LogIn" component={LogIn} />
-        <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} /> 
+        <Stack.Navigator initialRouteName="ScreenOne">
+
+          <Stack.Screen name="ScreenOne" component={ScreenOne} />
+          <Stack.Screen name="Menu_professional" component={Menu_professional} />
+          <Stack.Screen name="NewAppointment" component={NewAppointment} />
+          <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+          <Stack.Screen name="LogIn" component={LogIn} />
+          <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} />
           <Stack.Screen name="Search3" component={Search3} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen name='Professional_registration' component={Professional_registration} />
-        <Stack.Screen name='Client_registration' component={Client_registration} />
-        <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
-        <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
-        <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
-        <Stack.Screen name="Profil_pro" component={Profil_pro}/>
-        <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional}/>  
-         {/* <Stack.Screen name="Set_notifications" component={Set_notifications}/>  */}
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          <Stack.Screen name='Professional_registration' component={Professional_registration} />
+          <Stack.Screen name='Client_registration' component={Client_registration} />
+          <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
+          <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+          <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
+          <Stack.Screen name="Profil_pro" component={Profil_pro} />
+          <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} />
+          <Stack.Screen name="Set_notifications" component={Set_notifications} />
+          <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} />
         </Stack.Navigator>
       </NavigationContainer>
-     </UserContext.Provider>
+    </UserContext.Provider>
 
   );
 }

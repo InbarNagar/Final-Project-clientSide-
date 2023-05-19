@@ -1,15 +1,13 @@
 import { View, Text ,StyleSheet,ScrollView,TouchableOpacity,Keyboard,TextInput} from 'react-native'
 
 import { RadioButton } from "react-native-paper";
-import { UserContext,BussinessContext } from './UserDietails';
+import { UserContext} from './UserDietails';
 import React, { useState, useEffect, useContext } from 'react';
-
+import { BusinessDetails } from './obj/FunctionAPICode';
 
 export default function Update_personal_details_Bussines() {
 
     const { userDetails, setUserDetails } = useContext(UserContext);
-    // const {BussinessDetails, setBussinessDetails}= useContext(BussinessContext);********
-
     const [Name, setName] = useState('');
     const [AddressStreet, setStreet] = useState('');
     const [AddressHouseNumber, setHouseNumber] = useState('');
@@ -17,20 +15,37 @@ export default function Update_personal_details_Bussines() {
     const [Is_client_house, setLocation] = useState('');
     const [Professional_ID_number, setIdPro] = useState('');
     const BussinesNumber = userDetails.Business_Number;
-    const pro_id_preson = userDetails.Professional_ID_number
+   
+  const [DataDetails,setDetailsBus]=useState(null);
 
-    const Update_Bussines = () => {
+    useEffect(()=>{
+    BusinessDetails(BussinesNumber).then((result) => {
+    setDetailsBus(result.data);
+    setName(DataDetails.Name);
+    setStreet(DataDetails.AddressStreet);
+    setHouseNumber(DataDetails.AddressHouseNumber);
+    setCity(DataDetails.AddressCity);
+    setLocation(DataDetails.Is_client_house);
+    setIdPro(DataDetails.Professional_ID_number);
+
+    }, (error) => {
+      console.log('error', error)
+    })}
+
+   );
+   
+    // const Update_Bussines = () => {
         
-        const data = {
-            Name: Name,
-            Is_client_house: Is_client_house,
-            AddressStreet: AddressStreet,
-            AddressHouseNumber: AddressHouseNumber,
-            AddressCity: AddressCity,
-            Professional_ID_number: pro_id_preson
-        }
-
-    }
+    //     const data = {
+    //         Name: Name,
+    //         Is_client_house: Is_client_house,
+    //         AddressStreet: AddressStreet,
+    //         AddressHouseNumber: AddressHouseNumber,
+    //         AddressCity: AddressCity,
+    //         Professional_ID_number: Professional_ID_number,
+    //         Business_Number:BussinesNumber 
+    //     }
+    // }
 
     return (
 
@@ -39,11 +54,11 @@ export default function Update_personal_details_Bussines() {
             <View style={styles.container}>
         
               <Text style={styles.title}>  עריכת פרופיל עסקי</Text>
-              <Text style={styles.titp}> רק עוד כמה פרטים קטנים והעמוד שלך מוכן</Text>
+              <Text style={styles.titp}> שלום </Text>
         
               <View style={styles.inp}>
                 <TextInput style={styles.textInputS}
-                  placeholder="שם העסק"
+                  placeholder={Name}
                   placeholderTextColor="#92a2bd"
                   value={Name}
                   onChangeText={(text) => setName(text)}
@@ -91,17 +106,6 @@ export default function Update_personal_details_Bussines() {
                 
               </View>
         
-        
-              {/* <View>
-                <Text>{Id_Pro}</Text>
-              </View> */}
-              {/* <View style={styles.inp}>
-                <TextInput style={styles.textInputS}
-                  placeholder="תעודת זהות בעל עסק"
-                  value={Professional_ID_number}
-                  onChangeText={(text) => setIdPro(text)}
-                />
-              </View> */}
         
               
         <View>

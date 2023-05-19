@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import { StyleSheet, View, TextInput, Button, Text, marginRight, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -6,8 +6,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native';
 import LogIn from './LogIn';
 import Header from '../obj/Header';
-
+import PushNofitictaion from '../PushNofitictaion';
+import { UserContext } from '../UserDietails';
 const ScreenOne = (props) => {
+
+   
+ 
 
     return (
 
@@ -18,7 +22,9 @@ const ScreenOne = (props) => {
 
             <View >
            <Image style={style.image} source={require('../../assets/Studio.png')}/>
-                <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro'})
+
+                 <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro'})
+
                 }}>
                     <View style={style.viewS}>
                         <Text style={style.titleText}>בעלי עסקים</Text>
