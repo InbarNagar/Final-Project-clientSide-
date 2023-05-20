@@ -20,6 +20,7 @@ import {
   New_Future_Apointment,
   allApoC,
   Post_SendPushNotification,
+  AllApointemtDetailesForClient
 } from "./obj/FunctionAPICode";
 import moment from "moment";
 import { NavigationActions } from "react-navigation";
@@ -45,34 +46,34 @@ export default function Search3(props) {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const [apo,setapo]=useState();//inbar
   const [allAppointment, setallAppointment] = useState([
-    {
-      Number_appointment: 122,
-      Date: "2023-05-30T00:00:00",
-      Start_time: "21:49:56",
-      End_time: "21:49:56",
-      Is_client_house: "NO        ",
-      Business_Number: 4,
-      Appointment_status: "confirmed",
-      AddressStreet: "אהוד",
-      AddressCity: "חיפה",
-      AddressHouseNumber: "5         ",
-      BusinessName: "nirabeauty",
-      ID_Client: null,
-    },
-    {
-      Number_appointment: 1122,
-      Date: "2023-05-10T00:00:00",
-      Start_time: "15:13:20",
-      End_time: "15:13:20",
-      Is_client_house: "YES       ",
-      Business_Number: 4,
-      Appointment_status: "Appointment_ended",
-      AddressStreet: "אהוד",
-      AddressCity: "חיפה",
-      AddressHouseNumber: "5         ",
-      BusinessName: "nirabeauty",
-      ID_Client: null,
-    },
+    // {
+    //   Number_appointment: 122,
+    //   Date: "2023-05-30T00:00:00",
+    //   Start_time: "21:49:56",
+    //   End_time: "21:49:56",
+    //   Is_client_house: "NO        ",
+    //   Business_Number: 4,
+    //   Appointment_status: "confirmed",
+    //   AddressStreet: "אהוד",
+    //   AddressCity: "חיפה",
+    //   AddressHouseNumber: "5         ",
+    //   BusinessName: "nirabeauty",
+    //   ID_Client: null,
+    // },
+    // {
+    //   Number_appointment: 1122,
+    //   Date: "2023-05-10T00:00:00",
+    //   Start_time: "15:13:20",
+    //   End_time: "15:13:20",
+    //   Is_client_house: "YES       ",
+    //   Business_Number: 4,
+    //   Appointment_status: "Appointment_ended",
+    //   AddressStreet: "אהוד",
+    //   AddressCity: "חיפה",
+    //   AddressHouseNumber: "5         ",
+    //   BusinessName: "nirabeauty",
+    //   ID_Client: null,
+    // },
   ]); //תורים שמחכים לאישור
   const [allAppointmentEnd, setallAppointmentEnd] = useState([]); // תורים שעשיתי
   const [FutureAppointment, setFutureAppointment] = useState([]); //תורים עתידיים
@@ -131,14 +132,15 @@ export default function Search3(props) {
     setShowProfileSection(false);
     console.log("התורים שלי: " + showSAppointmenthSection);
     setShowSAppointmenthSectionn(!showSAppointmenthSection);
-    // allApoC(IdNumber).then((result) => {
-    //   if (result.data){
-    //     setallAppointment(result.data)
-    //     console.log(result.data.length);
-    //   }
-    // }, (error) => {
-    //   console.log('error', error)
-    // })
+    
+    AllApointemtDetailesForClient(userDetails).then((result) => {
+      if (result.data){
+        setallAppointment(result.data)
+        console.log(result.data);
+      }
+    }, (error) => {
+      console.log('error', error)
+    })
     console.log(JSON.stringify(allAppointment));
   };
   const [showProfileSection, setShowProfileSection] = useState(false); //להפעיל תצוגת פרופיל לקוח

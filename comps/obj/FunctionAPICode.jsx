@@ -143,3 +143,8 @@ export const SaveTokenforIDPro= (ID_number,token) => {
 export const AllApointemtDetailes= () => {
     return Axios(`Appointment/AllAppointment`, 'post',{})
 }
+
+
+export const AllApointemtDetailesForClient= (body) => {
+    return Axios(`Appointment/AllAppointmentForClient`, 'post',body)
+}
