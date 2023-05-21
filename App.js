@@ -11,7 +11,7 @@ import Client_registration from './comps/Client_registration';
 import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
 import Search3 from './comps/Search3';
-import Search from './comps/Search';
+import Search from './comps/Map';
 import AddTratment from './comps/AddTratment';
 import Menu_treatment_forAppointment from './comps/Menu_treatment_forAppointment';
 import NewAppointment from './comps/NewAppointment';
@@ -28,6 +28,7 @@ import Update_personal_details_Professional from './comps/Update_personal_detail
 import Update_personal_details_Bussines from './comps/Update_personal_details_Bussines';
 import Set_notifications from './comps/Set_notifications';
 import ClientProfile from './comps/ClientProfile';
+import Map from './comps/Map';
 
 
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -61,7 +62,7 @@ function App() {
       <NavigationContainer>
 
 
-        <Stack.Navigator initialRouteName="ScreenOne">
+        <Stack.Navigator initialRouteName="Map">
 
           <Stack.Screen name="ScreenOne" component={ScreenOne} />
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
@@ -70,6 +71,7 @@ function App() {
           <Stack.Screen name="LogIn" component={LogIn} />
           <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} />
           <Stack.Screen name="Search3" component={Search3} />
+          <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name='Professional_registration' component={Professional_registration} />
           <Stack.Screen name='Client_registration' component={Client_registration} />

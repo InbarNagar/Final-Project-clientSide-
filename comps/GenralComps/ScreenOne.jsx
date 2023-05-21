@@ -2,7 +2,6 @@ import React, { useState,useEffect,useContext } from 'react';
 import { StyleSheet, View, TextInput, Button, Text, marginRight, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { TouchableOpacity } from 'react-native';
 import LogIn from './LogIn';
 import Header from '../obj/Header';
@@ -41,7 +40,6 @@ const ScreenOne = (props) => {
                     </View>
 
                 </TouchableOpacity> 
-
             </View>
         </View>
     )

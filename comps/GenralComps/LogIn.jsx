@@ -11,7 +11,7 @@ import Client_registration from '../Client_registration';
 import Button from '../obj/Button';
 import Maps_test from '../Maps_test';
 import Search3 from '../Search3';
-import Search from '../Search';
+import Search from '../Map';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NewAppointment from '../NewAppointment';
 // import { AsyncStorage } from 'react-native';
