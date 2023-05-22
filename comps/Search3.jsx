@@ -14,6 +14,7 @@ import { AntDesign, Ionicons,Feather } from "@expo/vector-icons";
 import { RadioButton } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import {
+  GetAllAvailableAppointments,
   AppointmentToClient,
   Search_post,
   Treatment_type_GET,
@@ -26,13 +27,15 @@ import moment from "moment";
 import { NavigationActions } from "react-navigation";
 import { UserContext } from "../comps/UserDietails";
 import { Button } from "react-native-elements";
-
+import Geocoder from 'react-native-geocoding';
 
 import searchOnMap from "../comps/UserDietails";
 import AppointmentCard_forClient from "./obj/AppointmentCard_forClient";
 import { AllApointemtDetailes } from "./obj/FunctionAPICode";
 export default function Search3(props) {
   const { navigation } = props;
+  Geocoder.init('AIzaSyBMwN0NknaPibHnpv8laiFYUKmQFz1FHZY');
+
   const [AddressCity, setAddressCity] = useState("");
   const [NameTreatment, setNameTreatment] = useState("");
   const [gender, setGender] = useState("");
@@ -98,7 +101,18 @@ export default function Search3(props) {
         setapo(res.data)
       console.log(userDetails.ID_number.toString())
     });
-
+    GetAllAvailableAppointments().then(
+      (result) => {
+        console.log("available appointments amount: ", result.length);
+        if (result) {
+          // let temp = result.map((x) => x.Name);
+          SetResponse(result);
+        }
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
   }, []);
 
   useEffect(() => {
@@ -118,7 +132,7 @@ export default function Search3(props) {
 
   }, [token]);
   // אזור טיפול בהצגה והעלמת אזורים
-  const [showSearchSection, setShowSearchSection] = useState(false); //להפעיל תצוגת חיפוש תור
+  const [showSearchSection, setShowSearchSection] = useState(true); //להפעיל תצוגת חיפוש תור
   const handleSearchToggleSection = () => {
     console.log("מסך חיפוש : " + showSearchSection);
     setShowSAppointmenthSectionn(false);
@@ -161,10 +175,10 @@ export default function Search3(props) {
   const handleInstagramLink = () => {
     Linking.openURL(ClientData.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
   };
-  const [showSection, setShowSection] = useState(false); //להסתיר את הכפתור של תצוגת מפה
-  const handleToggleSection = () => {
-    setShowSection(!showSection);
-  };
+  // const [showSection, setShowSection] = useState(false); //להסתיר את הכפתור של תצוגת מפה
+  // const handleToggleSection = () => {
+  //   setShowSection(!showSection);
+  // };
 
 
   function btnSearch() {
@@ -202,6 +216,7 @@ export default function Search3(props) {
           console.log("error", error);
         }
       );
+      
     }
   }
 
@@ -214,7 +229,6 @@ export default function Search3(props) {
       
       Appointment_status: x.Appointment_status,
       ID_Client: ClientData.ID_Client,
-
       Number_appointment: x.Number_appointment,
     };
     console.log("****",pickedApointment);
@@ -226,7 +240,7 @@ export default function Search3(props) {
         apo.forEach((apointment)=>{
            if( pickedApointment.Number_appointment==apointment.Number_appointment){
             settoken(apointment.token)
-            return
+            return;
           }
         })
       //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
@@ -379,7 +393,7 @@ export default function Search3(props) {
                   titleStyle={{ fontWeight: "bold" }}
                   onPress={btnSearch}
                 />
-                {showSection && response.length > 0 && (
+                { response.length > 0 && (
                   <Button
                     title="תצוגת מפה"
                     buttonStyle={{

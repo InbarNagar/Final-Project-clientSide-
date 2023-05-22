@@ -145,6 +145,12 @@ export const AllApointemtDetailes= () => {
 }
 
 
+//כל התורים ללקוח
 export const AllApointemtDetailesForClient= (body) => {
     return Axios(`Appointment/AllAppointmentForClient`, 'post',body)
+}
+//מביא את כל התורים הפנויים הקיימים - למסך הפתיחה של הלקוח
+export const GetAllAvailableAppointments = () => {
+    console.log(`Appointment/AllAvailableAppointment`)
+    return Fetch(`Appointment/AllAvailableAppointment`,'get')
 }

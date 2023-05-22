@@ -60,10 +60,7 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-
-
-        <Stack.Navigator initialRouteName="Map">
-
+        <Stack.Navigator initialRouteName="ScreenOne">
           <Stack.Screen name="ScreenOne" component={ScreenOne} />
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
           <Stack.Screen name="NewAppointment" component={NewAppointment} />
