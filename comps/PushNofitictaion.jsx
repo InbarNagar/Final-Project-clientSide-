@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 export default async function PushNofitictaion() {
 
   let token;
-  if (Constants.isDevice) {
+  if (Constants.isDevice) {//בודק אם זה מכשיר נייד 
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     if (existingStatus !== 'granted') {

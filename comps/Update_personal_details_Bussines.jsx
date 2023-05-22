@@ -1,14 +1,14 @@
 import { View, Text ,StyleSheet,ScrollView,TouchableOpacity,Keyboard,TextInput} from 'react-native'
-
+import Alert from './Alert';
 import { RadioButton } from "react-native-paper";
 import { UserContext} from './UserDietails';
 import React, { useState, useEffect, useContext } from 'react';
 import { BusinessDetails } from './obj/FunctionAPICode';
-
+import { UpdateapiBusiness } from './obj/FunctionAPICode';
 export default function Update_personal_details_Bussines() {
 
     const { userDetails, setUserDetails } = useContext(UserContext);
-    const [Name, setName] = useState('');
+    const [Name, setName] = useState(DataDetails.Name);
     const [AddressStreet, setStreet] = useState('');
     const [AddressHouseNumber, setHouseNumber] = useState('');
     const [AddressCity, setCity] = useState('');
@@ -34,18 +34,30 @@ export default function Update_personal_details_Bussines() {
 
    );
    
-    // const Update_Bussines = () => {
+    const Update_Bussines = () => {
         
-    //     const data = {
-    //         Name: Name,
-    //         Is_client_house: Is_client_house,
-    //         AddressStreet: AddressStreet,
-    //         AddressHouseNumber: AddressHouseNumber,
-    //         AddressCity: AddressCity,
-    //         Professional_ID_number: Professional_ID_number,
-    //         Business_Number:BussinesNumber 
-    //     }
-    // }
+        const data = {
+            Name: Name,
+            Is_client_house: Is_client_house,
+            AddressStreet: AddressStreet,
+            AddressHouseNumber: AddressHouseNumber,
+            AddressCity: AddressCity,
+            Professional_ID_number: Professional_ID_number,
+            Business_Number:BussinesNumber 
+        }
+        console.log("%%%%%%%%%%%%%%%%%%%%%",data)
+        UpdateapiBusiness(data).then(
+          (res) => {
+              
+              console.log('yes', res.data)
+             
+              
+          }, (error) => {
+              console.log('error', error)
+           
+
+          });
+    }
 
     return (
 
@@ -58,7 +70,7 @@ export default function Update_personal_details_Bussines() {
         
               <View style={styles.inp}>
                 <TextInput style={styles.textInputS}
-                  placeholder={Name}
+                  placeholder="שם"
                   placeholderTextColor="#92a2bd"
                   value={Name}
                   onChangeText={(text) => setName(text)}
@@ -110,7 +122,8 @@ export default function Update_personal_details_Bussines() {
               
         <View>
                 <TouchableOpacity 
-        
+   
+      onPress={Update_Bussines}
                 >
                   <View style={styles.but}>  
                     <Text style={styles.thachtext}>עדכן</Text>

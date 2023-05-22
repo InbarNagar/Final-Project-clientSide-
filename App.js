@@ -29,8 +29,8 @@ import Update_personal_details_Bussines from './comps/Update_personal_details_Bu
 import Set_notifications from './comps/Set_notifications';
 import ClientProfile from './comps/ClientProfile';
 import Map from './comps/Map';
-
-
+import Update_ClientDetailes from './comps/Update_ClientDetailes';
+import LogInGenral from './comps/LogInGenral';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -60,12 +60,12 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="ScreenOne">
+        <Stack.Navigator initialRouteName="Menu_treatment_registration">\
           <Stack.Screen name="ScreenOne" component={ScreenOne} />
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
           <Stack.Screen name="NewAppointment" component={NewAppointment} />
           <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
-          <Stack.Screen name="LogIn" component={LogIn} />
+          {/* <Stack.Screen name="LogIn" component={LogIn} /> */}
           <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} />
           <Stack.Screen name="Search3" component={Search3} />
           <Stack.Screen name="Map" component={Map} />
@@ -79,7 +79,8 @@ function App() {
           <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} />
           <Stack.Screen name="Set_notifications" component={Set_notifications} />
           <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} />
-
+          <Stack.Screen name="Update_ClientDetailes" component={Update_ClientDetailes} />
+          <Stack.Screen name="LogInGenral" component={LogInGenral} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
