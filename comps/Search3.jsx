@@ -10,7 +10,7 @@ import {
   Image,
   Linking
 } from "react-native";
-import { AntDesign, Ionicons,Feather } from "@expo/vector-icons";
+import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { RadioButton } from "react-native-paper";
 import { Picker } from "@react-native-picker/picker";
 import {
@@ -41,10 +41,10 @@ export default function Search3(props) {
   const [categories, setCategories] = useState(["קטגוריה"]);
   const [chosenTreratmentNum, setChosenTreratmentNum] = useState(0);
   const [selectedTreatment, setSelectedTreatment] = useState({});
-   const [token,settoken]=useState();// ענבר
+  const [token, settoken] = useState();// ענבר
   const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
   const { userDetails, setUserDetails } = useContext(UserContext);
-  const [apo,setapo]=useState();//inbar
+  const [apo, setapo] = useState();//inbar
   const [allAppointment, setallAppointment] = useState([
     // {
     //   Number_appointment: 122,
@@ -92,28 +92,32 @@ export default function Search3(props) {
         console.log("error", error);
       }
     );
-    AllApointemtDetailes().then((res)=>{
-    
-      console.log("&&&&&&&&&&&&&&&&&&&&&&",res.data)
-        setapo(res.data)
+    AllApointemtDetailes().then((res) => {
+
+      console.log("&&&&&&&&&&&&&&&&&&&&&&", res.data)
+      setapo(res.data)
       console.log(userDetails.ID_number.toString())
     });
 
   }, []);
 
   useEffect(() => {
-    if(token){
-         const body = {
-          "to":  token,
-          "title": "BeautyMe",
-          "body": `${userDetails.First_name} הזמינה תור חדש `,
-          "badge": "0",
-          "ttl": "3",// מספר שניות לשליחה
-          "data": {
-            "to": token
-          }
+    if (token) {
+      const body = {
+        "to": token,
+        "title": "BeautyMe",
+        "body": `${userDetails.First_name} הזמינה תור חדש `,
+        "badge": "0",
+        "ttl": "1",// מספר שניות לשליחה
+        "data": {
+          "to": token
         }
-        Post_SendPushNotification(body).then(()=>{})
+      }
+      Post_SendPushNotification(body).then
+        (() => {
+          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%", token)
+        }
+        )
     }
 
   }, [token]);
@@ -132,9 +136,9 @@ export default function Search3(props) {
     setShowProfileSection(false);
     console.log("התורים שלי: " + showSAppointmenthSection);
     setShowSAppointmenthSectionn(!showSAppointmenthSection);
-    
+
     AllApointemtDetailesForClient(userDetails).then((result) => {
-      if (result.data){
+      if (result.data) {
         setallAppointment(result.data)
         console.log(result.data);
       }
@@ -211,29 +215,30 @@ export default function Search3(props) {
 
     //לקבוע תור
     const pickedApointment = {
-      
+
       Appointment_status: x.Appointment_status,
-      ID_Client: ClientData.ID_Client,
+      ID_Client: userDetails.ID_number,
 
       Number_appointment: x.Number_appointment,
     };
-    console.log("****",pickedApointment);
-    console.log("*************",x);
+    console.log("****", pickedApointment);
+    console.log("*************", x);
     AppointmentToClient(pickedApointment).then(
       (result) => {
         console.log("yes", result.data);
-       
-        apo.forEach((apointment)=>{
-           if( pickedApointment.Number_appointment==apointment.Number_appointment){
+
+        apo.forEach((apointment) => {
+          if (pickedApointment.Number_appointment == apointment.Number_appointment) {
             settoken(apointment.token)
+            console.log(apointment.token)
             return
           }
         })
-      //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
+        //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
         if (result.data) {
           alert("result.data");
         }
-     
+
         Alert.alert(`${x.Number_appointment} מחכה לאישור מבעל העסק }`);
 
       },
@@ -243,8 +248,8 @@ export default function Search3(props) {
     );
     btnSearch();
   }
-  function NavigateToBusiness(x){
-     console.log(x);
+  function NavigateToBusiness(x) {
+    console.log(x);
   }
 
   return (
@@ -295,7 +300,7 @@ export default function Search3(props) {
                 </Picker>
                 <Picker
                   selectedValue={sorts}
-                  // onValueChange={(value) => handleInputChange("sort", value)}
+                // onValueChange={(value) => handleInputChange("sort", value)}
                 >
                   {sorts.map((s) => (
                     <Picker.Item label={s} value={s} key={s} />
@@ -487,18 +492,21 @@ export default function Search3(props) {
                 <AntDesign name="instagram" size={24} color="black" />
               </TouchableOpacity>
             </View>
+            <TouchableOpacity onPress={() => props.navigation.navigate('Update_ClientDetailes')}>
+              <Text>עריכת פרופיל עסקי</Text>
+            </TouchableOpacity>
           </View>
         )}
       {/* סוף קומפוננטת מסך פרופיל */}
       {/* קומפוננטת תורים */}
       {showSAppointmenthSection &&
         !showProfileSection &&
-        !showSearchSection &&(
+        !showSearchSection && (
           <View style={styles.view1}>
             {allAppointment.map((appointment) => {
               return (
                 <AppointmentCard_forClient
-                key={appointment.Number_appointment}
+                  key={appointment.Number_appointment}
                   backgroundColor={"grey"}
                   status={appointment.Appointment_status}
                   Date={appointment.Date}
@@ -525,11 +533,11 @@ const styles = StyleSheet.create({
   },
   view1: {
     flex: 3,
-   flexDirection: 'column',
-    alignItems:'stretch',
-    padding:10,
-  //  borderColor:'#9acd32'
-   
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    padding: 10,
+    //  borderColor:'#9acd32'
+
 
   },
   filtersView: {},

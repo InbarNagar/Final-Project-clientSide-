@@ -16,10 +16,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './obj/Header';
 
 
-
-
-
-
 const Menu_treatment_registration = (props) =>{
 
     const [treatments, setTreatments] = useState([]);

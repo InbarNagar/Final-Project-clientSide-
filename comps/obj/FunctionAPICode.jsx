@@ -140,11 +140,16 @@ export const SaveTokenforIDPro= (ID_number,token) => {
     return Axios(`Client/OneProfessionalToken/${ID_number}/${token}`, 'post',{})
 }
 
+//כל התורים בשביל טוקן
 export const AllApointemtDetailes= () => {
     return Axios(`Appointment/AllAppointment`, 'post',{})
 }
 
-
+//כל התורים ללקוח
 export const AllApointemtDetailesForClient= (body) => {
     return Axios(`Appointment/AllAppointmentForClient`, 'post',body)
+}
+
+export const UpdateapiBusiness=(body)=>{
+    return Axios(`Business/UpdateBusinesss`, 'post',body)
 }
