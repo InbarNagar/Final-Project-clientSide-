@@ -134,36 +134,36 @@
 //       console.log("www")
 
 
-//       const res = LogInProo(data).then((result) => {
-//       // LogInPro(ID_number, password).then((result) => {
-//         console.log('yes', result)        
-//         //  setUserDetails( {
-//         //       "ID_number": "123455555 ",
-//         //       "First_name": "nira",
-//         //       "Last_name": "cohen",
-//         //       "birth_date": "1965-10-12T00:00:00",
-//         //       "gender": "F",
-//         //       "phone": "521212121",
-//         //       "Email": "nira@gmail.com",
-//         //       "AddressStreet": "ehud",
-//         //       "AddressHouseNumber": "5         ",
-//         //       "AddressCity": "haifa",
-//         //       "password": "12333",
-//         //       "Business_Number": 4,
-//         //       "userType": null
-//         //   })
-//           setlogin(true);
+// //       const res = LogInProo(data).then((result) => {
+// //       // LogInPro(ID_number, password).then((result) => {
+// //         console.log('yes', result)        
+// //         //  setUserDetails( {
+// //         //       "ID_number": "123455555 ",
+// //         //       "First_name": "nira",
+// //         //       "Last_name": "cohen",
+// //         //       "birth_date": "1965-10-12T00:00:00",
+// //         //       "gender": "F",
+// //         //       "phone": "521212121",
+// //         //       "Email": "nira@gmail.com",
+// //         //       "AddressStreet": "ehud",
+// //         //       "AddressHouseNumber": "5         ",
+// //         //       "AddressCity": "haifa",
+// //         //       "password": "12333",
+// //         //       "Business_Number": 4,
+// //         //       "userType": null
+// //         //   })
+// //           setlogin(true);
        
-//       //   console.log('i am here')
-//       // }, (error) => {
-//       //   console.log('error', error)
-//       // })
-//     //   console.log("yyy" + res);
-//     //   console.log("mmm" + res.Business_Number);
+// //       //   console.log('i am here')
+// //       // }, (error) => {
+// //       //   console.log('error', error)
+// //       // })
+// //     //   console.log("yyy" + res);
+// //     //   console.log("mmm" + res.Business_Number);
 
-//     //   await AsyncStorage.setItem('Business_Number', res.Business_Number); // הכנסה ללוקאל סטורג
-//     //   const storedIdbus = await AsyncStorage.getItem('Business_Number'); //לקיחת הנתונין מהלוקאל סטורג והדפסה שלו כדי לראותת שזה הצליח
-//     // console.log('Stored idbus:', storedIdbus);
+// //     //   await AsyncStorage.setItem('Business_Number', res.Business_Number); // הכנסה ללוקאל סטורג
+// //     //   const storedIdbus = await AsyncStorage.getItem('Business_Number'); //לקיחת הנתונין מהלוקאל סטורג והדפסה שלו כדי לראותת שזה הצליח
+// //     // console.log('Stored idbus:', storedIdbus);
 //     }
     
   
@@ -321,100 +321,100 @@
 
 
 
-// // const handleLogin =  async () => {
-//   //   if (userType == 'Cli') {
-//   //     await AsyncStorage.setItem('idNumber_client', idNumber_client);
-//   //     console.log('cli')
-//   //     
-//   //     LogInF(ID_number, password).then((result) => {
-//   //       console.log('yes', result);
-//   //       // navigation.navigate('Search')
+// // // const handleLogin =  async () => {
+// //   //   if (userType == 'Cli') {
+// //   //     await AsyncStorage.setItem('idNumber_client', idNumber_client);
+// //   //     console.log('cli')
+// //   //     
+// //   //     LogInF(ID_number, password).then((result) => {
+// //   //       console.log('yes', result);
+// //   //       // navigation.navigate('Search')
 
-//   //     }, (error) => {
-//   //       console.log('error', error)
-//   //     })
-//   //   }
-//   //   else {
-//   //     console.log(ID_number)
-//   //     await AsyncStorage.setItem('idNumber_professional', ID_number);
-//   //     console.log('professional')
-//   //     const storedIdNumber = await AsyncStorage.getItem('idNumber_professional');
-//   //   console.log('Stored idNumber_professional:', storedIdNumber);
-//   //     const data = {
-//   //       ID_number: ID_number,
-//   //       password: password,
-//   //     } 
-//   //     console.log(ID_number)
-//   //     console.log(password)
-//   //     console.log(data)
-//   //     LogInProo(data).then((result) => {
-//   //     // LogInPro(ID_number, password).then((result) => {
-//   //       console.log('yes', result)
-//   //      navigation.navigate('NewAppointment')
-//   //       console.log('i am here')
-//   //     }, (error) => {
-//   //       console.log('error', error)
-//   //     })
-//   //   }
-//   // }
-//       //option 1 - less
-//       // const userData = { ID_number: ID_number, password: password }
-//       // let url = 'http://proj.ruppin.ac.il/cgroup93/prod/api/Professional/GetProfessional'
-//       // const response = fetch(url, {
-//       //   method: 'POST',
-//       //   headers: ({
-//       //     "Content-type": "application/json",
-//       //     'Accept': "application/json"
-//       //   }),
-//       //   body: JSON.stringify(userData),
-//       // })
-//       //   .then((response) => {
-//       //     if (response.status === 200)
-//       //       return response.json()
-//       //     else return null
-//       //   })
-//       //   .then((json) => {
-//       //     if (json === null)
-//       //       alert('login faild')
-//       //     else
-//       //       alert('login ok')
-//       //     navigation.navigate('Search', { user: json })
-//       //   }).catch((error) => {
-//       //     Alert.alert('Login Failed');
-//       //     console.log(error);
-//       //   }
-//       //   );
+// //   //     }, (error) => {
+// //   //       console.log('error', error)
+// //   //     })
+// //   //   }
+// //   //   else {
+// //   //     console.log(ID_number)
+// //   //     await AsyncStorage.setItem('idNumber_professional', ID_number);
+// //   //     console.log('professional')
+// //   //     const storedIdNumber = await AsyncStorage.getItem('idNumber_professional');
+// //   //   console.log('Stored idNumber_professional:', storedIdNumber);
+// //   //     const data = {
+// //   //       ID_number: ID_number,
+// //   //       password: password,
+// //   //     } 
+// //   //     console.log(ID_number)
+// //   //     console.log(password)
+// //   //     console.log(data)
+// //   //     LogInProo(data).then((result) => {
+// //   //     // LogInPro(ID_number, password).then((result) => {
+// //   //       console.log('yes', result)
+// //   //      navigation.navigate('NewAppointment')
+// //   //       console.log('i am here')
+// //   //     }, (error) => {
+// //   //       console.log('error', error)
+// //   //     })
+// //   //   }
+// //   // }
+// //       //option 1 - less
+// //       // const userData = { ID_number: ID_number, password: password }
+// //       // let url = 'http://proj.ruppin.ac.il/cgroup93/prod/api/Professional/GetProfessional'
+// //       // const response = fetch(url, {
+// //       //   method: 'POST',
+// //       //   headers: ({
+// //       //     "Content-type": "application/json",
+// //       //     'Accept': "application/json"
+// //       //   }),
+// //       //   body: JSON.stringify(userData),
+// //       // })
+// //       //   .then((response) => {
+// //       //     if (response.status === 200)
+// //       //       return response.json()
+// //       //     else return null
+// //       //   })
+// //       //   .then((json) => {
+// //       //     if (json === null)
+// //       //       alert('login faild')
+// //       //     else
+// //       //       alert('login ok')
+// //       //     navigation.navigate('Search', { user: json })
+// //       //   }).catch((error) => {
+// //       //     Alert.alert('Login Failed');
+// //       //     console.log(error);
+// //       //   }
+// //       //   );
 
-//       //option 2 - fav
-//       // console.log('professional')
-//       // LogInPro(ID_number, password).then((result) => {
-//       //   console.log('yes', result)
-//       //   navigation.navigate('Search3')
-//       //   console.log('i am here')
-//       // }, (error) => {
-//       //   console.log('error', error)
-//       // })
+// //       //option 2 - fav
+// //       // console.log('professional')
+// //       // LogInPro(ID_number, password).then((result) => {
+// //       //   console.log('yes', result)
+// //       //   navigation.navigate('Search3')
+// //       //   console.log('i am here')
+// //       // }, (error) => {
+// //       //   console.log('error', error)
+// //       // })
     
 
-//     // const response = await  fetch('http://localhost:53758/api/Client/OneClient', {
-//     //   method: 'POST',
-//     //   headers:({
-//     //     "Content-type": "application/json",
-//     //     'Accept': "application/json"
-//     //   }),
-//     //   body: JSON.stringify({ "ID_number":ID_number,"password": password }),
-//     // })
+// //     // const response = await  fetch('http://localhost:53758/api/Client/OneClient', {
+// //     //   method: 'POST',
+// //     //   headers:({
+// //     //     "Content-type": "application/json",
+// //     //     'Accept': "application/json"
+// //     //   }),
+// //     //   body: JSON.stringify({ "ID_number":ID_number,"password": password }),
+// //     // })
 
-//     // const data = await response.json();
+// //     // const data = await response.json();
 
-//     // if (data.success) {
-//     //   Alert.alert('Login successful');
-//     //   // navigate to the next screen
-//     //   props.navigation.navigate('Search')
-//     // } 
+// //     // if (data.success) {
+// //     //   Alert.alert('Login successful');
+// //     //   // navigate to the next screen
+// //     //   props.navigation.navigate('Search')
+// //     // } 
 
-//     // else {
-//     //   Alert.alert('Login failed', data.message);
-//     // }
+// //     // else {
+// //     //   Alert.alert('Login failed', data.message);
+// //     // }
 
 // }

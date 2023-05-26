@@ -60,7 +60,7 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Menu_treatment_registration">\
+        <Stack.Navigator initialRouteName="ScreenOne">
           <Stack.Screen name="ScreenOne" component={ScreenOne} />
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
           <Stack.Screen name="NewAppointment" component={NewAppointment} />
@@ -73,7 +73,7 @@ function App() {
           <Stack.Screen name='Professional_registration' component={Professional_registration} />
           <Stack.Screen name='Client_registration' component={Client_registration} />
           <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
-          <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+          <Stack.Screen name="Menu_treatment_regisFtration" component={Menu_treatment_registration} />
           <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
           <Stack.Screen name="Profil_pro" component={Profil_pro} />
           <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} />
@@ -81,6 +81,7 @@ function App() {
           <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} />
           <Stack.Screen name="Update_ClientDetailes" component={Update_ClientDetailes} />
           <Stack.Screen name="LogInGenral" component={LogInGenral} />
+          <Stack.Screen name="ClientProfile" component={ClientProfile} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
