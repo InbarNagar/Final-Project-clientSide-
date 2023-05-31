@@ -160,3 +160,7 @@ export const GetAllAvailableAppointments = () => {
 export const UpdateapiBusiness=(body)=>{
     return Axios(`Business/UpdateBusinesss`, 'post',body)
 }
+//פרטי עסק לפי מספר תור
+export const GetOneAppointment=(appointmentNumber)=>{
+    return Fetch(`Appointment/OneAppointment/${appointmentNumber}`,'get')
+}

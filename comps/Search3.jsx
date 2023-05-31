@@ -468,6 +468,7 @@ export default function Search3(props) {
               console.log("key: "+appointment.Number_appointment);
               return (
                 <AppointmentCard_forClient
+                  key={appointment.Number_appointment}
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"grey"}
                   status={appointment.Appointment_status}
@@ -477,8 +478,8 @@ export default function Search3(props) {
                   AddressStreet={appointment.AddressStreet}
                   AddressHouseNumber={appointment.AddressHouseNumber}
                   AddressCity={appointment.AddressCity}
-                  BusinessName={appointment.BusinessName}
-                
+                  BusinessName={appointment.Name}
+                  ClientIDnumber={userDetails.ID_number}
                 />
               );
             })}
