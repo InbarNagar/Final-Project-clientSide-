@@ -1,9 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
+import Button from "./Button";
+import { allApoB } from "./FunctionAPICode";
 
 
 const AppointmentCard_forProfessional_Calendar = (props) => {
-  const { backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, Client_Last_Name } = props;
+  const { backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, Client_Last_Name,ID_Client} = props;
+
+
 
   const styles = StyleSheet.create({
     card: {
@@ -25,16 +29,27 @@ const AppointmentCard_forProfessional_Calendar = (props) => {
     }
   });
 
-  const massage = () => {
+
+
+  const massage = (ID_Client) => {
     if (status == "Appointment_ended") {
       return <Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
     }
-    if (status == "Confirmed")
-      return <Text style={styles.title}>{Treatment_Type} {Client_Name} {Client_Last_Name} :שם לקוחה </Text>
+    if (status == "Confirmed"){
+  
+      return <Text style={styles.title}>{Treatment_Type} {Client_Name} {Client_Last_Name} :שם לקוחה </Text>}
 
     if (status == "Not available") // if status =
       return <Text style={styles.title}>תור לא זמין</Text>
 
+    if(status=="Awaiting_approval"){
+    return(
+    <>
+    <Text style={styles.title}>{Treatment_Type} {Client_Name} {Client_Last_Name} :שם לקוחה </Text>
+    <Button text="אשר תור"></Button>
+    </>
+    );
+  }
     else { // if status =
       return <Text style={styles.title}>תור עדיין פנוי</Text>
     }
@@ -43,9 +58,10 @@ const AppointmentCard_forProfessional_Calendar = (props) => {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{moment(Date).format('DD/MM/YYYY')}</Text>
-      {massage()}
+     
       {/* <Text style={styles.title}>{Treatment_Type} - {Client_Name}</Text> */}
       <Text style={styles.title}>{Start_time} - {End_time}</Text>
+      {massage(ID_Client)}
     </View>
   );
 };

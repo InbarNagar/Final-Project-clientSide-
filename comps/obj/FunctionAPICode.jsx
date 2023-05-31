@@ -72,8 +72,8 @@ export const New_Future_Apointment = (body) => {
 }
 
 
-export const LogInF = (body) => {
-    return Axios(`Client/OneClient`, 'post', body)
+export const ClientDetailes = (ID_number) => {
+    return Axios(`Client/OneClient/${ID_number}`, 'post')
 }
 //כל התורים של בעל עסק
 export const allApoB= (Business_Numberr) => {

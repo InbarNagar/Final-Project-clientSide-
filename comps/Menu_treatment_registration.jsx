@@ -187,10 +187,16 @@ async function loadData() {
             console.log(result.status)
             Alert.alert(
                'העסק נוסף בהצלחה',
-              'שמחים שהצטרפתם למשפחת Beauty Me',
+              'שמחים שהצטרפתם למשפחת Beauty Me. '+
+              'תרצו להוסיף טיפול נוסף?',
               [
-                { text: 'ייאאלה בואו נתחיל', onPress: () => {props.navigation.navigate('LogInGenral',{userType:'Pro'})
-              } },
+                { text: 'הוספת טיפול נוסף', onPress: () => {
+                  setSelectedTreatment(null)
+                  setSelectedCategory(null)
+                  setPrice(null)
+                  setDuration(null)
+                } },
+                { text: 'ייאאלה בואו נתחיל', onPress: () => {props.navigation.navigate('LogInGenral',{userType:'Pro'})} },
               ],
               { cancelable: false }
             );
