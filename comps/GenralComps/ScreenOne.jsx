@@ -23,7 +23,7 @@ const ScreenOne = (props) => {
            <Image style={style.image} source={require('../../assets/Studio.png')}/>
 
 
-                 <TouchableOpacity onPress={() => {props.navigation.navigate('LogIn',{userType:'Pro'})
+                 <TouchableOpacity onPress={() => {props.navigation.navigate('LogInGenral',{userType:'Pro'})
 
 
                 }}>
@@ -33,7 +33,7 @@ const ScreenOne = (props) => {
 
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { props.navigation.navigate('LogIn',{userType:'Cli'})
+                <TouchableOpacity onPress={() => { props.navigation.navigate('LogInGenral',{userType:'Cli'})
              }}>
                     <View style={style.viewS}>
                         <Text style={style.titleText} >לקוחות</Text>

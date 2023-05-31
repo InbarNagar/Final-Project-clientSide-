@@ -94,15 +94,19 @@ export const FutureAppointmenB = (Business_Numberr) => {
 }
 
 export const DeleteClient=(clientID_number)=>{
-    return Fetch('Client/DeleteClient','DELETE',clientID_number)
+    return Fetch(`Client/DeleteClient/${clientID_number}`,'DELETE')
 }
 //מחיקת עסק קיים
 export const DeleteBusiness=(businessNumber)=>{
-    return Fetch('Business/DeleteBusinesss','DELETE',businessNumber)
+    return Fetch(`Business/DeleteBusinesss/${businessNumber}`,'DELETE')
 }
 //מחיקת בעל עסק
 export const DeleteProffesional=(profssinalID_number)=>{
-    return Fetch('Proffesional/DeleteProffesional','DELETE',profssinalID_number)
+    return Fetch(`Proffesional/DeleteProffesional/${profssinalID_number}`,'DELETE')
+}
+//מחיקת תור עתידי ע"י לקוח
+export const CancelAppointmentByClient=(appointmentNumber)=>{
+    return Fetch(`Appointment/CanceleAppointmentByClient/${appointmentNumber}`,'DELETE')
 }
 //עדכון פרטי לקוח 
 export const UpdateClient=(body)=>{
@@ -116,7 +120,6 @@ export const UpdateProffesional=(body)=>{
 export const LogInUser = (body) => {
     return Axios(`user/checkUser`, 'post', body)
 }
-
 
 export const BusinessDetails= (business_num) => {
     return Axios(`Business/OneBusiness/${business_num}`, 'post')
@@ -149,7 +152,11 @@ export const AllApointemtDetailes= () => {
 export const AllApointemtDetailesForClient= (body) => {
     return Axios(`Appointment/AllAppointmentForClient`, 'post',body)
 }
-
+//מביא את כל התורים הפנויים הקיימים - למסך הפתיחה של הלקוח
+export const GetAllAvailableAppointments = () => {
+    console.log(`Appointment/AllAvailableAppointment`)
+    return Fetch(`Appointment/AllAvailableAppointment`,'get')
+}
 export const UpdateapiBusiness=(body)=>{
     return Axios(`Business/UpdateBusinesss`, 'post',body)
 }

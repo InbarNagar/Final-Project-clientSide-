@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import Button from '../obj/Button';
  import Professional_registration from './Professional_registration';
 // import { AsyncStorage } from 'react-native';
-
+import ClientProfile from './ClientProfile';
 import { UserContext } from './UserDietails';
 import Header from './obj/Header';
 import PushNofitictaion from './PushNofitictaion';

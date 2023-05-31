@@ -364,5 +364,5 @@ async function loadData() {
                 });
 
 
-                export default Menu_treatment_registration
+                export default Menu_treatment_registration;
 

@@ -1,4 +1,4 @@
-import { React, useContext, useState } from "react";
+import { React, useContext, useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -6,45 +6,23 @@ import {
   Linking,
   StyleSheet,
   Image,
+  BackHandler,
+  Alert
 } from "react-native";
-import { AntDesign, Feather } from "@expo/vector-icons";
+import {Button} from 'react-native-elements';
+import { AntDesign, Feather, FontAwesome } from "@expo/vector-icons";
 import { UserContext } from "./UserDietails";
-export default function ClientProfile() {
-  const [showAppointmentSection, setShowAppointmentSection] = useState(false); //להציג את התורים שלי
+import { exp } from "react-native-reanimated";
+import { useNavigation } from "@react-navigation/native";
+import { DeleteClient } from "./obj/FunctionAPICode";
+import { TextInput } from "react-native-gesture-handler";
+import { string } from "prop-types";
 
-  const handleAppointmentToggleSection = () => {
-    console.log("התורים שלי: "+showAppointmentSection);
-    setShowAppointmentSection(!showAppointmentSection);
-  };
+const ClientProfile = (props) => {
+  const navigation = useNavigation();
+
   const { userDetails, setUserDetails } = useContext(UserContext);
-  // const ClientData = userDetails;
-  const ClientData = {
-    ID_number: "123456789 ",
-    First_name: "maya",
-    Last_name: "cohen",
-    birth_date: "1990-01-01T00:00:00",
-    gender: "F",
-    phone: "521111111",
-    Email: "maya@gmail.com",
-    AddressStreet: "hamenora",
-    AddressHouseNumber: "2         ",
-    AddressCity: "haifa",
-    Facebook_link:
-      "https://www.facebook.com/profile.php?id=1750014197&mibextid=ZbWKwL",
-    Instagram_link:
-      "https://instagram.com/inbar_nagar7?igshid=NTc4MTIwNjQ2YQ==",
-    password: "111",
-    userType: "Cli",
-  };
-  const handleEditDetails = () => {
-    // Handle edit details button press
-    // Add your logic here
-  };
-
-  const handleNavigate = () => {
-    // Handle navigate button press
-    // Add your navigation logic here
-  };
+  const ClientData = userDetails;
 
   const handleFacebookLink = () => {
     Linking.openURL(ClientData.Facebook_link); // לשים משתנה של כתובת פייסבוק שהמשתמש יזין
@@ -53,81 +31,102 @@ export default function ClientProfile() {
   const handleInstagramLink = () => {
     Linking.openURL(ClientData.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
   };
+  const [deleteSection, SetDeleteSection] = useState(false);
+  const[confirmID,SetConfirmID]=useState('');
+  const handleDeleteSection = () => SetDeleteSection(prevState => !prevState);
+  function exitApp() {
+    BackHandler.exitApp();
+    return true;
+}
 
-  return (
-    <View>
-      <View style={styles.menu}>
-        <TouchableOpacity style={styles.menuItem}>
-          <AntDesign name="edit" size={24} color="black" />
-          <Text style={styles.menuText}>עריכת פרטים</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={() => navigation.navigate("Search3")}
-        >
-          <AntDesign name="home" size={24} color="black" />
-          <Text style={styles.menuText}>מסך בית</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={handleAppointmentToggleSection}
-        >
-          <AntDesign name="calendar" size={24} color="black" />
-          <Text style={styles.menuText}>התורים שלי</Text>
-        </TouchableOpacity>
-      </View>
-      <View>
-        {/* <Image source={require('')} style={{ width: 150, height: 150 }} /> */}
-        <Image
-          source={require(".././assets/Wpic.jpg")}
-          style={{ width: 100, height: 100 }}
-        />
-        <Text style={{ fontSize: 30, fontWeight: 2 }}>
-          {ClientData.First_name} {ClientData.Last_name}
-        </Text>
-        <Text>טלפון: {ClientData.phone}</Text>
-        <Text>
-          כתובת: {ClientData.AddressStreet} {ClientData.AddressHouseNumber},
-          {ClientData.AddressCity}
-        </Text>
-        <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={handleFacebookLink}>
-            <Feather name="facebook" size={24} color="black" />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleInstagramLink}>
-            <AntDesign name="instagram" size={24} color="black" />
-          </TouchableOpacity>
-        </View>
-        </View>
-
-        {showAppointmentSection && (
-          <View>
-            <Text>התורים שלי!</Text>
-          </View>
-        )}
-    </View>
+function deleteAccount() {
+  if(confirmID==="DELETE"){
+    console.log("starting to delete account");
+    DeleteClient(ClientData.ID_number).then(
+    (result) => {
+      console.log(`client ${ClientData.ID_number} DELETED! `);
+      console.log(result.data);
+      
+      exitApp();
+    },
+    (error) => {
+      console.log("error", error);
+      // Handle error, including finding a way to display to the user that deletion failed.
+    }
   );
 }
+else{
+  console.log("confirmation didn't operate correctly");
+  Alert.alert("confirmation of ID was wrong!")
+}
+}
+  return (
+    <View style={styles.container}>
+      <Image
+        source={require(".././assets/Wpic.jpg")}
+        style={styles.profilePicture}
+      />
+      <View style={styles.iconContainer}>
+        <TouchableOpacity onPress={handleInstagramLink}>
+          <FontAwesome name="instagram" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleInstagramLink}>
+          <FontAwesome name="facebook-square" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.name}>
+        {ClientData.First_name + " " + ClientData.Last_name}
+      </Text>
+      <Text style={styles.address}>
+        {ClientData.AddressStreet +
+          " " +
+          ClientData.AddressHouseNumber +
+          ", " +
+          ClientData.AddressCity}
+      </Text>
+      <Button
+        title="עריכת פרופיל"
+        onPress={() => navigation.navigate("Update_ClientDetailes")}
+      />
+      <Button title="מחיקת חשבון" onPress={handleDeleteSection} buttonStyle={{backgroundColor:'red'}}/>
+      {deleteSection &&
+       <View>
+        <Text>כדי למחוק את החשבון יש לכתוב DELETE</Text>
+        <TextInput placeholder="כתוב DELETE" value={confirmID} onChangeText={(value)=>SetConfirmID(value)}/>
+      <TouchableOpacity onPress={deleteAccount}>
+      <AntDesign name="delete" size={24} color="black" />
+      </TouchableOpacity>
+      </View>}
+    </View>
+  );
+};
 const styles = StyleSheet.create({
-  menu: {
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    paddingTop: 10,
+  },
+  profilePicture: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+  },
+  iconContainer: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center",
-    // backgroundColor: '#f2f2f2',
-    height: 60,
-    width: "100%",
-    bottom: 0,
-    borderTopWidth: 1,
-    borderTopColor: "#cccccc",
+    width: "50%",
+    marginTop: 10,
+    marginBottom: 10,
   },
-  menuItem: {
-    alignItems: "center",
-    justifyContent: "center",
+  name: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
-  menuText: {
-    fontSize: 12,
-    paddingTop: 5,
+  address: {
+    fontSize: 14,
+    textAlign: "center",
   },
 });
+export default ClientProfile;

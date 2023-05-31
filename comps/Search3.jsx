@@ -11,28 +11,35 @@ import {
   Linking
 } from "react-native";
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
-import { RadioButton } from "react-native-paper";
-import { Picker } from "@react-native-picker/picker";
+// import { RadioButton } from "react-native-paper";
+// import { Picker } from "@react-native-picker/picker";
 import {
-  AppointmentToClient,
-  Search_post,
-  Treatment_type_GET,
-  New_Future_Apointment,
-  allApoC,
-  Post_SendPushNotification,
+  // GetAllAvailableAppointments,
+  // AppointmentToClient,
+  // Search_post,
+  // Treatment_type_GET,
+  // New_Future_Apointment,
+  // allApoC,
+  // Post_SendPushNotification,
   AllApointemtDetailesForClient
 } from "./obj/FunctionAPICode";
 import moment from "moment";
 import { NavigationActions } from "react-navigation";
 import { UserContext } from "../comps/UserDietails";
 import { Button } from "react-native-elements";
-
-
+import Geocoder from 'react-native-geocoding';
 import searchOnMap from "../comps/UserDietails";
 import AppointmentCard_forClient from "./obj/AppointmentCard_forClient";
-import { AllApointemtDetailes } from "./obj/FunctionAPICode";
+// import { AllApointemtDetailes } from "./obj/FunctionAPICode";
+import ClientProfile from "./ClientProfile";
+// import ClientSearchReasultCard from "./ClientSearchReasultCard";
+import SearchFiltersMenu from "./SearchFiltersMenu";
+
+
 export default function Search3(props) {
   const { navigation } = props;
+  Geocoder.init('AIzaSyBMwN0NknaPibHnpv8laiFYUKmQFz1FHZY');
+
   const [AddressCity, setAddressCity] = useState("");
   const [NameTreatment, setNameTreatment] = useState("");
   const [gender, setGender] = useState("");
@@ -79,50 +86,61 @@ export default function Search3(props) {
   const [FutureAppointment, setFutureAppointment] = useState([]); //תורים עתידיים
   const ClientData = userDetails;
   // const IdNumber = "123456789";
-  useEffect(() => {
-    Treatment_type_GET().then(
-      (result) => {
-        console.log("categories: ", result);
-        if (result) {
-          // let temp = result.map((x) => x.Name);
-          setCategories(result);
-        }
-      },
-      (error) => {
-        console.log("error", error);
-      }
-    );
-    AllApointemtDetailes().then((res) => {
+  // useEffect(() => {
+  //   Treatment_type_GET().then(
+  //     (result) => {
+  //       console.log("categories: ", result);
+  //       if (result) {
+  //         // let temp = result.map((x) => x.Name);
+  //         setCategories(result);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log("error", error);
+  //     }
+  //   );
+  //   AllApointemtDetailes().then((res) => {
 
-      console.log("&&&&&&&&&&&&&&&&&&&&&&", res.data)
-      setapo(res.data)
-      console.log(userDetails.ID_number.toString())
-    });
+  //     console.log("&&&&&&&&&&&&&&&&&&&&&&", res.data)
+  //     setapo(res.data)
+  //     console.log(userDetails.ID_number.toString())
+  //   });
+  //   GetAllAvailableAppointments().then(
+  //     (result) => {
+  //       console.log("available appointments amount: ", result.length);
+  //       if (result) {
+  //         // let temp = result.map((x) => x.Name);
+  //         SetResponse(result);
+  //       }
+  //     },
+  //     (error) => {
+  //       console.log("error", error);
+  //     }
+  //   );
+  // }, []);
 
-  }, []);
+  // useEffect(() => {
+  //   if (token) {
+  //     const body = {
+  //       "to": token,
+  //       "title": "BeautyMe",
+  //       "body": `${userDetails.First_name} הזמינה תור חדש `,
+  //       "badge": "0",
+  //       "ttl": "1",// מספר שניות לשליחה
+  //       "data": {
+  //         "to": token
+  //       }
+  //     }
+  //     Post_SendPushNotification(body).then
+  //       (() => {
+  //         console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%", token)
+  //       }
+  //       )
+  //   }
 
-  useEffect(() => {
-    if (token) {
-      const body = {
-        "to": token,
-        "title": "BeautyMe",
-        "body": `${userDetails.First_name} הזמינה תור חדש `,
-        "badge": "0",
-        "ttl": "1",// מספר שניות לשליחה
-        "data": {
-          "to": token
-        }
-      }
-      Post_SendPushNotification(body).then
-        (() => {
-          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%", token)
-        }
-        )
-    }
-
-  }, [token]);
+  // }, [token]);
   // אזור טיפול בהצגה והעלמת אזורים
-  const [showSearchSection, setShowSearchSection] = useState(false); //להפעיל תצוגת חיפוש תור
+  const [showSearchSection, setShowSearchSection] = useState(true); //להפעיל תצוגת חיפוש תור
   const handleSearchToggleSection = () => {
     console.log("מסך חיפוש : " + showSearchSection);
     setShowSAppointmenthSectionn(false);
@@ -158,99 +176,96 @@ export default function Search3(props) {
   // אזור ניהול תורים לתצוגת התורים
 
 
-  const handleFacebookLink = () => {
-    Linking.openURL(ClientData.Facebook_link); // לשים משתנה של כתובת פייסבוק שהמשתמש יזין
-  };
+  // const handleFacebookLink = () => {
+  //   Linking.openURL(ClientData.Facebook_link); // לשים משתנה של כתובת פייסבוק שהמשתמש יזין
+  // };
 
-  const handleInstagramLink = () => {
-    Linking.openURL(ClientData.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
-  };
-  const [showSection, setShowSection] = useState(false); //להסתיר את הכפתור של תצוגת מפה
-  const handleToggleSection = () => {
-    setShowSection(!showSection);
-  };
-
-
-  function btnSearch() {
-    let num = 0;
-    {
-      categories.map((z) => {
-        //שומר את מספר ההטיפול בשביל הקריאה לשמירת תור עתידי
-        if (z.Name == NameTreatment) {
-          num = z.Type_treatment_Number;
-          setChosenTreratmentNum(num);
-          console.log(
-            "treatment number: " + chosenTreratmentNum,
-            "treatment name: " + NameTreatment
-          );
-        }
-      });
-      const obj = {
-        AddressCity: AddressCity,
-        NameTreatment: NameTreatment,
-        // sort: "דירוג גבוהה תחילה",
-        gender: gender,
-        Is_client_house: Is_client_house,
-      };
-      // SetResponse([{"Appointment_status": null, "Business_Number": 1, "Date": "2023-04-09T00:00:00", "End_time": "12:30:00", "Is_client_house": "YES       ", "Number_appointment": 4, "Start_time": "12:00:00"}, {"Appointment_status": null, "Business_Number": 2, "Date": "2023-04-10T00:00:00", "End_time": "13:30:00", "Is_client_house": "YES       ", "Number_appointment": 6, "Start_time": "13:00:00"}])
-      Search_post(obj).then(
-        (result) => {
-          console.log("yes", result.data);
-          if (result.data) {
-            SetResponse(result.data);
-            console.log("amount of results: " + result.data.length);
-            handleToggleSection(); //מפעיל את הכפתור תצוגת מפה
-          }
-        },
-        (error) => {
-          console.log("error", error);
-        }
-      );
-    }
-  }
+  // const handleInstagramLink = () => {
+  //   Linking.openURL(ClientData.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
+  // };
+  // const [showSection, setShowSection] = useState(false); //להסתיר את הכפתור של תצוגת מפה
+  // const handleToggleSection = () => {
+  //   setShowSection(!showSection);
+  // };
 
 
+  // function btnSearch() {
+  //   let num = 0;
+  //   {
+  //     categories.map((z) => {
+  //       //שומר את מספר ההטיפול בשביל הקריאה לשמירת תור עתידי
+  //       if (z.Name == NameTreatment) {
+  //         num = z.Type_treatment_Number;
+  //         setChosenTreratmentNum(num);
+  //         console.log(
+  //           "treatment number: " + chosenTreratmentNum,
+  //           "treatment name: " + NameTreatment
+  //         );
+  //       }
+  //     });
+  //     const obj = {
+  //       AddressCity: AddressCity,
+  //       NameTreatment: NameTreatment,
+  //       // sort: "דירוג גבוהה תחילה",
+  //       gender: gender,
+  //       Is_client_house: Is_client_house,
+  //     };
+  //     // SetResponse([{"Appointment_status": null, "Business_Number": 1, "Date": "2023-04-09T00:00:00", "End_time": "12:30:00", "Is_client_house": "YES       ", "Number_appointment": 4, "Start_time": "12:00:00"}, {"Appointment_status": null, "Business_Number": 2, "Date": "2023-04-10T00:00:00", "End_time": "13:30:00", "Is_client_house": "YES       ", "Number_appointment": 6, "Start_time": "13:00:00"}])
+  //     Search_post(obj).then(
+  //       (result) => {
+  //         console.log("yes", result.data);
+  //         if (result.data) {
+  //           SetResponse(result.data);
+  //           console.log("amount of results: " + result.data.length);
+  //           handleToggleSection(); //מפעיל את הכפתור תצוגת מפה
+  //         }
+  //       },
+  //       (error) => {
+  //         console.log("error", error);
+  //       }
+  //     );
+      
+  //   }
+  // }
 
-  function btnBookApiontment(x) {
 
-    //לקבוע תור
-    const pickedApointment = {
 
-      Appointment_status: x.Appointment_status,
-      ID_Client: userDetails.ID_number,
+  // function btnBookApiontment(x) {
 
-      Number_appointment: x.Number_appointment,
-    };
-    console.log("****", pickedApointment);
-    console.log("*************", x);
-    AppointmentToClient(pickedApointment).then(
-      (result) => {
-        console.log("yes", result.data);
+  //   //לקבוע תור
+  //   const pickedApointment = {
 
-        apo.forEach((apointment) => {
-          if (pickedApointment.Number_appointment == apointment.Number_appointment) {
-            settoken(apointment.token)
-            console.log(apointment.token)
-            return
-          }
-        })
-        //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
-        if (result.data) {
-          alert("result.data");
-        }
+  //     Appointment_status: x.Appointment_status,
+  //     ID_Client: userDetails.ID_number,
+  //     Number_appointment: x.Number_appointment,
+  //   };
+  //   console.log("****", pickedApointment);
+  //   console.log("*************", x);
+  //   AppointmentToClient(pickedApointment).then(
+  //     (result) => {
+  //       console.log("yes", result.data);
 
-        Alert.alert(`${x.Number_appointment} מחכה לאישור מבעל העסק }`);
+  //       apo.forEach((apointment) => {
+  //         if (pickedApointment.Number_appointment == apointment.Number_appointment) {
+  //           settoken(apointment.token)
+  //           console.log(apointment.token)
+  //           return
+  //         }
+  //       })
+  //       //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
+  //       if (result.data) {
+  //         alert("result.data");
+  //       }
 
-      },
-      (error) => {
-        console.log("error", error);
-      }
-    );
-    btnSearch();
-  }
-  function NavigateToBusiness(x) {
-    console.log(x);
-  }
+  //       Alert.alert(`${x.Number_appointment} מחכה לאישור מבעל העסק }`);
+
+  //     },
+  //     (error) => {
+  //       console.log("error", error);
+  //     }
+  //   );
+  //   btnSearch();
+  // }
 
   return (
     <View style={styles.container}>
@@ -284,7 +299,10 @@ export default function Search3(props) {
         !showProfileSection &&
         !showSAppointmenthSection && (
           <ScrollView>
-            <View style={styles.filtersView}>
+            <SearchFiltersMenu
+            ClientIDnumber={userDetails.ID_number}
+            />
+            {/* <View style={styles.filtersView}>
               <View style={styles.pickerView}>
                 <Picker
                   selectedValue={NameTreatment}
@@ -384,7 +402,7 @@ export default function Search3(props) {
                   titleStyle={{ fontWeight: "bold" }}
                   onPress={btnSearch}
                 />
-                {showSection && response.length > 0 && (
+                { response.length > 0 && (
                   <Button
                     title="תצוגת מפה"
                     buttonStyle={{
@@ -407,62 +425,30 @@ export default function Search3(props) {
                   />
                 )}
               </View>
-            </View>
-            <View style={styles.resultsView}>
+            </View> */}
+            {/* <View style={styles.resultsView}>
               <ScrollView>
                 {response &&
                   response.length > 0 &&
                   response.map((x, i) => {
                     return (
                       <View key={i}>
-                        <Text>מספר עסק: {x.Business_Number}</Text>
-                        <Text>מספר תור: {x.Number_appointment}</Text>
-                        <Text>
-                          תאריך: {moment(x.Date).format("DD-MM-YYYY")}
-                        </Text>
-                        <Text>שעת התחלה: {x.Start_time}</Text>
-                        <Text>שעת סיום: {x.End_time}</Text>
-                        <Text>האם מגיע לבית הלקוח? {x.Is_client_house}</Text>
-                        <Button
-                          title="צפה בפרופיל העסק"
-                          buttonStyle={{
-                            backgroundColor: "black",
-                            borderWidth: 2,
-                            borderColor: "white",
-                            borderRadius: 30,
-                          }}
-                          containerStyle={{
-                            width: 200,
-                            marginHorizontal: 50,
-                            marginVertical: 10,
-                          }}
-                          titleStyle={{ fontWeight: "bold" }}
-                          onPress={NavigateToBusiness(x.Business_Number)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
+                        <ClientSearchReasultCard
+                        Is_client_house={x.Is_client_house}
+                        End_time={x.End_time}
+                        Start_time={x.Start_time}
+                        Date={x.Date}
+                        Number_appointment={x.Number_appointment}
+                        Business_Number={x.Business_Number}
+                        AddressStreet={x.AddressStreet}
+                        AddressHouseNumber={x.AddressHouseNumber}
+                        AddressCity={x.AddressCity}
                         />
-                        <Button
-                          title="הזמן תור"
-                          buttonStyle={{
-                            backgroundColor: "black",
-                            borderWidth: 2,
-                            borderColor: "white",
-                            borderRadius: 30,
-                          }}
-                          containerStyle={{
-                            width: 200,
-                            marginHorizontal: 50,
-                            marginVertical: 10,
-                          }}
-                          titleStyle={{ fontWeight: "bold" }}
-                          onPress={() => btnBookApiontment(x)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
-                        />
-                        <Text>
-                          -----------------------------------------------------------
-                        </Text>
                       </View>
                     );
                   })}
               </ScrollView>
-            </View>
+            </View> */}
           </ScrollView>
         )}
       {/* סוף קומפוננטת חיפוש (מסך בית) */}
@@ -470,32 +456,7 @@ export default function Search3(props) {
       {showProfileSection &&
         !showSAppointmenthSection &&
         !showSearchSection && (
-          <View>
-            {/* <Image source={require('')} style={{ width: 150, height: 150 }} /> */}
-            <Image
-              source={require(".././assets/Wpic.jpg")}
-              style={{ width: 100, height: 100 }}
-            />
-            <Text style={{ fontSize: 30, fontWeight: 2 }}>
-              {ClientData.First_name} {ClientData.Last_name}
-            </Text>
-            <Text>טלפון: {ClientData.phone}</Text>
-            <Text>
-              כתובת: {ClientData.AddressStreet} {ClientData.AddressHouseNumber},
-              {ClientData.AddressCity}
-            </Text>
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity onPress={handleFacebookLink}>
-                <Feather name="facebook" size={24} color="black" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={handleInstagramLink}>
-                <AntDesign name="instagram" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity onPress={() => props.navigation.navigate('Update_ClientDetailes')}>
-              <Text>עריכת פרופיל עסקי</Text>
-            </TouchableOpacity>
-          </View>
+          <ClientProfile/>
         )}
       {/* סוף קומפוננטת מסך פרופיל */}
       {/* קומפוננטת תורים */}
@@ -504,9 +465,10 @@ export default function Search3(props) {
         !showSearchSection && (
           <View style={styles.view1}>
             {allAppointment.map((appointment) => {
+              console.log("key: "+appointment.Number_appointment);
               return (
                 <AppointmentCard_forClient
-                  key={appointment.Number_appointment}
+                  Number_appointment={appointment.Number_appointment}
                   backgroundColor={"grey"}
                   status={appointment.Appointment_status}
                   Date={appointment.Date}
@@ -516,6 +478,7 @@ export default function Search3(props) {
                   AddressHouseNumber={appointment.AddressHouseNumber}
                   AddressCity={appointment.AddressCity}
                   BusinessName={appointment.BusinessName}
+                
                 />
               );
             })}
@@ -537,10 +500,7 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     padding: 10,
     //  borderColor:'#9acd32'
-
-
   },
-  filtersView: {},
   resultsView: {
     flex: 1,
   },
@@ -554,7 +514,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
   },
-  buttons: {},
   menu: {
     flexDirection: "row",
     justifyContent: "space-around",
