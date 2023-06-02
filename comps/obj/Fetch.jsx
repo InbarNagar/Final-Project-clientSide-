@@ -50,30 +50,3 @@ export const Axios = (url, method, body) =>
         reject(error.response.status);
       });
   })
-
-  // export const AxiosNum = (url, method, num) =>
-  // new Promise((resolve, reject) => {
-  //   const configurationObject = {
-  //     url: Baseurl + url,
-  //     method: method,
-  //     data: num
-  //   }
-   
-  //   axios(configurationObject)
-  //     .then((response) => {
-  //       if (response.status === 200 || response.status === 201) {
-  //         resolve(response);
-  //         return { status: "OK", data: response.data };
-  //         // return response.data;
-  //       } 
-  //       else {
-  //         throw new Error(response);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("num=>", num);
-  //       console.log("url=>", Baseurl + url)
-  //       console.log("method=>", method)
-  //       reject(error.response.status);
-  //     });
-  // })

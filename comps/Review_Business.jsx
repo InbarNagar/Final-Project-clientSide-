@@ -1,3 +1,4 @@
+
 // import React, { useState } from "react";
 // import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 // import { Rating } from "react-native-ratings";
@@ -92,18 +93,25 @@
 //   });
 
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
+import { useNavigation } from '@react-navigation/native';
 
-const Review_Business = () => {
-  const [cleanliness, setCleanliness] = useState(3);
-  const [service, setService] = useState(3);
-  const [Professionalism, setProfessionalism] = useState(3);
+
+const Review_Business = ({ route }) => {
+  const navigation = useNavigation();
+ const [Professionalism, setProfessionalism] = useState(3);
+  const{Number_appointment,ClientIDnumber,BusinessName}=route.params;
+  const [cleanliness, setCleanliness] = useState(0);
+  const [service, setService] = useState(0);
+  const [product, setProduct] = useState(0);
   const [comments, setComments] = useState('');
   const [On_time, setOn_time] = useState('');
   const [Overall_rating, setOverall_rating] = useState('');
+
+
   const SendReview = () => {
     () => {
       console.log(`ניקיון: ${cleanliness}`);
@@ -126,12 +134,59 @@ const Review_Business = () => {
     }
   }
 
+  useEffect(() => {
+    console.log(BusinessName+' '+Number_appointment+' '+ClientIDnumber);
+    // GetOneAppointment(Number_appointment).then(
+    //   (result) => {
+    //     console.log("appointment: ", result);
+    //     if (result) {
+    //       // let temp = result.map((x) => x.Name);
+    //       SetAppointmentDetails(result.data);
+    //       console.log(result);
+    //     }
+    //   },
+    //   (error) => {
+    //     console.log("error", error);
+    //   }
+    // );
+  
+  }, []);
+  const[appointmentDetails,SetAppointmentDetails]=useState()
+  
+  function publishReview(){
+    try{
+     // Check if appointmentDetails is not undefined
+        let Overall=(cleanliness+service+product)/3;
+        const reviewDetails={
+          Number_appointment: Number_appointment,
+          ClientIDnumber: ClientIDnumber,
+          cleanliness: cleanliness,
+          service: service,
+          product: product,
+          comments: comments,
+          Overall: Overall,
+          Business_Number: 4//appointmentDetails.Business_Number
+        }
+        console.log('review details: '+JSON.stringify(reviewDetails));
+        navigation.goBack();
+      }
+      catch{
+        console.log(`error when trying to post Review of appointment ${Number_appointment}`);
+      }
+      finally{
+        console.log("תודה על הביקורת! ככה עזרת למשתמשים אחרים להחליט מי בעל המקצוע הטוב ביותר!");
+
+      }
+    
+}
+
+
   return (
     <PaperProvider>
       <View style={styles.container}>
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.title}>דרג את העסק</Title>
+            <Title style={styles.title}>דרג את {BusinessName}</Title>
 
             <Paragraph style={styles.subtitle}>ניקיון</Paragraph>
             <Rating
@@ -180,14 +235,16 @@ const Review_Business = () => {
               multiline
               numberOfLines={4}
               value={comments}
-              onChangeText={setComments}
+              onChangeText={(value) => setComments(value)}
             />
 
             <Button
               style={styles.button}
               icon='check'
               mode='contained'
+
               onPress={SendReview()}
+
             >
               שלח דירוג
             </Button>

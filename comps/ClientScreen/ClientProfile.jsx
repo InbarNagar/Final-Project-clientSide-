@@ -11,10 +11,10 @@ import {
 } from "react-native";
 import {Button} from 'react-native-elements';
 import { AntDesign, Feather, FontAwesome } from "@expo/vector-icons";
-import { UserContext } from "./UserDietails";
+import { UserContext } from "../UserDietails";
 import { exp } from "react-native-reanimated";
 import { useNavigation } from "@react-navigation/native";
-import { DeleteClient } from "./obj/FunctionAPICode";
+import { DeleteClient } from "../obj/FunctionAPICode";
 import { TextInput } from "react-native-gesture-handler";
 import { string } from "prop-types";
 
@@ -63,14 +63,14 @@ else{
   return (
     <View style={styles.container}>
       <Image
-        source={require(".././assets/Wpic.jpg")}
+        // source={require("")}
         style={styles.profilePicture}
       />
       <View style={styles.iconContainer}>
         <TouchableOpacity onPress={handleInstagramLink}>
           <FontAwesome name="instagram" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleInstagramLink}>
+        <TouchableOpacity onPress={handleFacebookLink}>
           <FontAwesome name="facebook-square" size={24} color="black" />
         </TouchableOpacity>
       </View>

@@ -108,6 +108,10 @@ export const DeleteProffesional=(profssinalID_number)=>{
 export const CancelAppointmentByClient=(appointmentNumber)=>{
     return Fetch(`Appointment/CanceleAppointmentByClient/${appointmentNumber}`,'DELETE')
 }
+//םרטי בעל עסק
+export const GetOneBusiness=(businessNumber)=>{
+    return Axios(`Business/OneBusiness/${businessNumber}`,'post',{})
+}
 //עדכון פרטי לקוח 
 export const UpdateClient=(body)=>{
     return Axios(`Client/UpdateClient`, 'post',body)
@@ -161,6 +165,16 @@ export const UpdateapiBusiness=(body)=>{
     return Axios(`Business/UpdateBusinesss`, 'post',body)
 }
 
+
 export const  NewBusinessReviewByClient=(body)=>{
     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
+}
+//פרטי עסק לפי מספר תור
+export const GetOneAppointment=(appointmentNumber)=>{
+    return Fetch(`Appointment/OneAppointment/${appointmentNumber}`,'get')
+}
+//קריאה לקבלת טבלאות יומן, תורים וסוגי תורים לבעל עסק
+export const GetBusinessDiary=(Business_Number)=>{
+    return Fetch(`BusinessDiary/${Business_Number}`,'GET')
+
 }

@@ -13,14 +13,13 @@ import {
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import {
   AllApointemtDetailesForClient
-} from "./obj/FunctionAPICode";
+} from "../obj/FunctionAPICode";
 import moment from "moment";
 import { NavigationActions } from "react-navigation";
-import { UserContext } from "../comps/UserDietails";
+import { UserContext } from "../UserDietails";
 import { Button } from "react-native-elements";
 import Geocoder from 'react-native-geocoding';
-import searchOnMap from "../comps/UserDietails";
-import AppointmentCard_forClient from "./obj/AppointmentCard_forClient";
+import AppointmentCard_forClient from "./AppointmentCard_forClient";
 import ClientProfile from "./ClientProfile";
 import SearchFiltersMenu from "./SearchFiltersMenu";
 
@@ -159,6 +158,7 @@ export default function Search3(props) {
               console.log("key: "+appointment.Number_appointment);
               return (
                 <AppointmentCard_forClient
+                  key={appointment.Number_appointment}
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"grey"}
                   status={appointment.Appointment_status}
@@ -168,8 +168,8 @@ export default function Search3(props) {
                   AddressStreet={appointment.AddressStreet}
                   AddressHouseNumber={appointment.AddressHouseNumber}
                   AddressCity={appointment.AddressCity}
-                  BusinessName={appointment.BusinessName}
-                
+                  BusinessName={appointment.Name}
+                  ClientIDnumber={userDetails.ID_number}
                 />
               );
             })}
