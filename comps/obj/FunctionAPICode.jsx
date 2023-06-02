@@ -160,3 +160,7 @@ export const GetAllAvailableAppointments = () => {
 export const UpdateapiBusiness=(body)=>{
     return Axios(`Business/UpdateBusinesss`, 'post',body)
 }
+
+export const  NewBusinessReviewByClient=(body)=>{
+    return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
+}
