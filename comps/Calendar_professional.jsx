@@ -38,13 +38,13 @@ export default function Calendar_professional() {
       "title": "BeautyMe",
       "body": `${userDetails.First_name} הוספת תור חדש`,
       "badge": "0",
-      "ttl": "3",// מספר שניות לשליחה
+      "ttl": "1",// מספר שניות לשליחה
       "data": {
         "to": userDetails.Token
       }
     }
     console.log({ userDetails })
-    Post_SendPushNotification(body).then((res) => {
+    Post_SendPushNotification(body).then(() => {
 
     }).catch((error) => {
       console.log("error", error);
@@ -116,19 +116,6 @@ export default function Calendar_professional() {
   }
 
 
-  const importdetailes = (ID_Client) => {
-    let name;
-    ClientDetailes(ID_Client).then(
-      (res)=>{
-        console.log(res.data,"****************************************")
-        name = res.data.First_name;
-      })
-      console.log(name,"****************************")
-    return name;
-    } 
-        
-    
-  
 
   return (
     <>
@@ -161,7 +148,8 @@ export default function Calendar_professional() {
                     Date={x.Date}
                     Start_time={x.Start_time}
                     End_time={x.End_time}
-                    Client_Name={x.ID_Client?importdetailes(x.ID_Client):"ggg"}
+                    Client_Name={x.First_name}
+                    Client_Last_Name={x.Last_name}
                  
                   />
                 )

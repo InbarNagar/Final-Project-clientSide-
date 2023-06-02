@@ -186,24 +186,24 @@ async function loadData() {
             console.log(result.data)
             console.log(result.status)
             Alert.alert(
-               'העסק נוסף בהצלחה',
-              'שמחים שהצטרפתם למשפחת Beauty Me. '+
-              'תרצו להוסיף טיפול נוסף?',
-              [
-                { text: 'הוספת טיפול נוסף', onPress: () => {
-                  setSelectedTreatment(null)
-                  setSelectedCategory(null)
-                  setPrice(null)
-                  setDuration(null)
-                } },
-                { text: 'ייאאלה בואו נתחיל', onPress: () => {props.navigation.navigate('LogInGenral',{userType:'Pro'})} },
-              ],
-              { cancelable: false }
-            );
-        }).catch(error => {
-            console.log(error);
-        });
-        };}
+              'העסק נוסף בהצלחה',
+             'שמחים שהצטרפתם למשפחת Beauty Me. '+
+             'תרצו להוסיף טיפול נוסף?',
+             [
+               { text: 'הוספת טיפול נוסף', onPress: () => {
+                 setSelectedTreatment(null)
+                 setSelectedCategory(null)
+                 setPrice(null)
+                 setDuration(null)
+               } },
+               { text: 'ייאאלה בואו נתחיל', onPress: () => {props.navigation.navigate('LogInGenral',{userType:'Pro'})} },
+             ],
+             { cancelable: false }
+           );
+       }).catch(error => {
+           console.log(error);
+       });
+       };}
 
         // const handledurationTime = (event, selectedTime) => {
         //     const currentTime = selectedTime || startTime;

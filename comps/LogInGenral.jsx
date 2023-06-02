@@ -12,6 +12,9 @@ import Header from './obj/Header';
 import PushNofitictaion from './PushNofitictaion';
 import { SaveTokenforID,SaveTokenforIDPro,LogInUser } from './obj/FunctionAPICode';
 import Button from './obj/Button';
+//import Icon from 'react-native-vector-icons/FontAwesome';
+
+
 
 export default function LogInGenral(props) {
   const [ID_number, setID_number] = useState('');
@@ -21,6 +24,8 @@ export default function LogInGenral(props) {
    const { userDetails, setUserDetails } = useContext(UserContext);
    const [islogin,setlogin]= useState();
 
+
+   
    useEffect( () => {
     // setLoading(true)
    if(islogin&&userDetails) {PushNofitictaion().then((token) => {
@@ -134,6 +139,7 @@ if(userDetails){
       <View style={styles.inp}>
        
         <TextInput
+        
           style={styles.input}
           placeholder="סיסמא"
           value={password}

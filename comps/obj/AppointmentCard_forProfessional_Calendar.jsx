@@ -31,7 +31,7 @@ const AppointmentCard_forProfessional_Calendar = (props) => {
 
 
 
-  const massage = (ID_Client) => {
+  const massage = () => {
     if (status == "Appointment_ended") {
       return <Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
     }

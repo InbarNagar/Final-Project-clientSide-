@@ -21,7 +21,7 @@ export default function SearchFiltersMenu(props) {
         const [categories, setCategories] = useState(["קטגוריה"]);
         const [response, SetResponse] = useState([]);//מערך תוצאות החיפוש
         const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
-        
+        //const [apo, setapo] = useState();//inbar
         useEffect(() => {
             Treatment_type_GET().then(
               (result) => {
@@ -92,42 +92,6 @@ export default function SearchFiltersMenu(props) {
               
             }
           }
-        //   function btnBookApiontment(x) {
-        
-        //     //לקבוע תור
-        //     const pickedApointment = {
-        
-        //       Appointment_status: x.Appointment_status,
-        //       ID_Client:clientIDnumber,
-        //       Number_appointment: x.Number_appointment,
-        //     };
-        //     console.log("****", pickedApointment);
-        //     console.log("*************", x);
-        //     AppointmentToClient(pickedApointment).then(
-        //       (result) => {
-        //         console.log("yes", result.data);
-        
-        //         apo.forEach((apointment) => {
-        //           if (pickedApointment.Number_appointment == apointment.Number_appointment) {
-        //             settoken(apointment.token)
-        //             console.log(apointment.token)
-        //             return
-        //           }
-        //         })
-        //         //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
-        //         if (result.data) {
-        //           alert("result.data");
-        //         }
-        
-        //         Alert.alert(`${x.Number_appointment} מחכה לאישור מבעל העסק }`);
-        
-        //       },
-        //       (error) => {
-        //         console.log("error", error);
-        //       }
-        //     );
-        //     btnSearch();
-        //   }
             return(
                 <View >
                       <View>
@@ -270,6 +234,7 @@ export default function SearchFiltersMenu(props) {
                                 AddressCity={x.AddressCity}
                                 ClientIDnumber={ClientIDnumber}
                                 Appointment_status={x.Appointment_status}
+                                //apo={apo}
                                 />
                               </View>
                             );

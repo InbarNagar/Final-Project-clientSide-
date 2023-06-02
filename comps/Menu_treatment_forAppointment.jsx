@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, FlatList} from 'react-native';
 import {BussinesCanGiveTreatment} from './obj/FunctionAPICode';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,13 +10,14 @@ import Notificationss from './obj/Notificationss';
 import { Alert } from 'react-native';
 import Header from './obj/Header';
 import { color } from 'react-native-reanimated';
-
+import { UserContext } from '../comps/UserDietails';
 
 
 
 
 const Menu_treatment_forAppointment = () => {
 
+  
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedTreatments, setSelectedTreatments] = useState([]);
@@ -25,7 +26,7 @@ const Menu_treatment_forAppointment = () => {
   const [BusinessData, setBusinessData] = useState([]);  //מערך על כל סוגי הטיפולים האפשריים לעסק הספציפי
   const [selectedRows, setSelectedRows] = useState([]);
   const [select_treatment_for_appointment, setSelect_treatment_for_appointment] = useState([]) // מערך עם כל סוגי הטיפולים האפשריים לתור הספציפי לפי מה שבחר בעל העסק
-
+  const { userDetails, setUserDetails } = useContext(UserContext);
   const navigation = useNavigation();
 
   const handelLocalstorage = async () => {
@@ -51,8 +52,8 @@ const Menu_treatment_forAppointment = () => {
     handelLocalstorage();
     const fetchBusinessData = async () => {
       try {
-        const Business_Numberr = "4";
-        const data = await BussinesCanGiveTreatment(Business_Numberr);
+        const BussinesNumber = userDetails.Business_Number;
+        const data = await BussinesCanGiveTreatment(BussinesNumber);
         const BusinessData = data.data.map((item) => {
           return {
             Type_treatment_Number: item['Type_treatment_Number'],
@@ -84,10 +85,10 @@ const Menu_treatment_forAppointment = () => {
       if(result.status==200){
         // Notificationss("OK", "התור נוסף בהצלחה") 
         Alert.alert(
-          'OK',
+          'תור חדש נוסף בהצלחה',
           'התור נוסף בהצלחה',
           [
-            { text: 'OK', onPress: () => navigation.navigate('Calendar_professional') },
+            {onPress: () => navigation.navigate('Calendar_professional') },
           ],
           { cancelable: false }
         );
@@ -106,98 +107,96 @@ const Menu_treatment_forAppointment = () => {
     }
   };
   
-  
   const UserRow = ({ Type_treatment_Number, Name_Type_treatment, Price, Treatment_duration }, index) => (
     <TouchableOpacity onPress={() => handleRowPress(Type_treatment_Number)}>
       <View style={[styles.userRow, select_treatment_for_appointment.includes(Type_treatment_Number) && styles.selectedUserRow, { flexDirection: 'row', padding: 10 }]}>
-        <Text style={{ flex: 1, ...styles.userRowText }}>{Name_Type_treatment}</Text>
-        <Text style={{ flex: 1, ...styles.userRowText }}>{Price}</Text>
-        <Text style={{ flex: 1, ...styles.userRowText }}>{Treatment_duration}</Text>
+        <Text style={{ flex: 1, ...styles.userRowText, textAlign: 'center' }}>{Name_Type_treatment}</Text>
+        <Text style={{ flex: 1, ...styles.userRowText, textAlign: 'center' }}>{Price}</Text>
+        <Text style={{ flex: 1, ...styles.userRowText, textAlign: 'center' }}>{Treatment_duration}</Text>
       </View>
     </TouchableOpacity>
   );
 
 
-  return (
-    <View  >
-      <View >
-      <Header text="סוגי טיפולים" fontSize={50} height={200}/>
-        <Text style={styles.title}>{"\n"}בחרי את סוגי הטיפולים האפשריים לתור זה:</Text>
-        <FlatList
+return (
+  <View style={styles.container}>
+      <Text style={styles.title}>בחרי את סוגי הטיפולים האפשריים לתור זה:</Text>
+      <FlatList
           data={BusinessData}
           keyExtractor={(item) => item.Type_treatment_Number}
           renderItem={({ item, index }) => (
-            <UserRow
-              Type_treatment_Number={item.Type_treatment_Number}
-              Name_Type_treatment={item.Name_Type_treatment}
-              Price={item.Price}
-              Treatment_duration={item.Treatment_duration}
-              index={index}
-            />
+              <UserRow
+                  Type_treatment_Number={item.Type_treatment_Number}
+                  Name_Type_treatment={item.Name_Type_treatment}
+                  Price={item.Price}
+                  Treatment_duration={item.Treatment_duration}
+                  index={index}
+              />
           )}
           ListHeaderComponent={() => (
-            <View style={{ flexDirection: 'row' }}>
-              <Text style={{ flex: 1, fontWeight: 'bold'}}>סוג טיפול</Text>
-              <Text style={{ flex: 1, fontWeight: 'bold'}}>מחיר</Text>
-              <Text style={{ flex: 1, fontWeight: 'bold'}}>משך הטיפול</Text>
-            </View>
+              <View style={styles.listHeader}>
+                  <Text style={styles.headerText}>סוג טיפול</Text>
+                  <Text style={styles.headerText}>מחיר</Text>
+                  <Text style={styles.headerText}>משך הטיפול</Text>
+              </View>
           )}
-        />
-      </View>
-      
-      
-        <Button onPress={handleAddTreatments} text="הוסף טיפולים"  color="#98FB98" />
-      
-    </View>
-  );
-
+      />
+      <Button style={styles.button} onPress={handleAddTreatments} text="הוסף טיפולים" />
+  </View>
+);
           }
 
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)',
-    padding: '20px 40px',
-    margin: 1,
-    maxWidth: 500,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.16,
-    shadowRadius: 6,
-    padding: 20,
-    margin: 20,
-    maxWidth: 500,
-  },
-
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center'
-  },
-  subtitle: {
-    fontSize: 18,
-    marginBottom: 20,
-  },
-  button: {
-    backgroundColor: '#007bff',
-    color: '#fff',
-    fontWeight: 'bold',
-    padding: '10px 20px',
-    borderRadius: 5,
-    cursor: 'pointer',
-  },
-});
-
+          const styles = StyleSheet.create({
+            container: {
+                flex: 1,
+                paddingHorizontal: 20,
+                paddingTop: 50,
+                backgroundColor: '#f5f5f5'
+            },
+            title: {
+                fontSize: 20,
+                fontWeight: '600',
+                color: '#333',
+                marginBottom: 20,
+            },
+            userRow: {
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              backgroundColor: '#fff',
+              padding: 15,
+              marginBottom: 10,
+              borderRadius: 5,
+              borderWidth: 1, // add border
+              borderColor: '#ccc', // border color
+              opacity: 0.8, // change opacity
+            },
+            selectedUserRow: {
+                backgroundColor: '#98FB98',
+            },
+            userRowText: {
+                fontSize: 18,
+                color: '#333',
+            },
+            listHeader: {
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginBottom: 20,
+            },
+            headerText: {
+                fontSize: 16,
+                fontWeight: '600',
+                color: '#333',
+            },
+            button: {
+                backgroundColor: '#007bff',
+                paddingVertical: 10,
+                paddingHorizontal: 20,
+                borderRadius: 5,
+                alignItems: 'center',
+                marginTop: 30,
+            },
+        });
 
 
 export default Menu_treatment_forAppointment;
@@ -207,6 +206,217 @@ export default Menu_treatment_forAppointment;
 
 
 
+//***************************** עובד */
+// import React, { useState, useEffect, useContext } from 'react';
+// import { View, Text, TextInput, StyleSheet, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+// import {BussinesCanGiveTreatment} from './obj/FunctionAPICode';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import {All_treatment_in_appointment} from './obj/FunctionAPICode';
+// import Button from './obj/Button';
+// import { useNavigation } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import Notificationss from './obj/Notificationss';
+// import { Alert } from 'react-native';
+// import Header from './obj/Header';
+// import { color } from 'react-native-reanimated';
+// import { UserContext } from '../comps/UserDietails';
+
+
+
+
+// const Menu_treatment_forAppointment = () => {
+
+  
+//   const [treatments, setTreatments] = useState([]);
+//   const [categories, setCategories] = useState([]);
+//   const [selectedTreatments, setSelectedTreatments] = useState([]);
+//   const [professionalID, setIdNumber] = useState('');
+//   const [appointmentID, setAppointment_num] = useState('');
+//   const [BusinessData, setBusinessData] = useState([]);  //מערך על כל סוגי הטיפולים האפשריים לעסק הספציפי
+//   const [selectedRows, setSelectedRows] = useState([]);
+//   const [select_treatment_for_appointment, setSelect_treatment_for_appointment] = useState([]) // מערך עם כל סוגי הטיפולים האפשריים לתור הספציפי לפי מה שבחר בעל העסק
+//   const { userDetails, setUserDetails } = useContext(UserContext);
+//   const navigation = useNavigation();
+
+//   const handelLocalstorage = async () => {
+//     try {
+//       const professionalID = await AsyncStorage.getItem('idNumber_professional');
+//       const appointmentID = await AsyncStorage.getItem('appointmentId');
+//       setIdNumber(professionalID || '');
+//       setAppointment_num(appointmentID || '');
+//     } catch (error) {
+//       console.log('Failed to load from AsyncStorage', error);
+//     }
+//   }
+
+//   const printAsyncStorageKeys = async () => {
+//     const keys = await AsyncStorage.getAllKeys();
+//     console.log("AsyncStorage keys: ", keys);
+//   }
+
+//   useEffect(() => {
+//     setSelect_treatment_for_appointment([]);
+//     setBusinessData([]);
+//     printAsyncStorageKeys();
+//     handelLocalstorage();
+//     const fetchBusinessData = async () => {
+//       try {
+//         const BussinesNumber = userDetails.Business_Number;
+//         const data = await BussinesCanGiveTreatment(BussinesNumber);
+//         const BusinessData = data.data.map((item) => {
+//           return {
+//             Type_treatment_Number: item['Type_treatment_Number'],
+//             Name_Type_treatment: item['Name_Type_treatment'],
+//             Price: item['Price'],
+//             Treatment_duration: item['Treatment_duration']
+//           };
+//         });
+//         setBusinessData(BusinessData);
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     };
+//     fetchBusinessData();
+//   },[]);
+
+//   const handleAddTreatments = () => {
+//     select_treatment_for_appointment.forEach(item => {
+//       const data = {
+//         Number_appointment: appointmentID,
+//         Type_treatment_Number: item,
+//       };
+//       console.log(data)
+//       console.log("4444")
+//       // const axios = All_treatment_in_appointment(data)
+//       All_treatment_in_appointment(data).then(result => {
+//         console.log(result.data)
+//         console.log(result.status)
+//       if(result.status==200){
+//         // Notificationss("OK", "התור נוסף בהצלחה") 
+//         Alert.alert(
+//           'תור חדש נוסף בהצלחה',
+//           'התור נוסף בהצלחה',
+//           [
+//             {onPress: () => navigation.navigate('Calendar_professional') },
+//           ],
+//           { cancelable: false }
+//         );
+//       }
+//     }).catch(error => {
+//         console.log(error);
+//     });
+//     });
+//   };
+
+//   const handleRowPress = (Type_treatment_Number) => {
+//     if (select_treatment_for_appointment.includes(Type_treatment_Number)) {
+//       setSelect_treatment_for_appointment(select_treatment_for_appointment.filter((num) => num !== Type_treatment_Number));
+//     } else {
+//       setSelect_treatment_for_appointment([...select_treatment_for_appointment, Type_treatment_Number]);
+//     }
+//   };
+  
+  
+//   const UserRow = ({ Type_treatment_Number, Name_Type_treatment, Price, Treatment_duration }, index) => (
+//     <TouchableOpacity onPress={() => handleRowPress(Type_treatment_Number)}>
+//       <View style={[styles.userRow, select_treatment_for_appointment.includes(Type_treatment_Number) && styles.selectedUserRow, { flexDirection: 'row', padding: 10 }]}>
+//         <Text style={{ flex: 1, ...styles.userRowText }}>{Name_Type_treatment}</Text>
+//         <Text style={{ flex: 1, ...styles.userRowText }}>{Price}</Text>
+//         <Text style={{ flex: 1, ...styles.userRowText }}>{Treatment_duration}</Text>
+//       </View>
+//     </TouchableOpacity>
+//   );
+
+
+//   return (
+//     <View  >
+//       <View >
+//       <Header text="סוגי טיפולים" fontSize={50} height={200}/>
+//         <Text style={styles.title}>{"\n"}בחרי את סוגי הטיפולים האפשריים לתור זה:</Text>
+//         <FlatList
+//           data={BusinessData}
+//           keyExtractor={(item) => item.Type_treatment_Number}
+//           renderItem={({ item, index }) => (
+//             <UserRow
+//               Type_treatment_Number={item.Type_treatment_Number}
+//               Name_Type_treatment={item.Name_Type_treatment}
+//               Price={item.Price}
+//               Treatment_duration={item.Treatment_duration}
+//               index={index}
+//             />
+//           )}
+//           ListHeaderComponent={() => (
+//             <View style={{ flexDirection: 'row' }}>
+//               <Text style={{ flex: 1, fontWeight: 'bold'}}>סוג טיפול</Text>
+//               <Text style={{ flex: 1, fontWeight: 'bold'}}>מחיר</Text>
+//               <Text style={{ flex: 1, fontWeight: 'bold'}}>משך הטיפול</Text>
+//             </View>
+//           )}
+//         />
+//       </View>
+      
+      
+//         <Button onPress={handleAddTreatments} text="הוסף טיפולים"  color="#98FB98" />
+      
+//     </View>
+//   );
+
+//           }
+
+
+// const styles = StyleSheet.create({
+//   container: {
+//     display: 'flex',
+//     flexDirection: 'column',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//     backgroundColor: '#fff',
+//     borderRadius: 5,
+//     boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)',
+//     padding: '20px 40px',
+//     margin: 1,
+//     maxWidth: 500,
+//     shadowColor: '#000',
+//     shadowOffset: {
+//       width: 0,
+//       height: 3,
+//     },
+//     shadowOpacity: 0.16,
+//     shadowRadius: 6,
+//     padding: 20,
+//     margin: 20,
+//     maxWidth: 500,
+//   },
+
+//   title: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 20,
+//     textAlign: 'center'
+//   },
+//   subtitle: {
+//     fontSize: 18,
+//     marginBottom: 20,
+//   },
+//   button: {
+//     backgroundColor: '#007bff',
+//     color: '#fff',
+//     fontWeight: 'bold',
+//     padding: '10px 20px',
+//     borderRadius: 5,
+//     cursor: 'pointer',
+//   },
+// });
+
+
+
+// export default Menu_treatment_forAppointment;
+
+
+
+
+
+//************************************************************** */
 
 
           // style={styles.container}

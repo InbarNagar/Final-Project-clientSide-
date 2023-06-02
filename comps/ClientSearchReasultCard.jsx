@@ -3,13 +3,14 @@ import {Text,View,Alert} from 'react-native';
 import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import { Button } from "react-native-elements";
-import {AppointmentToClient,Post_SendPushNotification} from './obj/FunctionAPICode';
+import {AppointmentToClient,Post_SendPushNotification,AllApointemtDetailes} from './obj/FunctionAPICode';
 import { UserContext } from "./UserDietails";
 
 const ClientSearchReasultCard = (props) => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const ClientData = userDetails;
-
+ const [token, settoken] = useState();// ענבר
+const [apo,setapo]=useState();
   const  {
     ClientIDnumber,
     Is_client_house,
@@ -21,12 +22,22 @@ const ClientSearchReasultCard = (props) => {
     AddressStreet,
     AddressHouseNumber,
     AddressCity,
-    apo,
+    //apo,
     Appointment_status
   } = props;
-  const [token, settoken] = useState();// ענבר
 
+  useEffect(()=>{
+    
+    AllApointemtDetailes().then((res) => {
+        
+      console.log("&&&&&&&&&&&&&&&&&&&&&&", res.data)
+      setapo(res.data)
+      
+    });
+  },[])
+ 
   useEffect(() => {
+    
     if (token) {
       const body = {
         "to": token,

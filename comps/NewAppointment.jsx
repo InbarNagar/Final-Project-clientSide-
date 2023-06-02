@@ -1,3 +1,20 @@
+// import React, { useState, useEffect, useContext } from 'react';
+// import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet, Keyboard } from 'react-native';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import DateTimePicker from '@react-native-community/datetimepicker';
+// import Menu_treatment_registration from './Menu_treatment_registration';
+// import Button from './obj/Button';
+// import {NewAppointmentPost} from './obj/FunctionAPICode';
+// // import { Header } from 'react-native-elements';
+// import Header from './obj/Header';
+// // import { AsyncStorage } from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import { useNavigation } from '@react-navigation/native';
+// import { UserContext } from '../comps/UserDietails';
+// import Menu_professional from "./obj/Menu_professional";
+
+
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, TouchableOpacity, Switch, TextInput, StyleSheet, Keyboard } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,11 +30,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../comps/UserDietails';
 import Menu_professional from "./obj/Menu_professional";
-
-
-
-
-
 
 
 const Stack = createNativeStackNavigator();
@@ -140,7 +152,7 @@ const NewAppointment = () => {
 
 <Text>{'\n'}</Text>
       <TouchableOpacity onPress={() => setShowDatePicker(true)}>
-        <Text style={styles.label}>Date: {date.toLocaleDateString()}</Text>
+        <Text style={styles.label}>{date.toLocaleDateString()} תאריך:</Text>
       </TouchableOpacity>
       {showDatePicker && (
         <DateTimePicker
@@ -152,7 +164,7 @@ const NewAppointment = () => {
       )}
   
       <TouchableOpacity onPress={() => setShowStartTimePicker(true)}>
-        <Text style={styles.label}>Start Time: {startTime.toLocaleTimeString()}</Text>
+        <Text style={styles.label}> {startTime.toLocaleTimeString()}שעת התחלה:</Text>
       </TouchableOpacity>
       {showStartTimePicker && (
         <DateTimePicker
@@ -164,7 +176,7 @@ const NewAppointment = () => {
       )}
   
       <TouchableOpacity onPress={() => setShowEndTimePicker(true)}>
-        <Text style={styles.label}>End Time: {endTime.toLocaleTimeString()}</Text>
+        <Text style={styles.label} >  {endTime.toLocaleTimeString()}שעת סיום:</Text>
       </TouchableOpacity>
       {showEndTimePicker && (
         <DateTimePicker
@@ -176,13 +188,14 @@ const NewAppointment = () => {
       )}
   
   <View style={styles.row}>
-      <Text style={styles.label}>Can go to client:</Text>
+     
       <Switch value={canGoToClient} onValueChange={setCanGoToClient} />
+       <Text style={styles.label}>יכול להגיע לבית הלקוח:</Text>
     </View>
 
     <Text>{'\n'}</Text>
     
-    <Button onPress={handleSubmit} text="הוספת התור" color="#98FB98" fontSize="30" />
+    <Button onPress={handleSubmit} text="הוספת התור" color="#98FB98" fontSize={30} />
       {/* <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Add Appointment</Text>
       </TouchableOpacity> */}
@@ -238,8 +251,6 @@ const NewAppointment = () => {
   });
 
 export default NewAppointment ;
-
-
 
 //         fetch('http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/NewAppointment', {
 //       method: 'POST',
