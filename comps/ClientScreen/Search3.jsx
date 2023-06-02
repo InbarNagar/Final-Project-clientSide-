@@ -102,8 +102,6 @@ export default function Search3(props) {
   // אזור ניהול תורים לתצוגת התורים
 
  
-
-
   return (
     <View style={styles.container}>
 
