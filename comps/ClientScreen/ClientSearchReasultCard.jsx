@@ -3,9 +3,9 @@ import {Text,View,Alert} from 'react-native';
 import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import { Button } from "react-native-elements";
-import {AppointmentToClient,Post_SendPushNotification} from './obj/FunctionAPICode';
-import { UserContext } from "./UserDietails";
-
+import {AppointmentToClient,Post_SendPushNotification} from '../obj/FunctionAPICode';
+import { UserContext } from "../UserDietails";
+import BusinessProfilePOPUP from './BusinessProfilePOPUP'
 const ClientSearchReasultCard = (props) => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const ClientData = userDetails;
@@ -25,7 +25,16 @@ const ClientSearchReasultCard = (props) => {
     Appointment_status
   } = props;
   const [token, settoken] = useState();// ענבר
+  const [modalVisible, setModalVisible] = useState(false);
+  const [businessProfilePOPUP,SetBusinessProfilePOPUP]=useState(false);
 
+  function handleBusinessProfilePOPUP(){
+    console.log("open pop-up window"); setModalVisible(!modalVisible);
+    console.log("modalVisible - ",modalVisible);
+    SetBusinessProfilePOPUP(!businessProfilePOPUP);
+    console.log("businessProfilePOPUP - " ,businessProfilePOPUP);
+    console.log("business number: "+JSON.stringify(Business_Number));
+  }
   useEffect(() => {
     if (token) {
       const body = {
@@ -47,10 +56,6 @@ const ClientSearchReasultCard = (props) => {
 
   }, [token]);
   const navigation = useNavigation();
-  
-  function NavigateToBusiness(x) {
-    console.log(x);
-  }
   function btnBookApiontment(Appointment_status,Number_appointment,) {
         
     //לקבוע תור
@@ -113,7 +118,7 @@ const ClientSearchReasultCard = (props) => {
           marginVertical: 10,
         }}
         titleStyle={{ fontWeight: "bold" }}
-        onPress={NavigateToBusiness(Business_Number)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
+        onPress={() => handleBusinessProfilePOPUP()} //יועבר לדף העסק שגם שם אפשר להזמין את התור
       />
       <Button
         title="הזמן תור"
@@ -131,6 +136,13 @@ const ClientSearchReasultCard = (props) => {
         titleStyle={{ fontWeight: "bold" }}
         onPress={() => btnBookApiontment(Appointment_status,Number_appointment)} //יועבר לדף העסק שגם שם אפשר להזמין את התור
       />
+      {businessProfilePOPUP&&(
+        <BusinessProfilePOPUP 
+        isVisible={modalVisible}
+        onClose={() => handleBusinessProfilePOPUP()}
+        Business_Number = {JSON.stringify(Business_Number)}
+      />
+      )}
       <Text>-----------------------------------------------------------</Text>
     </View>
   );

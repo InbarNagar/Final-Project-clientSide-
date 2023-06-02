@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
 import { Button } from "react-native-elements";
-import {CancelAppointmentByClient} from './FunctionAPICode'
+import {CancelAppointmentByClient} from '../obj/FunctionAPICode'
 import Review_Business from "../Review_Business";
 import { useNavigation } from '@react-navigation/native';
 

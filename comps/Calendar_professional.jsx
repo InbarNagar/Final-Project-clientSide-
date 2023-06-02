@@ -10,6 +10,7 @@ import React, { useContext } from "react";
 import { FutureAppointmenB } from "./obj/FunctionAPICode";
 import { Post_SendPushNotification } from "./obj/FunctionAPICode";
 import AppointmentCard_forProfessional_Calendar from "./obj/AppointmentCard_forProfessional_Calendar";
+import { ClientDetailes } from "./obj/FunctionAPICode";
 //מסך ראשי בעל עסק
 export default function Calendar_professional() {
 
@@ -21,16 +22,19 @@ export default function Calendar_professional() {
   const [allAppointmentAvilable, setallAppointmentAvilable] = useState([])
   const [allAppointmentEnd, setallAppointmentEnd] = useState([])
   const [FutureAppointment, setFutureAppointment] = useState([])
+  const [Client, setclient] = useState([])
 
   const [showText, setShowText] = useState(false);
   const [showText2, setShowText2] = useState(false);
   const [showText3, setShowText3] = useState(false);
   const [showText4, setShowText4] = useState(false);
 
-  const test =()=>{
-    
+  const namecli = "";
+
+  const test = () => {
+
     const body = {
-      "to":  userDetails.Token,
+      "to": userDetails.Token,
       "title": "BeautyMe",
       "body": `${userDetails.First_name} הוספת תור חדש`,
       "badge": "0",
@@ -39,8 +43,8 @@ export default function Calendar_professional() {
         "to": userDetails.Token
       }
     }
-    console.log({userDetails})
-    Post_SendPushNotification(body).then((res)=>{
+    console.log({ userDetails })
+    Post_SendPushNotification(body).then((res) => {
 
     }).catch((error) => {
       console.log("error", error);
@@ -56,6 +60,7 @@ export default function Calendar_professional() {
       if (result.data)
         setallAppointment(result.data)
 
+
     }, (error) => {
       console.log('error', error)
     })
@@ -63,7 +68,7 @@ export default function Calendar_professional() {
     setShowText2(!showText2);
 
   }
-  
+
 
   const handleSubmit2 = () => {
 
@@ -102,7 +107,7 @@ export default function Calendar_professional() {
       if (result.data)
         console.log(result.data)
       setFutureAppointment(result.data)
-      console.log("****",FutureAppointment.length)
+      console.log("****", FutureAppointment.length)
     }, (error) => {
       console.log('error', error)
     })
@@ -110,95 +115,113 @@ export default function Calendar_professional() {
     setShowText3(!showText3);
   }
 
+
+  const importdetailes = (ID_Client) => {
+    let name;
+    ClientDetailes(ID_Client).then(
+      (res)=>{
+        console.log(res.data,"****************************************")
+        name = res.data.First_name;
+      })
+      console.log(name,"****************************")
+    return name;
+    } 
+        
+    
+  
+
   return (
     <>
-    
-    <ScrollView>
-      <View style={styles.view}>
-      <Header text="היומן שלי" color='#9acd32' fontSize='35' />
-        <ScrollView horizontal={true}>
-          <View style={styles.container}>
-        
-            <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="#ff8c00" />
-            <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="#98FB98" />
-            <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="#FF6961" />
-            <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="#87CEFA" />
-            <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" />
-          </View>
-        </ScrollView>
+
+      <ScrollView>
+        <View style={styles.view}>
+          <Header text="היומן שלי" color='#9acd32' fontSize='35' />
+          <ScrollView horizontal={true}>
+            <View style={styles.container}>
+
+              <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="#ff8c00" />
+              <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="#98FB98" />
+              <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="#FF6961" />
+              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="#87CEFA" />
+              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" />
+            </View>
+          </ScrollView>
 
 
-        {showText2 &&<View style={styles.view1}>
-          {allAppointment && allAppointment.length > 0 &&
-            allAppointment.map(x => {
-              console.log(x.Date)
-              return (
-              <AppointmentCard_forProfessional_Calendar
-                backgroundColor={"#ff8c00"}
-                // Treatment_Type= 
-                status={x.Appointment_status}
-                Date={x.Date}
-                Start_time={x.Start_time}
-                End_time={x.End_time}
+          {showText2 && <View style={styles.view1}>
+            {allAppointment && allAppointment.length > 0 &&
+              allAppointment.map(x => {
                
-              />
-           )})}
-        </View>}
-
-        {showText &&  <View style={styles.view1}>
-          {allAppointmentAvilable &&
-            allAppointmentAvilable.map(x => {
-              if (x.Appointment_status == "Available"||x.Appointment_status=="available")
+                console.log(x.Date)
                 return (
                   <AppointmentCard_forProfessional_Calendar
-                  backgroundColor={"#98FB98"}
-                  status={x.Appointment_status}
-                  Date={x.Date}
-                  Start_time={x.Start_time}
-                  End_time={x.End_time}
-                />
+                    backgroundColor={"#ff8c00"}
+                    // Treatment_Type= 
+                    status={x.Appointment_status}
+                    Date={x.Date}
+                    Start_time={x.Start_time}
+                    End_time={x.End_time}
+                    Client_Name={x.ID_Client?importdetailes(x.ID_Client):"ggg"}
+                 
+                  />
                 )
-            })}
-        </View>}
+              })}
+          </View>}
+
+          {showText && <View style={styles.view1}>
+            {allAppointmentAvilable &&
+              allAppointmentAvilable.map(x => {
+                if (x.Appointment_status == "Available" || x.Appointment_status == "available")
+                  return (
+                    <AppointmentCard_forProfessional_Calendar
+                      backgroundColor={"#98FB98"}
+                      status={x.Appointment_status}
+                      Date={x.Date}
+                      Start_time={x.Start_time}
+                      End_time={x.End_time}
+                    />
+                  )
+              })}
+          </View>}
 
 
-        {showText4 &&  <View>
-          {allAppointmentEnd && allAppointmentEnd.length > 0 &&
-            allAppointmentEnd.map(x => {
-              if (x.Appointment_status == "Appointment_ended")
+          {showText4 && <View>
+            {allAppointmentEnd && allAppointmentEnd.length > 0 &&
+              allAppointmentEnd.map(x => {
+                if (x.Appointment_status == "Appointment_ended")
+                  return (
+                    <AppointmentCard_forProfessional_Calendar
+                      backgroundColor={"#87CEFA"}
+                      status={x.Appointment_status}
+                      Date={x.Date}
+                      Start_time={x.Start_time}
+                      End_time={x.End_time}
+                    />
+                  )
+              })}
+          </View>}
+
+
+          {showText3 && <View style={styles.view1}>
+            {FutureAppointment && FutureAppointment.length > 0 &&
+              FutureAppointment.map(x => {
                 return (
                   <AppointmentCard_forProfessional_Calendar
-                  backgroundColor={"#87CEFA"}
-                  status={x.Appointment_status}
-                  Date={x.Date}
-                  Start_time={x.Start_time}
-                  End_time={x.End_time}
-                />
+                    backgroundColor={"#FF6961"}
+                    status={x.Appointment_status}
+                    Date={x.Date}
+                    Start_time={x.Start_time}
+                    End_time={x.End_time}
+                    Client_Name={x.First_name_client}
+                    Client_Last_Name={x.Last_name_client}
+                  />
                 )
-            })}
-        </View>}
+              })}
+          </View>}
+        </View>
 
-
-        {showText3 && <View style={styles.view1}>
-          {FutureAppointment && FutureAppointment.length > 0 &&
-            FutureAppointment.map(x => {
-              return (
-                <AppointmentCard_forProfessional_Calendar
-                  backgroundColor={"#FF6961"}
-                  status={x.Appointment_status}
-                  Date={x.Date}
-                  Start_time={x.Start_time}
-                  End_time={x.End_time}
-                  Client_Name= {x.First_name_client}
-                  Client_Last_Name= {x.Last_name_client}
-                />
-              )
-            })}
-        </View>}
-      </View>
-
-    </ScrollView>
-    <Menu_professional/>
+      </ScrollView>
+      <Menu_professional />
     </>
   )
 };
@@ -208,31 +231,31 @@ const styles = StyleSheet.create({
     flex: 12,
     flexDirection: 'row',
     // alignItems: 'center'
-    
+
   },
 
   view1: {
     flex: 3,
-   flexDirection: 'column',
-    alignItems:'stretch',
-    padding:10,
-  //  borderColor:'#9acd32'
-   
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    padding: 10,
+    //  borderColor:'#9acd32'
+
   },
   view: {
     flex: 1,
     flexDirection: 'column',
-  
+
   },
   wel: {
     textAlign: "center",
     fontSize: 30,
-    color:'#9acd32',
-},
-text:{
-  textAlign: "center",
-  fontSize: 20,
-}
+    color: '#9acd32',
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 20,
+  }
 
 
 });

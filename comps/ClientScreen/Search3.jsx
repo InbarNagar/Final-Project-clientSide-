@@ -11,28 +11,16 @@ import {
   Linking
 } from "react-native";
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
-// import { RadioButton } from "react-native-paper";
-// import { Picker } from "@react-native-picker/picker";
 import {
-  // GetAllAvailableAppointments,
-  // AppointmentToClient,
-  // Search_post,
-  // Treatment_type_GET,
-  // New_Future_Apointment,
-  // allApoC,
-  // Post_SendPushNotification,
   AllApointemtDetailesForClient
-} from "./obj/FunctionAPICode";
+} from "../obj/FunctionAPICode";
 import moment from "moment";
 import { NavigationActions } from "react-navigation";
-import { UserContext } from "../comps/UserDietails";
+import { UserContext } from "../UserDietails";
 import { Button } from "react-native-elements";
 import Geocoder from 'react-native-geocoding';
-import searchOnMap from "../comps/UserDietails";
-import AppointmentCard_forClient from "./obj/AppointmentCard_forClient";
-// import { AllApointemtDetailes } from "./obj/FunctionAPICode";
+import AppointmentCard_forClient from "./AppointmentCard_forClient";
 import ClientProfile from "./ClientProfile";
-// import ClientSearchReasultCard from "./ClientSearchReasultCard";
 import SearchFiltersMenu from "./SearchFiltersMenu";
 
 

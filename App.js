@@ -10,7 +10,6 @@ import Professional_registration from './comps/Professional_registration';
 import Client_registration from './comps/Client_registration';
 import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
-import Search3 from './comps/Search3';
 import Search from './comps/Map';
 import AddTratment from './comps/AddTratment';
 import Menu_treatment_forAppointment from './comps/Menu_treatment_forAppointment';
@@ -27,11 +26,12 @@ import Menu_treatment_registration from './comps/Menu_treatment_registration';
 import Update_personal_details_Professional from './comps/Update_personal_details_Professional';
 import Update_personal_details_Bussines from './comps/Update_personal_details_Bussines';
 import Set_notifications from './comps/Set_notifications';
-import ClientProfile from './comps/ClientProfile';
+import ClientProfile from './comps/ClientScreen/ClientProfile';
 import Map from './comps/Map';
 import Update_ClientDetailes from './comps/Update_ClientDetailes';
 import LogInGenral from './comps/LogInGenral';
 import Review_Business from './comps/Review_Business';
+import Search3 from './comps/ClientScreen/Search3';
 
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
@@ -63,9 +63,10 @@ function App() {
 
       <NavigationContainer>
 
+        <Stack.Navigator initialRouteName="LogInGenral">
 
-        <Stack.Navigator initialRouteName="ScreenOne">
-          <Stack.Screen name="ScreenOne" component={LogInGenral} />
+          <Stack.Screen name="LogInGenral" component={LogInGenral} />
+
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
           <Stack.Screen name="NewAppointment" component={NewAppointment} />
           <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
@@ -84,9 +85,13 @@ function App() {
           <Stack.Screen name="Set_notifications" component={Set_notifications} />
           <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} />
           <Stack.Screen name="Update_ClientDetailes" component={Update_ClientDetailes} />
-          <Stack.Screen name="LogInGenral" component={LogInGenral} />
+         
+
           <Stack.Screen name="ClientProfile" component={ClientProfile} />
+
           <Stack.Screen name="Review_Business" component={Review_Business} />
+       
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
