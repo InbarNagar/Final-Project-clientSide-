@@ -9,7 +9,7 @@ import BusinessProfilePOPUP from './BusinessProfilePOPUP'
 const ClientSearchReasultCard = (props) => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const ClientData = userDetails;
-
+  const [apo,setapo]=useState();
   const  {
     ClientIDnumber,
     Is_client_house,
@@ -21,7 +21,7 @@ const ClientSearchReasultCard = (props) => {
     AddressStreet,
     AddressHouseNumber,
     AddressCity,
-    apo,
+    //apo,
     Appointment_status
   } = props;
   const [token, settoken] = useState();// ענבר
@@ -35,7 +35,17 @@ const ClientSearchReasultCard = (props) => {
     console.log("businessProfilePOPUP - " ,businessProfilePOPUP);
     console.log("business number: "+JSON.stringify(Business_Number));
   }
+  useEffect(()=>{
+    
+    AllApointemtDetailes().then((res) => {
+        
+      console.log("&&&&&&&&&&&&&&&&&&&&&&", res.data)
+      setapo(res.data)
+      
+    });
+  },[]) 
   useEffect(() => {
+    
     if (token) {
       const body = {
         "to": token,
