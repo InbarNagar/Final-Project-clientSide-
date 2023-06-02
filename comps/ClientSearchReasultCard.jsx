@@ -22,7 +22,6 @@ const [apo,setapo]=useState();
     AddressStreet,
     AddressHouseNumber,
     AddressCity,
-    //apo,
     Appointment_status
   } = props;
 
