@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
-import { Button } from "react-native-elements";
+import Button from "../obj/Button";
 import {CancelAppointmentByClient} from '../obj/FunctionAPICode'
 import Review_Business from "../Review_Business";
 import { useNavigation } from '@react-navigation/native';
@@ -21,25 +21,25 @@ const AppointmentCard_forClient = (props) => {
   );
 }
 
-  const styles = StyleSheet.create({
-    card: {
-      borderWidth: 1,
-      borderRadius: 10,
-      borderColor: '#d3d3d3',
-      padding: 10,
-      marginVertical: 5,
-      backgroundColor: backgroundColor,
-    },
-    title: {
-      fontWeight: 'bold',
-      marginBottom: 5,
-      textAlign: "center",
-    },
-    text: {
+const styles = StyleSheet.create({
+  card: {
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#d3d3d3',
+    padding: 10,
+    marginVertical: 5,
+    backgroundColor: backgroundColor,
+  },
+  title: {
+    fontWeight: 'bold',
+    marginBottom: 5,
+    textAlign: "center",
+  },
+  text: {
 
-      fontSize: 20,
-    }
-  });
+    fontSize: 20,
+  }
+});
 
   const massage = () => {
     if (status == "Appointment_ended") {
@@ -60,13 +60,13 @@ const AppointmentCard_forClient = (props) => {
     if (status == "Awaiting_approval") // if status =
       return (<>
       <Text style={styles.title}>ממתין לאישור בעל עסק</Text>
-      <Button title="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
+      <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff"  text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
       </>)
 
     else { // if status =
       return (<>
       <Text style={styles.title}>{Treatment_Type} תור מאושר</Text>
-      <Button title="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
+      <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff" text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
       </>
       )
     }
@@ -75,9 +75,9 @@ const AppointmentCard_forClient = (props) => {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{moment(Date).format('DD/MM/YYYY')}</Text>
-      {massage()}
-      <Text>{BusinessName} כתובת: {AddressStreet} {AddressHouseNumber}, {AddressCity}</Text>
+      <Text style={styles.title}>שם העסק: {BusinessName}, כתובת: {AddressStreet} {AddressHouseNumber},{AddressCity}</Text>
       <Text style={styles.title}>{Start_time} - {End_time}</Text>
+      {massage()}
     </View>
   );
 };

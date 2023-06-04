@@ -242,7 +242,6 @@ const Review_Business = ({ route }) => {
               style={styles.button}
               icon='check'
               mode='contained'
-
               onPress={SendReview()}
 
             >

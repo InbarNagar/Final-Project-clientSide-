@@ -1,5 +1,15 @@
+// import { React, useEffect, useState, useContext } from "react";
+// import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native";
+// import { RadioButton } from "react-native-paper";
+// import { useNavigation } from "@react-navigation/core";
+// import { Button } from "react-native-elements";
+// import { Picker } from "@react-native-picker/picker";
+// import ClientSearchReasultCard from './ClientSearchReasultCard';
+// import { Search_post, GetAllAvailableAppointments, Treatment_type_GET, AllApointemtDetailes } from './obj/FunctionAPICode'
+// import { Value } from "react-native-reanimated";
+
 import { React, useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/core";
 import { Button } from "react-native-elements";
@@ -10,9 +20,16 @@ import {
   GetAllAvailableAppointments,
   Treatment_type_GET,
 } from "../obj/FunctionAPICode";
+import { MaterialIcons as Icon } from '@expo/vector-icons';
 export default function SearchFiltersMenu(props) {
-  const { ClientIDnumber, ClientFirstName } = props;
+  const {
+    ClientIDnumber,
+    ClientFirstName
+  } = props
 
+  const [filter_catgories, set_filter_catgories] = useState([]);
+
+  const [ShowFilter, SethowFilter] = useState(false);
   const navigation = useNavigation();
   const [chosenTreratmentNum, setChosenTreratmentNum] = useState(0);
   const [NameTreatment, setNameTreatment] = useState("");
@@ -20,9 +37,9 @@ export default function SearchFiltersMenu(props) {
   const [AddressCity, setAddressCity] = useState("");
   const [Is_client_house, setIs_client_house] = useState("");
   const [categories, setCategories] = useState(["קטגוריה"]);
-  const [response, SetResponse] = useState([]); //מערך תוצאות החיפוש
-  const sorts = ["דירוג","דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
-
+  const [response, SetResponse] = useState([]);//מערך תוצאות החיפוש
+  const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
+  //const [apo, setapo] = useState();//inbar
   useEffect(() => {
     Treatment_type_GET().then(
       (result) => {
@@ -90,166 +107,194 @@ export default function SearchFiltersMenu(props) {
           console.log("error", error);
         }
       );
+
     }
   }
-  //   function btnBookApiontment(x) {
 
-  //     //לקבוע תור
-  //     const pickedApointment = {
+  const FilterTreatment = (text) => {
+    console.log("&&&&&&&&&&&&&&&&&&", filter_catgories && filter_catgories.length > 0)
 
-  //       Appointment_status: x.Appointment_status,
-  //       ID_Client:clientIDnumber,
-  //       Number_appointment: x.Number_appointment,
-  //     };
-  //     console.log("****", pickedApointment);
-  //     console.log("*************", x);
-  //     AppointmentToClient(pickedApointment).then(
-  //       (result) => {
-  //         console.log("yes", result.data);
+    const filterSearch = categories.filter((value) => value.Name.includes(text))
+    set_filter_catgories(filterSearch)
+    console.log("&&&&&&&&%%%%%%%", filterSearch)
+    console.log(text)
+  }
 
-  //         apo.forEach((apointment) => {
-  //           if (pickedApointment.Number_appointment == apointment.Number_appointment) {
-  //             settoken(apointment.token)
-  //             console.log(apointment.token)
-  //             return
-  //           }
-  //         })
-  //         //  settoken("ExponentPushToken[sCfqv9F-xkfthnmyMFXsDX]")
-  //         if (result.data) {
-  //           alert("result.data");
-  //         }
 
-  //         Alert.alert(`${x.Number_appointment} מחכה לאישור מבעל העסק }`);
-
-  //       },
-  //       (error) => {
-  //         console.log("error", error);
-  //       }
-  //     );
-  //     btnSearch();
-  //   }
   return (
-    <View style={styles.container}>
-      <View style={styles.pickerContainer}>
-        <Picker
-          style={styles.picker}
-          selectedValue={NameTreatment}
-          onValueChange={(value) => setNameTreatment(value)}
-        >
-          {categories.map((category, i) => (
-            <Picker.Item label={category.Name} value={category.Name} key={i} />
-          ))}
-        </Picker>
-        <Picker
-          style={styles.picker}
-          selectedValue={sorts}
-          // onValueChange={(value) => handleInputChange("sort", value)}
-        >
-          {sorts.map((s) => (
-            <Picker.Item label={s} value={s} key={s} />
-          ))}
-        </Picker>
-      </View>
+    <View>
+
       <View>
-        <TextInput
-          style={styles.input}
-          placeholder="עיר"
-          value={AddressCity}
-          onChangeText={(value) => setAddressCity(value)}
-        />
-      </View>
-      <View>
-        <View>
-          <View>
-            <Text>מין מטפל :</Text>
-          </View>
-          <View style={styles.radioButtonContainer}>
-            <View>
-              <Text>זכר</Text>
-              <RadioButton
-                style={styles.RadioButton}
-                value="M"
-                status={gender === "M" ? "checked" : "unchecked"}
-                onPress={() => setGender("M")}
-              />
-            </View>
-            <View style={styles.radioButtonContainer}>
-              <Text>נקבה</Text>
-              <RadioButton
-                style={styles.RadioButton}
-                value="F"
-                status={gender === "F" ? "checked" : "unchecked"}
-                onPress={() => setGender("F")}
-              />
-            </View>
-          </View>
-        </View>
-        <View>
-          <View>
-            <Text>טיפול ביתי: </Text>
-          </View>
-          <View  style={styles.radioButtonContainer}>
-            <View>
-              <Text>כן</Text>
-              <RadioButton
-                style={styles.RadioButton}
-                value="YES"
-                status={Is_client_house === "YES" ? "checked" : "unchecked"}
-                onPress={() => setIs_client_house("YES")}
-              />
-            </View>
-            <View>
-              <Text>לא</Text>
-              <RadioButton
-                style={styles.RadioButton}
-                value="NO"
-                status={Is_client_house === "NO" ? "checked" : "unchecked"}
-                onPress={() => setIs_client_house("NO")}
-              />
-            </View>
-          </View>
-        </View>
-      </View>
-      <View>
-        <Button
-          title="חפש"
-          buttonStyle={{
-            backgroundColor: "blue",
-            borderWidth: 2,
-            borderColor: "white",
-            borderRadius: 30,
-          }}
-          containerStyle={{
-            width: 200,
-            marginHorizontal: 50,
-            marginVertical: 10,
-          }}
-          titleStyle={{ fontWeight: "bold" }}
-          onPress={btnSearch}
-        />
-        {response.length > 0 && (
+        <Text style={styles.title}>שלום {ClientFirstName}  </Text>
+        <View style={{flexDirection: 'column',}}>
+          <TextInput style={{
+           height: 40,
+           borderColor: 'gray',
+           borderWidth: 1,
+           marginBottom: 10, 
+        placeholderTextColor:"#E6E6FA"
+          }} onChangeText={(text) => FilterTreatment(text)} placeholder="הקלדי טיפול יופי" >  </TextInput>
+  <View  style={styles.buttonContainer}>
           <Button
-            title="תצוגת מפה"
+            title="חפש"
+            onPress={btnSearch}
             buttonStyle={{
-              backgroundColor: "blue",
+              backgroundColor: "rgb(92, 71, 205)",
               borderWidth: 2,
               borderColor: "white",
               borderRadius: 30,
             }}
-            containerStyle={{
-              width: 200,
-              marginHorizontal: 50,
-              marginVertical: 10,
-            }}
-            titleStyle={{ fontWeight: "bold" }}
-            onPress={() => {
-              props.navigation.navigate("SearchOnMap", {
-                results: response,
-              });
-            }}
+            icon={
+              <Icon
+                name="search"
+                size={24}
+                color="white"
+              />
+            }
           />
-        )}
+          {response.length > 0 && (
+            <Button
+          style={{Color:"rgb(92, 71, 205)"}}
+              title="תצוגת מפה"
+              buttonStyle={{
+                backgroundColor: "rgb(92, 71, 205)",
+                borderWidth: 2,
+                borderColor: "white",
+                borderRadius: 30,
+                
+              }}
+              // containerStyle={{
+              //   width: 200,
+              //   marginHorizontal: 50,
+              //   marginVertical: 10,
+              // }}
+              // titleStyle={{ fontWeight: "bold" }}
+              onPress={() => {
+                props.navigation.navigate("SearchOnMap", {
+                  results: response,
+                });
+              }}
+              icon={
+                <Icon
+                  name="place"
+                  size={24}
+                  color="white"
+                />
+              }
+            />
+          )}
+          <Button title="סינון"
+              buttonStyle={{
+                backgroundColor: "rgb(92, 71, 205)",
+                borderWidth: 2,
+                borderColor: "white",
+                borderRadius: 30,
+              }}
+            icon={
+              <Icon
+                name="filter-list"
+                size={24}
+                color="white"
+              />
+            } onPress={() => SethowFilter(!ShowFilter)} />
+        </View>
+        </View>
+        <Picker
+          selectedValue={NameTreatment}
+          onValueChange={(value) => setNameTreatment(value)}
+          style={styles.picker}
+        >
+          {filter_catgories && filter_catgories.length > 0 ?
+            filter_catgories.map((category, i) => (
+              <Picker.Item
+                label={category.Name}
+                value={category.Name}
+                key={i}
+              />)) :
+            <Picker.Item
+              label={"אין תוצאות"}
+              key={0}
+            />
+
+          }
+        </Picker>
+
+        {ShowFilter && <View>
+          <Picker
+            selectedValue={sorts}
+          // onValueChange={(value) => handleInputChange("sort", value)}
+          >
+            {sorts.map((s) => (
+              <Picker.Item label={s} value={s} key={s} />
+            ))}
+          </Picker>
+
+          <View>
+            <TextInput
+              style={{ fontSize: 25, borderColor: "black", borderWidth: 2 }}
+              placeholder="עיר"
+              value={AddressCity}
+              onChangeText={(value) => setAddressCity(value)}
+            />
+          </View>
+
+          <View>
+            <View>
+              <Text>מין מטפל:</Text>
+            </View>
+            <View>
+              <View>
+                <Text>זכר</Text>
+                <RadioButton
+                  value="M"
+                  status={gender === "M" ? "checked" : "unchecked"}
+                  onPress={() => setGender("M")}
+                />
+              </View>
+              <View>
+                <Text>נקבה</Text>
+                <RadioButton
+                  value="F"
+                  status={gender === "F" ? "checked" : "unchecked"}
+                  onPress={() => setGender("F")}
+                />
+              </View>
+            </View>
+          </View>
+          <View>
+            <View>
+              <Text>טיפול ביתי: </Text>
+            </View>
+            <View>
+              <View>
+                <Text>כן</Text>
+                <RadioButton
+                  value="YES"
+                  status={
+                    Is_client_house === "YES" ? "checked" : "unchecked"
+                  }
+                  onPress={() => setIs_client_house("YES")}
+                />
+              </View>
+              <View>
+                <Text>לא</Text>
+                <RadioButton
+                  value="NO"
+                  status={
+                    Is_client_house === "NO" ? "checked" : "unchecked"
+                  }
+                  onPress={() => setIs_client_house("NO")}
+                />
+              </View>
+            </View>
+          </View>
+        </View>}
+      
       </View>
+
+
+
+
       <ScrollView>
         {response &&
           response.length > 0 &&
@@ -268,63 +313,90 @@ export default function SearchFiltersMenu(props) {
                   AddressCity={x.AddressCity}
                   ClientIDnumber={ClientIDnumber}
                   Appointment_status={x.Appointment_status}
+                //apo={apo}
                 />
               </View>
             );
           })}
       </ScrollView>
     </View>
-  );
+  )
 }
-
 const styles = StyleSheet.create({
+  inp: {
+    flexDirection: 'row',
+    padding: 15,
+    justifyContent: 'center',
+    width: '80%',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 20,
+    backgroundColor: '#eee', // Lighter color for better visibility
+
+  },
+  textInputS: (borderColor) => {
+    return {
+      color: "rgb(92, 71, 205)",
+      borderColor: borderColor ? 'green' : 'red',
+      fontSize: 20, // Less emphasis on the font size
+      textAlign: 'right',
+      fontWeight: 'bold',
+    }
+  },
+  title: {
+    padding: 10,
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#000', // Change color to black for better visibility
+    fontWeight: 'bold',
+    color: "rgb(92, 71, 205)",
+  },
+  titp: {
+    textAlign: 'center',
+    color: 'red',
+    fontSize: 17,
+  },
   container: {
-    flex: 1,
-    backgroundColor: "#F5FCFF",
-    padding: 16,
+    flex: 1, // Let it take the available space
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fafafa', // Lighter background color for better contrast
+    padding: '5%', // Use percentage for padding
   },
-  pickerContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  text: {
+    textAlign: 'right',
+    paddingBottom: 10,
+  },
+  but: {
+    textAlign: 'center',
+    borderRadius: 25,
+    height: 50,
     marginBottom: 20,
+    backgroundColor: '#1E90FF', // More conventional button color
+    padding: 15,
+    margin: 10,
   },
-  picker: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 5,
-  },
-  input: {
-    height: 40,
-    borderColor: "gray",
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingLeft: 8,
-  },
-  radioButtonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
-  },
-  radioButtonGroup: {
-    flexDirection: "row",
-    alignItems: "center",
+  thachtext: {
+    textAlign: 'center',
+    color: '#fffaf0',
+    fontSize: 20, // Less emphasis on font size
+    fontWeight: 'bold',
+    height: 50,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    
   },
-  button: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#4682B4",
-    padding: 10,
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: "#fff",
-    fontSize: 16,
+  picker: {
+    // height: 50,
+    // width: 150,
+    borderColor: "rgb(92, 71, 205)",
+    // borderWidth: 1,
+     borderRadius: 20, // This will make the picker appear as a rounded rectangle
+    backgroundColor: '#E6E6FA', // This will give the picker a white background with 50% opacity
   },
 });
+
+

@@ -21,20 +21,21 @@ const Button = (props) => {
         marginTop: 20,
         width: width,
       }),
-      buttonText: {
+
+      buttonText:(colortext) => ({
         fontSize: fontSize,
-        fontWeight: 'bold',
+        fontWeight:'bold',
         color: colortext,
         textAlign: 'center',
         opacity: 0.5,
-      }
+     }),
     });
 
   return (
     <TouchableOpacity 
       onPress={onPress} 
       style={styles.button(color)}>
-      <Text style={styles.buttonText}>{text}</Text>
+      <Text style={styles.buttonText(colortext)}>{text}</Text>
     </TouchableOpacity>
   );
 };

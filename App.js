@@ -63,16 +63,22 @@ function App() {
 
       <NavigationContainer>
 
-        <Stack.Navigator initialRouteName="LogInGenral">
+        <Stack.Navigator initialRouteName="LogInGenral" screenOptions={{headerStyle: {
+            backgroundColor: "rgb(92, 71, 205)",
+          },
+          headerTintColor: '#F5FCFF',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          }, }} >
 
-          <Stack.Screen name="LogInGenral" component={LogInGenral} />
+          <Stack.Screen name="LogInGenral" component={LogInGenral} options={{ title: 'כניסה'}} />
 
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
-          <Stack.Screen name="NewAppointment" component={NewAppointment} />
-          <Stack.Screen name="Calendar_professional" component={Calendar_professional} />
+          <Stack.Screen name="NewAppointment" component={NewAppointment} options={{ title: 'הוספת תור חדש' }} />
+          <Stack.Screen name="Calendar_professional" component={Calendar_professional}options={{ title: 'היומן שלי' }}/>
           {/* <Stack.Screen name="LogIn" component={LogIn} /> */}
           <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} />
-          <Stack.Screen name="Search3" component={Search3} />
+          <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name='Professional_registration' component={Professional_registration} />
