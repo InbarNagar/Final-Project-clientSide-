@@ -172,3 +172,11 @@ export const GetOneAppointment=(appointmentNumber)=>{
 export const GetBusinessDiary=(Business_Number)=>{
     return Fetch(`BusinessDiary/${Business_Number}`,'GET')
 }
+//חיפוש חדש לפי יומן עסק- BusinessDiary
+export const NewSearchPost=(body)=>{
+    return Axios(`Business/UpdateBusinesss`, 'post',body)
+}
+//דירוג עסק ע"י לקוח שבוצע לו טיפול
+export const ReviewBusiness=(body)=>{
+    return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
+}

@@ -32,6 +32,7 @@ import Update_ClientDetailes from './comps/Update_ClientDetailes';
 import LogInGenral from './comps/LogInGenral';
 import Review_Business from './comps/Review_Business';
 import Search3 from './comps/ClientScreen/Search3';
+import NewSearch3 from './comps/ClientScreen/NewSearch3';
 
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
@@ -63,6 +64,7 @@ function App() {
 
       <NavigationContainer>
 
+        {/* <Stack.Navigator initialRouteName="LogInGenral"> */}
         <Stack.Navigator initialRouteName="LogInGenral">
 
           <Stack.Screen name="LogInGenral" component={LogInGenral} />
@@ -87,7 +89,8 @@ function App() {
           <Stack.Screen name="Update_ClientDetailes" component={Update_ClientDetailes} />
           <Stack.Screen name="ClientProfile" component={ClientProfile} />
           <Stack.Screen name="Review_Business" component={Review_Business} />
-       
+          <Stack.Screen name="NewSearch3" component={NewSearch3} />
+
 
         </Stack.Navigator>
       </NavigationContainer>

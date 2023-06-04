@@ -6,10 +6,11 @@ import Review_Business from "../Review_Business";
 import { useNavigation } from '@react-navigation/native';
 
 const AppointmentCard_forClient = (props) => {
-  const {ClientIDnumber,Number_appointment, AddressCity,AddressHouseNumber,AddressStreet,backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, BusinessName } = props;
+  const {Business_Number,ClientIDnumber,Number_appointment, AddressCity,AddressHouseNumber,AddressStreet,backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, BusinessName } = props;
   const navigation = useNavigation();
 
   function cancelAppointment(Number_appointment){
+    console.log("appoinment: "+ Number_appointment);
     CancelAppointmentByClient(Number_appointment).then(
     (result) => {
       console.log(`appointment ${Number_appointment} canceled!! `);
@@ -52,6 +53,7 @@ const AppointmentCard_forClient = (props) => {
           Number_appointment,
           ClientIDnumber,
           BusinessName,
+          Business_Number
         })
       }
     />

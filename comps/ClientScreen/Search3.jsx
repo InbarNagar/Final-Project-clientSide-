@@ -153,27 +153,32 @@ export default function Search3(props) {
       {showSAppointmenthSection &&
         !showProfileSection &&
         !showSearchSection && (
-          <View style={styles.view1}>
-            {allAppointment.map((appointment) => {
-              console.log("key: "+appointment.Number_appointment);
-              return (
-                <AppointmentCard_forClient
-                  key={appointment.Number_appointment}
-                  Number_appointment={appointment.Number_appointment}
-                  backgroundColor={"grey"}
-                  status={appointment.Appointment_status}
-                  Date={appointment.Date}
-                  Start_time={appointment.Start_time}
-                  End_time={appointment.End_time}
-                  AddressStreet={appointment.AddressStreet}
-                  AddressHouseNumber={appointment.AddressHouseNumber}
-                  AddressCity={appointment.AddressCity}
-                  BusinessName={appointment.Name}
-                  ClientIDnumber={userDetails.ID_number}
-                />
-              );
-            })}
-          </View>
+          <ScrollView>
+              {/* <View style={styles.scrollContent}> */}
+
+  {allAppointment.map((appointment) => {
+    console.log("key: " + appointment.Number_appointment);
+    return (
+      <AppointmentCard_forClient
+        key={appointment.Number_appointment}
+        Number_appointment={appointment.Number_appointment}
+        backgroundColor={"grey"}
+        status={appointment.Appointment_status}
+        Date={appointment.Date}
+        Start_time={appointment.Start_time}
+        End_time={appointment.End_time}
+        AddressStreet={appointment.AddressStreet}
+        AddressHouseNumber={appointment.AddressHouseNumber}
+        AddressCity={appointment.AddressCity}
+        BusinessName={appointment.Name}
+        Business_Number={appointment.Business_Number}
+        ClientIDnumber={userDetails.ID_number}
+      />
+    );
+  })}
+    {/* </View> */}
+
+</ScrollView>
         )}
 
     </View>
@@ -185,13 +190,17 @@ const styles = StyleSheet.create({
 
     flex: 1,
   },
-  view1: {
-    flex: 3,
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    padding: 10,
-    //  borderColor:'#9acd32'
-  },
+  // view1: {
+  //   flex: 3,
+  //   flexDirection: 'column',
+  //   alignItems:'center',
+  //   padding: 10,
+  //   //  borderColor:'#9acd32'
+  // },
+  // scrollContent: {
+  //   alignItems: 'center',
+  //   paddingVertical: 16,
+  // },
   resultsView: {
     flex: 1,
   },
