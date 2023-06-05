@@ -1,9 +1,10 @@
+
 // import React, { useState } from "react";
 // import { View, Text, TextInput, StyleSheet, Button } from "react-native";
 // import { Rating } from "react-native-ratings";
 
 // export default function Review_Business() {
- 
+
 //   const [cleanliness, setCleanliness] = useState(3);
 //   const [service, setService] = useState(3);
 //   const [comments, setComments] = useState("");
@@ -59,7 +60,7 @@
 //       </View>
 //     );
 //   }
-  
+
 //   // זהו העיצוב של הרכיב. ניתן לשנות את הערכים האלה כדי לשנות את המראה והתחושה של הרכיב.
 //   const styles = StyleSheet.create({
 //     container: {
@@ -90,7 +91,7 @@
 //       padding: 10
 //     }
 //   });
-  
+
 
 import React, { useState,useEffect } from 'react';
 import { Alert,View, StyleSheet } from 'react-native';
@@ -98,6 +99,7 @@ import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragr
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
 import { ReviewBusiness } from './obj/FunctionAPICode';
+
 
 const Review_Business = ({ route }) => {
   const navigation = useNavigation();
@@ -107,7 +109,6 @@ const Review_Business = ({ route }) => {
   const [Professionalism, SetProfessionalism] = useState(0);
   const [On_time, SetOn_time] = useState(0);
   const [Comment, SetComment] = useState('');
-
   useEffect(() => {
     console.log(Business_Number+' '+BusinessName+' '+Number_appointment+' '+ClientIDnumber);
   }, []);
@@ -167,7 +168,7 @@ const Review_Business = ({ route }) => {
               onFinishRating={(rating) => SetProfessionalism(rating)}
             />
 
-            <Paragraph style={styles.subtitle}>מוצר</Paragraph>
+            <Paragraph style={styles.subtitle}>מקצועיות</Paragraph>
             <Rating
               type='star'
               ratingCount={5}
@@ -236,4 +237,3 @@ const styles = StyleSheet.create({
 });
 
 export default Review_Business;
-  

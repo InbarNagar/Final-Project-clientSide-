@@ -128,6 +128,10 @@ export const LogInUser = (body) => {
 export const BusinessDetails= (business_num) => {
     return Axios(`Business/OneBusiness/${business_num}`, 'post')
 }
+//אישור תור ע"י בעל עסק לפי מספר תור
+export const ConfirmAppointment= (Number_appointment) => {
+    return Fetch(`Appointment/changeStatus/${Number_appointment}`, 'post')
+}
 
 //פונקציה לשים איפה שרוצים לשלוח התראות
 export const  Post_SendPushNotification=(body)=>{
@@ -164,6 +168,11 @@ export const GetAllAvailableAppointments = () => {
 export const UpdateapiBusiness=(body)=>{
     return Axios(`Business/UpdateBusinesss`, 'post',body)
 }
+
+
+export const  NewBusinessReviewByClient=(body)=>{
+    return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
+}
 //פרטי עסק לפי מספר תור
 export const GetOneAppointment=(appointmentNumber)=>{
     return Fetch(`Appointment/OneAppointment/${appointmentNumber}`,'get')
@@ -171,6 +180,7 @@ export const GetOneAppointment=(appointmentNumber)=>{
 //קריאה לקבלת טבלאות יומן, תורים וסוגי תורים לבעל עסק
 export const GetBusinessDiary=(Business_Number)=>{
     return Fetch(`BusinessDiary/${Business_Number}`,'GET')
+
 }
 //חיפוש חדש לפי יומן עסק- BusinessDiary
 export const NewSearchPost=(body)=>{

@@ -1,6 +1,6 @@
 
 import React, { useState ,useEffect, useContext} from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, SafeAreaVie, TextInput,Text,Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import Button from '../obj/Button';
@@ -12,8 +12,8 @@ import Header from './obj/Header';
 import PushNofitictaion from './PushNofitictaion';
 import { SaveTokenforID,SaveTokenforIDPro,LogInUser } from './obj/FunctionAPICode';
 import Button from './obj/Button';
-//import Icon from 'react-native-vector-icons/FontAwesome';
-
+import Alert from './Alert';
+import { MaterialIcons as Icon } from '@expo/vector-icons';
 
 
 export default function LogInGenral(props) {
@@ -23,9 +23,14 @@ export default function LogInGenral(props) {
 
    const { userDetails, setUserDetails } = useContext(UserContext);
    const [islogin,setlogin]= useState();
+   const [alert, setAlert] = useState()
+   const [hidePassword, setHidePassword] = useState(true)
 
-
-   
+   const onPressEye = () => {
+    setHidePassword(!hidePassword);
+  };
+ 
+  const eyeIcon = hidePassword ? 'visibility' : 'visibility-off';
    useEffect( () => {
     // setLoading(true)
    if(islogin&&userDetails) {PushNofitictaion().then((token) => {
@@ -92,6 +97,8 @@ if(userDetails){
 
   const handleLogin =  async () => {
 
+
+
       const data = {
         id_number: ID_number,
         password: password,
@@ -100,8 +107,14 @@ if(userDetails){
         console.log('yes', result.data);
          setUserDetails(result.data)
          setlogin(true);
-  
+       
       }, (error) => {
+        setAlert(<Alert
+        text='שם משתמש וסיסמא אינם תקינים'
+        type='worng'
+        time={1000}
+        bottom={100}
+    />)
         console.log('error', error)
       })
     
@@ -113,54 +126,67 @@ if(userDetails){
     }
 
  
-
   return (
+    <>
+    {alert && alert}
     <View style={styles.container}>
 
-      <Header text="Log In" fontSize={100} height={200}/>
+   <Header text="BeautyMe" fontSize={60} height={200} color="#E6E6FA"/>
+
+   
+
+    <View style={styles.content}>
+    
 
       <Text style={styles.title}>תעודת זהות</Text>
       <View style={styles.inp}>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center',}}>
+      <View style={{flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 5, borderColor: '#999', alignItems: 'center'}}>
         <TextInput
-          style={styles.input}
+          style={{flex: 1, padding: 10, fontSize: 18, textAlign: 'right'}}
           placeholder="תעודת זהות"
           value={ID_number}
           onChangeText={setID_number} 
           autoCapitalize="none"
           keyboardType="email-address"
           autoCompleteType="email"
-        //   onblur={handleidNumber}
-
+          
         />
+
+</View>
+    </View>
       </View>
      
       <Text>{'\n'}</Text>
       <Text style={styles.title}>סיסמא</Text>
       <View style={styles.inp}>
        
-        <TextInput
-        
-          style={styles.input}
-          placeholder="סיסמא"
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{flexDirection: 'row', borderWidth: 1, borderRadius: 10, padding: 5, borderColor: '#999', alignItems: 'center'}}>
+        <TextInput 
+          secureTextEntry={hidePassword} 
           value={password}
           onChangeText={setPassword}
-          secureTextEntry={true}
-          autoCompleteType="password"
+          style={{flex: 1, padding: 10, fontSize: 18, textAlign: 'right'}} 
+          placeholder="סיסמא"
         />
+        <TouchableOpacity onPress={onPressEye}>
+          <Icon name={eyeIcon} size={24} color={'#666'} />  
+        </TouchableOpacity>
+      </View>
+    </View>
 
       </View>
 
 
-      <Button color='#9acd32' width={300} fontSize={30} borderRadius={30} text="התחברות" onPress={handleLogin} />
+      <Button color="#E6E6FA" width={300} fontSize={20} borderRadius={20} text="התחברות" onPress={handleLogin} colortext="rgb(74, 88, 169)" />
 
-      {/* <Button color='transparent' text="שכחתי סיסמה" onPress={() => { navigation.navigate(ForgotPassword) }} /> */}
-      
-      {/* <Button color='transparent' text=" עדיין לא נרשמתם? לחצו כאן להרשמה" onPress={Registration} />  */}
+
       <Button color='transparent' text="עדיין לא נרשמתם? לחצו כאן" onPress={Registration} />
-
+</View>
     </View>
 
-
+    </>
 
   );
 }
@@ -171,14 +197,18 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: 'center',
     // justifyContent: 'center',
-    backgroundColor: '#f8f8ff'
-
+    backgroundColor: '#F5FCFF',
+    flex: 1,
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     // marginBottom: 1,
-    alignItems: 'center',
+    alignItems:'flex-start',
+    color:"rgb(92, 71, 205)",
+    textAlign:'right'
+   
+
   },
   input: {
     borderWidth: 1,
@@ -194,6 +224,7 @@ const styles = StyleSheet.create({
     padding: 2,
     justifyContent: 'space-between',
     width: "100%",
+    textAlign:'right'
   },
   label: {
     position: 'absolute',
@@ -221,6 +252,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     alignItems: 'center'
   },
+  content: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1, // מסגרת עדינה
+    borderColor: 'grey', // צבע המסגרת
+    borderRadius: 10, // קימור המסגרת
+    padding: 30, // רווח בתוך המסגרת
+    marginTop: 50, // רווח מעל לתוכן
+    
+  },
+  image:{
+    width:100,
+    height:100,
+    padding:20
+    }
+
 });
 
 

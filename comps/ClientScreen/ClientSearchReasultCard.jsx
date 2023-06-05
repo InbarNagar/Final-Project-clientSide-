@@ -3,7 +3,7 @@ import {Text,View,Alert} from 'react-native';
 import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import { Button } from "react-native-elements";
-import {AppointmentToClient,Post_SendPushNotification,AllApointemtDetailes} from '../obj/FunctionAPICode';
+import {AppointmentToClient,Post_SendPushNotification, AllApointemtDetailes} from '../obj/FunctionAPICode';
 import { UserContext } from "../UserDietails";
 import BusinessProfilePOPUP from './BusinessProfilePOPUP'
 const ClientSearchReasultCard = (props) => {
@@ -21,7 +21,6 @@ const ClientSearchReasultCard = (props) => {
     AddressStreet,
     AddressHouseNumber,
     AddressCity,
-    //apo,
     Appointment_status
   } = props;
   const [token, settoken] = useState();// ענבר

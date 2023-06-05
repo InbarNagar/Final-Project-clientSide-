@@ -67,25 +67,53 @@ export default function Search3(props) {
   }, [token]);
   // אזור טיפול בהצגה והעלמת אזורים
   const [showSearchSection, setShowSearchSection] = useState(true); //להפעיל תצוגת חיפוש תור
+
+
   const handleSearchToggleSection = () => {
     console.log("מסך חיפוש : " + showSearchSection);
     setShowSAppointmenthSectionn(false);
     setShowProfileSection(false);
     setShowSearchSection(!showSearchSection);
   };
+
+
   const [showSAppointmenthSection, setShowSAppointmenthSectionn] =
     useState(false); //להפעיל תצוגת תורים
+
+
   const handleAppointmentToggleSection = () => {
     setShowSearchSection(false);
     setShowProfileSection(false);
+
+const data={
+  "AddressCity":userDetails.AddressCity ,
+  "AddressHouseNumber":userDetails.AddressHouseNumber ,
+  "AddressStreet": userDetails.AddressStreet,
+  "Email":userDetails.Email,
+  "Facebook_link":userDetails.Facebook_link,
+  "First_name": userDetails.First_name,
+  "ID_number":userDetails.ID_number,
+  "Instagram_link": userDetails.Instagram_link,
+  "Last_name": userDetails.Last_name,
+  "Token": userDetails.token,
+  "birth_date": userDetails.birth_date,
+  "gender": userDetails.gender,
+  "password": userDetails.password,
+  "phone": userDetails.phone,
+  "userType": "Cli"}
+
+
+
     console.log("התורים שלי: " + showSAppointmenthSection);
     setShowSAppointmenthSectionn(!showSAppointmenthSection);
+    console.log("התורים שלי: " + showSAppointmenthSection);
+console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+    AllApointemtDetailesForClient(data).then((result) => {
 
-    AllApointemtDetailesForClient(userDetails).then((result) => {
-      if (result.data) {
+       console.log(result.data,"**************************************************************************************");
         setallAppointment(result.data)
-        console.log(result.data);
-      }
+       
+   
     }, (error) => {
       console.log('error', error)
     })
@@ -102,42 +130,18 @@ export default function Search3(props) {
   // אזור ניהול תורים לתצוגת התורים
 
  
-
-
   return (
+    <>
+   
     <View style={styles.container}>
-
-      <View style={styles.menu}>
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={handleProfileToggleSection}
-        >
-          <Ionicons name="person" size={24} color="black" />
-          <Text style={styles.menuText}>פרופיל</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={handleSearchToggleSection}
-        >
-          <AntDesign name="home" size={24} color="black" />
-          <Text style={styles.menuText}>מסך בית</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.menuItem}
-          onPress={handleAppointmentToggleSection}
-        >
-          <AntDesign name="calendar" size={24} color="black" />
-          <Text style={styles.menuText}>התורים שלי</Text>
-        </TouchableOpacity>
-      </View>
+     <ScrollView>
       {showSearchSection &&
         !showProfileSection &&
         !showSAppointmenthSection && (
           <ScrollView>
             <SearchFiltersMenu
             ClientIDnumber={userDetails.ID_number}
+            ClientFirstName={userDetails.First_name}
             />
           </ScrollView>
         )}
@@ -153,35 +157,58 @@ export default function Search3(props) {
       {showSAppointmenthSection &&
         !showProfileSection &&
         !showSearchSection && (
-          <ScrollView>
-              {/* <View style={styles.scrollContent}> */}
-
-  {allAppointment.map((appointment) => {
-    console.log("key: " + appointment.Number_appointment);
-    return (
-      <AppointmentCard_forClient
-        key={appointment.Number_appointment}
-        Number_appointment={appointment.Number_appointment}
-        backgroundColor={"grey"}
-        status={appointment.Appointment_status}
-        Date={appointment.Date}
-        Start_time={appointment.Start_time}
-        End_time={appointment.End_time}
-        AddressStreet={appointment.AddressStreet}
-        AddressHouseNumber={appointment.AddressHouseNumber}
-        AddressCity={appointment.AddressCity}
-        BusinessName={appointment.Name}
-        Business_Number={appointment.Business_Number}
-        ClientIDnumber={userDetails.ID_number}
-      />
-    );
-  })}
-    {/* </View> */}
-
-</ScrollView>
+          <View style={styles.view1}>
+            {allAppointment.map((appointment) => {
+              console.log("key: "+appointment.Number_appointment);
+              return (
+                <AppointmentCard_forClient
+                  key={appointment.Number_appointment}
+                  Number_appointment={appointment.Number_appointment}
+                  backgroundColor={"rgb(229, 222, 255)"}
+                  status={appointment.Appointment_status}
+                  Date={appointment.Date}
+                  Start_time={appointment.Start_time}
+                  End_time={appointment.End_time}
+                  AddressStreet={appointment.AddressStreet}
+                  AddressHouseNumber={appointment.AddressHouseNumber}
+                  AddressCity={appointment.AddressCity}
+                  BusinessName={appointment.Name}
+                  Business_Number={appointment.Business_Number}
+                  ClientIDnumber={userDetails.ID_number}
+                />
+              );
+            })}
+          </View>
         )}
+  </ScrollView>
+<View style={styles.menu}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={handleProfileToggleSection}
+        >
+          <Ionicons name="person" size={24} color="white" />
+          <Text style={styles.menuText}>פרופיל</Text>
+        </TouchableOpacity>
 
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={handleSearchToggleSection}
+        >
+          <AntDesign name="home" size={24} color="white" />
+          <Text style={styles.menuText}>מסך בית</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={handleAppointmentToggleSection}
+        >
+          <AntDesign name="calendar" size={24} color="white" />
+          <Text style={styles.menuText}>התורים שלי</Text>
+        </TouchableOpacity>
+      </View>
     </View>
+
+    </>
   );
 }
 
@@ -224,6 +251,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderTopWidth: 1,
     borderTopColor: "#cccccc",
+    backgroundColor:"rgb(92, 71, 205)"
   },
   menuItem: {
     alignItems: "center",
@@ -232,5 +260,6 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 12,
     paddingTop: 5,
+    color:"white"
   },
 });

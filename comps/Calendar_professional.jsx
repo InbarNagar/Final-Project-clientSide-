@@ -122,7 +122,7 @@ export default function Calendar_professional() {
 
       <ScrollView>
         <View style={styles.view}>
-          <Header text="היומן שלי" color='#9acd32' fontSize='35' />
+          {/* <Header text="היומן שלי" color='#9acd32' fontSize='35' /> */}
           <ScrollView horizontal={true}>
             <View style={styles.container}>
 
@@ -142,6 +142,8 @@ export default function Calendar_professional() {
                 console.log(x.Date)
                 return (
                   <AppointmentCard_forProfessional_Calendar
+                    key={x.Number_appointment}
+                    Number_appointment={x.Number_appointment}
                     backgroundColor={"#ff8c00"}
                     // Treatment_Type= 
                     status={x.Appointment_status}
@@ -150,7 +152,6 @@ export default function Calendar_professional() {
                     End_time={x.End_time}
                     Client_Name={x.First_name}
                     Client_Last_Name={x.Last_name}
-                 
                   />
                 )
               })}
@@ -162,7 +163,9 @@ export default function Calendar_professional() {
                 if (x.Appointment_status == "Available" || x.Appointment_status == "available")
                   return (
                     <AppointmentCard_forProfessional_Calendar
-                      backgroundColor={"#98FB98"}
+                    key={x.Number_appointment}
+                    Number_appointment={x.Number_appointment}  
+                    backgroundColor={"#98FB98"}
                       status={x.Appointment_status}
                       Date={x.Date}
                       Start_time={x.Start_time}
@@ -179,7 +182,9 @@ export default function Calendar_professional() {
                 if (x.Appointment_status == "Appointment_ended")
                   return (
                     <AppointmentCard_forProfessional_Calendar
-                      backgroundColor={"#87CEFA"}
+                    key={x.Number_appointment}
+                    Number_appointment={x.Number_appointment} 
+                    backgroundColor={"#87CEFA"}
                       status={x.Appointment_status}
                       Date={x.Date}
                       Start_time={x.Start_time}
@@ -195,7 +200,9 @@ export default function Calendar_professional() {
               FutureAppointment.map(x => {
                 return (
                   <AppointmentCard_forProfessional_Calendar
-                    backgroundColor={"#FF6961"}
+                  key={x.Number_appointment}
+                    Number_appointment={x.Number_appointment} 
+                  backgroundColor={"#FF6961"}
                     status={x.Appointment_status}
                     Date={x.Date}
                     Start_time={x.Start_time}
