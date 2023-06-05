@@ -5,6 +5,7 @@ import { UserContext } from './UserDietails';
 import React, { useState, useEffect, useContext } from 'react';
 import { BusinessDetails } from './obj/FunctionAPICode';
 import { UpdateapiBusiness } from './obj/FunctionAPICode';
+import Menu_professional from './obj/Menu_professional';
 export default function Update_personal_details_Bussines() {
 
   const { userDetails, setUserDetails } = useContext(UserContext);
@@ -67,7 +68,7 @@ export default function Update_personal_details_Bussines() {
         <View style={styles.container}>
 
           <Text style={styles.title}>  עריכת פרופיל עסקי</Text>
-          <Text style={styles.titp}> שלום </Text>
+       
 
           <View style={styles.inp}>
             <TextInput style={styles.textInputS}
@@ -131,10 +132,10 @@ export default function Update_personal_details_Bussines() {
               </View>
 
             </TouchableOpacity></View>
-
+          
         </View>
       </TouchableOpacity>
-
+  <Menu_professional />
     </ScrollView>
   )
 
@@ -144,59 +145,43 @@ export default function Update_personal_details_Bussines() {
 const styles = StyleSheet.create({
   inp: {
     flexDirection: 'row',
-    padding: 15,
     justifyContent: 'center',
-    width: '90%',
+    width: '80%',
     borderRadius: 25,
     height: 50,
     marginBottom: 30,
-    backgroundColor: '#fffaf0'
-
+    backgroundColor: '#f3e5f5' // Material Design light purple 100
   },
   textInputS: {
-    // height: 40,
-    // width: "80%",
-    // margin: 10,
-    // borderWidth: 1,
-    // padding: 10,
     color: '#808080',
-    // height: 50,
     fontSize: 20,
     textAlign: 'right',
     fontWeight: 'bold',
     opacity: 0.5,
-
   },
   title: {
     padding: 10,
     justifyContent: 'center',
     textAlign: 'center',
     fontSize: 25,
-    color: '#fff',
+    color: '#ba68c8', // Material Design purple 300
     fontWeight: 'bold',
-
   },
-
   titp: {
     textAlign: 'center',
-    color: '#fffaf0',
+    color: '#f3e5f5', // Material Design light purple 100
     fontSize: 17,
     padding: 20,
   },
-
   container: {
-    flex: 1,
-    // backgroundColor: '#fff',
+ 
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#9acd32',
+    backgroundColor: '#ce93d8', // Material Design purple 200
     padding: 50,
     paddingBottom: 60,
-    width: "100%",
     height: "100%"
-
   },
-
   text: {
     textAlign: 'right',
     paddingBottom: 10,
@@ -206,26 +191,17 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    backgroundColor: '#ff69b4',
+    backgroundColor: '#e1bee7', // Material Design purple 100
     padding: 15,
     margin: 10,
     marginTop: 10,
     width: "90%",
-
   },
   thachtext: {
     textAlign: 'center',
-    color: '#fffaf0',
+    color: '#f3e5f5', // Material Design light purple 100
     fontSize: 25,
     fontWeight: 'bold',
-    //borderRadius: 10,
     height: 50,
-    // marginBottom: 20,
-    // backgroundColor: '#fffaf0',
-    // padding: 15,
-    // margin: 10,
-    // marginTop: 20,
-
   },
-
 });

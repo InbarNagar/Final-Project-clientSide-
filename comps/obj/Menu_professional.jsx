@@ -16,17 +16,17 @@ const Menu_professional = () => {
     <View style={styles.menu}>
     
     <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Profil_pro')}>
-        <Ionicons name="person-outline" size={24} color="black" />
+        <Ionicons name="person-outline" size={24} color="white"  />
         <Text style={styles.menuText}>Profile</Text>
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewAppointment')}>
-        <Ionicons name="add-circle-outline" size={24} color="black" />
+        <Ionicons name="add-circle-outline" size={24} color="white"  />
         <Text style={styles.menuText}>Add</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Calendar_professional')}>
-        <Ionicons name="calendar-outline" size={24} color="black" />
+        <Ionicons name="calendar-outline" size={24} color="white" />
         <Text style={styles.menuText}>Calendar</Text>
       </TouchableOpacity>
       
@@ -46,6 +46,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderTopWidth: 1,
     borderTopColor: '#cccccc',
+    backgroundColor:"rgb(92, 71, 205)",
   },
   menuItem: {
     alignItems: 'center',
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 12,
     paddingTop: 5,
+    color:"white"
   },
 });
 

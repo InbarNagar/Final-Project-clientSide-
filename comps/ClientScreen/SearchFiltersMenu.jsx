@@ -9,7 +9,7 @@
 // import { Value } from "react-native-reanimated";
 
 import { React, useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator  } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/core";
 import { Button } from "react-native-elements";
@@ -27,6 +27,7 @@ export default function SearchFiltersMenu(props) {
     ClientFirstName
   } = props
 
+  const [loading, setLoading] = useState(true);
   const [filter_catgories, set_filter_catgories] = useState([]);
 
   const [ShowFilter, SethowFilter] = useState(false);
@@ -47,10 +48,12 @@ export default function SearchFiltersMenu(props) {
         if (result) {
           // let temp = result.map((x) => x.Name);
           setCategories(result);
+          
         }
       },
       (error) => {
         console.log("error", error);
+       
       }
     );
     // AllApointemtDetailes().then((res) => {
@@ -122,8 +125,8 @@ export default function SearchFiltersMenu(props) {
 
 
   return (
+ 
     <View>
-
       <View>
         <Text style={styles.title}>שלום {ClientFirstName}  </Text>
         <View style={{flexDirection: 'column',}}>
@@ -199,6 +202,7 @@ export default function SearchFiltersMenu(props) {
             } onPress={() => SethowFilter(!ShowFilter)} />
         </View>
         </View>
+       
         <Picker
           selectedValue={NameTreatment}
           onValueChange={(value) => setNameTreatment(value)}
@@ -219,76 +223,58 @@ export default function SearchFiltersMenu(props) {
           }
         </Picker>
 
-        {ShowFilter && <View>
-          <Picker
-            selectedValue={sorts}
-          // onValueChange={(value) => handleInputChange("sort", value)}
-          >
-            {sorts.map((s) => (
-              <Picker.Item label={s} value={s} key={s} />
-            ))}
-          </Picker>
+        {ShowFilter && (
+  <View style={styles.filterContainer}>
+    <View>
+      <TextInput
+        style={styles.input}
+        placeholder="עיר"
+        value={AddressCity}
+        onChangeText={(value) => setAddressCity(value)}
+      />
+    </View>
 
-          <View>
-            <TextInput
-              style={{ fontSize: 25, borderColor: "black", borderWidth: 2 }}
-              placeholder="עיר"
-              value={AddressCity}
-              onChangeText={(value) => setAddressCity(value)}
-            />
-          </View>
+    <View>
+      <Text style={styles.sectionTitle}>מין מטפל:</Text>
+      <View style={styles.radioButtonContainer}>
+        <RadioButton
+          value="M"
+          status={gender === "M" ? "checked" : "unchecked"}
+          onPress={() => setGender("M")}
+        />
+        <Text style={styles.radioButtonLabel}>זכר</Text>
+      </View>
+      <View style={styles.radioButtonContainer}>
+        <RadioButton
+          value="F"
+          status={gender === "F" ? "checked" : "unchecked"}
+          onPress={() => setGender("F")}
+        />
+        <Text style={styles.radioButtonLabel}>נקבה</Text>
+      </View>
+    </View>
 
-          <View>
-            <View>
-              <Text>מין מטפל:</Text>
-            </View>
-            <View>
-              <View>
-                <Text>זכר</Text>
-                <RadioButton
-                  value="M"
-                  status={gender === "M" ? "checked" : "unchecked"}
-                  onPress={() => setGender("M")}
-                />
-              </View>
-              <View>
-                <Text>נקבה</Text>
-                <RadioButton
-                  value="F"
-                  status={gender === "F" ? "checked" : "unchecked"}
-                  onPress={() => setGender("F")}
-                />
-              </View>
-            </View>
-          </View>
-          <View>
-            <View>
-              <Text>טיפול ביתי: </Text>
-            </View>
-            <View>
-              <View>
-                <Text>כן</Text>
-                <RadioButton
-                  value="YES"
-                  status={
-                    Is_client_house === "YES" ? "checked" : "unchecked"
-                  }
-                  onPress={() => setIs_client_house("YES")}
-                />
-              </View>
-              <View>
-                <Text>לא</Text>
-                <RadioButton
-                  value="NO"
-                  status={
-                    Is_client_house === "NO" ? "checked" : "unchecked"
-                  }
-                  onPress={() => setIs_client_house("NO")}
-                />
-              </View>
-            </View>
-          </View>
-        </View>}
+    <View>
+      <Text style={styles.sectionTitle}>טיפול ביתי:</Text>
+      <View style={styles.radioButtonContainer}>
+        <RadioButton
+          value="YES"
+          status={Is_client_house === "YES" ? "checked" : "unchecked"}
+          onPress={() => setIs_client_house("YES")}
+        />
+        <Text style={styles.radioButtonLabel}>כן</Text>
+      </View>
+      <View style={styles.radioButtonContainer}>
+        <RadioButton
+          value="NO"
+          status={Is_client_house === "NO" ? "checked" : "unchecked"}
+          onPress={() => setIs_client_house("NO")}
+        />
+        <Text style={styles.radioButtonLabel}>לא</Text>
+      </View>
+    </View>
+  </View>
+)}
       
       </View>
 
@@ -383,6 +369,7 @@ const styles = StyleSheet.create({
     fontSize: 20, // Less emphasis on font size
     fontWeight: 'bold',
     height: 50,
+    
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -396,6 +383,42 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
      borderRadius: 20, // This will make the picker appear as a rounded rectangle
     backgroundColor: '#E6E6FA', // This will give the picker a white background with 50% opacity
+  },
+
+  filterContainer: {
+    width: '100%',
+    padding: 10,
+    borderRadius: 10,
+    borderColor: '#000',
+    borderWidth: 1,
+    marginVertical: 10,
+    backgroundColor: '#EEE',
+   
+  },
+  input: {
+    fontSize: 16,
+    borderColor: "black", 
+    borderWidth: 2,
+    padding: 10,
+    marginVertical: 5,
+  },
+  radioButtonContainer: {
+    flexDirection: 'row-reverse', // Reverses the direction
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  radioButtonLabel: {
+    fontSize: 16,
+    marginLeft: 10,
+    flexDirection: 'row-reverse',
+   
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
+    marginVertical: 10,
+    textAlign: 'right',
   },
 });
 

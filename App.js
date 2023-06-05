@@ -86,7 +86,7 @@ function App() {
           <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
           <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
           <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
-          <Stack.Screen name="Profil_pro" component={Profil_pro} />
+          <Stack.Screen name="Profil_pro" component={Profil_pro} options={{ title: 'אזור אישי' }} />
           <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} />
           <Stack.Screen name="Set_notifications" component={Set_notifications} />
           <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} />
