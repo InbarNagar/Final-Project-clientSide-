@@ -96,9 +96,6 @@ if(userDetails){
   },[userDetails])
 
   const handleLogin =  async () => {
-
-
-
       const data = {
         id_number: ID_number,
         password: password,
