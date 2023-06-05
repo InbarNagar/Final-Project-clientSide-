@@ -94,92 +94,56 @@
 
 
 import React, { useState,useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { Alert,View, StyleSheet } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
+import { ReviewBusiness } from './obj/FunctionAPICode';
 
 
 const Review_Business = ({ route }) => {
   const navigation = useNavigation();
- const [Professionalism, setProfessionalism] = useState(3);
-  const{Number_appointment,ClientIDnumber,BusinessName}=route.params;
-  const [cleanliness, setCleanliness] = useState(0);
-  const [service, setService] = useState(0);
-  const [product, setProduct] = useState(0);
-  const [comments, setComments] = useState('');
-  const [On_time, setOn_time] = useState('');
-  const [Overall_rating, setOverall_rating] = useState('');
 
-
-  const SendReview = () => {
-    () => {
-      console.log(`ניקיון: ${cleanliness}`);
-      console.log(`שירות: ${service}`);
-      console.log(`מוצר: ${product}`);
-      console.log(`הערות: ${comments}`);
-      const data = {
-        // Number_appointment: ,  
-        // Cleanliness: cleanliness,
-        // Professionalism:Professionalism,
-        // On_time:On_time ,
-        // Overall_rating:Overall_rating ,
-        // Client_ID_number:,
-        // Business_Number: ,
-        // Comment: comments
-      }
-      NewBusinessReviewByClient(data).then(() => {
-
-      })
-    }
-  }
-
+  const{Number_appointment,ClientIDnumber,BusinessName,Business_Number}=route.params;
+  const [cleanliness, SetCleanliness] = useState(0);
+  const [Professionalism, SetProfessionalism] = useState(0);
+  const [On_time, SetOn_time] = useState(0);
+  const [Comment, SetComment] = useState('');
   useEffect(() => {
-    console.log(BusinessName+' '+Number_appointment+' '+ClientIDnumber);
-    // GetOneAppointment(Number_appointment).then(
-    //   (result) => {
-    //     console.log("appointment: ", result);
-    //     if (result) {
-    //       // let temp = result.map((x) => x.Name);
-    //       SetAppointmentDetails(result.data);
-    //       console.log(result);
-    //     }
-    //   },
-    //   (error) => {
-    //     console.log("error", error);
-    //   }
-    // );
-  
+    console.log(Business_Number+' '+BusinessName+' '+Number_appointment+' '+ClientIDnumber);
   }, []);
-  const[appointmentDetails,SetAppointmentDetails]=useState()
-  
+
   function publishReview(){
     try{
      // Check if appointmentDetails is not undefined
-        let Overall=(cleanliness+service+product)/3;
+        let Overall=(cleanliness+Professionalism+On_time)/3;
         const reviewDetails={
           Number_appointment: Number_appointment,
-          ClientIDnumber: ClientIDnumber,
+          Client_ID_number: ClientIDnumber,
           cleanliness: cleanliness,
-          service: service,
-          product: product,
-          comments: comments,
-          Overall: Overall,
-          Business_Number: 4//appointmentDetails.Business_Number
+          Professionalism: Professionalism,
+          On_time: On_time,
+          Comment: Comment,
+          Overall_rating: Overall,
+          Business_Number: Business_Number//appointmentDetails.Business_Number
         }
-        console.log('review details: '+JSON.stringify(reviewDetails));
-        navigation.goBack();
+        ReviewBusiness(reviewDetails).then(
+      (result) => {
+        if (result) {
+          console.log(result.data);
+          Alert.alert("תודה על הדירוג! חכמת ההמונים תמיד מנצחת!")
+          navigation.goBack();
+        }
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
       }
       catch{
         console.log(`error when trying to post Review of appointment ${Number_appointment}`);
       }
-      finally{
-        console.log("תודה על הביקורת! ככה עזרת למשתמשים אחרים להחליט מי בעל המקצוע הטוב ביותר!");
-
-      }
-    
 }
-
 
   return (
     <PaperProvider>
@@ -193,7 +157,7 @@ const Review_Business = ({ route }) => {
               type='star'
               ratingCount={5}
               imageSize={30}
-              onFinishRating={(rating) => setCleanliness(rating)}
+              onFinishRating={(rating) => SetCleanliness(rating)}
             />
 
             <Paragraph style={styles.subtitle}>שירות</Paragraph>
@@ -201,7 +165,7 @@ const Review_Business = ({ route }) => {
               type='star'
               ratingCount={5}
               imageSize={30}
-              onFinishRating={(rating) => setService(rating)}
+              onFinishRating={(rating) => SetProfessionalism(rating)}
             />
 
             <Paragraph style={styles.subtitle}>מקצועיות</Paragraph>
@@ -209,23 +173,7 @@ const Review_Business = ({ route }) => {
               type='star'
               ratingCount={5}
               imageSize={30}
-              onFinishRating={(rating) => setProfessionalism(rating)}
-            />
-
-            <Paragraph style={styles.subtitle}>זמנים</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => setOn_time(rating)}
-            />
-
-            <Paragraph style={styles.subtitle}>דירוג כללי</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => setOverall_rating(rating)}
+              onFinishRating={(rating) => SetOn_time(rating)}
             />
 
             <Paragraph style={styles.subtitle}>הערות</Paragraph>
@@ -234,16 +182,21 @@ const Review_Business = ({ route }) => {
               mode='outlined'
               multiline
               numberOfLines={4}
-              value={comments}
-              onChangeText={(value) => setComments(value)}
+              value={Comment}
+              onChangeText={(value) => SetComment(value)}
             />
 
             <Button
               style={styles.button}
               icon='check'
               mode='contained'
-              onPress={SendReview()}
-
+              onPress={() => {
+                console.log(`ניקיון: ${cleanliness}`);
+                console.log(`שירות: ${On_time}`);
+                console.log(`מוצר: ${Professionalism}`);
+                console.log(`הערות: ${Comment}`);
+                publishReview();
+              }}
             >
               שלח דירוג
             </Button>

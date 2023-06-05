@@ -100,7 +100,7 @@ if(userDetails){
 
 
       const data = {
-        ID_number: ID_number,
+        id_number: ID_number,
         password: password,
       } 
       LogInUser(data).then((result) => {

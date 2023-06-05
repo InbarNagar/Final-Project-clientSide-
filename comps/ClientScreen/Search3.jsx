@@ -173,6 +173,7 @@ console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
                   AddressHouseNumber={appointment.AddressHouseNumber}
                   AddressCity={appointment.AddressCity}
                   BusinessName={appointment.Name}
+                  Business_Number={appointment.Business_Number}
                   ClientIDnumber={userDetails.ID_number}
                 />
               );
@@ -216,13 +217,17 @@ const styles = StyleSheet.create({
 
     flex: 1,
   },
-  view1: {
-    flex: 3,
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    padding: 10,
-    //  borderColor:'#9acd32'
-  },
+  // view1: {
+  //   flex: 3,
+  //   flexDirection: 'column',
+  //   alignItems:'center',
+  //   padding: 10,
+  //   //  borderColor:'#9acd32'
+  // },
+  // scrollContent: {
+  //   alignItems: 'center',
+  //   paddingVertical: 16,
+  // },
   resultsView: {
     flex: 1,
   },
