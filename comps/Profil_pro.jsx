@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, View, Text, marginRight, Image, ScrollView } from 'react-native';
-
+import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Menu_professional from './obj/Menu_professional';
 import { UserContext } from './UserDietails';
@@ -9,91 +8,69 @@ import Button from './obj/Button';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-
-
 const Profil_pro = (Props) => {
-
-
     const { userDetails, setUserDetails } = useContext(UserContext);
 
-    // const [First_name, setFirstName] = useState('');
-    // const [Last_name, setLastName] = useState('');
-
-    // useEffect(() => {
-
-    //     setFirstName(userDetails.First_name)
-    //     setLastName(userDetails.Last_name)
-
-    // }, [userDetails])
-
     return (
+        <View style={styles.view}>
+        
+            <View style={styles.container}>
+                
+                <TouchableOpacity style={styles.button} onPress={() => Props.navigation.navigate('Update_personal_details_Professional')} >
+                    <Text style={styles.buttonText}>עריכת פרטים אישים </Text>
+                </TouchableOpacity>
 
-        <>
-            <View style={styles.view}>
-                <Header text="אזור אישי" color='#9acd32' fontSize={35} />
-                {/* <Text style={styles.wel}>שלום {First_name} </Text>  */}
+                <TouchableOpacity style={styles.button} onPress={() => Props.navigation.navigate('Update_personal_details_Bussines')}>
+                    <Text style={styles.buttonText}> עריכת פרטי העסק  </Text>
+                </TouchableOpacity>
 
-                <View style={styles.container}>
-                    <View>
-                        <TouchableOpacity onPress={() => Props.navigation.navigate('Update_personal_details_Professional')} >
-                            <Text >עריכת פרטים אישים </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <TouchableOpacity onPress={() => Props.navigation.navigate('Update_personal_details_Bussines')}>
-                            <Text> עריכת פרטי העסק  </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <TouchableOpacity onPress={() => Props.navigation.navigate('Set_notifications')}>
-                            <Text>   הגדרת התראות </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View>
-                        <TouchableOpacity onPress={() => Props.navigation.navigate('Update_personal_details_Bussines')}>
-                            <Text> ביקורות על העסק </Text>
-                        </TouchableOpacity>
-                    </View>
-               
-               
-                </View>
+                <TouchableOpacity style={styles.button} onPress={() => Props.navigation.navigate('Set_notifications')}>
+                    <Text style={styles.buttonText}> הגדרת התראות </Text>
+                </TouchableOpacity>
 
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}> ביקורות על העסק </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button}>
+                    <Text style={styles.buttonText}>הוספת סוג טיפול נוסף </Text>
+                </TouchableOpacity>
             </View>
-
             <Menu_professional />
-        </>
+        </View>
     )
 }
+
 const styles = StyleSheet.create({
     container: {
-        flex: 12,
-        alignItems: 'center'
-
-    },
-
-    view1: {
-        flex: 3,
-        flexDirection: 'column',
-        alignItems: 'stretch',
-        padding: 10,
-        //  borderColor:'#9acd32'
-
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#f8f8ff',
+        opacity: 0.9,
+        borderColor: '#800080',
+        borderWidth: 2,
+        borderRadius: 10,
+        width: '80%',
+        height: '50%'
     },
     view: {
-        flex: 4,
-        flexDirection: 'column',
-
+        flex: 1,
+        backgroundColor: '#f8f8ff',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    wel: {
-        textAlign: "center",
-        fontSize: 30,
-        color: '#9acd32',
+    button: {
+        alignItems: 'center',
+        backgroundColor: '#9370DB',
+        padding: 10,
+        marginTop: 10,
+        borderRadius: 5,
+        width: '100%',
     },
-    text: {
-        textAlign: "center",
-        fontSize: 20,
-    }
-
-
+    buttonText: {
+        color: '#fff',
+        fontSize: 16,
+    },
 });
-export default Profil_pro;
+
+export default Profil_pro; 

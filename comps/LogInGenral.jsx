@@ -128,8 +128,8 @@ if(userDetails){
     {alert && alert}
     <View style={styles.container}>
 
-   <Header text="BeautyMe" fontSize={60} height={200} color="#E6E6FA"/>
-
+   {/* <Header text="BeautyMe" fontSize={60} height={200} color="#E6E6FA"/> */}
+   <Image style={styles.image} source={require('../assets/be.jpeg')}/>
    
 
     <View style={styles.content}>
@@ -176,7 +176,7 @@ if(userDetails){
       </View>
 
 
-      <Button color="#E6E6FA" width={300} fontSize={20} borderRadius={20} text="התחברות" onPress={handleLogin} colortext="rgb(74, 88, 169)" />
+      <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} text="התחברות" onPress={handleLogin} colortext="white" />
 
 
       <Button color='transparent' text="עדיין לא נרשמתם? לחצו כאן" onPress={Registration} />
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     padding: 5,
     alignItems: 'center',
     // justifyContent: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
     flex: 1,
   },
   title: {
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignItems: 'center',
     width: "30%",
-    backgroundColor: '#9acd32',
+    backgroundColor: "rgb(92, 71, 205)",
     color: '#fff',
   },
   buttonText: {
@@ -260,9 +260,9 @@ const styles = StyleSheet.create({
     
   },
   image:{
-    width:100,
-    height:100,
-    padding:20
+    width:200,
+    height:200,
+    padding:20,
     }
 
 });

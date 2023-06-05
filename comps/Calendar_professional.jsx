@@ -122,7 +122,7 @@ export default function Calendar_professional() {
 
       <ScrollView>
         <View style={styles.view}>
-          {/* <Header text="היומן שלי" color='#9acd32' fontSize='35' /> */}
+
           <ScrollView horizontal={true}>
             <View style={styles.container}>
 
