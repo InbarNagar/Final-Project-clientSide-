@@ -11,6 +11,7 @@ import { FutureAppointmenB } from "./obj/FunctionAPICode";
 import { Post_SendPushNotification } from "./obj/FunctionAPICode";
 import AppointmentCard_forProfessional_Calendar from "./obj/AppointmentCard_forProfessional_Calendar";
 import { ClientDetailes } from "./obj/FunctionAPICode";
+import ShowReviews from "./ShowReviews";
 //מסך ראשי בעל עסק
 export default function Calendar_professional() {
 

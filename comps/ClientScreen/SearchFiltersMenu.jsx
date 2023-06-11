@@ -137,6 +137,7 @@ export default function SearchFiltersMenu(props) {
            marginBottom: 10, 
         placeholderTextColor:"#E6E6FA"
           }} onChangeText={(text) => FilterTreatment(text)} placeholder="הקלדי טיפול יופי" >  </TextInput>
+          
   <View  style={styles.buttonContainer}>
           <Button
             title="חפש"
@@ -421,5 +422,3 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-
-

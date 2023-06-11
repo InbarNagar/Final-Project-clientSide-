@@ -33,6 +33,7 @@ import LogInGenral from './comps/LogInGenral';
 import Review_Business from './comps/Review_Business';
 import Search3 from './comps/ClientScreen/Search3';
 import NewSearch3 from './comps/ClientScreen/NewSearch3';
+import ShowReviews from './comps/ShowReviews';
 
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
@@ -63,7 +64,7 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LogInGenral" screenOptions={{headerStyle: {
+        <Stack.Navigator initialRouteName="NewSearch3" screenOptions={{headerStyle: {
             backgroundColor: "rgb(92, 71, 205)",
           },
           headerTintColor: '#F5FCFF',
@@ -94,6 +95,8 @@ function App() {
           <Stack.Screen name="ClientProfile" component={ClientProfile} />
           <Stack.Screen name="Review_Business" component={Review_Business} />
           <Stack.Screen name="NewSearch3" component={NewSearch3} />
+          <Stack.Screen name="ShowReviews" component={ShowReviews} />
+
 
 
         </Stack.Navigator>

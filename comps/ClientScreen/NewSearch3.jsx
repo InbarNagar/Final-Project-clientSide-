@@ -12,19 +12,19 @@ export default function NewSearch3() {
         Is_client_house:'YES',
     } 
 
-    NewSearchPost(searchObj).then(
-        (result) => {
-          console.log("yes", result.data);
-          if (result.data) {
-            SetResponse(result.data);
-            console.log("amount of results: " + result.data.length);
-            //מפעיל את הכפתור תצוגת מפה
-          }
-        },
-        (error) => {
-          console.log("error", error);
-        }
-      );
+    // NewSearchPost(searchObj).then(
+    //     (result) => {
+    //       console.log("yes", result.data);
+    //       if (result.data) {
+    //         SetResponse(result.data);
+    //         console.log("amount of results: " + result.data.length);
+    //         //מפעיל את הכפתור תצוגת מפה
+    //       }
+    //     },
+    //     (error) => {
+    //       console.log("error", error);
+    //     }
+    //   );
   }, []);
 
 console.log(JSON.stringify(GetData(Data)));
@@ -51,7 +51,8 @@ console.log(JSON.stringify(GetData(Data)));
     ],
         typeTritment:[{
             duration:data[0].Treatment_duration,
-            type:data[0].Type_treatment_Number
+            type:data[0].Type_treatment_Number,
+            price:data[0].Price
         },
         // {
         //     duration:'2',
@@ -86,7 +87,8 @@ console.log(JSON.stringify(GetData(Data)));
             typeTritment.push(data[i].Type_treatment_Number)
             obj.typeTritment.push({
                 duration:data[i].Treatment_duration,
-                type:data[i].Type_treatment_Number
+                type:data[i].Type_treatment_Number,
+                price:data[i].Price
             })
           
         }
@@ -122,7 +124,8 @@ console.log(JSON.stringify(GetData(Data)));
             ],
                 typeTritment:[{
                     duration:data[i].Treatment_duration,
-                    type:data[i].Type_treatment_Number
+                    type:data[i].Type_treatment_Number,
+                    price:data[i].Price
                 },
             ],
                 apointemnt:[
@@ -138,12 +141,26 @@ console.log(JSON.stringify(GetData(Data)));
         }
     }
     res.push(obj)
+    console.log(JSON.stringify(res[0].diary[2].time));
+    SetResult(res);
     return res;
   }
 
   return (
   <>
-
+{result && (
+  <React.Fragment>
+    {(() => {
+      const elements = [];
+      for (let i = 0; i < result.length; i++) {
+        const element = result[i];
+        // Render or access properties of the element
+        elements.push(<View key={i}>{element}</View>);
+      }
+      return elements;
+    })()}
+  </React.Fragment>
+)}
   </>
   )
 }

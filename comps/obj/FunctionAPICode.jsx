@@ -155,7 +155,10 @@ export const SaveTokenforIDPro= (ID_number,token) => {
 export const AllApointemtDetailes= () => {
     return Axios(`Appointment/AllAppointment`, 'post',{})
 }
-
+//כל התורים שלי של הלקוח - כולל טבלת דירוג
+export const AllApointemtDetailesForClient_With_BusinessReview= (ID_Client) => {
+    return Axios(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'GET',{})
+}
 //כל התורים ללקוח
 export const AllApointemtDetailesForClient= (body) => {
     return Axios(`Appointment/AllAppointmentForClient`, 'post',body)
@@ -190,3 +193,11 @@ export const NewSearchPost=(body)=>{
 export const ReviewBusiness=(body)=>{
     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
 }
+//כל הדירוגים של העסק - לפי מספר עסק
+export const AllBusinessReviews= (BusinessNumber) => {
+    return Axios(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`, 'GET',{})
+}
+//פונקציית חיפוש חדשה לפי יומן עסק
+// export const ReviewBusiness=(body)=>{
+//     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
+// }

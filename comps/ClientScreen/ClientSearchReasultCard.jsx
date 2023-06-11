@@ -54,7 +54,7 @@ const ClientSearchReasultCard = (props) => {
       const body = {
         "to": token,
         "title": "BeautyMe",
-        "body": `${ClientData.First_Name} הזמינה תור חדש `,
+        "body": `${userDetails.First_Name} הזמינה תור חדש `,
         "badge": "0",
         "ttl": "1",// מספר שניות לשליחה
         "data": {
@@ -79,8 +79,8 @@ const ClientSearchReasultCard = (props) => {
       ID_Client:ClientIDnumber,
       Number_appointment:Number_appointment,
     };
-    console.log("****", pickedApointment);
-    console.log("*************"+ Appointment_status+ Number_appointment);
+    console.log("**", pickedApointment);
+    console.log("*****"+ Appointment_status+ Number_appointment);
     AppointmentToClient(pickedApointment).then(
       (result) => {
         console.log("yes", result.data);
