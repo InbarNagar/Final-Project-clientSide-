@@ -26,7 +26,8 @@ const ShowReviews =()=>{
 
     return (
     <ScrollView>
-        {allReviews.map((review)=>{
+        {allReviews.map((review)=>
+        {
         console.log(review);
         return(
         <View style={styles.card}>

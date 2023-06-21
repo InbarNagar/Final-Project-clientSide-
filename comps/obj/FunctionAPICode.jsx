@@ -187,7 +187,7 @@ export const GetBusinessDiary=(Business_Number)=>{
 }
 //חיפוש חדש לפי יומן עסק- BusinessDiary
 export const NewSearchPost=(body)=>{
-    return Axios(`Business/UpdateBusinesss`, 'post',body)
+    return Axios(`BusinessDiary/GetAllBusinessDiaryBy_Status_City_TreatmentNumber`, 'post',body)
 }
 //דירוג עסק ע"י לקוח שבוצע לו טיפול
 export const ReviewBusiness=(body)=>{
@@ -196,6 +196,10 @@ export const ReviewBusiness=(body)=>{
 //כל הדירוגים של העסק - לפי מספר עסק
 export const AllBusinessReviews= (BusinessNumber) => {
     return Axios(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`, 'GET',{})
+}
+//דירוג עסק ע"י לקוח שבוצע לו טיפול
+export const AddNewAvailableHours=(body)=>{
+    return Axios(`BusinessDiary/AddNewOption`, 'post',body)
 }
 //פונקציית חיפוש חדשה לפי יומן עסק
 // export const ReviewBusiness=(body)=>{
