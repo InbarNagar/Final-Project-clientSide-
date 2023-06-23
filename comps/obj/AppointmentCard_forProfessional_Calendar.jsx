@@ -21,6 +21,7 @@ const AppointmentCard_forProfessional_Calendar = (props) => {
     }
   );
 }
+
 function ApproveAppointment(Number_appointment){
   console.log("appoinment: "+ Number_appointment);
   ConfirmAppointment(Number_appointment).then(

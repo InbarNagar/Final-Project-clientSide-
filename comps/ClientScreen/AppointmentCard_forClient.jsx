@@ -6,7 +6,7 @@ import Review_Business from "../Review_Business";
 import { useNavigation } from '@react-navigation/native';
 
 const AppointmentCard_forClient = (props) => {
-  const {Business_Number,ClientIDnumber,Number_appointment, AddressCity,AddressHouseNumber,AddressStreet,backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, BusinessName } = props;
+  const {Review_Number,Business_Number,ClientIDnumber,Number_appointment, AddressCity,AddressHouseNumber,AddressStreet,backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, BusinessName } = props;
   const navigation = useNavigation();
 
   function cancelAppointment(Number_appointment){
@@ -43,12 +43,14 @@ const styles = StyleSheet.create({
 });
 
   const massage = () => {
-    if (status == "Appointment_ended") {
+    if (status == "Appointment_ended" && Review_Number == null) {
       return (
       <><Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
      <Button
+
+     color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff" 
       text="דרג עסק" 
-      color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff"
+
       onPress={() => 
         navigation.navigate('Review_Business', {
           Number_appointment,
@@ -58,6 +60,12 @@ const styles = StyleSheet.create({
         })
       }
     />
+      </>)
+    }
+    if (status == "Appointment_ended" && Review_Number != null) {
+      return (
+      <><Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
+      <Text>העסק דורג!</Text>
       </>)
     }
     if (status == "Awaiting_approval") // if status =

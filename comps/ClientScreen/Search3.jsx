@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import {
-  AllApointemtDetailesForClient
+  AllApointemtDetailesForClient_With_BusinessReview
 } from "../obj/FunctionAPICode";
 import moment from "moment";
 import { NavigationActions } from "react-navigation";
@@ -85,22 +85,23 @@ export default function Search3(props) {
     setShowSearchSection(false);
     setShowProfileSection(false);
 
-const data={
-  "AddressCity":userDetails.AddressCity ,
-  "AddressHouseNumber":userDetails.AddressHouseNumber ,
-  "AddressStreet": userDetails.AddressStreet,
-  "Email":userDetails.Email,
-  "Facebook_link":userDetails.Facebook_link,
-  "First_name": userDetails.First_name,
-  "ID_number":userDetails.ID_number,
-  "Instagram_link": userDetails.Instagram_link,
-  "Last_name": userDetails.Last_name,
-  "Token": userDetails.token,
-  "birth_date": userDetails.birth_date,
-  "gender": userDetails.gender,
-  "password": userDetails.password,
-  "phone": userDetails.phone,
-  "userType": "Cli"}
+// const data={
+//   "AddressCity":userDetails.AddressCity ,
+//   "AddressHouseNumber":userDetails.AddressHouseNumber ,
+//   "AddressStreet": userDetails.AddressStreet,
+//   "Email":userDetails.Email,
+//   "Facebook_link":userDetails.Facebook_link,
+//   "First_name": userDetails.First_name,
+//   "ID_number":userDetails.ID_number,
+//   "Instagram_link": userDetails.Instagram_link,
+//   "Last_name": userDetails.Last_name,
+//   "Token": userDetails.token,
+//   "birth_date": userDetails.birth_date,
+//   "gender": userDetails.gender,
+//   "password": userDetails.password,
+//   "phone": userDetails.phone,
+//   "userType": "Cli"
+// }
 
 
 
@@ -108,17 +109,17 @@ const data={
     setShowSAppointmenthSectionn(!showSAppointmenthSection);
     console.log("התורים שלי: " + showSAppointmenthSection);
 console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-    AllApointemtDetailesForClient(data).then((result) => {
+console.log(userDetails.ID_number);
+  AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
 
        console.log(result.data,"**************************************************************************************");
         setallAppointment(result.data)
-       
-   
     }, (error) => {
       console.log('error', error)
     })
     console.log(JSON.stringify(allAppointment));
   };
+  
   const [showProfileSection, setShowProfileSection] = useState(false); //להפעיל תצוגת פרופיל לקוח
   const handleProfileToggleSection = () => {
     setShowSearchSection(false);
@@ -163,6 +164,7 @@ console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
               return (
                 <AppointmentCard_forClient
                   key={appointment.Number_appointment}
+                  Review_Number={appointment.Review_Number}
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
                   status={appointment.Appointment_status}

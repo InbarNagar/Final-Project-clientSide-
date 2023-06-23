@@ -1,40 +1,54 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { StyleSheet, View, Text, Image, ScrollView } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useContext, useEffect } from 'react';
+import { StyleSheet, View, Text,TouchableOpacity} from 'react-native';
 import Menu_professional from './obj/Menu_professional';
 import { UserContext } from './UserDietails';
 import Header from './obj/Header';
 import Button from './obj/Button';
+
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useFocusEffect } from '@react-navigation/native';
-const Profil_pro = (Props) => {
-    const { userDetails, setUserDetails } = useContext(UserContext);
+
     const [src, setsrc] = useState()
     useFocusEffect(
         React.useCallback(() => {
        setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg`)
       },[]))
+
+// import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation} from "@react-navigation/core";
+const Profil_pro = (Props) => {
+    const { userDetails, setUserDetails } = useContext(UserContext);
+const navigation=useNavigation();
+useEffect(()=>{
+    console.log("profile pro = "+JSON.stringify(userDetails));
+},[])
+
     return (
         <View style={styles.view}>
 
             <View style={styles.container}>
+
                 <Image style={styles.img} onError={({ currentTarget }) => {
                     setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg');
                 }} source={{ uri: src }} />
-                <TouchableOpacity style={styles.button} onPress={() => Props.navigation.navigate('Update_personal_details_Professional')} >
+               
+
+                
+                <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('Update_personal_details_Professional')} >
+
                     <Text style={styles.buttonText}>עריכת פרטים אישים </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => Props.navigation.navigate('Update_personal_details_Bussines')}>
+                <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('Update_personal_details_Bussines')}>
                     <Text style={styles.buttonText}> עריכת פרטי העסק  </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => Props.navigation.navigate('Set_notifications')}>
+                <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('Set_notifications')}>
                     <Text style={styles.buttonText}> הגדרת התראות </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('ShowReviews',{BusinessNumber:JSON.stringify(userDetails.Business_Number)})}>
                     <Text style={styles.buttonText}> ביקורות על העסק </Text>
                 </TouchableOpacity>
 

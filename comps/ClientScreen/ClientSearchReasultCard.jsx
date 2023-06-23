@@ -3,7 +3,7 @@ import {Text,View,Alert,StyleSheet} from 'react-native';
 import { useNavigation } from "@react-navigation/core";
 import moment from "moment";
 import { Button } from "react-native-elements";
-import {AppointmentToClient,Post_SendPushNotification, AllApointemtDetailes} from '../obj/FunctionAPICode';
+import {AppointmentToClient,Post_SendPushNotification, AllApointemtDetailes, AllBusinessReviews} from '../obj/FunctionAPICode';
 import { UserContext } from "../UserDietails";
 import BusinessProfilePOPUP from './BusinessProfilePOPUP'
 
@@ -31,6 +31,7 @@ const ClientSearchReasultCard = (props) => {
   const [token, settoken] = useState();// ענבר
   const [modalVisible, setModalVisible] = useState(false);
   const [businessProfilePOPUP,SetBusinessProfilePOPUP]=useState(false);
+  const [businessRankArr, SetBusinessRankArr] = useState();
 
   function handleBusinessProfilePOPUP(){
     console.log("open pop-up window"); setModalVisible(!modalVisible);
@@ -40,7 +41,15 @@ const ClientSearchReasultCard = (props) => {
     console.log("business number: "+JSON.stringify(Business_Number));
   }
   useEffect(()=>{
-    
+    AllBusinessReviews(Business_Number).then(
+      (result) => {
+        console.log("yes", result.data);
+        SetBusinessRankArr( result.data);
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
     AllApointemtDetailes().then((res) => {
         
       console.log("&&&&&&&&&&&&&&&&&&&&&&", res.data)
@@ -79,8 +88,8 @@ const ClientSearchReasultCard = (props) => {
       ID_Client:ClientIDnumber,
       Number_appointment:Number_appointment,
     };
-    console.log("****", pickedApointment);
-    console.log("*************"+ Appointment_status+ Number_appointment);
+    console.log("**", pickedApointment);
+    console.log("*****"+ Appointment_status+ Number_appointment);
     AppointmentToClient(pickedApointment).then(
       (result) => {
         console.log("yes", result.data);
@@ -134,6 +143,7 @@ const ClientSearchReasultCard = (props) => {
     />
     {businessProfilePOPUP && (
       <BusinessProfilePOPUP 
+      businessRankArr={businessRankArr}
       isVisible={modalVisible}
       onClose={() => handleBusinessProfilePOPUP()}
       Business_Number = {JSON.stringify(Business_Number)}
