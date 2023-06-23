@@ -5,7 +5,6 @@ import ScreenOne from './comps/GenralComps/ScreenOne';
 import LogIn from './comps/GenralComps/LogIn';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ForgotPassword from './comps/GenralComps/ForgotPassword';
 import Professional_registration from './comps/Professional_registration';
 import Client_registration from './comps/Client_registration';
 import Create_Business_Pro from './comps/Create_Business_Pro';
@@ -33,7 +32,8 @@ import LogInGenral from './comps/LogInGenral';
 import Review_Business from './comps/Review_Business';
 import Search3 from './comps/ClientScreen/Search3';
 import NewSearch3 from './comps/ClientScreen/NewSearch3';
-
+import ForgotPassword from './comps/GenralComps/ForgotPassword';
+import CameraUse from './comps/ImagePicker/CameraUse';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -94,7 +94,7 @@ function App() {
           <Stack.Screen name="ClientProfile" component={ClientProfile} />
           <Stack.Screen name="Review_Business" component={Review_Business} />
           <Stack.Screen name="NewSearch3" component={NewSearch3} />
-
+          <Stack.Screen name="CameraUse" component={CameraUse} />
 
         </Stack.Navigator>
       </NavigationContainer>

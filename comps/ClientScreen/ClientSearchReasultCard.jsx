@@ -54,7 +54,7 @@ const ClientSearchReasultCard = (props) => {
       const body = {
         "to": token,
         "title": "BeautyMe",
-        "body": `${ClientData.First_Name} הזמינה תור חדש `,
+        "body": `${userDetails.First_Name} הזמינה תור חדש `,
         "badge": "0",
         "ttl": "1",// מספר שניות לשליחה
         "data": {

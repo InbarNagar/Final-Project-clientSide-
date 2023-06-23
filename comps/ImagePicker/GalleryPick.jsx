@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, Platform, Image, TouchableOpacity } from 'react
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker'
 import { Constants } from 'expo-constants';
-import Button from '../../CTools/Button';
+import Button from '../CTools/Button';
 import { Ionicons } from '@expo/vector-icons';
 
 export default function GalleryPick(props,{navigation}) {

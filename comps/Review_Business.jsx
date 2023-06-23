@@ -93,9 +93,9 @@
 //   });
 
 
-import React, { useState,useEffect } from 'react';
-import { Alert,View, StyleSheet } from 'react-native';
-import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
+import React, { useState, useEffect } from 'react';
+import { Alert, View, StyleSheet } from 'react-native';
+import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph,TouchableOpacity } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
 import { ReviewBusiness } from './obj/FunctionAPICode';
@@ -104,46 +104,59 @@ import { ReviewBusiness } from './obj/FunctionAPICode';
 const Review_Business = ({ route }) => {
   const navigation = useNavigation();
 
-  const{Number_appointment,ClientIDnumber,BusinessName,Business_Number}=route.params;
+  const { Number_appointment, ClientIDnumber, BusinessName, Business_Number } = route.params;
   const [cleanliness, SetCleanliness] = useState(0);
   const [Professionalism, SetProfessionalism] = useState(0);
   const [On_time, SetOn_time] = useState(0);
   const [Comment, SetComment] = useState('');
+  const [ImageID,setImageID]= useState();
+
+ 
+
+  // useFocusEffect(
+  //   React.useCallback(() => {
+  //     let uniqueId = Date.now();
+  //     uniqueId += Math.random().toString(36).substring(2)
+  //     setImageID(uniqueId)
+  // },[]))
+
+
+
   useEffect(() => {
-    console.log(Business_Number+' '+BusinessName+' '+Number_appointment+' '+ClientIDnumber);
+    console.log(Business_Number + ' ' + BusinessName + ' ' + Number_appointment + ' ' + ClientIDnumber);
   }, []);
 
-  function publishReview(){
-    try{
-     // Check if appointmentDetails is not undefined
-        let Overall=(cleanliness+Professionalism+On_time)/3;
-        const reviewDetails={
-          Number_appointment: Number_appointment,
-          Client_ID_number: ClientIDnumber,
-          cleanliness: cleanliness,
-          Professionalism: Professionalism,
-          On_time: On_time,
-          Comment: Comment,
-          Overall_rating: Overall,
-          Business_Number: Business_Number//appointmentDetails.Business_Number
+  function publishReview() {
+    try {
+      // Check if appointmentDetails is not undefined
+      let Overall = (cleanliness + Professionalism + On_time) / 3;
+      const reviewDetails = {
+        Number_appointment: Number_appointment,
+        Client_ID_number: ClientIDnumber,
+        cleanliness: cleanliness,
+        Professionalism: Professionalism,
+        On_time: On_time,
+        Comment: Comment,
+        Overall_rating: Overall,
+        Business_Number: Business_Number//appointmentDetails.Business_Number
+      }
+      ReviewBusiness(reviewDetails).then(
+        (result) => {
+          if (result) {
+            console.log(result.data);
+            Alert.alert("תודה על הדירוג! חכמת ההמונים תמיד מנצחת!")
+            navigation.goBack();
+          }
+        },
+        (error) => {
+          console.log("error", error);
         }
-        ReviewBusiness(reviewDetails).then(
-      (result) => {
-        if (result) {
-          console.log(result.data);
-          Alert.alert("תודה על הדירוג! חכמת ההמונים תמיד מנצחת!")
-          navigation.goBack();
-        }
-      },
-      (error) => {
-        console.log("error", error);
-      }
-    );
-      }
-      catch{
-        console.log(`error when trying to post Review of appointment ${Number_appointment}`);
-      }
-}
+      );
+    }
+    catch {
+      console.log(`error when trying to post Review of appointment ${Number_appointment}`);
+    }
+  }
 
   return (
     <PaperProvider>
@@ -186,6 +199,19 @@ const Review_Business = ({ route }) => {
               onChangeText={(value) => SetComment(value)}
             />
 
+          
+              {/* <TouchableOpacity  style={styles.button}  onPress={() => props.navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number})}>
+                <View>
+                  <Text>צלם</Text>
+                </View>
+              </TouchableOpacity>
+           */}
+            <Button
+            style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number })}
+            ></Button>
+
+
+
             <Button
               style={styles.button}
               icon='check'
@@ -198,6 +224,7 @@ const Review_Business = ({ route }) => {
                 publishReview();
               }}
             >
+
               שלח דירוג
             </Button>
           </Card.Content>

@@ -190,3 +190,12 @@ export const NewSearchPost=(body)=>{
 export const ReviewBusiness=(body)=>{
     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
 }
+
+export const SetPhoto=(body)=>{
+    return Axios(`Business/SetPhoto`, 'post',body)
+}
+
+export const GetPhoto=(id)=>{
+    return Fetch(`Business/getPhoto/${id}`,'GET')
+
+}

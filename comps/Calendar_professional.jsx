@@ -126,11 +126,11 @@ export default function Calendar_professional() {
           <ScrollView horizontal={true}>
             <View style={styles.container}>
 
-              <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="#ff8c00" />
-              <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="#98FB98" />
-              <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="#FF6961" />
-              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="#87CEFA" />
-              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" />
+              <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="rgb(92, 71, 205)" colortext="white"/>
+              <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="rgb(92, 71, 205)" colortext="white"/>
+              <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="rgb(92, 71, 205)" colortext="white"/>
+              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="rgb(92, 71, 205)" colortext="white"  />
+              {/* <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" /> */}
             </View>
           </ScrollView>
 
@@ -144,7 +144,7 @@ export default function Calendar_professional() {
                   <AppointmentCard_forProfessional_Calendar
                     key={x.Number_appointment}
                     Number_appointment={x.Number_appointment}
-                    backgroundColor={"#ff8c00"}
+                    backgroundColor={"rgb(92, 71, 205)"}
                     // Treatment_Type= 
                     status={x.Appointment_status}
                     Date={x.Date}
@@ -165,7 +165,7 @@ export default function Calendar_professional() {
                     <AppointmentCard_forProfessional_Calendar
                     key={x.Number_appointment}
                     Number_appointment={x.Number_appointment}  
-                    backgroundColor={"#98FB98"}
+                    backgroundColor={"rgb(92, 71, 205)"}
                       status={x.Appointment_status}
                       Date={x.Date}
                       Start_time={x.Start_time}
@@ -184,7 +184,7 @@ export default function Calendar_professional() {
                     <AppointmentCard_forProfessional_Calendar
                     key={x.Number_appointment}
                     Number_appointment={x.Number_appointment} 
-                    backgroundColor={"#87CEFA"}
+                    backgroundColor={"rgb(92, 71, 205)"}
                       status={x.Appointment_status}
                       Date={x.Date}
                       Start_time={x.Start_time}
@@ -202,7 +202,7 @@ export default function Calendar_professional() {
                   <AppointmentCard_forProfessional_Calendar
                   key={x.Number_appointment}
                     Number_appointment={x.Number_appointment} 
-                  backgroundColor={"#FF6961"}
+                  backgroundColor={"rgb(92, 71, 205)"}
                     status={x.Appointment_status}
                     Date={x.Date}
                     Start_time={x.Start_time}
@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontSize: 20,
+    color:"white"
   }
 
 

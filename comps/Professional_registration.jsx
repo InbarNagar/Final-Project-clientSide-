@@ -36,6 +36,7 @@ const Professional_registration = (props) => {
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
       password: password,
+      ProfilPic:"profil"+ID_number
     }
     Professional_Registration(data).then((result) => {
       console.log('yes', result)
@@ -195,6 +196,13 @@ const Professional_registration = (props) => {
             {/* <Text>סיסמא</Text> */}
           </View>
 
+          <View>
+            <TouchableOpacity style={styles.but} onPress={()=>props.navigation.navigate('CameraUse',{imageName:"profil"+ID_number})}>
+              <View>
+                <Text style={styles.thachtext}>צלם</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
 
           <View>
             <TouchableOpacity style={styles.but} onPress={handleRegistration}>

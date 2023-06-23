@@ -7,15 +7,21 @@ import Header from './obj/Header';
 import Button from './obj/Button';
 import { useNavigation } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import { useFocusEffect } from '@react-navigation/native';
 const Profil_pro = (Props) => {
     const { userDetails, setUserDetails } = useContext(UserContext);
-
+    const [src, setsrc] = useState()
+    useFocusEffect(
+        React.useCallback(() => {
+       setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg`)
+      },[]))
     return (
         <View style={styles.view}>
-        
+
             <View style={styles.container}>
-                
+                <Image style={styles.img} onError={({ currentTarget }) => {
+                    setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg');
+                }} source={{ uri: src }} />
                 <TouchableOpacity style={styles.button} onPress={() => Props.navigation.navigate('Update_personal_details_Professional')} >
                     <Text style={styles.buttonText}>עריכת פרטים אישים </Text>
                 </TouchableOpacity>
@@ -35,6 +41,16 @@ const Profil_pro = (Props) => {
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>הוספת סוג טיפול נוסף </Text>
                 </TouchableOpacity>
+
+                <View>
+
+            <TouchableOpacity style={styles.button} onPress={()=>Props.navigation.navigate('CameraUse',{imageName:"profil"+userDetails.ID_number})}>
+              <View>
+                <Text style={styles.thachtext}>צלם</Text>
+              </View>
+
+            </TouchableOpacity>
+          </View>
             </View>
             <Menu_professional />
         </View>
@@ -70,6 +86,12 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#fff',
         fontSize: 16,
+    },
+    img: {
+        height: 250,
+        width: 250,
+        borderRadius: 1000,
+
     },
 });
 

@@ -1,24 +1,43 @@
 import {Alert, View, Text, StyleSheet, Platform, Image, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect,useContext } from 'react';
 import * as ImagePicker from 'expo-image-picker'
-import { Constants } from 'expo-constants';
-import Button from '../../CTools/Button';
+import Button from '../CTools/Button';
 import { Ionicons } from '@expo/vector-icons';
-import PopUp from '../../CTools/PopUp';
-import upiUrl from '../../Routes/Url';
-import { UserContext } from '../../CTools/UserDetailsHook';
+import PopUp from '../CTools/PopUp';
 import * as Progress from 'react-native-progress';
-
-
-
+import { Baseurl } from '../obj/Config';
+import { useFocusEffect } from '@react-navigation/native';
+import { SetPhoto } from '../obj/FunctionAPICode';
 export default function Gallery(props) {
   const {description=true, picUri ,setShow,imageName,setDonePicture}=props
 
 
-  const {userDetails, setUserDetails} = useContext(UserContext);
+  //const {userDetails, setUserDetails} = useContext(UserContext);
   const [image, setImage] = useState(picUri);
   const [loading, setLoading] = useState(false);
-  
+  const [Business_Number,setBusiness_Number]=useState();
+
+  useFocusEffect(
+    React.useCallback(() => {
+    if(imageName.startsWith("REVIEW")){
+      let id=imageName.replace("REVIEW","")
+      setBusiness_Number(id)
+  }
+  },[]))
+ 
+  // useEffect(() => {
+  //    if(imageName.startsWith("REVIEW")&&Business_Number){
+  //     let id=imageName.replace("REVIEW","")
+  //     SetPhoto({Business_number:id,url_photo:imageName}).then((res) => {
+  //       console.log(res)
+  //     }).catch(err => {console.log('err upload= ' + err);     
+   
+  // });
+  // }
+    
+  // }, [Business_Number])
+
+
   //waiting for permision
   useEffect(() => {
     (async ()=>{
@@ -52,8 +71,15 @@ export default function Gallery(props) {
 const btnImgUpload=()=>{
   //upload user picture
 console.log('waiting for answer: ');
-ImgUpload(`${image}`
+if(imageName.startsWith("REVIEW")){
+  ImgUpload(`${image}`
+   ,`${imageName+Date.now()+Math.random().toString(36).substring(2)}.jpg`)
+}
+else{
+  ImgUpload(`${image}`
    ,`${imageName}.jpg`)
+}
+
   
  //imageName=='ingredientPic' || imageName=='recipePic' 
   //complite code for recipe and imgredient 
@@ -65,19 +91,30 @@ const ImgUpload = (imgUri, picName) => {
   dataI.append('picture', {
   uri: imgUri,
   name: picName,
-  type: 'image/jpg'
+  type: 'image/jpg',
+ 
   });
   const config = {
     method: 'POST',
     body: dataI,
     }
      setLoading(true)
-    fetch(upiUrl+"uploadpicture", config)
+    fetch(Baseurl+"uploadpicture", config)
     .then((res) => {
+     
+      console.log("**********************^^^^^^^^^^^^",config)
     if (res.status == 201) {console.log('resStatus=>',res.status);return res.json(); }
     else {console.log(res.status);return res.err;}
     })
-    .then((responseData) => {
+    .then(async(responseData) => {
+      if(imageName.startsWith("REVIEW")){
+           
+           await SetPhoto({Business_number:Business_Number,url_photo:picName}).then((res) => {
+              console.log(res)
+            }).catch(err => {console.log('err upload= ' + err);     
+         
+        });
+        }
       console.log('responsData=>',responseData);
     if (responseData != "err") {
       
@@ -87,14 +124,15 @@ const ImgUpload = (imgUri, picName) => {
     setLoading(false)
    setDonePicture(true)
    setShow(false)
+   setBusiness_Number(true);
    console.log('DONE!');
-   if(userDetails&&(picName.startsWith("profileDoctor")||picName.startsWith("profilePatient"))){
-    setUserDetails({
-      id:userDetails.id,
-      name:userDetails.name,
-      image:picName
-    })
-   }
+  //  if(userDetails&&(picName.startsWith("profileDoctor")||picName.startsWith("profilePatient"))){
+  //   setUserDetails({
+  //     id:userDetails.id,
+  //     name:userDetails.name,
+  //     image:picName
+  //   })
+  //  }
     }
     else {alert('error uploding ...');
     setLoading(false)
@@ -115,9 +153,9 @@ element={
   <>    
     <Text style={styles.title()}> {imageName.includes("Ingredient")?'Ingredient':imageName.includes("Ingredient")?'Recipe':'Profile'} picture</Text>
 <TouchableOpacity style={styles.pic} onPress={PickImage}>
-        {image==null ?
-         <Image style={styles.img} source={require('../../images/blankProfilePicture.png')}/>: 
-          <Image style={styles.img} source={{uri:image}}  /> }        
+       {image==null ?
+         <Image style={styles.img} source={require('../../assets/profilUser.jpeg')}/>: 
+          <Image style={styles.img} source={{uri:image}}  /> }         
         <View style={styles.icon}><Ionicons name="camera-reverse-outline"  size={25}  /></View>
         {description&&<Text style={{alignSelf: 'center',justifyContent:'flex-start' }}>Tap To Edit </Text>}
       </TouchableOpacity>
