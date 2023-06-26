@@ -32,13 +32,11 @@ import LogInGenral from './comps/LogInGenral';
 import Review_Business from './comps/Review_Business';
 import Search3 from './comps/ClientScreen/Search3';
 import NewSearch3 from './comps/ClientScreen/NewSearch3';
-<<<<<<< HEAD
 import ForgotPassword from './comps/GenralComps/ForgotPassword';
 import CameraUse from './comps/ImagePicker/CameraUse';
-=======
 import ShowReviews from './comps/ShowReviews';
 import AvailableAppointmentToBook from './comps/ClientScreen/AvailableAppointmentToBook';
->>>>>>> aaed5e10953f0872acfab16ae9ae98c5efd32730
+
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -68,7 +66,7 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="NewSearch3" screenOptions={{headerStyle: {
+        <Stack.Navigator initialRouteName="LogInGenral" screenOptions={{headerStyle: {
             backgroundColor: "rgb(92, 71, 205)",
           },
           headerTintColor: '#F5FCFF',
@@ -99,10 +97,7 @@ function App() {
           <Stack.Screen name="ClientProfile" component={ClientProfile} />
           <Stack.Screen name="Review_Business" component={Review_Business} />
           <Stack.Screen name="NewSearch3" component={NewSearch3} />
-
           <Stack.Screen name="CameraUse" component={CameraUse} />
-
-
           <Stack.Screen name="ShowReviews" component={ShowReviews} />
           <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} />
 

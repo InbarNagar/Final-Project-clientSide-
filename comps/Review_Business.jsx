@@ -95,7 +95,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Alert, View, StyleSheet } from 'react-native';
-import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph,TouchableOpacity } from 'react-native-paper';
+import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
 import { ReviewBusiness } from './obj/FunctionAPICode';
@@ -209,8 +209,6 @@ const Review_Business = ({ route }) => {
             <Button
             style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number })}
             ></Button>
-
-
 
             <Button
               style={styles.button}

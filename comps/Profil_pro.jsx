@@ -1,23 +1,24 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import { StyleSheet, View, Text,TouchableOpacity} from 'react-native';
 import Menu_professional from './obj/Menu_professional';
 import { UserContext } from './UserDietails';
 import Header from './obj/Header';
 import Button from './obj/Button';
-
-import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation} from "@react-navigation/core";
 import { useFocusEffect } from '@react-navigation/native';
+
+    
+
+
+
+const Profil_pro = (Props) => {
 
     const [src, setsrc] = useState()
     useFocusEffect(
         React.useCallback(() => {
        setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg`)
       },[]))
-
-// import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation} from "@react-navigation/core";
-const Profil_pro = (Props) => {
+      
     const { userDetails, setUserDetails } = useContext(UserContext);
 const navigation=useNavigation();
 useEffect(()=>{
