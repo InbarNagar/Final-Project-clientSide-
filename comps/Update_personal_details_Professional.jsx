@@ -123,14 +123,10 @@ return (
 
     <>
         {alert && alert}
-        <ScrollView>
+        <ScrollView contentContainerStyle={styles.scrollView}>
             <View style={styles.container}>
-                <Header text="עריכת פרטים אישים " color='#9acd32' fontSize={35} />
-                <Text>  שלום {First_name} {Last_name} </Text>
-
-
-
-
+                <Header text="עריכת פרטים אישים " color='rgb(92, 71, 205)' fontSize={35} />
+               
                 <View style={styles.inp}>
                     <TextInput style={styles.textInputS(CheckInput('Email', Email))}
                         placeholder={userDetails.Email}
@@ -184,7 +180,7 @@ return (
 
 
                 <View style={styles.inp}>
-                    <TextInput style={styles.textInputS(false)}
+                    <TextInput style={styles.textInputS(true)}
                         placeholder="סיסמא"
                         placeholderTextColor="#92a2bd"
                         value={password}
@@ -212,22 +208,29 @@ return (
 }
 
 const styles = StyleSheet.create({
+    scrollView: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     inp: {
         flexDirection: 'row',
         padding: 15,
         justifyContent: 'center',
-        width: '80%',
+        width: '100%',
         borderRadius: 25,
-        height: 50,
-        marginBottom: 20,
-        backgroundColor: '#fffaf0',
-
+        height: 45,
+        marginBottom: 10,
+        borderColor: "rgb(92, 71, 205)",
+        backgroundColor: 'white',
+        border: 1
+    
 
     },
     textInputS: (borderColor) => {
         return {
-            // height: 40,
-            // width: "80%",
+             height: 30,
+            width: "80%",
             // margin: 10,
             borderWidth: 1,
             // padding: 10,
@@ -245,27 +248,33 @@ const styles = StyleSheet.create({
         padding: 10,
         justifyContent: 'center',
         textAlign: 'center',
-        fontSize: 25,
-        color: '#fff',
+        fontSize: 20,
+        color: "rgb(92, 71, 205)",
         fontWeight: 'bold',
-
+        textShadowColor: 'rgb(92, 71, 205)',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 5,
+    
     },
 
     titp: {
         textAlign: 'center',
         color: '#fffaf0',
-        fontSize: 17,
+        fontSize: 15,
+        color: "rgb(92, 71, 205)",
+        padding:10
     },
 
     container: {
-        flex: 12,
-        // backgroundColor: '#fff',
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#9acd32',
-        padding: 50
-    },
-
+        backgroundColor: '#e6e6fa',
+        justifyContent: 'flex-start',
+        backgroundColor: '#e6e6fa',
+        width: '100%',
+        padding:40,
+      },
     text: {
 
 
@@ -278,8 +287,8 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         height: 50,
         marginBottom: 20,
-        backgroundColor: '#ff69b4',
-        padding: 15,
+        backgroundColor: "rgb(92, 71, 205)",
+        padding: 8,
         margin: 10,
         marginTop: 10,
 

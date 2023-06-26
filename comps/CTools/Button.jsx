@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         }
     },
     //generic bottom style
-    button: (size = 15, height = 4, radius = 30,color='#1ea6d6',borderColor='white') => {
+    button: (size = 15, height = 4, radius = 30,color="rgb(92, 71, 205)",borderColor='white') => {
         return {
             borderWidth: 1,
             borderRadius: radius,

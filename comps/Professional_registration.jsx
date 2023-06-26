@@ -199,7 +199,7 @@ const Professional_registration = (props) => {
           <View>
             <TouchableOpacity style={styles.but} onPress={()=>props.navigation.navigate('CameraUse',{imageName:"profil"+ID_number})}>
               <View>
-                <Text style={styles.thachtext}>צלם</Text>
+                <Text style={styles.thachtext}>הוספת תמונת פרופיל</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -226,9 +226,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '80%',
     borderRadius: 25,
-    height: 50,
-    marginBottom: 20,
-    backgroundColor: '#fffaf0'
+    height: 45,
+    marginBottom: 10,
+    borderColor:"rgb(92, 71, 205)",
+    backgroundColor: 'white',
+    border:1
 
   },
   textInputS: {
@@ -239,50 +241,52 @@ const styles = StyleSheet.create({
     // padding: 10,
     color: '#808080',
     // height: 50,
-    fontSize: 25,
+    fontSize: 15,
     textAlign: 'right',
     fontWeight: 'bold',
     opacity: 0.5,
+    
 
   },
   title: {
     padding: 10,
     justifyContent: 'center',
     textAlign: 'center',
-    fontSize: 25,
-    color: '#fff',
+    fontSize: 20,
+    color: "rgb(92, 71, 205)",
     fontWeight: 'bold',
+    textShadowColor: 'rgb(92, 71, 205)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
 
   },
 
   titp: {
     textAlign: 'center',
     color: '#fffaf0',
-    fontSize: 17,
+    fontSize: 15,
+    color: "rgb(92, 71, 205)",
+    padding:10
   },
 
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#9acd32'
+    backgroundColor: '#e6e6fa',
   },
 
   text: {
-
-
     textAlign: 'right',
     paddingBottom: 10,
-
   },
   but: {
     textAlign: 'center',
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    backgroundColor: '#ff69b4',
-    padding: 15,
+    backgroundColor: "rgb(92, 71, 205)",
+    padding: 8,
     margin: 10,
     marginTop: 10,
     
@@ -290,7 +294,7 @@ const styles = StyleSheet.create({
   thachtext: {
     textAlign: 'center',
     color: '#fffaf0',
-    fontSize:25,
+    fontSize:20,
     fontWeight:'bold',
     //borderRadius: 10,
      height: 50,

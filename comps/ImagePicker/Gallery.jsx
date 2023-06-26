@@ -149,28 +149,29 @@ const ImgUpload = (imgUri, picName) => {
 setShow={(isShow)=>setShow(isShow)}
 width={100}
 height={100}
+
 element={ 
   <>    
-    <Text style={styles.title()}> {imageName.includes("Ingredient")?'Ingredient':imageName.includes("Ingredient")?'Recipe':'Profile'} picture</Text>
+    <Text style={styles.title()}> {imageName.includes("Ingredient")?'Ingredient':imageName.includes("REVIEW")?'ביקורת':'תמונת פרופיל'} </Text>
 <TouchableOpacity style={styles.pic} onPress={PickImage}>
        {image==null ?
          <Image style={styles.img} source={require('../../assets/profilUser.jpeg')}/>: 
           <Image style={styles.img} source={{uri:image}}  /> }         
         <View style={styles.icon}><Ionicons name="camera-reverse-outline"  size={25}  /></View>
-        {description&&<Text style={{alignSelf: 'center',justifyContent:'flex-start' }}>Tap To Edit </Text>}
+        {description&&<Text style={{alignSelf: 'center',justifyContent:'flex-start' }}>בחר תמונה </Text>}
       </TouchableOpacity>
 
-<Button text='DONE'
+<Button text='העלה תמונה'
 style={styles.button}
-onPress={image?btnImgUpload:alert('picture not selected')}
+onPress={image?btnImgUpload:alert('לא נבחרה תמונה')}
 /> 
 { loading && <View style={styles.progress}>
             <Progress.Bar
               width={255}
               height={15}
               borderRadius={5}
-              borderColor={"#bbe4f2"}
-              color='#69BEDC' //#FFCF84-orange
+              borderColor={"rgb(92, 71, 205)"}
+              color="rgb(92, 71, 205)" //#FFCF84-orange
               useNativeDriver={true}
               borderWidth={2}
               indeterminate={true}
@@ -179,8 +180,8 @@ onPress={image?btnImgUpload:alert('picture not selected')}
           </View>}
 </>
 }
-button_txt='Cancle'
-backgroundColor="#bbe4f2"
+button_txt='ביטול'
+backgroundColor="white"
 button_height='4'
 />
  </>
@@ -191,7 +192,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+   
+    
   },
   img:{
     height: 250,
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
     
   },
   pic: { justifyContent: 'center', flex: 1,marginBottom:'30%' },
- button: {  },
+ button: {},
   icon: { justifyContent:'flex-start',alignSelf: 'center',borderRadius:1000,padding:'1%',position:'relative',bottom:'1%' },
   title: (paddingRight =0, title_size = 30) => {
     return {
@@ -212,7 +215,7 @@ const styles = StyleSheet.create({
       paddingTop: '20%',
       fontWeight: 'bold',
       color: 'white',
-      textShadowColor: '#1EA6D6',
+      textShadowColor: 'rgb(92, 71, 205)',
       textShadowOffset: { width: 2, height: 2 },
       textShadowRadius: 5,
       justifyContent:'flex-start',

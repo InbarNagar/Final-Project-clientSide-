@@ -130,7 +130,7 @@ if(userDetails){
 
    {/* <Header text="BeautyMe" fontSize={60} height={200} color="#E6E6FA"/> */}
    <Image style={styles.image} source={require('../assets/be.jpeg')}/>
-   
+    <Text style={styles.tit}>see the beauty around you</Text>
 
     <View style={styles.content}>
     
@@ -263,7 +263,20 @@ const styles = StyleSheet.create({
     width:200,
     height:200,
     padding:20,
+    },
+    tit:{
+      "fontFamily":"font",
+      "fontSize": 25,
+      "fontWeight": "500",
+      "letterSpacing": 0.15,
+      "lineHeight": 24,
+      textShadowColor: 'rgb(92, 71, 205)',
+      textShadowOffset: { width: 2, height: 2 },
+      textShadowRadius: 5,
+      opacity:0.7
     }
+
+
 
 });
 

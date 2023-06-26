@@ -17,17 +17,17 @@ const Menu_professional = () => {
     
     <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Profil_pro')}>
         <Ionicons name="person-outline" size={24} color="white"  />
-        <Text style={styles.menuText}>Profile</Text>
+        <Text style={styles.menuText}>פרופיל</Text>
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewAppointment')}>
         <Ionicons name="add-circle-outline" size={24} color="white"  />
-        <Text style={styles.menuText}>Add</Text>
+        <Text style={styles.menuText}>הוספת תורים</Text>
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Calendar_professional')}>
         <Ionicons name="calendar-outline" size={24} color="white" />
-        <Text style={styles.menuText}>Calendar</Text>
+        <Text style={styles.menuText}>צפייה בתורים</Text>
       </TouchableOpacity>
       
     </View>

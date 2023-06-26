@@ -44,13 +44,14 @@ export default function Search3(props) {
   const [allAppointmentEnd, setallAppointmentEnd] = useState([]); // תורים שעשיתי
   const [FutureAppointment, setFutureAppointment] = useState([]); //תורים עתידיים
   const ClientData = userDetails;
+  const name= userDetails.First_name
   
   useEffect(() => {
     if (token) {
       const body = {
         "to": token,
         "title": "BeautyMe",
-        "body": `${userDetails.First_name} הזמינה תור חדש `,
+        "body": `${userDetails.name} הזמינה תור חדש `,
         "badge": "0",
         "ttl": "1",// מספר שניות לשליחה
         "data": {

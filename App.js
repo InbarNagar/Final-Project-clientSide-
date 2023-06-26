@@ -36,7 +36,7 @@ import ForgotPassword from './comps/GenralComps/ForgotPassword';
 import CameraUse from './comps/ImagePicker/CameraUse';
 import ShowReviews from './comps/ShowReviews';
 import AvailableAppointmentToBook from './comps/ClientScreen/AvailableAppointmentToBook';
-
+import NewAvilableHours from './comps/NewAvilableHours';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -66,15 +66,15 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LogInGenral" screenOptions={{headerStyle: {
-            backgroundColor: "rgb(92, 71, 205)",
+        <Stack.Navigator initialRouteName="NewAvilableHours" screenOptions={{headerStyle: {
+            backgroundColor: "'rgb(92, 71, 205)'",
           },
           headerTintColor: '#F5FCFF',
           headerTitleStyle: {
             fontWeight: 'bold',
           }, }} >
 
-          <Stack.Screen name="LogInGenral" component={LogInGenral} options={{ title: 'כניסה'}} />
+          <Stack.Screen name="LogInGenral" component={LogInGenral} options={{ title: ''}} />
 
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
           <Stack.Screen name="NewAppointment" component={NewAppointment} options={{ title: 'הוספת תור חדש' }} />
@@ -84,10 +84,10 @@ function App() {
           <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} />
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-          <Stack.Screen name='Professional_registration' component={Professional_registration} />
+          <Stack.Screen name='Professional_registration' component={Professional_registration}options={{ title: 'הרשמת בעל עסק פרטים אישים' }} />
           <Stack.Screen name='Client_registration' component={Client_registration} />
-          <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} />
-          <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} />
+          <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} options={{ title: ' הרשמת בעל עסק  ' }} />
+          <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} options={{ title: ' הרשמת בעל עסק  ' }}/>
           <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
           <Stack.Screen name="Profil_pro" component={Profil_pro} options={{ title: 'אזור אישי' }} />
           <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} />
@@ -97,10 +97,10 @@ function App() {
           <Stack.Screen name="ClientProfile" component={ClientProfile} />
           <Stack.Screen name="Review_Business" component={Review_Business} />
           <Stack.Screen name="NewSearch3" component={NewSearch3} />
-          <Stack.Screen name="CameraUse" component={CameraUse} />
+          <Stack.Screen name="CameraUse" component={CameraUse} options={{ title:'מצלמה'}} />
           <Stack.Screen name="ShowReviews" component={ShowReviews} />
           <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} />
-
+          <Stack.Screen name="NewAvilableHours" component={NewAvilableHours} options={{ title:'הוספת זמינות לפרסום'}} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
