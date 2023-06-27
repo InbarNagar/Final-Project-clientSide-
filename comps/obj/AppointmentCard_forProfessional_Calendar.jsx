@@ -91,7 +91,7 @@ function ApproveAppointment(Number_appointment){
       <Text style={styles.title}>{moment(Date).format('DD/MM/YYYY')}</Text>
      
       {/* <Text style={styles.title}>{Treatment_Type} - {Client_Name}</Text> */}
-      <Text style={styles.title}>{Start_time} - {End_time}</Text>
+      <Text style={styles.title}>{moment(Start_time).format('LT')}-{moment(End_time).format('LT')}</Text>
       {massage()}
     </View>
   );
