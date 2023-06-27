@@ -20,7 +20,7 @@ const Menu_professional = () => {
         <Text style={styles.menuText}>פרופיל</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewAppointment')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewAvilableHours')}>
         <Ionicons name="add-circle-outline" size={24} color="white"  />
         <Text style={styles.menuText}>הוספת תורים</Text>
       </TouchableOpacity>

@@ -6,7 +6,7 @@ import LogIn from './comps/GenralComps/LogIn';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Professional_registration from './comps/Professional_registration';
-import Client_registration from './comps/Client_registration';
+
 import Create_Business_Pro from './comps/Create_Business_Pro';
 // import SearchTest from './comps/SearchTest';
 import Search from './comps/Map';
@@ -37,6 +37,7 @@ import CameraUse from './comps/ImagePicker/CameraUse';
 import ShowReviews from './comps/ShowReviews';
 import AvailableAppointmentToBook from './comps/ClientScreen/AvailableAppointmentToBook';
 import NewAvilableHours from './comps/NewAvilableHours';
+import Client_registration from './comps/Client_registration';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -66,7 +67,7 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="NewAvilableHours" screenOptions={{headerStyle: {
+        <Stack.Navigator initialRouteName="LogInGenral" screenOptions={{headerStyle: {
             backgroundColor: "'rgb(92, 71, 205)'",
           },
           headerTintColor: '#F5FCFF',
@@ -79,7 +80,7 @@ function App() {
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
           <Stack.Screen name="NewAppointment" component={NewAppointment} options={{ title: 'הוספת תור חדש' }} />
           <Stack.Screen name="Calendar_professional" component={Calendar_professional}options={{ title: 'היומן שלי' }}/>
-          {/* <Stack.Screen name="LogIn" component={LogIn} /> */}
+
           <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} />
           <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} />
           <Stack.Screen name="Map" component={Map} />

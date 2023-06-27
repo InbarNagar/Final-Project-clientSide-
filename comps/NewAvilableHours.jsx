@@ -1,18 +1,26 @@
 import React, { useState,useContext } from 'react';
 import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import { parse,format } from 'date-fns';
+import { format } from 'date-fns';
 import { Picker } from '@react-native-picker/picker';
 import Button from './CTools/Button';
 import { AddNewAvailableHours } from './obj/FunctionAPICode';
 import { Alert } from 'react-native';
 import { UserContext } from './UserDietails';
-const NewAvailableHours = () => {
+import { useNavigation} from "@react-navigation/core";
+import Menu_professional from './obj/Menu_professional';
+import moment from "moment";
+
+const NewAvailableHours = (Props) => {
+
+
+    const navigation = useNavigation();
+
     const [End_time, setSelectedTimeEnd] = useState('00:00');
     const [Start_time, setSelectedTimeStart] = useState('00:00');
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [Date, setSelectedDate] = useState('');
-  
+    const [Date2, setSelectedDate2] = useState('');
     const { userDetails, setUserDetails } = useContext(UserContext);
     const BussinesNumber = userDetails.Business_Number;
     
@@ -25,7 +33,8 @@ const NewAvailableHours = () => {
     };
 
     const handleConfirm = (date) => {
-        setSelectedDate(format(date,'yyyy-mm-dd'));
+         setSelectedDate(moment(date).format('DD/MM/YYYY'));
+         setSelectedDate2(moment(date).format('YYYY-MM-DD'))
         hideDatePicker();
         
     };
@@ -48,21 +57,23 @@ const NewAvailableHours = () => {
     }
 
     const handleSendData = () => {
-        // כאן תוכלי לממש את הפונקציה לשליחת הנתונים לשרת
-        const [hours, minutes] = Start_time.split(':'); // פיצול השעה לשעות ודקות
+        
+        const [hours, minutes] = Start_time.split(':'); 
         const numericTime = parseInt(hours, 10) + parseInt(minutes, 10) / 60;
         
-        const [hour, minute] = End_time.split(':'); // פיצול השעה לשעות ודקות
+        const [hour, minute] = End_time.split(':'); 
         const numericTime2 = parseInt(hour, 10) + parseInt(minute, 10) / 60;
         const data = {
             "Business_id":parseInt(BussinesNumber),
-            "Date":Date,
+            "Date":Date2,
             "Start_time":numericTime,
             "End_time": numericTime2 
         }
         AddNewAvailableHours(data).then((result) => {
             console.log('yes^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^', result)
-            alert("השינוים נשצרו בהצלחה")
+            alert("השינוים נשמרו בהצלחה")
+            navigation.navigate('Calendar_professional')
+
         }, (error) => {
             console.log('error', error)
         });
@@ -122,7 +133,10 @@ const NewAvailableHours = () => {
                 <Button text="שלח" onPress={handleSendData} />
             </View>
 
+            <Menu_professional/>
         </View>
+
+
     );
 };
 

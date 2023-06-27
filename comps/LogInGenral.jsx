@@ -14,7 +14,7 @@ import { SaveTokenforID,SaveTokenforIDPro,LogInUser } from './obj/FunctionAPICod
 import Button from './obj/Button';
 import Alert from './Alert';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
-
+import Client_registration from './Client_registration';
 
 export default function LogInGenral(props) {
   const [ID_number, setID_number] = useState('');
@@ -116,8 +116,11 @@ if(userDetails){
       })
     
   }
-  
   const Registration = () => {
+   
+    props.navigation.navigate(Client_registration)
+   }
+  const Registration2 = () => {
    
      props.navigation.navigate(Professional_registration)
     }
@@ -180,6 +183,7 @@ if(userDetails){
 
 
       <Button color='transparent' text="עדיין לא נרשמתם? לחצו כאן" onPress={Registration} />
+      <Button color='transparent' text="הרשמת עסקים" onPress={Registration2} />
 </View>
     </View>
 
@@ -265,7 +269,6 @@ const styles = StyleSheet.create({
     padding:20,
     },
     tit:{
-      "fontFamily":"font",
       "fontSize": 25,
       "fontWeight": "500",
       "letterSpacing": 0.15,

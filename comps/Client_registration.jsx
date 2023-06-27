@@ -181,24 +181,88 @@ const styles = StyleSheet.create({
   inp: {
     flexDirection: 'row',
     padding: 15,
-    justifyContent: 'space-between',
-    color: 'red',
+    justifyContent: 'center',
+    width: '80%',
+    borderRadius: 25,
+    height: 45,
+    marginBottom: 10,
+    borderColor:"rgb(92, 71, 205)",
+    backgroundColor: 'white',
+    border:1
+
   },
   textInputS: {
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    width: "80%",
-    marginRight: 8,
+    // height: 40,
+    // width: "80%",
+    // margin: 10,
+    // borderWidth: 1,
+    // padding: 10,
+    color: '#808080',
+    // height: 50,
+    fontSize: 15,
+    textAlign: 'right',
+    fontWeight: 'bold',
+    opacity: 0.5,
+    
+
   },
   title: {
-    padding: 60,
+    padding: 10,
     justifyContent: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 20,
+    color: "rgb(92, 71, 205)",
+    fontWeight: 'bold',
+    textShadowColor: 'rgb(92, 71, 205)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+
   },
+
   titp: {
     textAlign: 'center',
-    Color: '#9acd32'
-  }
+    color: '#fffaf0',
+    fontSize: 15,
+    color: "rgb(92, 71, 205)",
+    padding:10
+  },
+
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#e6e6fa',
+  },
+
+  text: {
+    textAlign: 'right',
+    paddingBottom: 10,
+  },
+  but: {
+    textAlign: 'center',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 20,
+    backgroundColor: "rgb(92, 71, 205)",
+    padding: 8,
+    margin: 10,
+    marginTop: 10,
+    
+  },
+  thachtext: {
+    textAlign: 'center',
+    color: '#fffaf0',
+    fontSize:20,
+    fontWeight:'bold',
+    //borderRadius: 10,
+     height: 50,
+    // marginBottom: 20,
+    // backgroundColor: '#fffaf0',
+    // padding: 15,
+    // margin: 10,
+    // marginTop: 20,
+  },
+
 });
 
 
