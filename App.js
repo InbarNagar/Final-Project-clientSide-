@@ -64,7 +64,7 @@ function App() {
     <UserContext.Provider value={{ userDetails, setUserDetails }}>
 
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="NewSearch3" screenOptions={{headerStyle: {
+        <Stack.Navigator initialRouteName="LogInGenral" screenOptions={{headerStyle: {
             backgroundColor: "rgb(92, 71, 205)",
           },
           headerTintColor: '#F5FCFF',
@@ -95,7 +95,7 @@ function App() {
           <Stack.Screen name="ClientProfile" component={ClientProfile} />
           <Stack.Screen name="Review_Business" component={Review_Business} />
           <Stack.Screen name="NewSearch3" component={NewSearch3} />
-          <Stack.Screen name="ShowReviews" component={ShowReviews} />
+         <Stack.Screen name="ShowReviews" component={ShowReviews} />
           <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} />
         </Stack.Navigator>
       </NavigationContainer>

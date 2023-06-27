@@ -1,6 +1,4 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Fetch, Axios, AxiosNum } from './Fetch'
+import { Fetch, Axios } from './Fetch'
 
 // התחברות בעל עסק פונקציית POST עם FROMBODY...... לא דרך נכונה... צריך לשנות את זה לגט... אבל לבנתיים....................
 export const LogInProo = (body) => {
@@ -142,6 +140,9 @@ export const  Post_SendPushNotification=(body)=>{
 export const AppointmentToClient= (body) => {
     return Axios(`Appointment/ClientToAppointment`, 'post',body)
 }
+export const NewAppointmentToClient= (body) => {
+    return Axios(`Appointment/NewAppointmentByClient`, 'post',body)
+}
 
 export const SaveTokenforID= (ID_number,token) => {
     return Axios(`Client/OneClientToken/${ID_number}/${token}`, 'post',{})
@@ -186,8 +187,9 @@ export const GetBusinessDiary=(Business_Number)=>{
 
 }
 //חיפוש חדש לפי יומן עסק- BusinessDiary
+//נשלח סוג טיפול ועיר, אפשר גם בלי עיר 
 export const NewSearchPost=(body)=>{
-    return Axios(`BusinessDiary/GetAllBusinessDiaryBy_Status_City_TreatmentNumber`, 'post',body)
+    return Axios(`BusinessDiary/GetAllBusinessDiaryByCity_TreatmentNumber`, 'post',body)
 }
 //דירוג עסק ע"י לקוח שבוצע לו טיפול
 export const ReviewBusiness=(body)=>{

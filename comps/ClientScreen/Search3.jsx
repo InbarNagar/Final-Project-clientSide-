@@ -3,47 +3,31 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   ScrollView,
-  Alert,
   TouchableOpacity,
-  Image,
-  Linking
 } from "react-native";
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import {
   AllApointemtDetailesForClient_With_BusinessReview
 } from "../obj/FunctionAPICode";
-import moment from "moment";
-import { NavigationActions } from "react-navigation";
 import { UserContext } from "../UserDietails";
-import { Button } from "react-native-elements";
 import Geocoder from 'react-native-geocoding';
 import AppointmentCard_forClient from "./AppointmentCard_forClient";
 import ClientProfile from "./ClientProfile";
 import SearchFiltersMenu from "./SearchFiltersMenu";
+import NewSearch3 from "./NewSearch3";
 
 
 export default function Search3(props) {
   const { navigation } = props;
   Geocoder.init('AIzaSyBMwN0NknaPibHnpv8laiFYUKmQFz1FHZY');
 
-  const [AddressCity, setAddressCity] = useState("");
-  const [NameTreatment, setNameTreatment] = useState("");
-  const [gender, setGender] = useState("");
-  const [Is_client_house, setIs_client_house] = useState("");
-  const [response, SetResponse] = useState([]);
-  const [categories, setCategories] = useState(["קטגוריה"]);
-  const [chosenTreratmentNum, setChosenTreratmentNum] = useState(0);
-  const [selectedTreatment, setSelectedTreatment] = useState({});
   const [token, settoken] = useState();// ענבר
   const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
   const { userDetails, setUserDetails } = useContext(UserContext);
   const [apo, setapo] = useState();//inbar
   const [allAppointment, setallAppointment] = useState([]); //תורים שמחכים לאישור
-  const [allAppointmentEnd, setallAppointmentEnd] = useState([]); // תורים שעשיתי
-  const [FutureAppointment, setFutureAppointment] = useState([]); //תורים עתידיים
-  const ClientData = userDetails;
+   const ClientData = userDetails;
   
   useEffect(() => {
     if (token) {
@@ -139,12 +123,13 @@ console.log(userDetails.ID_number);
       {showSearchSection &&
         !showProfileSection &&
         !showSAppointmenthSection && (
-          <ScrollView>
-            <SearchFiltersMenu
-            ClientIDnumber={userDetails.ID_number}
-            ClientFirstName={userDetails.First_name}
-            />
-          </ScrollView>
+          <NewSearch3/>
+          // <ScrollView>
+          //   <SearchFiltersMenu
+          //   ClientIDnumber={userDetails.ID_number}
+          //   ClientFirstName={userDetails.First_name}
+          //   />
+          // </ScrollView>
         )}
       {/* סוף קומפוננטת חיפוש (מסך בית) */}
       {/* קוממפוננטת מסך פרופיל */}

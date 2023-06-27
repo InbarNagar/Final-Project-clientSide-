@@ -1,15 +1,13 @@
-// import { React, useEffect, useState, useContext } from "react";
-// import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native";
-// import { RadioButton } from "react-native-paper";
-// import { useNavigation } from "@react-navigation/core";
-// import { Button } from "react-native-elements";
-// import { Picker } from "@react-native-picker/picker";
-// import ClientSearchReasultCard from './ClientSearchReasultCard';
-// import { Search_post, GetAllAvailableAppointments, Treatment_type_GET, AllApointemtDetailes } from './obj/FunctionAPICode'
-// import { Value } from "react-native-reanimated";
-
 import { React, useEffect, useState, useContext } from "react";
-import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, ActivityIndicator  } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { RadioButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/core";
 import { Button } from "react-native-elements";
@@ -20,12 +18,9 @@ import {
   GetAllAvailableAppointments,
   Treatment_type_GET,
 } from "../obj/FunctionAPICode";
-import { MaterialIcons as Icon } from '@expo/vector-icons';
+import { MaterialIcons as Icon } from "@expo/vector-icons";
 export default function SearchFiltersMenu(props) {
-  const {
-    ClientIDnumber,
-    ClientFirstName
-  } = props
+  const { ClientIDnumber, ClientFirstName } = props;
 
   const [loading, setLoading] = useState(true);
   const [filter_catgories, set_filter_catgories] = useState([]);
@@ -38,7 +33,7 @@ export default function SearchFiltersMenu(props) {
   const [AddressCity, setAddressCity] = useState("");
   const [Is_client_house, setIs_client_house] = useState("");
   const [categories, setCategories] = useState(["קטגוריה"]);
-  const [response, SetResponse] = useState([]);//מערך תוצאות החיפוש
+  const [response, SetResponse] = useState([]); //מערך תוצאות החיפוש
   const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
   //const [apo, setapo] = useState();//inbar
   useEffect(() => {
@@ -48,12 +43,10 @@ export default function SearchFiltersMenu(props) {
         if (result) {
           // let temp = result.map((x) => x.Name);
           setCategories(result);
-          
         }
       },
       (error) => {
         console.log("error", error);
-       
       }
     );
     // AllApointemtDetailes().then((res) => {
@@ -110,178 +103,162 @@ export default function SearchFiltersMenu(props) {
           console.log("error", error);
         }
       );
-
     }
   }
 
   const FilterTreatment = (text) => {
-    console.log("&&&&&&&&&&&&&&&&&&", filter_catgories && filter_catgories.length > 0)
+    console.log(
+      "&&&&&&&&&&&&&&&&&&",
+      filter_catgories && filter_catgories.length > 0
+    );
 
-    const filterSearch = categories.filter((value) => value.Name.includes(text))
-    set_filter_catgories(filterSearch)
-    console.log("&&&&&&&&%%%%%%%", filterSearch)
-    console.log(text)
-  }
-
+    const filterSearch = categories.filter((value) =>
+      value.Name.includes(text)
+    );
+    set_filter_catgories(filterSearch);
+    console.log("&&&&&&&&%%%%%%%", filterSearch);
+    console.log(text);
+  };
 
   return (
- 
     <View>
       <View>
-        <Text style={styles.title}>שלום {ClientFirstName}  </Text>
-        <View style={{flexDirection: 'column',}}>
-          <TextInput style={{
-           height: 40,
-           borderColor: 'gray',
-           borderWidth: 1,
-           marginBottom: 10, 
-        placeholderTextColor:"#E6E6FA"
-          }} onChangeText={(text) => FilterTreatment(text)} placeholder="הקלדי טיפול יופי" >  </TextInput>
-          
-  <View  style={styles.buttonContainer}>
-          <Button
-            title="חפש"
-            onPress={btnSearch}
-            buttonStyle={{
-              backgroundColor: "rgb(92, 71, 205)",
-              borderWidth: 2,
-              borderColor: "white",
-              borderRadius: 30,
+        <Text style={styles.title}>שלום {ClientFirstName} </Text>
+        <View style={{ flexDirection: "column" }}>
+          <TextInput
+            style={{
+              height: 40,
+              borderColor: "gray",
+              borderWidth: 1,
+              marginBottom: 10,
+              placeholderTextColor: "#E6E6FA",
             }}
-            icon={
-              <Icon
-                name="search"
-                size={24}
-                color="white"
-              />
-            }
-          />
-          {response.length > 0 && (
+            onChangeText={(text) => FilterTreatment(text)}
+            placeholder="הקלדי טיפול יופי"
+          >
+            {" "}
+          </TextInput>
+
+          <View style={styles.buttonContainer}>
             <Button
-          style={{Color:"rgb(92, 71, 205)"}}
-              title="תצוגת מפה"
+              title="חפש"
+              onPress={btnSearch}
               buttonStyle={{
                 backgroundColor: "rgb(92, 71, 205)",
                 borderWidth: 2,
                 borderColor: "white",
                 borderRadius: 30,
-                
               }}
-              // containerStyle={{
-              //   width: 200,
-              //   marginHorizontal: 50,
-              //   marginVertical: 10,
-              // }}
-              // titleStyle={{ fontWeight: "bold" }}
-              onPress={() => {
-                props.navigation.navigate("SearchOnMap", {
-                  results: response,
-                });
-              }}
-              icon={
-                <Icon
-                  name="place"
-                  size={24}
-                  color="white"
-                />
-              }
+              icon={<Icon name="search" size={24} color="white" />}
             />
-          )}
-          <Button title="סינון"
+            {response.length > 0 && (
+              <Button
+                style={{ Color: "rgb(92, 71, 205)" }}
+                title="תצוגת מפה"
+                buttonStyle={{
+                  backgroundColor: "rgb(92, 71, 205)",
+                  borderWidth: 2,
+                  borderColor: "white",
+                  borderRadius: 30,
+                }}
+                // containerStyle={{
+                //   width: 200,
+                //   marginHorizontal: 50,
+                //   marginVertical: 10,
+                // }}
+                // titleStyle={{ fontWeight: "bold" }}
+                onPress={() => {
+                  props.navigation.navigate("SearchOnMap", {
+                    results: response,
+                  });
+                }}
+                icon={<Icon name="place" size={24} color="white" />}
+              />
+            )}
+            <Button
+              title="סינון"
               buttonStyle={{
                 backgroundColor: "rgb(92, 71, 205)",
                 borderWidth: 2,
                 borderColor: "white",
                 borderRadius: 30,
               }}
-            icon={
-              <Icon
-                name="filter-list"
-                size={24}
-                color="white"
-              />
-            } onPress={() => SethowFilter(!ShowFilter)} />
+              icon={<Icon name="filter-list" size={24} color="white" />}
+              onPress={() => SethowFilter(!ShowFilter)}
+            />
+          </View>
         </View>
-        </View>
-       
+
         <Picker
           selectedValue={NameTreatment}
           onValueChange={(value) => setNameTreatment(value)}
           style={styles.picker}
         >
-          {filter_catgories && filter_catgories.length > 0 ?
+          {filter_catgories && filter_catgories.length > 0 ? (
             filter_catgories.map((category, i) => (
               <Picker.Item
                 label={category.Name}
                 value={category.Name}
                 key={i}
-              />)) :
-            <Picker.Item
-              label={"אין תוצאות"}
-              key={0}
-            />
-
-          }
+              />
+            ))
+          ) : (
+            <Picker.Item label={"אין תוצאות"} key={0} />
+          )}
         </Picker>
 
         {ShowFilter && (
-  <View style={styles.filterContainer}>
-    <View>
-      <TextInput
-        style={styles.input}
-        placeholder="עיר"
-        value={AddressCity}
-        onChangeText={(value) => setAddressCity(value)}
-      />
-    </View>
+          <View style={styles.filterContainer}>
+            <View>
+              <TextInput
+                style={styles.input}
+                placeholder="עיר"
+                value={AddressCity}
+                onChangeText={(value) => setAddressCity(value)}
+              />
+            </View>
+            <View>
+              <Text style={styles.sectionTitle}>מין מטפל:</Text>
+              <View style={styles.radioButtonContainer}>
+                <RadioButton
+                  value="M"
+                  status={gender === "M" ? "checked" : "unchecked"}
+                  onPress={() => setGender("M")}
+                />
+                <Text style={styles.radioButtonLabel}>זכר</Text>
+              </View>
+              <View style={styles.radioButtonContainer}>
+                <RadioButton
+                  value="F"
+                  status={gender === "F" ? "checked" : "unchecked"}
+                  onPress={() => setGender("F")}
+                />
+                <Text style={styles.radioButtonLabel}>נקבה</Text>
+              </View>
+            </View>
 
-    <View>
-      <Text style={styles.sectionTitle}>מין מטפל:</Text>
-      <View style={styles.radioButtonContainer}>
-        <RadioButton
-          value="M"
-          status={gender === "M" ? "checked" : "unchecked"}
-          onPress={() => setGender("M")}
-        />
-        <Text style={styles.radioButtonLabel}>זכר</Text>
+            <View>
+              <Text style={styles.sectionTitle}>טיפול ביתי:</Text>
+              <View style={styles.radioButtonContainer}>
+                <RadioButton
+                  value="YES"
+                  status={Is_client_house === "YES" ? "checked" : "unchecked"}
+                  onPress={() => setIs_client_house("YES")}
+                />
+                <Text style={styles.radioButtonLabel}>כן</Text>
+              </View>
+              <View style={styles.radioButtonContainer}>
+                <RadioButton
+                  value="NO"
+                  status={Is_client_house === "NO" ? "checked" : "unchecked"}
+                  onPress={() => setIs_client_house("NO")}
+                />
+                <Text style={styles.radioButtonLabel}>לא</Text>
+              </View>
+            </View>
+          </View>
+        )}
       </View>
-      <View style={styles.radioButtonContainer}>
-        <RadioButton
-          value="F"
-          status={gender === "F" ? "checked" : "unchecked"}
-          onPress={() => setGender("F")}
-        />
-        <Text style={styles.radioButtonLabel}>נקבה</Text>
-      </View>
-    </View>
-
-    <View>
-      <Text style={styles.sectionTitle}>טיפול ביתי:</Text>
-      <View style={styles.radioButtonContainer}>
-        <RadioButton
-          value="YES"
-          status={Is_client_house === "YES" ? "checked" : "unchecked"}
-          onPress={() => setIs_client_house("YES")}
-        />
-        <Text style={styles.radioButtonLabel}>כן</Text>
-      </View>
-      <View style={styles.radioButtonContainer}>
-        <RadioButton
-          value="NO"
-          status={Is_client_house === "NO" ? "checked" : "unchecked"}
-          onPress={() => setIs_client_house("NO")}
-        />
-        <Text style={styles.radioButtonLabel}>לא</Text>
-      </View>
-    </View>
-  </View>
-)}
-      
-      </View>
-
-
-
-
       <ScrollView>
         {response &&
           response.length > 0 &&
@@ -300,125 +277,120 @@ export default function SearchFiltersMenu(props) {
                   AddressCity={x.AddressCity}
                   ClientIDnumber={ClientIDnumber}
                   Appointment_status={x.Appointment_status}
-                //apo={apo}
+                  //apo={apo}
                 />
               </View>
             );
           })}
       </ScrollView>
     </View>
-  )
+  );
 }
 const styles = StyleSheet.create({
   inp: {
-    flexDirection: 'row',
+    flexDirection: "row",
     padding: 15,
-    justifyContent: 'center',
-    width: '80%',
+    justifyContent: "center",
+    width: "80%",
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    backgroundColor: '#eee', // Lighter color for better visibility
-
+    backgroundColor: "#eee", // Lighter color for better visibility
   },
   textInputS: (borderColor) => {
     return {
       color: "rgb(92, 71, 205)",
-      borderColor: borderColor ? 'green' : 'red',
+      borderColor: borderColor ? "green" : "red",
       fontSize: 20, // Less emphasis on the font size
-      textAlign: 'right',
-      fontWeight: 'bold',
-    }
+      textAlign: "right",
+      fontWeight: "bold",
+    };
   },
   title: {
     padding: 10,
-    justifyContent: 'center',
-    textAlign: 'center',
+    justifyContent: "center",
+    textAlign: "center",
     fontSize: 25,
-    color: '#000', // Change color to black for better visibility
-    fontWeight: 'bold',
+    color: "#000", // Change color to black for better visibility
+    fontWeight: "bold",
     color: "rgb(92, 71, 205)",
   },
   titp: {
-    textAlign: 'center',
-    color: 'red',
+    textAlign: "center",
+    color: "red",
     fontSize: 17,
   },
   container: {
     flex: 1, // Let it take the available space
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fafafa', // Lighter background color for better contrast
-    padding: '5%', // Use percentage for padding
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fafafa", // Lighter background color for better contrast
+    padding: "5%", // Use percentage for padding
   },
   text: {
-    textAlign: 'right',
+    textAlign: "right",
     paddingBottom: 10,
   },
   but: {
-    textAlign: 'center',
+    textAlign: "center",
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    backgroundColor: '#1E90FF', // More conventional button color
+    backgroundColor: "#1E90FF", // More conventional button color
     padding: 15,
     margin: 10,
   },
   thachtext: {
-    textAlign: 'center',
-    color: '#fffaf0',
+    textAlign: "center",
+    color: "#fffaf0",
     fontSize: 20, // Less emphasis on font size
-    fontWeight: 'bold',
+    fontWeight: "bold",
     height: 50,
-    
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   picker: {
     // height: 50,
     // width: 150,
     borderColor: "rgb(92, 71, 205)",
     // borderWidth: 1,
-     borderRadius: 20, // This will make the picker appear as a rounded rectangle
-    backgroundColor: '#E6E6FA', // This will give the picker a white background with 50% opacity
+    borderRadius: 20, // This will make the picker appear as a rounded rectangle
+    backgroundColor: "#E6E6FA", // This will give the picker a white background with 50% opacity
   },
 
   filterContainer: {
-    width: '100%',
+    width: "100%",
     padding: 10,
     borderRadius: 10,
-    borderColor: '#000',
+    borderColor: "#000",
     borderWidth: 1,
     marginVertical: 10,
-    backgroundColor: '#EEE',
-   
+    backgroundColor: "#EEE",
   },
   input: {
     fontSize: 16,
-    borderColor: "black", 
+    borderColor: "black",
     borderWidth: 2,
     padding: 10,
     marginVertical: 5,
   },
   radioButtonContainer: {
-    flexDirection: 'row-reverse', // Reverses the direction
-    alignItems: 'center',
+    flexDirection: "row-reverse", // Reverses the direction
+    alignItems: "center",
     marginVertical: 5,
   },
   radioButtonLabel: {
     fontSize: 16,
     marginLeft: 10,
-    flexDirection: 'row-reverse',
-   
+    flexDirection: "row-reverse",
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#000',
+    fontWeight: "bold",
+    color: "#000",
     marginVertical: 10,
-    textAlign: 'right',
+    textAlign: "right",
   },
 });
