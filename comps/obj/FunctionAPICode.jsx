@@ -195,6 +195,17 @@ export const NewSearchPost=(body)=>{
 export const ReviewBusiness=(body)=>{
     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
 }
+
+
+export const SetPhoto=(body)=>{
+    return Axios(`Business/SetPhoto`, 'post',body)
+}
+
+export const GetPhoto=(id)=>{
+    return Fetch(`Business/getPhoto/${id}`,'GET')
+
+}
+
 //כל הדירוגים של העסק - לפי מספר עסק
 export const AllBusinessReviews= (BusinessNumber) => {
     return Axios(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`, 'GET',{})

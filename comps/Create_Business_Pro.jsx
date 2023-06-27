@@ -1,5 +1,5 @@
-import React, { useState ,useContext} from 'react';
-import { Button, StyleSheet, Text, TextInput, View, Keyboard ,ScrollView} from 'react-native';
+import React, { useState, useContext } from 'react';
+import { Button, StyleSheet, Text, TextInput, View, Keyboard, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native';
@@ -8,7 +8,7 @@ import Professional_registration from './Professional_registration';
 import { Professional_Business } from './obj/FunctionAPICode';
 import Menu_treatment_registration from './Menu_treatment_registration';
 import AsyncStorage from '@react-native-async-storage/async-storage';
- import { UserContext } from './UserDietails';
+import { UserContext } from './UserDietails';
 
 const Create_Business_Pro = (props) => {
   const [Name, setName] = useState('');
@@ -18,7 +18,7 @@ const Create_Business_Pro = (props) => {
   const [Is_client_house, setLocation] = useState('');
   const [Professional_ID_number, setIdPro] = useState('');
 
-   
+
 
   const { navigation, route } = props
   let Id_Pro = route.params.ID
@@ -43,7 +43,7 @@ const Create_Business_Pro = (props) => {
     Professional_Business(data).then((result) => {
       console.log('yes', result)
       console.log(result.data)
-      
+
       console.log(result.data.businessId + "ppppp")
       const businessId = result.data.businessId.toString();
       console.log(businessId + "oooooo")
@@ -83,68 +83,68 @@ const Create_Business_Pro = (props) => {
 
 
   return (
-    <ScrollView>
-<TouchableOpacity onPress={Keyboard.dismiss}>
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <TouchableOpacity onPress={Keyboard.dismiss} style={{ flex: 1 }}>
+        <View style={styles.container}>
 
-      <Text style={styles.title}>בניית פרופיל עסקי</Text>
-      <Text style={styles.titp}> רק עוד כמה פרטים קטנים והעמוד שלך מוכן</Text>
+          <Text style={styles.title}>בניית פרופיל עסקי</Text>
+          <Text style={styles.titp}> רק עוד כמה פרטים קטנים והעמוד שלך מוכן</Text>
 
-      <View style={styles.inp}>
-        <TextInput style={styles.textInputS}
-          placeholder="שם העסק"
-          placeholderTextColor="#92a2bd"
-          value={Name}
-          onChangeText={(text) => setName(text)}
-        />
-      
-      </View>
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder="שם העסק"
+              placeholderTextColor="#92a2bd"
+              value={Name}
+              onChangeText={(text) => setName(text)}
+            />
 
-      <View style={styles.inp}>
-        <TextInput style={styles.textInputS}
-          placeholder="רחוב"
-          placeholderTextColor="#92a2bd"
-          value={AddressStreet}
-          onChangeText={(text) => setStreet(text)}
-        />
-          
-      </View>
+          </View>
 
-      <View style={styles.inp}>
-        <TextInput style={styles.textInputS}
-          placeholder="מספר בית"
-          placeholderTextColor="#92a2bd"
-          value={AddressHouseNumber}
-          onChangeText={(text) => setHouseNumber(text)}
-        />
-         
-      </View>
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder="רחוב"
+              placeholderTextColor="#92a2bd"
+              value={AddressStreet}
+              onChangeText={(text) => setStreet(text)}
+            />
 
-      <View style={styles.inp}>
-        <TextInput style={styles.textInputS}
-          placeholder="עיר"
-          placeholderTextColor="#92a2bd"
-          value={AddressCity}
-          onChangeText={(text) => setCity(text)}
-        />
-  
-      </View>
+          </View>
 
-      <View style={styles.inp}>
-        <TextInput style={styles.textInputS}
-          placeholder="נותן שירות בבית הלקוח ?"
-          placeholderTextColor="#92a2bd"
-          value={Is_client_house}
-          onChangeText={(text) => setLocation(text)}
-        />
-        
-      </View>
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder="מספר בית"
+              placeholderTextColor="#92a2bd"
+              value={AddressHouseNumber}
+              onChangeText={(text) => setHouseNumber(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder="עיר"
+              placeholderTextColor="#92a2bd"
+              value={AddressCity}
+              onChangeText={(text) => setCity(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder="נותן שירות בבית הלקוח ?"
+              placeholderTextColor="#92a2bd"
+              value={Is_client_house}
+              onChangeText={(text) => setLocation(text)}
+            />
+
+          </View>
 
 
-      {/* <View>
+          {/* <View>
         <Text>{Id_Pro}</Text>
       </View> */}
-      {/* <View style={styles.inp}>
+          {/* <View style={styles.inp}>
         <TextInput style={styles.textInputS}
           placeholder="תעודת זהות בעל עסק"
           value={Professional_ID_number}
@@ -152,20 +152,20 @@ const Create_Business_Pro = (props) => {
         />
       </View> */}
 
-      
-<View>
-        <TouchableOpacity onPress={handleRegistrationB}
 
-        >
-          <View style={styles.but}>  
-            <Text style={styles.thachtext}>המשך</Text>
-          </View>
+          <View>
+            <TouchableOpacity onPress={handleRegistrationB}
 
-        </TouchableOpacity></View>
-      
-    </View>
-    </TouchableOpacity>
-    
+            >
+              <View style={styles.but}>
+                <Text style={styles.thachtext}>המשך</Text>
+              </View>
+
+            </TouchableOpacity></View>
+
+        </View>
+      </TouchableOpacity>
+
     </ScrollView>
   )
 }
@@ -175,11 +175,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 15,
     justifyContent: 'center',
-    width: '90%',
+    width: '80%',
     borderRadius: 25,
-    height: 50,
-    marginBottom: 30,
-    backgroundColor: '#fffaf0'
+    height: 45,
+    marginBottom: 10,
+    borderColor: "rgb(92, 71, 205)",
+    backgroundColor: 'white',
+    border: 1
 
   },
   textInputS: {
@@ -190,10 +192,11 @@ const styles = StyleSheet.create({
     // padding: 10,
     color: '#808080',
     // height: 50,
-    fontSize: 20,
+    fontSize: 15,
     textAlign: 'right',
     fontWeight: 'bold',
     opacity: 0.5,
+
 
   },
   title: {
@@ -203,32 +206,35 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: '#fff',
     fontWeight: 'bold',
-
+    color: "rgb(92, 71, 205)",
+    textShadowColor: 'rgb(92, 71, 205)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
   },
-
   titp: {
     textAlign: 'center',
     color: '#fffaf0',
-    fontSize: 17,
-  padding:20,
+    fontSize: 15,
+    color: "rgb(92, 71, 205)",
+    padding: 10
   },
+
 
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#9acd32',
-    padding:50,
-    paddingBottom:60,
-    width:"100%",
-    height:"100%"
-    
+    justifyContent: 'center',
+    backgroundColor: '#e6e6fa',
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    height:'100%',
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    borderWidth: 1,
+    borderColor: 'black',
   },
 
   text: {
-
-
     textAlign: 'right',
     paddingBottom: 10,
 
@@ -238,25 +244,25 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     height: 50,
     marginBottom: 20,
-    backgroundColor: '#ff69b4',
+    backgroundColor: "rgb(92, 71, 205)",
     padding: 15,
     margin: 10,
     marginTop: 10,
-    width:"90%",
-    
+
   },
   thachtext: {
     textAlign: 'center',
     color: '#fffaf0',
-    fontSize:25,
-    fontWeight:'bold',
+    fontSize: 25,
+    fontWeight: 'bold',
     //borderRadius: 10,
-     height: 50,
+    height: 50,
     // marginBottom: 20,
     // backgroundColor: '#fffaf0',
     // padding: 15,
     // margin: 10,
     // marginTop: 20,
+
 
   },
 

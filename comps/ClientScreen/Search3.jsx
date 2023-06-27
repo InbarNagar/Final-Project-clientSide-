@@ -34,7 +34,7 @@ export default function Search3(props) {
       const body = {
         "to": token,
         "title": "BeautyMe",
-        "body": `${userDetails.First_name} הזמינה תור חדש `,
+        "body": `${userDetails.name} הזמינה תור חדש `,
         "badge": "0",
         "ttl": "1",// מספר שניות לשליחה
         "data": {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Vibration } from 'react-native';
 import { Camera } from 'expo-camera';
-import Button from '../obj/Button';
+import Button from '../CTools/Button';
 import { Feather, SimpleLineIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import Gallery from './Gallery'
 export default function CameraUse(props) {
@@ -71,8 +71,15 @@ donePicture?navigation.goBack():'';
       </Camera>
       <View style={styles.buttonContainer}>
 
-        {/* הופך את המצלמה */}
+
         <Button
+          justifyContent='flex-end'
+          // alignItems='flex-start'
+          element={<SimpleLineIcons name="refresh" size={30} color="black" />}
+          radios={1000}
+          width={10}
+          height={10}
+          style={styles.button}
           onPress={() => {
             setType(
               type === Camera.Constants.Type.back
@@ -80,8 +87,14 @@ donePicture?navigation.goBack():'';
                 : Camera.Constants.Type.back
             );
           }} />
-            {/* מצלם*/}
         <Button
+          element={<SimpleLineIcons name="camera" size={30} color="black" />}
+          radios={1000}
+          width={10}
+          height={10}
+          justifyContent='flex-end'
+          // alignItems='center'
+          style={styles.button}
           onPress={async () => {
             if (camera) {
               const data = await camera.takePictureAsync({quality:0.2});
@@ -92,8 +105,14 @@ donePicture?navigation.goBack():'';
             Vibration.vibrate(); //we can use vibration anywhere! 
           }} />
 
-              {/* בחירה מאלבום*/}
         <Button
+          element={<AntDesign name="picture" size={30} color="black" />}
+          radios={1000}
+          width={10}
+          height={10}
+          justifyContent='flex-end'
+          // alignItems='flex-end'
+          style={styles.button}
           onPress={() => {setShow(true)}}
             />
           
@@ -129,6 +148,8 @@ const styles = StyleSheet.create({
     paddingLeft: '15%',
     flexDirection: 'row',
     alignItems: 'center',
+    //backgroundColor:"rgb(92, 71, 205)"
+    
   },
   button: {
 

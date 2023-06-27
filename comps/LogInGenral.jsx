@@ -14,7 +14,7 @@ import { SaveTokenforID,SaveTokenforIDPro,LogInUser } from './obj/FunctionAPICod
 import Button from './obj/Button';
 import Alert from './Alert';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
-
+import Client_registration from './Client_registration';
 
 export default function LogInGenral(props) {
   const [ID_number, setID_number] = useState('');
@@ -116,8 +116,11 @@ if(userDetails){
       })
     
   }
-  
   const Registration = () => {
+   
+    props.navigation.navigate(Client_registration)
+   }
+  const Registration2 = () => {
    
      props.navigation.navigate(Professional_registration)
     }
@@ -130,7 +133,7 @@ if(userDetails){
 
    {/* <Header text="BeautyMe" fontSize={60} height={200} color="#E6E6FA"/> */}
    <Image style={styles.image} source={require('../assets/be.jpeg')}/>
-   
+    <Text style={styles.tit}>see the beauty around you</Text>
 
     <View style={styles.content}>
     
@@ -180,6 +183,7 @@ if(userDetails){
 
 
       <Button color='transparent' text="עדיין לא נרשמתם? לחצו כאן" onPress={Registration} />
+      <Button color='transparent' text="הרשמת עסקים" onPress={Registration2} />
 </View>
     </View>
 
@@ -263,7 +267,19 @@ const styles = StyleSheet.create({
     width:200,
     height:200,
     padding:20,
+    },
+    tit:{
+      "fontSize": 25,
+      "fontWeight": "500",
+      "letterSpacing": 0.15,
+      "lineHeight": 24,
+      textShadowColor: 'rgb(92, 71, 205)',
+      textShadowOffset: { width: 2, height: 2 },
+      textShadowRadius: 5,
+      opacity:0.7
     }
+
+
 
 });
 

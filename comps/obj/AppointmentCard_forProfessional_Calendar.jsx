@@ -65,7 +65,7 @@ function ApproveAppointment(Number_appointment){
     }
     if (status == "Confirmed"){
       return (<>
-      <Text style={styles.title}>{Treatment_Type} {Client_Name} {Client_Last_Name} :שם לקוחה </Text>
+      <Text style={styles.title}>:שם לקוחה  {Client_Name} {Client_Last_Name} </Text>
       <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff" text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
             </>)
             }
@@ -76,8 +76,8 @@ function ApproveAppointment(Number_appointment){
     return(
     <>
     <Text style={styles.title}>{Treatment_Type} {Client_Name} {Client_Last_Name} :שם לקוחה </Text>
-    <Button text="אשר תור" onPress={() => ApproveAppointment(Number_appointment)}></Button>
-    <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff"  text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
+    <Button color="white" width={300} fontSize={20} borderRadius={20} colortext="rgb(92, 71, 205)" text="אשר תור" onPress={() => ApproveAppointment(Number_appointment)}></Button>
+    <Button color="white" width={300} fontSize={20} borderRadius={20} colortext="rgb(92, 71, 205)"  text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
     </>
     );
   }
@@ -91,8 +91,8 @@ function ApproveAppointment(Number_appointment){
       <Text style={styles.title}>{moment(Date).format('DD/MM/YYYY')}</Text>
      
       {/* <Text style={styles.title}>{Treatment_Type} - {Client_Name}</Text> */}
-      <Text style={styles.title}>{Start_time} - {End_time}</Text>
-      {massage(ID_Client)}
+      <Text style={styles.title}>{moment(Start_time).format('LT')}-{moment(End_time).format('LT')}</Text>
+      {massage()}
     </View>
   );
 };

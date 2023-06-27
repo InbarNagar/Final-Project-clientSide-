@@ -47,8 +47,10 @@ const styles = StyleSheet.create({
       return (
       <><Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
      <Button
+
      color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff" 
       text="דרג עסק" 
+
       onPress={() => 
         navigation.navigate('Review_Business', {
           Number_appointment,
