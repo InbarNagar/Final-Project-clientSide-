@@ -165,17 +165,19 @@ element={
 style={styles.button}
 onPress={image?btnImgUpload:alert('לא נבחרה תמונה')}
 /> 
-{ loading && <View style={styles.progress}>
-            <Progress.Bar
-              width={255}
-              height={15}
-              borderRadius={5}
-              borderColor={"rgb(92, 71, 205)"}
-              color="rgb(92, 71, 205)" //#FFCF84-orange
-              useNativeDriver={true}
-              borderWidth={2}
-              indeterminate={true}
-              animationConfig={{ bounciness: 20 }}
+{ loading && <View >
+            <Progress.CircleSnail
+              // width={255}
+              // height={15}
+              // borderRadius={5}
+               borderColor={"rgb(92, 71, 205)"}
+               color="rgb(92, 71, 205)" //#FFCF84-orange
+               useNativeDriver={true}
+              // borderWidth={2}
+              // indeterminate={true}
+               //animationConfig={{ bounciness: 20 }}
+              size={30} indeterminate={true}
+              
             />
           </View>}
 </>

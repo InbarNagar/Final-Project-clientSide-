@@ -76,7 +76,7 @@ const Client_registration = () => {
            value={ID_number}
            onChangeText={(text) => setid(text)}
          />
-         <Text>תעודת זהות:</Text>
+       
       </View>
 
       <View style={styles.inp}>
@@ -85,7 +85,7 @@ const Client_registration = () => {
           value={First_name}
           onChangeText={(text) => setFirstName(text)}
         />
-        <Text>שם פרטי</Text>
+      
       </View>
 
       <View style={styles.inp}>
@@ -94,7 +94,7 @@ const Client_registration = () => {
           value={Last_name}
           onChangeText={(text) => setLastName(text)}
         />
-        <Text>שם משפחה</Text>
+       
       </View>
 
       <View style={styles.inp}>
@@ -103,7 +103,7 @@ const Client_registration = () => {
           value={gender}
           onChangeText={(text) => setGender(text)}
         />
-        <Text>מין</Text>
+   
       </View>
 
       <View style={styles.inp}>
@@ -112,7 +112,7 @@ const Client_registration = () => {
           value={birth_date}
           onChangeText={(text) => setDateOfBirth(text)}
         />
-        <Text>שם משפחה</Text>
+    
       </View>
 
       <View style={styles.inp}>
@@ -121,7 +121,7 @@ const Client_registration = () => {
           value={phone}
           onChangeText={(text) => setPhone(text)}
         />
-        <Text>פלאפון</Text>
+    
       </View>
       <View style={styles.inp}>
         <TextInput style={styles.textInputS}
@@ -129,7 +129,7 @@ const Client_registration = () => {
           value={Email}
           onChangeText={(text) => setEmail(text)}
         />
-        <Text>איימיל</Text>
+     
       </View>
 
 
@@ -139,7 +139,7 @@ const Client_registration = () => {
           value={AddressStreet}
           onChangeText={(text) => setStreet(text)}
         />
-        <Text>רחוב</Text>
+      
       </View>
 
 
@@ -149,7 +149,7 @@ const Client_registration = () => {
           value={AddressHouseNumber}
           onChangeText={(text) => setHouseNumber(text)}
         />
-        <Text>מספר בית</Text>
+       
       </View>
 
       <View style={styles.inp}>
@@ -158,7 +158,7 @@ const Client_registration = () => {
           value={AddressCity}
           onChangeText={(text) => setCity(text)}
         />
-        <Text>עיר</Text>
+      
       </View>
 
       <View style={styles.inp}>
@@ -168,7 +168,7 @@ const Client_registration = () => {
           onChangeText={(text) => setPassword(text)}
           secureTextEntry={true}
         />
-        <Text>סיסמא</Text>
+     
       </View>
 
       <Button color='#9acd32' title="סיום הרשמה" onPress={handleRegistrationC} />
