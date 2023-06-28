@@ -76,7 +76,9 @@ export default function Calendar_professional() {
     allApoB(BussinesNumber).then((result) => {
 
       if (result.data) {
-        setallAppointmentAvilable(result.data)
+        filterresult1= result.data.filter(apo=> apo.Appointment_status =="Awaiting_approval")
+        //console.log(filterresult1,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+        setallAppointmentAvilable(filterresult1)
       }
       console.log(allAppointmentAvilable.length, "*****")
 
@@ -92,7 +94,10 @@ export default function Calendar_professional() {
     allApoB(BussinesNumber).then((result) => {
 
       if (result.data)
-        setallAppointmentEnd(result.data)
+     filterresult= result.data.filter(apo=> apo.Appointment_status =="Appointment_ended")
+    // console.log(filterresult,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    setallAppointmentEnd(filterresult)
+
 
     }, (error) => {
       console.log('error', error)
@@ -103,16 +108,28 @@ export default function Calendar_professional() {
 
   const handleSubmit3 = () => {
 
-    FutureAppointmenB(BussinesNumber).then((result) => {
+    allApoB(BussinesNumber).then((result) => {
 
-      if (result.data)
-        console.log(result.data)
-      setFutureAppointment(result.data)
-      console.log("****", FutureAppointment.length)
+      if(result.data)
+     filterresult3= result.data.filter(apo=> apo.Appointment_status =="confirmed")
+     console.log(filterresult3.length,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+     setFutureAppointment(filterresult3)
+
+
     }, (error) => {
       console.log('error', error)
     })
 
+    // FutureAppointmenB(BussinesNumber).then((result) => {
+
+    //   if (result.data)
+    //     console.log(result.data)
+    //   setFutureAppointment(result.data)
+    //   console.log("****", FutureAppointment.length)
+    // }, (error) => {
+    //   console.log('error', error)
+    // })
+    
     setShowText3(!showText3);
   }
 
@@ -128,7 +145,7 @@ export default function Calendar_professional() {
             <View style={styles.container}>
 
               <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="rgb(92, 71, 205)" colortext="white"/>
-              <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים פנויים" color="rgb(92, 71, 205)" colortext="white"/>
+              <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים שמחכים לאישור" color="rgb(92, 71, 205)" colortext="white"/>
               <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="rgb(92, 71, 205)" colortext="white"/>
               <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="rgb(92, 71, 205)" colortext="white"  />
               {/* <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" /> */}
@@ -149,8 +166,8 @@ export default function Calendar_professional() {
                     // Treatment_Type= 
                     status={x.Appointment_status}
                     Date={x.Date}
-                    Start_time={x.Start_time}
-                    End_time={x.End_time}
+                    Start_time={x.Start_Hour}
+                    End_time={x.End_Hour}
                     Client_Name={x.First_name}
                     Client_Last_Name={x.Last_name}
                   />
@@ -161,16 +178,16 @@ export default function Calendar_professional() {
           {showText && <View style={styles.view1}>
             {allAppointmentAvilable &&
               allAppointmentAvilable.map(x => {
-                if (x.Appointment_status == "Available" || x.Appointment_status == "available")
+                
                   return (
                     <AppointmentCard_forProfessional_Calendar
                     key={x.Number_appointment}
                     Number_appointment={x.Number_appointment}  
-                    backgroundColor={"rgb(92, 71, 205)"}
                       status={x.Appointment_status}
                       Date={x.Date}
-                      Start_time={x.Start_time}
-                      End_time={x.End_time}
+                      Start_time={x.Start_Hour}
+                      End_time={x.End_Hour}
+                      Is_client_house1={x.Is_client_house1=="YES"?"טיפול בבית הלקוח":"טיפול בבית העסק"}
                     />
                   )
               })}
@@ -188,8 +205,9 @@ export default function Calendar_professional() {
                     backgroundColor={"rgb(92, 71, 205)"}
                       status={x.Appointment_status}
                       Date={x.Date}
-                      Start_time={x.Start_time}
-                      End_time={x.End_time}
+                      Start_time={x.Start_Hour}
+                      End_time={x.End_Hour}
+                      Is_client_house1={x.Is_client_house1=="YES"?"טיפול בבית הלקוח":"טיפול בבית העסק"}
                     />
                   )
               })}
@@ -206,8 +224,8 @@ export default function Calendar_professional() {
                   backgroundColor={"rgb(92, 71, 205)"}
                     status={x.Appointment_status}
                     Date={x.Date}
-                    Start_time={x.Start_time}
-                    End_time={x.End_time}
+                    Start_time={x.Start_Hour}
+                    End_time={x.End_Hour}
                     Client_Name={x.First_name_client}
                     Client_Last_Name={x.Last_name_client}
                   />
