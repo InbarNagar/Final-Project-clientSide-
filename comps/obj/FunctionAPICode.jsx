@@ -169,6 +169,11 @@ export const GetAllAvailableAppointments = () => {
     console.log(`Appointment/AllAvailableAppointment`)
     return Fetch(`Appointment/AllAvailableAppointment`,'get')
 }
+//יומן עסק לפי מספק בעל עסק
+export const BusinessDiaryForPro = (Business_id) => {
+    console.log(`BusinessDiary/BusinessDiaryForPro/${Business_id}`)
+    return Fetch(`BusinessDiary/BusinessDiaryForPro/${Business_id}`,'get')
+}
 export const UpdateapiBusiness=(body)=>{
     return Axios(`Business/UpdateBusinesss`, 'post',body)
 }
