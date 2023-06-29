@@ -5,7 +5,7 @@ import {CancelAppointmentByClient, ConfirmAppointment} from '../obj/FunctionAPIC
 import { useNavigation } from "@react-navigation/core";
 import { useEffect } from "react";
 const AppointmentCard_forProfessional_Calendar = (props) => {
-  const { Number_appointment,backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, Client_Last_Name,ID_Client} = props;
+  const { Number_appointment,backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, status, Date, Client_Last_Name,ID_Client,Is_client_house1} = props;
   const navigation = useNavigation();
 
     function cancelAppointment(Number_appointment){
@@ -39,12 +39,12 @@ function ApproveAppointment(Number_appointment){
 
   const styles = StyleSheet.create({
     card: {
-      borderWidth: 1,
-      borderRadius: 10,
-      borderColor: '#d3d3d3',
+      borderWidth: 2,
+      borderRadius: 20,
+      borderColor: "rgb(92, 71, 205)",
       padding: 10,
       marginVertical: 5,
-      backgroundColor: backgroundColor,
+      backgroundColor:"white",
     },
     title: {
       fontWeight: 'bold',
@@ -61,9 +61,9 @@ function ApproveAppointment(Number_appointment){
 
   const massage = () => {
     if (status == "Appointment_ended") {
-      return <Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
+      return <Text style={styles.title}>{Treatment_Type} התור הסתיים </Text>
     }
-    if (status == "Confirmed"){
+    if (status == "confirmed"){
       return (<>
       <Text style={styles.title}>:שם לקוחה  {Client_Name} {Client_Last_Name} </Text>
       <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff" text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
@@ -86,12 +86,19 @@ function ApproveAppointment(Number_appointment){
     }
   }
 
+function floatToTime(floatNumber) {
+    let hours = Math.floor(floatNumber);
+    let minutes = Math.floor((floatNumber - hours) * 60);
+    return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+}
+
   return (
     <View style={styles.card}>
       <Text style={styles.title}>{moment(Date).format('DD/MM/YYYY')}</Text>
      
       {/* <Text style={styles.title}>{Treatment_Type} - {Client_Name}</Text> */}
-      <Text style={styles.title}>{moment(Start_time).format('LT')}-{moment(End_time).format('LT')}</Text>
+      <Text style={styles.title}>{floatToTime(Start_time)}{moment(Start_time).format('LT')}-{moment(End_time).format('LT')}</Text>
+      <Text  style={styles.title}>{Is_client_house1} </Text>
       {massage()}
     </View>
   );
