@@ -17,8 +17,8 @@ export default function NewSearch3() {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const [result, SetResult] = useState([]);
   const [gender, setGender] = useState("");
-  const [AddressCity, setAddressCity] = useState("");
-  const [Is_client_house, setIs_client_house] = useState("");
+  const [AddressCity, setAddressCity] = useState(null);
+  const [Is_client_house, setIs_client_house] = useState(null);
   const [categories, setCategories] = useState(["קטגוריה"]);
   
   const ClientData = userDetails;
@@ -329,7 +329,7 @@ onValueChange={(value) => SetTreatmentNumber(value)}
 style={styles.picker}>
 {categories&&categories.map((category)=>(
   <Picker.Item
-  label={category.Name}
+  label={category.Type_treatment_Number}
   value={category.Type_treatment_Number}
   key={category.Type_treatment_Number}
   />

@@ -74,8 +74,8 @@ export const ClientDetailes = (ID_number) => {
     return Axios(`Client/OneClient/${ID_number}`, 'post')
 }
 //כל התורים של בעל עסק
-export const allApoB= (Business_Numberr) => {
-    return Axios(`Appointment/AllAppointmentForBussines/${Business_Numberr}`, 'post')
+export const allApoB= (Business_Number) => {
+    return Fetch(`Appointment/AllAppointmentForBussines/${Business_Number}`, 'get')
 }
 //כל התורים של לקוח
 export const allApoC= (ID_Client) => {
