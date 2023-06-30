@@ -136,7 +136,7 @@ const date= result.diary[0].date;
       <Text style={styles.titleText}>טיפול:</Text>
       {result.typeTritment.map((t, i) => (
         <Text style={styles.text} key={i}>
-          מחיר: {t.price} סוג טיפול: {t.type} זמן: {t.duration}
+          מחיר: {t.price} זמן: {t.duration}
         </Text>
       ))}
       <Text style={styles.titleText}>תורים תפוסים:</Text>
