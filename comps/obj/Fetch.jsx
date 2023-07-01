@@ -50,3 +50,27 @@ export const Axios = (url, method, body) =>
         reject(error.response.status);
       });
   })
+
+  export const out_Fetch = (url, method) =>
+  new Promise((resolve, reject) => {
+    fetch( url, {
+      method: method,
+      headers: new Headers({
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      })
+    })
+      .then(res => {
+        if (res && res.status == 200|| res.status === 201) {
+          resolve(res.json());
+        } else {
+          throw new Error(res.status)
+        }
+      })
+      .catch(err => {
+        console.log("url=>", Baseurl + url)
+        console.log("method=>", method)
+        console.log("status=>", err)
+        reject("status code: " + err);
+      });
+  })

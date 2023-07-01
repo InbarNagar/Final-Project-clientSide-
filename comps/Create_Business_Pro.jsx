@@ -9,7 +9,7 @@ import { Professional_Business } from './obj/FunctionAPICode';
 import Menu_treatment_registration from './Menu_treatment_registration';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './UserDietails';
-
+import { getCord } from './obj/FunctionAPICode';
 const Create_Business_Pro = (props) => {
   const [Name, setName] = useState('');
   const [AddressStreet, setStreet] = useState('');
@@ -18,7 +18,8 @@ const Create_Business_Pro = (props) => {
   const [Is_client_house, setLocation] = useState('');
   const [Professional_ID_number, setIdPro] = useState('');
 
-
+ const[ LongCordinate,setLongCordinate]=useState('')
+ const[ LetCordinate,setLetCordinate]=useState('')
 
   const { navigation, route } = props
   let Id_Pro = route.params.ID
@@ -29,18 +30,31 @@ const Create_Business_Pro = (props) => {
   const handleRegistrationB = async () => {
 
     { setIdPro(Id_Pro) }
+  
+   let LetCordinate =null
+   let LongCordinate=null
+    await getCord(AddressStreet,AddressHouseNumber,AddressCity).then((result) => {
+      if(result.results&& result.results[0].geometry.location&&result.results[0].geometry&&
+        result.results.length>0)
+      console.log('yes', result.results[0].geometry.location)
+      LongCordinate=result.results[0].geometry.location.lng
+      LetCordinate=result.results[0].geometry.location.lat
+     
+    }, (error) => {
+      console.log('error', error)
+    });
     const data = {
       Name: Name,
       Is_client_house: Is_client_house,
       AddressStreet: AddressStreet,
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
-      Professional_ID_number: Id_Pro
+      Professional_ID_number: Id_Pro,
       // Professional_ID_number: Professional_ID_number
-
+      LongCordinate:LongCordinate,
+      LetCordinate:LetCordinate
     }
-
-    Professional_Business(data).then((result) => {
+    await Professional_Business(data).then((result) => {
       console.log('yes', result)
       console.log(result.data)
 

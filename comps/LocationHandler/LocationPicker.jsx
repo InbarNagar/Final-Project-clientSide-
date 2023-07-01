@@ -124,14 +124,14 @@ async function getLocationHandler(){
           radius: 10000,
           location: `${Number(region.latitude)}, ${Number(region.longitude)}`
         }}
-        styles={{ container: { flex: 0, position: 'absolute', top: '6.4%', width: '100%', zIndex: 1 } }}
+        styles={{ container: { flex: 1, position: 'absolute', top: '6.4%', width: '100%', zIndex: 1 } }}
        // currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
       //currentLocationLabel="Current location"
      //nearbyPlacesAPI="GooglePlacesSearch"
 
       />
       <View style={{position:'relative'}}>
-     {location && <>
+     {location ||1==1&& <>
      <MapView
         loadingEnabled={true}
         style={{ flex: 12,top:'1%'}}

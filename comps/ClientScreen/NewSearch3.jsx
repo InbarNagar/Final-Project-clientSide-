@@ -7,6 +7,8 @@ import { UserContext } from "../UserDietails";
 import { MaterialIcons as Icon } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
+import Maps_Inbar from "../Maps_Inbar";
+
 
 export default function NewSearch3() {
   const [NameTreatment, setNameTreatment] = useState("");
@@ -16,10 +18,11 @@ export default function NewSearch3() {
   const [token, settoken] = useState();// ענבר
   const { userDetails, setUserDetails } = useContext(UserContext);
   const [result, SetResult] = useState([]);
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState(null);
   const [AddressCity, setAddressCity] = useState(null);
   const [Is_client_house, setIs_client_house] = useState(null);
   const [categories, setCategories] = useState(["קטגוריה"]);
+ 
   
   const ClientData = userDetails;
   useEffect(() => {
@@ -42,6 +45,7 @@ export default function NewSearch3() {
     }
 
   }, [token]);
+
 //   useEffect(()=>{
 //     console.log("nameTreatment changed...");
 // for (let i = 0; i < categories.length; i++) {
@@ -58,6 +62,7 @@ export default function NewSearch3() {
         console.log("categories: ", result);
         if (result) {
           setCategories(result);
+          SetTreatmentNumber(result[0].Type_treatment_Number)
         }
       },
       (error) => {
@@ -81,6 +86,9 @@ export default function NewSearch3() {
       phone: data[0].phone,
       facebook: data[0].Facebook_link,
       instagram: data[0].Instagram_link,
+      LongCordinate:data[0].LongCordinate,
+      LetCordinate:data[0].LetCordinate,
+
       diary: [
         {
           date: data[0].Date1,
@@ -171,6 +179,8 @@ export default function NewSearch3() {
           phone: data[i].phone,
           facebook: data[i].Facebook_link,
           instagram: data[i].Instagram_link,
+          LongCordinate:data[i].LongCordinate,
+          LetCordinate:data[i].LetCordinate,
           diary: [
             {
               date: data[i].Date1,
@@ -199,6 +209,7 @@ export default function NewSearch3() {
     console.log(JSON.stringify(res[0].diary[2].time));
     SetResult(res);
     return res;
+
   }
   function btnSearch() {
    
@@ -231,7 +242,7 @@ export default function NewSearch3() {
           console.log("yes", result.data);
           if (result.data) {
             GetData(result.data);
-            console.log("amount of results: " + result.data.length);
+            console.log("amount of results: " + result.data);
             //מפעיל את הכפתור תצוגת מפה
           }
         },
@@ -243,7 +254,6 @@ export default function NewSearch3() {
   }
   const FilterTreatment = (text) => {
     console.log(
-      "&&&&&&&&&&&&&&&&&&",
       filter_catgories && filter_catgories.length > 0
     );
 
@@ -251,10 +261,11 @@ export default function NewSearch3() {
       value.Name.includes(text)
     );
     set_filter_catgories(filterSearch);
-    console.log("&&&&&&&&%%%%%%%", filterSearch);
+    console.log(filterSearch);
     console.log(text);
   };
-  return (
+  return (<>
+    {result&&result.length>0&&<Maps_Inbar result={result}/>}
     <View>
     <View>
         <Text style={styles.title}>שלום {ClientData.First_name} </Text>
@@ -327,11 +338,11 @@ export default function NewSearch3() {
 selectedValue={treatmentNumber}
 onValueChange={(value) => SetTreatmentNumber(value)}
 style={styles.picker}>
-{categories&&categories.map((category)=>(
+{categories&&categories.map((category,i)=>(
   <Picker.Item
-  label={category.Type_treatment_Number}
+  label={category.Name}
   value={category.Type_treatment_Number}
-  key={category.Type_treatment_Number}
+  key={i+"catgore"}
   />
   ))}
 </Picker>
@@ -405,6 +416,7 @@ style={styles.picker}>
           </View>
         )}
       </View>
+   
     <ScrollView>
       {result.map((r) => {
         return(
@@ -414,8 +426,10 @@ style={styles.picker}>
         />
         </View>)
       })}
+    
     </ScrollView>
-    </View>
+    
+    </View></>
   );
 }
 

@@ -12,6 +12,7 @@ import { Post_SendPushNotification } from "./obj/FunctionAPICode";
 import AppointmentCard_forProfessional_Calendar from "./obj/AppointmentCard_forProfessional_Calendar";
 import { ClientDetailes } from "./obj/FunctionAPICode";
 import ShowReviews from "./ShowReviews";
+import New_Calendar from "./New_Calender";
 //מסך ראשי בעל עסק
 export default function Calendar_professional() {
 
@@ -72,7 +73,7 @@ export default function Calendar_professional() {
 
 
   const handleSubmit2 = () => {
-
+    const filterresult1=""
     allApoB(BussinesNumber).then((result) => {
 
       if (result.data) {
@@ -92,9 +93,9 @@ export default function Calendar_professional() {
   const handleSubmit4 = () => {
 
     allApoB(BussinesNumber).then((result) => {
-
-      if (result.data)
-     filterresult= result.data.filter(apo=> apo.Appointment_status =="Appointment_ended")
+      const filterresult=""
+      if(result.data)
+     filterresult = result.data.filter(apo=> apo.Appointment_status =="Appointment_ended")
     // console.log(filterresult,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     setallAppointmentEnd(filterresult)
 
@@ -109,7 +110,7 @@ export default function Calendar_professional() {
   const handleSubmit3 = () => {
 
     allApoB(BussinesNumber).then((result) => {
-
+      const filterresult3=""
       if(result.data)
      filterresult3= result.data.filter(apo=> apo.Appointment_status =="confirmed")
      console.log(filterresult3.length,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
@@ -228,10 +229,13 @@ export default function Calendar_professional() {
                     End_time={x.End_Hour}
                     Client_Name={x.First_name_client}
                     Client_Last_Name={x.Last_name_client}
+
+                    
                   />
                 )
               })}
-          </View>}
+          </View>}    
+          {<New_Calendar></New_Calendar>}
         </View>
 
       </ScrollView>

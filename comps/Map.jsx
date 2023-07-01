@@ -28,12 +28,12 @@ export default function Map() {
     console.log(location);
 
   }, []);
-  // function locationHandler() {
-  //   const hasPermission = verifyPermission();
-  //   console.log(hasPermission);
-  //   const location = getCurrentPositionAsync();
-  //   console.log(location);
-  // }
+  function locationHandler() {
+    const hasPermission = verifyPermission();
+    console.log(hasPermission);
+    const location = getCurrentPositionAsync();
+    console.log(location);
+  }
   const [address, setAddress] = useState("");
 
   async function getCoordsByAddress() {
@@ -44,7 +44,7 @@ export default function Map() {
   return (
     <View>
       <Text>מפה</Text>
-      {/* <Button title="מיקום" onPress={locationHandler}/> */}
+       <Button title="מיקום" onPress={locationHandler}/> 
       <TextInput
         placeholder="כתובת"
         value={address}

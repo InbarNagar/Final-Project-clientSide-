@@ -1,4 +1,5 @@
-import { Fetch, Axios } from './Fetch'
+import { Fetch, Axios,out_Fetch } from './Fetch'
+
 
 // התחברות בעל עסק פונקציית POST עם FROMBODY...... לא דרך נכונה... צריך לשנות את זה לגט... אבל לבנתיים....................
 export const LogInProo = (body) => {
@@ -223,3 +224,28 @@ export const AddNewAvailableHours=(body)=>{
 // export const ReviewBusiness=(body)=>{
 //     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
 // }
+export const getCord = (street,number,city) =>{
+console.log(street,number,city)
+street=street.replaceAll(' ', '+')
+city=city.replaceAll(' ', '+')
+return out_Fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${number}+${street},${city},IL&key= AIzaSyBuYjLYxY6iSSVfQ755luh6KPM0mD4QfrM`,"GET")
+// var requestOptions = {
+//   method: 'GET',
+//   body: raw,
+//   headers: new Headers({
+//     'Content-Type': 'application/json',
+//     'Accept': 'application/json',
+//   })
+// };
+// return new Promise((resolve, reject) =>{
+// fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${number}+${street},${city},IL&key= AIzaSyBuYjLYxY6iSSVfQ755luh6KPM0mD4QfrM`, requestOptions)
+//   .then(response =>{
+//    console.log(response.json(),"@@@@@@@@@@@@@@@@@@@@@@@@@@") 
+//    return response.text()
+
+// }).then(result => console.log(result))
+//   .catch(error => {
+//     console.log('error', error)
+//      reject(error)
+// })})
+}
