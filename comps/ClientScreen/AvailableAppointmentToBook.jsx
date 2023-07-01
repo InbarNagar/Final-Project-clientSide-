@@ -1,11 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Alert,View, Button, Text, StyleSheet } from "react-native";
+import { Alert, View, Button, Text, StyleSheet } from "react-native";
 import { UserContext } from "../UserDietails";
 import BusinessProfilePOPUP from "./BusinessProfilePOPUP";
-import { AllApointemtDetailes,AllBusinessReviews, AppointmentToClient } from "../obj/FunctionAPICode";
+import {
+  AllApointemtDetailes,
+  AllBusinessReviews,
+  AppointmentToClient,
+} from "../obj/FunctionAPICode";
 import BusinessSchedule from "./BusinessSchedule";
 const AvailableAppointmentToBook = (props) => {
-
   const { userDetails, setUserDetails } = useContext(UserContext);
   const { result } = props;
   const [businessProfilePOPUP, SetBusinessProfilePOPUP] = useState(false);
@@ -17,9 +20,12 @@ const AvailableAppointmentToBook = (props) => {
   const [businessRankArr, SetBusinessRankArr] = useState();
   const [minNumber, SetMinNumber] = useState();
   const [maxNumber, SetMaxNumber] = useState();
-const date= result.diary[0].date;
+  const duration = result.typeTritment[0].time; //משך זמן תור
+  // חדש לפי הצגת שעות פנויות בלבד
+  const [openHours, SetOpenHours] = useState();
+  const date = result.diary[0].date;
   useEffect(() => {
-    let appArr = [result.apointemnt[0].time];
+    let appArr = [result.apointemnt[0].time]; //תורים תפוסים
     console.log("result.apointemnt[0].time" + result.apointemnt[0].time);
     for (let i = 1; i < result.apointemnt.length; i++) {
       console.log("loop number: " + i);
@@ -28,11 +34,25 @@ const date= result.diary[0].date;
         console.log(result.apointemnt[i].time);
       }
     }
-//     let newArr = [];
-// appArr.forEach(time => {
-//   newArr.push(parseInt(time.split("-")[0]));
-// });
-// console.log(newArr);
+    // מוציא את המספר הראשון ממערך התורים התפוסים
+    const firstHour = appArr.map((time) => parseInt(time.split("-")[0]));
+    //מוציא את המספר השני ממערך התורים התפוסים
+    const endHour = appArr.map((time) => parseInt(time.split("-")[1]));
+    // לולאה שמייצר מערך של אובייקט ג'ייסון עם שעת התחלה ומרווח זמן
+    let occupiedHoursWithGap = [];
+    for (let i = 0; i < firstHour.length; i++) {
+      let obj = {
+        startHour: firstHour[i],
+        gap: endHour[i] - firstHour[i],
+      };
+
+      occupiedHoursWithGap.push(obj);
+    }
+
+    let booked = occupiedHoursWithGap.map((o) => o.startHour);
+    console.log("booked: " + booked);
+
+    /// סוף אזור חדש
     SetBookedAppointment(appArr);
     console.log("appArr: " + appArr);
     AllBusinessReviews(result.id).then(
@@ -46,15 +66,57 @@ const date= result.diary[0].date;
     );
     console.log("rendering: " + result.id);
     console.log(result.diary);
-    let diaryArr = [result.diary[0].time];
+    let diaryArr = [result.diary[0].time]; //שעות שבעל העסק פתח
     for (let i = 1; i < result.diary.length; i++) {
-      if (result.diary[i].date ===JSON.stringify(result.diary[i - 1].date)) {
+      if (result.diary[i].date === JSON.stringify(result.diary[i - 1].date)) {
         if (!diaryArr.includes(JSON.stringify(result.diary[i].time))) {
           diaryArr.push(JSON.stringify(result.diary[i].time));
           console.log(JSON.stringify(result.diary[i].time));
         }
       }
     }
+    function findMinAndMaxHours(arr) {
+      let minHour = Infinity;
+      let maxHour = -Infinity;
+
+      for (let i = 0; i < arr.length; i++) {
+        const range = arr[i].split("-");
+        const startHour = parseInt(range[0], 10);
+        const endHour = parseInt(range[1], 10);
+
+        if (startHour < minHour) minHour = startHour;
+        if (endHour > maxHour) maxHour = endHour;
+      }
+
+      return [minHour, maxHour];
+    }
+    const [minHour, maxHour] = findMinAndMaxHours(diaryArr);
+    console.log(`Minimum Hour: ${minHour}, Maximum Hour: ${maxHour}`);
+    const hours = Array.from(
+      //מערך שמטרתו לייצר את כמות השעות לפי המרווח שמתקבל
+      { length: Math.ceil((maxHour - minHour) / duration) },
+      (v, i) => minHour + i * duration
+    );
+    let arr = [];
+    let str = `${hours[0]}`;
+    for (let i = 1; i < hours.length; i++) {
+      if (booked.includes(hours[i])) {
+        console.log("new hour to push: " + hours[i]);
+        str += `-${hours[i]}`;
+        console.log("str= " + str);
+        arr.push(str);
+        str = `${
+          hours[i] +
+          occupiedHoursWithGap.find((o) => o.startHour === hours[i]).gap
+        }`;
+        console.log("new str after push: " + str);
+      }
+    }
+    str += `-${hours[hours.length - 1] + 1}`;
+    arr.push(str);
+    console.log("arr: " + arr);
+    SetOpenHours(arr);
+    console.log("openHours: " + openHours);
     console.log("diaryArr: " + diaryArr);
     let minNumber = 24;
     let maxNumber = 0;
@@ -78,19 +140,7 @@ const date= result.diary[0].date;
     SetDiary(diaryArr);
   }, []);
 
-  
-  function extractBeforeHyphen(str) {
-    console.log("extractBeforeHyphen " + str);
-    let result = "";
-    for (let i = 0; i < str.length; i++) {
-      if (str[i] === "-") {
-        console.log("result: " + result);
-        return result;
-      }
-      result += str[i];
-    }
-  }
-
+  //הצגה של פרופיל עסק
   function handleBusinessProfilePOPUP() {
     console.log("open pop-up window");
     SetModalVisible(!modalVisible);
@@ -99,9 +149,8 @@ const date= result.diary[0].date;
     console.log("businessProfilePOPUP - ", businessProfilePOPUP);
     console.log("business number: " + JSON.stringify(result.id));
   }
-
+  //הצגה של יומן עסק
   function handleBusinessSchedulePOPUP() {
-   
     console.log("book appointment POPUP");
     SetBookModalVisible(!bookModalVisible);
     console.log("modalVisible - ", bookModalVisible);
