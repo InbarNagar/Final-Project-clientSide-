@@ -61,7 +61,7 @@ export default function Calendar_professional() {
 
       if (result.data)
         setallAppointment(result.data)
-
+        console.log(result.data)
 
     }, (error) => {
       console.log('error', error)
@@ -113,7 +113,7 @@ export default function Calendar_professional() {
       const filterresult3=""
       if(result.data)
      filterresult3= result.data.filter(apo=> apo.Appointment_status =="confirmed")
-     console.log(filterresult3.length,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+     console.log(filterresult3,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
      setFutureAppointment(filterresult3)
 
 
@@ -235,7 +235,7 @@ export default function Calendar_professional() {
                 )
               })}
           </View>}    
-          {<New_Calendar></New_Calendar>}
+          <New_Calendar/>
         </View>
 
       </ScrollView>
