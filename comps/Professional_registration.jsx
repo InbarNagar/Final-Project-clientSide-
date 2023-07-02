@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView, Keyboard } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LogIn from './GenralComps/LogIn';
 import Create_Business_Pro from './Create_Business_Pro';
 import { TouchableOpacity } from 'react-native';
 import { Professional_Registration } from './obj/FunctionAPICode';
+import {Input} from './obj/Input'
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import moment from "moment";
+
+
 
 // http://proj.ruppin.ac.il/cgroup93/prod/api/
 
@@ -22,6 +27,13 @@ const Professional_registration = (props) => {
   const [AddressHouseNumber, setHouseNumber] = useState('');
   const [AddressCity, setCity] = useState('');
   const [password, setPassword] = useState('');
+  const [instagramUserName, setinstagramUserName] = useState('');
+
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+  const [isFemaleChecked, setFemaleChecked] = useState(false);
+  const [isMaleChecked, setMaleChecked] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+
 
   const handleRegistration = () => {
     const data = {
@@ -36,7 +48,9 @@ const Professional_registration = (props) => {
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
       password: password,
-      ProfilPic:"profil"+ID_number
+      ProfilPic:"profil"+ID_number,
+      Instagram_link: instagramUserName,
+
     }
     Professional_Registration(data).then((result) => {
       console.log('yes', result)
@@ -75,15 +89,31 @@ const Professional_registration = (props) => {
 
   };
 
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+};
+
+const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+};
+
+const handleConfirm = (date) => {
+    //  setSelectedDate(moment(date).format('DD/MM/YYYY'));
+    setDateOfBirth(moment(date).format('YYYY-MM-DD'))
+    hideDatePicker();
+    
+};
+
 
   return (
+    <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
     <ScrollView>
-      <TouchableOpacity onPress={Keyboard.dismiss}>
 
         <View style={styles.container}>
           <Text style={styles.title}>איזה כיף שהחלטת להצטרף לקהילת בעלי העסקים שלנו!</Text>
           <Text style={styles.titp}>רק עוד כמה פרטים קטנים בשביל שנוכל להמשיך</Text>
 
+       
           <View style={styles.inp}>
             <TextInput style={styles.textInputS}
               placeholder="תעודת זהות"
@@ -124,15 +154,37 @@ const Professional_registration = (props) => {
             {/* <Text>מין</Text> */}
           </View>
 
-          <View style={styles.inp}>
+
+          <View>
+                <TouchableOpacity style={styles.dateContainer} onPress={showDatePicker}>
+                      <View
+                        style={styles.inpd}>
+                        <Text style={styles.textInputS}>{selectedDate ? selectedDate : "תאריך לידה"}</Text>
+                      </View>
+                    </TouchableOpacity>
+
+                  <DateTimePickerModal
+                    isVisible={isDatePickerVisible}
+                    mode="date"
+                    onConfirm={(date) => {
+                        setSelectedDate(date.toLocaleDateString("he-IL"));
+                        handleConfirm(date);
+                      }}
+                    onCancel={hideDatePicker}
+                    confirmTextIOS="אישור"
+                    cancelTextIOS="ביטול"
+                    locale="he"
+                  />
+                  </View>
+
+          {/* <View style={styles.inp}>
             <TextInput style={styles.textInputS}
               placeholder="תאריך לידה"
               value={birth_date}
               placeholderTextColor="#92a2bd"
               onChangeText={(text) => setDateOfBirth(text)}
             />
-            {/* <Text>תאריך</Text> */}
-          </View>
+          </View> */}
 
           <View style={styles.inp}>
             <TextInput style={styles.textInputS}
@@ -196,6 +248,17 @@ const Professional_registration = (props) => {
             {/* <Text>סיסמא</Text> */}
           </View>
 
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder="שם המשתמש באינסטגרם"
+              placeholderTextColor="#92a2bd"
+              value={instagramUserName}
+              onChangeText={(text) => setinstagramUserName(text)}
+            />
+          </View>
+
+  
+
           <View>
             <TouchableOpacity style={styles.but} onPress={()=>props.navigation.navigate('CameraUse',{imageName:"profil"+ID_number})}>
               <View>
@@ -214,8 +277,9 @@ const Professional_registration = (props) => {
           </View>
         </View>
 
-      </TouchableOpacity>
     </ScrollView>
+    </KeyboardAvoidingView>
+
   )
 }
 
@@ -245,7 +309,21 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontWeight: 'bold',
     opacity: 0.5,
+    color: '#92a2bd'
     
+
+  },
+  inpd: {
+    flexDirection: 'row',
+    padding: 15,
+    justifyContent: 'center',
+    width: 300,
+    borderRadius: 25,
+    height: 45,
+    marginBottom: 10,
+    borderColor:"rgb(92, 71, 205)",
+    backgroundColor: 'white',
+    border:1
 
   },
   title: {

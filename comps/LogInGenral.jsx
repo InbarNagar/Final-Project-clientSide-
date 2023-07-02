@@ -256,9 +256,9 @@ const styles = StyleSheet.create({
   content: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1, // מסגרת עדינה
-    borderColor: 'grey', // צבע המסגרת
-    borderRadius: 10, // קימור המסגרת
+    // borderWidth: 1, // מסגרת עדינה
+    // borderColor: 'grey', // צבע המסגרת
+    // borderRadius: 10, // קימור המסגרת
     padding: 30, // רווח בתוך המסגרת
     marginTop: 50, // רווח מעל לתוכן
     
