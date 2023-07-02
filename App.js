@@ -38,6 +38,10 @@ import ShowReviews from './comps/ShowReviews';
 import AvailableAppointmentToBook from './comps/ClientScreen/AvailableAppointmentToBook';
 import NewAvilableHours from './comps/NewAvilableHours';
 import Client_registration from './comps/Client_registration';
+import New_Calender from './comps/New_Calender';
+import NewBusinessDiary_Ofir from './comps/NewBusinessDiary_Ofir';
+import LocationPicker from './comps/LocationHandler/LocationPicker';
+import Maps_Inbar from './comps/Maps_Inbar';
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -68,7 +72,7 @@ function App() {
 
       <NavigationContainer>
         <Stack.Navigator initialRouteName="LogInGenral" screenOptions={{headerStyle: {
-            backgroundColor: "'rgb(92, 71, 205)'",
+            backgroundColor: "rgb(92, 71, 205)",
           },
           headerTintColor: '#F5FCFF',
           headerTitleStyle: {
@@ -102,6 +106,10 @@ function App() {
           <Stack.Screen name="ShowReviews" component={ShowReviews} />
           <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} />
           <Stack.Screen name="NewAvilableHours" component={NewAvilableHours} options={{ title:'הוספת זמינות לפרסום'}} />
+           <Stack.Screen name="New_Calender" component={New_Calender} options={{ title:'הוספת זמינות לפרסום'}} /> 
+          <Stack.Screen name="NewBusinessDiary_Ofir" component={NewBusinessDiary_Ofir} options={{ title:'הוספת זמינות לפרסום'}} />
+          <Stack.Screen name="Maps_Inbar" component={Maps_Inbar} options={{ title:'הוספת זמינות לפרסום'}} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>

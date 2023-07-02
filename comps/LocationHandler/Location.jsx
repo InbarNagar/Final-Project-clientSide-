@@ -1,11 +1,12 @@
 import { Alert, View, Text, Button } from 'react-native'
 import React, { useState, useEffect } from 'react'
-// import { PermissionStatus, getCurrentPositionAsync, useForegroundPermissions } from 'expo-location'
+ import { PermissionStatus, getCurrentPositionAsync, useForegroundPermissions } from 'expo-location'
 
 const Google_Api = "AIzaSyD4GfLv8lfVuLz_fEWCroPomInvTQlKez4";
 
-function LocationPicker() {
-    const [pickedLocation, setPickedLocation] = useState();
+function Location() {
+    const [pickedLocation, setPickedLocation] = useState({  lat: 12.66576,
+        lng: 22.1344});
     const [locationAddress, setLocationAddress] = useState();
     const [locationPermissionInformation, requestPermission] = useForegroundPermissions();
 

@@ -37,27 +37,27 @@ const[ShowReviewsSection,SetShowReviewsSection]=useState(false);
           console.log("error", error);
         }
       );
-        // let onTimeSum = 0;
-        // let professionalismSum = 0;
-        // let cleanlinessSum = 0;
-        // let overallRatingSum = 0;
-        // businessRankArr.forEach(bus => {
-        //   onTimeSum += bus.On_time;
-        //   professionalismSum += bus.Professionalism;
-        //   cleanlinessSum += bus.Cleanliness;
-        //   overallRatingSum += bus.Overall_rating;
-        // });
+        let onTimeSum = 0;
+        let professionalismSum = 0;
+        let cleanlinessSum = 0;
+        let overallRatingSum = 0;
+        businessRankArr.forEach(bus => {
+          onTimeSum += bus.On_time;
+          professionalismSum += bus.Professionalism;
+          cleanlinessSum += bus.Cleanliness;
+          overallRatingSum += bus.Overall_rating;
+        });
   
-        // SetOn_time(onTimeSum / businessRankArr.length);
-        // console.log(On_time);
-        // SetProfessionalism(professionalismSum / businessRankArr.length);
-        // console.log(Professionalism);
-        // SetCleanliness(cleanlinessSum / businessRankArr.length);
-        // console.log(Cleanliness);
-        // SetOverall_rating(overallRatingSum / businessRankArr.length);
-        // console.log(Overall_rating);
+        SetOn_time(onTimeSum / businessRankArr.length);
+        console.log(On_time);
+        SetProfessionalism(professionalismSum / businessRankArr.length);
+        console.log(Professionalism);
+        SetCleanliness(cleanlinessSum / businessRankArr.length);
+        console.log(Cleanliness);
+        SetOverall_rating(overallRatingSum / businessRankArr.length);
+        console.log(Overall_rating);
       
-    }, []);
+    }, [businessRankArr]);
   
   function handleInstagramLink() {
     // openURL(businessDetails.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין

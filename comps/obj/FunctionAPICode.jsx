@@ -1,6 +1,5 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { Fetch, Axios, AxiosNum } from './Fetch'
+import { Fetch, Axios,out_Fetch } from './Fetch'
+
 
 // התחברות בעל עסק פונקציית POST עם FROMBODY...... לא דרך נכונה... צריך לשנות את זה לגט... אבל לבנתיים....................
 export const LogInProo = (body) => {
@@ -76,8 +75,8 @@ export const ClientDetailes = (ID_number) => {
     return Axios(`Client/OneClient/${ID_number}`, 'post')
 }
 //כל התורים של בעל עסק
-export const allApoB= (Business_Numberr) => {
-    return Axios(`Appointment/AllAppointmentForBussines/${Business_Numberr}`, 'post')
+export const allApoB= (Business_Number) => {
+    return Fetch(`Appointment/AllAppointmentForBussines/${Business_Number}`, 'get')
 }
 //כל התורים של לקוח
 export const allApoC= (ID_Client) => {
@@ -142,6 +141,9 @@ export const  Post_SendPushNotification=(body)=>{
 export const AppointmentToClient= (body) => {
     return Axios(`Appointment/ClientToAppointment`, 'post',body)
 }
+export const NewAppointmentToClient= (body) => {
+    return Axios(`Appointment/NewAppointmentByClient`, 'post',body)
+}
 
 export const SaveTokenforID= (ID_number,token) => {
     return Axios(`Client/OneClientToken/${ID_number}/${token}`, 'post',{})
@@ -168,6 +170,11 @@ export const GetAllAvailableAppointments = () => {
     console.log(`Appointment/AllAvailableAppointment`)
     return Fetch(`Appointment/AllAvailableAppointment`,'get')
 }
+//יומן עסק לפי מספק בעל עסק
+export const BusinessDiaryForPro = (Business_id) => {
+    console.log(`BusinessDiary/BusinessDiaryForPro/${Business_id}`)
+    return Fetch(`BusinessDiary/BusinessDiaryForPro/${Business_id}`,'get')
+}
 export const UpdateapiBusiness=(body)=>{
     return Axios(`Business/UpdateBusinesss`, 'post',body)
 }
@@ -186,8 +193,9 @@ export const GetBusinessDiary=(Business_Number)=>{
 
 }
 //חיפוש חדש לפי יומן עסק- BusinessDiary
+//נשלח סוג טיפול ועיר, אפשר גם בלי עיר 
 export const NewSearchPost=(body)=>{
-    return Axios(`BusinessDiary/GetAllBusinessDiaryBy_Status_City_TreatmentNumber`, 'post',body)
+    return Axios(`BusinessDiary/GetAllBusinessDiaryByCity_TreatmentNumber`, 'post',body)
 }
 //דירוג עסק ע"י לקוח שבוצע לו טיפול
 export const ReviewBusiness=(body)=>{
@@ -216,3 +224,32 @@ export const AddNewAvailableHours=(body)=>{
 // export const ReviewBusiness=(body)=>{
 //     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
 // }
+export const getCord = (street,number,city) =>{
+console.log(street,number,city)
+street=street.replaceAll(' ', '+')
+city=city.replaceAll(' ', '+')
+return out_Fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${number}+${street},${city},IL&key= AIzaSyBuYjLYxY6iSSVfQ755luh6KPM0mD4QfrM`,"GET")
+// var requestOptions = {
+//   method: 'GET',
+//   body: raw,
+//   headers: new Headers({
+//     'Content-Type': 'application/json',
+//     'Accept': 'application/json',
+//   })
+// };
+// return new Promise((resolve, reject) =>{
+// fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${number}+${street},${city},IL&key= AIzaSyBuYjLYxY6iSSVfQ755luh6KPM0mD4QfrM`, requestOptions)
+//   .then(response =>{
+//    console.log(response.json(),"@@@@@@@@@@@@@@@@@@@@@@@@@@") 
+//    return response.text()
+
+// }).then(result => console.log(result))
+//   .catch(error => {
+//     console.log('error', error)
+//      reject(error)
+// })})
+}
+export const GetAllAppointmentForProWithClient = (businnes_number) => {
+    console.log(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`)
+    return Fetch(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`, 'Get')
+}

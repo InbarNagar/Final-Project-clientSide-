@@ -305,6 +305,108 @@ const handleConfirm = (date) => {
         }}
         checkedColor="#ac83c4"
       />
+      <View style={styles.inp}>
+         <TextInput style={styles.textInputS} 
+           placeholder="תעודת זהות"
+           value={ID_number}
+           onChangeText={(text) => setid(text)}
+         />
+       
+      </View>
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="שם פרטי"
+          value={First_name}
+          onChangeText={(text) => setFirstName(text)}
+        />
+      
+      </View>
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="שם משפחה"
+          value={Last_name}
+          onChangeText={(text) => setLastName(text)}
+        />
+       
+      </View>
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="מין"
+          value={gender}
+          onChangeText={(text) => setGender(text)}
+        />
+   
+      </View>
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="תאריך לידה"
+          value={birth_date}
+          onChangeText={(text) => setDateOfBirth(text)}
+        />
+    
+      </View>
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="פלאפון"
+          value={phone}
+          onChangeText={(text) => setPhone(text)}
+        />
+    
+      </View>
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="אימייל"
+          value={Email}
+          onChangeText={(text) => setEmail(text)}
+        />
+     
+      </View>
+
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="רחוב"
+          value={AddressStreet}
+          onChangeText={(text) => setStreet(text)}
+        />
+      
+      </View>
+
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="מספר בית"
+          value={AddressHouseNumber}
+          onChangeText={(text) => setHouseNumber(text)}
+        />
+       
+      </View>
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="עיר"
+          value={AddressCity}
+          onChangeText={(text) => setCity(text)}
+        />
+      
+      </View>
+
+      <View style={styles.inp}>
+        <TextInput style={styles.textInputS}
+          placeholder="סיסמא"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={true}
+        />
+     
+      </View>
+
+      <Button color='#9acd32' title="סיום הרשמה" onPress={handleRegistrationC} />
     </View>
 
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
