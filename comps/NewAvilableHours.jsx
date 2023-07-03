@@ -1,5 +1,5 @@
 import React, { useState,useContext } from 'react';
-import { View, StyleSheet, Text, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
 import { Picker } from '@react-native-picker/picker';
@@ -10,6 +10,7 @@ import { UserContext } from './UserDietails';
 import { useNavigation} from "@react-navigation/core";
 import Menu_professional from './obj/Menu_professional';
 import moment from "moment";
+import Header from './obj/Header';
 
 const NewAvailableHours = (Props) => {
 
@@ -82,9 +83,10 @@ const NewAvailableHours = (Props) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.contentContainer}>
+            {/* <ScrollView contentContainerStyle={styles.contentContainer}> */}
+            <Header text="הוספת שעות זמינות ליומן"  color={"rgb(92, 71, 205)"} />
                 <View style={styles.dateContainer}>
-                    <Button text="בחר תאריך" onPress={showDatePicker} />
+                    <Button text="בחר תאריך" alignItems="center" onPress={showDatePicker} />
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
                         mode="date"
@@ -96,9 +98,10 @@ const NewAvailableHours = (Props) => {
                     />
                     <Text style={styles.selectedDate}>{Date}</Text>
                 </View>
+                <Text>{'\n'}</Text>
                 <View style={styles.pickerContainer}>
                     <View style={styles.pickerWrapper}>
-                        <Text style={styles.pickerLabel}>שעת התחלה</Text>
+                        <Text style={styles.pickerLabel}>ממתי פנוי?</Text>
                         <Picker
                             style={styles.picker}
                             selectedValue={Start_time}
@@ -111,7 +114,7 @@ const NewAvailableHours = (Props) => {
                         {/* <Text style={styles.selectedTime}>{selectedTimeStart}</Text> */}
                     </View>
                     <View style={styles.pickerWrapper}>
-                        <Text style={styles.pickerLabel}>שעת סיום</Text>
+                        <Text style={styles.pickerLabel}>עד מתי פנוי?</Text>
                         <Picker
                             style={styles.picker}
                             selectedValue={End_time}
@@ -124,14 +127,15 @@ const NewAvailableHours = (Props) => {
                         {/* <Text style={styles.selectedTime}>{selectedTimeEnd}</Text> */}
                     </View>
                 </View>
+            {/* </ScrollView> */}
 
+            {/* <View style={styles.buttonContainer}> */}
+                <Button text="שלח" alignItems="center" onPress={handleSendData} />
+            {/* </View> */}
 
-
-            </ScrollView>
-
-            <View style={styles.buttonContainer}>
-                <Button text="שלח" onPress={handleSendData} />
-            </View>
+            {/* <View style={styles.image1}>
+            <Image style={styles.image} source={require('../assets/logoo.png')}/>
+            </View> */}
 
             <Menu_professional/>
         </View>
@@ -144,27 +148,36 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
-    },
-    contentContainer: {
         paddingHorizontal: 20,
         paddingBottom: 20,
     },
+    // contentContainer: {
+    //     paddingHorizontal: 20,
+    //     paddingBottom: 20,
+    // },
     dateContainer: {
-        flexDirection: 'row',
+        // flexDirection: 'row',
+        flexDirection: 'row-reverse',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 20,
+        marginTop: 30,
+
     },
     selectedDate: {
         fontSize: 26,
-        marginTop: 16,
+        // marginTop: 16,
         textAlign: 'center',
         color: 'rgb(92, 71, 205)',
     },
     pickerContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 20,
+        // justifyContent: 'space-between',
+        // justifyContent: 'flex-end',
+        flexDirection: 'row-reverse',
+        justifyContent: 'flex-start',
+        marginBottom: 200,
     },
     pickerWrapper: {
         flex: 1,
@@ -190,6 +203,18 @@ const styles = StyleSheet.create({
         width: 150,
         alignItems: 'center'
     },
+    // image:{
+    //     paddingTop: 100,
+    //     width:200,
+    //     height:200,
+    //     alignItems: 'center',
+    //     textAlign: 'center',    
+    //     justifyContent: 'center',
+    //     },
+    //     image1:{
+    //         alignItems: 'center',
+        
+    //       },
 });
 
 export default NewAvailableHours;

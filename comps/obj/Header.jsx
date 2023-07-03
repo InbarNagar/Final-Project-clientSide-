@@ -26,10 +26,20 @@ const Header = (props) => {
       },
       headerText: {
         fontSize:fontSize,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: color,
         textAlign: 'center',
+        "letterSpacing": 0.15,
+        "fontWeight": "500",
+        "lineHeight": 50,
+        textShadowColor: 'rgb(92, 71, 205)',
+        textShadowOffset: { width: 2, height: 2 },
+        textShadowRadius: 5,
+        opacity:0.7
+
       }
+
+      
       
     });
 

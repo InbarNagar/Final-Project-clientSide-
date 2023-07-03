@@ -15,7 +15,7 @@ import Header from './obj/Header';
 import Update_Menu_treatment from './Update_Menu_treatment'
 
 
-const jjj = (props) => {
+const Update_MenuTreatment = (props) => {
 
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -271,7 +271,7 @@ const styles = StyleSheet.create({
 });
 
 
-export default jjj;
+export default Update_MenuTreatment;
 
 
 

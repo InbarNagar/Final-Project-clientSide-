@@ -1,6 +1,6 @@
 
 import React, { useState ,useEffect, useContext} from 'react';
-import { StyleSheet, View, TouchableOpacity, SafeAreaVie, TextInput,Text,Image } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, SafeAreaVie, TextInput,Text,Image, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import Button from '../obj/Button';
@@ -128,6 +128,8 @@ if(userDetails){
  
   return (
     <>
+        <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+        <ScrollView>
     {alert && alert}
     <View style={styles.container}>
 
@@ -186,6 +188,9 @@ if(userDetails){
       <Button color='transparent' text="הרשמת עסקים" onPress={Registration2} />
 </View>
     </View>
+</ScrollView>
+    </KeyboardAvoidingView>
+
 
     </>
 
