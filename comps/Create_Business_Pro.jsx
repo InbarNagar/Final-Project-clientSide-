@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, Keyboard, ScrollView } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, Keyboard, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TouchableOpacity } from 'react-native';
@@ -17,6 +17,7 @@ const Create_Business_Pro = (props) => {
   const [AddressCity, setCity] = useState('');
   const [Is_client_house, setLocation] = useState('');
   const [Professional_ID_number, setIdPro] = useState('');
+  const [About, setAbout] = useState('');
 
  const[ LongCordinate,setLongCordinate]=useState('')
  const[ LetCordinate,setLetCordinate]=useState('')
@@ -50,6 +51,7 @@ const Create_Business_Pro = (props) => {
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
       Professional_ID_number: Id_Pro,
+      about: About,
       // Professional_ID_number: Professional_ID_number
       LongCordinate:LongCordinate,
       LetCordinate:LetCordinate
@@ -97,8 +99,8 @@ const Create_Business_Pro = (props) => {
 
 
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <TouchableOpacity onPress={Keyboard.dismiss} style={{ flex: 1 }}>
+    <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+    <ScrollView>
         <View style={styles.container}>
 
           <Text style={styles.title}>בניית פרופיל עסקי</Text>
@@ -154,6 +156,18 @@ const Create_Business_Pro = (props) => {
 
           </View>
 
+          <Text style={styles.titp}> כתוב בבקשה כמה פרטים על העסק כדי שהלקוח יוכל להכיר יותר טוב את העסק שלך {'\n'}</Text>
+          <View style={styles.inpAbout}>
+         
+
+            <TextInput style={styles.textInputAbout}
+              placeholder= "אודות העסק"
+              placeholderTextColor="#92a2bd"
+              value={About}
+              onChangeText={(text) => setAbout(text)}
+            />
+
+          </View>
 
           {/* <View>
         <Text>{Id_Pro}</Text>
@@ -178,9 +192,8 @@ const Create_Business_Pro = (props) => {
             </TouchableOpacity></View>
 
         </View>
-      </TouchableOpacity>
-
     </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 
@@ -213,6 +226,34 @@ const styles = StyleSheet.create({
 
 
   },
+  textInputAbout: {
+    // height: 40,
+    // width: "80%",
+    // margin: 10,
+    // borderWidth: 1,
+    // padding: 10,
+    color: '#808080',
+    // height: 50,
+    fontSize: 15,
+    textAlign: 'right',
+    fontWeight: 'bold',
+    opacity: 0.5,
+
+
+  },
+  inpAbout: {
+    flexDirection: 'row',
+    padding: 15,
+    justifyContent: 'center',
+    width: '80%',
+    borderRadius: 25,
+    height: 170,
+    marginBottom: 10,
+    borderColor: "rgb(92, 71, 205)",
+    backgroundColor: 'white',
+    border: 1
+
+  },
   title: {
     padding: 10,
     justifyContent: 'center',
@@ -240,12 +281,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#e6e6fa',
     paddingHorizontal: 20,
-    paddingTop: 50,
+    // paddingTop: 50,
     height:'100%',
     paddingHorizontal: 20,
-    paddingTop: 50,
-    borderWidth: 1,
-    borderColor: 'black',
+    // borderWidth: 1,
+    // borderColor: 'black',
+    paddingBottom: 150,
   },
 
   text: {

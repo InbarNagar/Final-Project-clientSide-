@@ -1,44 +1,12 @@
+// 
+
+
+
 #import "AppDelegate.h"
 
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTLinkingManager.h>
-
-// // Import the RCTPushNotificationManager module
-// #import <React/RCTPushNotificationManager.h>
-
-// @implementation AppDelegate
-
-// // Override point for customization after application launch.
-// - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
-//   // Define UNUserNotificationCenter
-//   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-//   center.delegate = self;
-
-//   // Request permission to display alerts and play sounds.
-//   [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionSound)
-//                         completionHandler:^(BOOL granted, NSError * _Nullable error) {
-//                           if (!error) {
-//                             NSLog(@"request authorization succeeded!");
-//                           }
-//                         }];
-
-//   // Define RCTPushNotificationManager
-//   [RCTPushNotificationManager didFinishLaunchingWithOptions:launchOptions];
-
-//   // Override point for customization after application launch.
-//   return YES;
-// }
-
-// // Define the function for handling local notification
-// - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-//   [RCTPushNotificationManager didReceiveLocalNotification:notification];
-// }
-
-// @end
-
-
-
 
 @implementation AppDelegate
 
@@ -49,6 +17,8 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+  [[FBSDKApplicationDelegate sharedInstance] application:application
+  didFinishLaunchingWithOptions:launchOptions];
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -99,6 +69,11 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
   return [super application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+  [FBSDKAppEvents activateApp];
 }
 
 @end
