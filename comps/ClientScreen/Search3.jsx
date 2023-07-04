@@ -12,11 +12,11 @@ import {
 } from "../obj/FunctionAPICode";
 import { UserContext } from "../UserDietails";
 import Geocoder from 'react-native-geocoding';
-import AppointmentCard_forClient from "./AppointmentCard_forClient";
+
 import ClientProfile from "./ClientProfile";
 import SearchFiltersMenu from "./SearchFiltersMenu";
 import NewSearch3 from "./NewSearch3";
-
+import AppointmentCard_forClient from "./AppointmentCard_forClient";
 
 export default function Search3(props) {
   const { navigation } = props;
@@ -87,8 +87,6 @@ export default function Search3(props) {
 //   "userType": "Cli"
 // }
 
-
-
     console.log("התורים שלי: " + showSAppointmenthSection);
     setShowSAppointmenthSectionn(!showSAppointmenthSection);
     console.log("התורים שלי: " + showSAppointmenthSection);
@@ -152,7 +150,7 @@ console.log(userDetails.ID_number);
                   Review_Number={appointment.Review_Number}
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
-                  status={appointment.Appointment_status}
+
                   Date={appointment.Date}
                   Start_time={appointment.Start_time}
                   End_time={appointment.End_time}
