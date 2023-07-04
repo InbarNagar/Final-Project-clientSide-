@@ -1,6 +1,10 @@
-import { React, useState, useEffect,useContext } from "react";
-import { Text, View, StyleSheet, Button,TextInput } from "react-native";
-import { NewSearchPost,Treatment_type_GET,Post_SendPushNotification } from "../obj/FunctionAPICode";
+import { React, useState, useEffect, useContext } from "react";
+import { Text, View, StyleSheet, Button, TextInput } from "react-native";
+import {
+  NewSearchPost,
+  Treatment_type_GET,
+  Post_SendPushNotification,
+} from "../obj/FunctionAPICode";
 import { ScrollView } from "react-native-gesture-handler";
 import AvailableAppointmentToBook from "./AvailableAppointmentToBook";
 import { UserContext } from "../UserDietails";
@@ -8,61 +12,58 @@ import { MaterialIcons as Icon } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
 import { RadioButton } from "react-native-paper";
 import Maps_Inbar from "../Maps_Inbar";
-
+import { log } from "react-native-reanimated";
 
 export default function NewSearch3() {
   const [NameTreatment, setNameTreatment] = useState("");
   const [treatmentNumber, SetTreatmentNumber] = useState("");
   const [ShowFilter, SethowFilter] = useState(false);
   const [filter_catgories, set_filter_catgories] = useState([]);
-  const [token, settoken] = useState();// ענבר
+  const [token, settoken] = useState(); // ענבר
   const { userDetails, setUserDetails } = useContext(UserContext);
   const [result, SetResult] = useState([]);
   const [gender, setGender] = useState(null);
   const [AddressCity, setAddressCity] = useState(null);
   const [Is_client_house, setIs_client_house] = useState(null);
   const [categories, setCategories] = useState(["קטגוריה"]);
- 
-  
+
   const ClientData = userDetails;
   useEffect(() => {
     if (token) {
       const body = {
-        "to": token,
-        "title": "BeautyMe",
-        "body": `${userDetails.First_name} הזמינה תור חדש `,
-        "badge": "0",
-        "ttl": "1",// מספר שניות לשליחה
-        "data": {
-          "to": token
-        }
-      }
-      Post_SendPushNotification(body).then
-        (() => {
-          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%", token)
-        }
-        )
+        to: token,
+        title: "BeautyMe",
+        // "body": `${userDetails.First_name} הזמינה תור חדש `,
+        body: ` הזמינה תור חדש `,
+        badge: "0",
+        ttl: "1", // מספר שניות לשליחה
+        data: {
+          to: token,
+        },
+      };
+      Post_SendPushNotification(body).then(() => {
+        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%", token);
+      });
     }
-
   }, [token]);
 
-//   useEffect(()=>{
-//     console.log("nameTreatment changed...");
-// for (let i = 0; i < categories.length; i++) {
-//   if(NameTreatment===categories[i].Name){
-//     console.log(NameTreatment+" is number: "+categories[i].Type_treatment_Number);
-//     SetTreatmentNumber(categories[i].Type_treatment_Number)
-//     break;
-//   }
-// }
-//   },[NameTreatment])
+  //   useEffect(()=>{
+  //     console.log("nameTreatment changed...");
+  // for (let i = 0; i < categories.length; i++) {
+  //   if(NameTreatment===categories[i].Name){
+  //     console.log(NameTreatment+" is number: "+categories[i].Type_treatment_Number);
+  //     SetTreatmentNumber(categories[i].Type_treatment_Number)
+  //     break;
+  //   }
+  // }
+  //   },[NameTreatment])
   useEffect(() => {
     Treatment_type_GET().then(
       (result) => {
         console.log("categories: ", result);
         if (result) {
           setCategories(result);
-          SetTreatmentNumber(result[0].Type_treatment_Number)
+          SetTreatmentNumber(result[0].Type_treatment_Number);
         }
       },
       (error) => {
@@ -86,9 +87,9 @@ export default function NewSearch3() {
       phone: data[0].phone,
       facebook: data[0].Facebook_link,
       instagram: data[0].Instagram_link,
-      LongCordinate:data[0].LongCordinate,
-      LetCordinate:data[0].LetCordinate,
-
+      LongCordinate: data[0].LongCordinate,
+      LetCordinate: data[0].LetCordinate,
+      Is_client_house: data[0].Is_client_house1,
       diary: [
         {
           date: data[0].Date1,
@@ -127,7 +128,7 @@ export default function NewSearch3() {
           // בודק האם יש עוד טווח שעות שונה באותו תאריך
           if (
             !obj.diary[obj.diary.length - 1].time.includes(
-              data[i].Start_time+ "-" + data[i].End_time
+              data[i].Start_time + "-" + data[i].End_time
             )
           ) {
             obj.diary[obj.diary.length - 1].time.push(
@@ -179,8 +180,8 @@ export default function NewSearch3() {
           phone: data[i].phone,
           facebook: data[i].Facebook_link,
           instagram: data[i].Instagram_link,
-          LongCordinate:data[i].LongCordinate,
-          LetCordinate:data[i].LetCordinate,
+          LongCordinate: data[i].LongCordinate,
+          LetCordinate: data[i].LetCordinate,
           diary: [
             {
               date: data[i].Date1,
@@ -205,57 +206,57 @@ export default function NewSearch3() {
         };
       }
     }
+    console.log(obj);
     res.push(obj);
-    console.log(JSON.stringify(res[0].diary[2].time));
     SetResult(res);
     return res;
-
   }
   function btnSearch() {
-   
     let num = 0;
-    
-      categories.map((z) => {
-        //שומר את מספר ההטיפול בשביל הקריאה לשמירת תור עתידי
-        if (z.Name == NameTreatment) {
-          num = z.Type_treatment_Number;
-          console.log(
-            "treatment number: " + num,
-            "treatment name: " + NameTreatment
-          );
-        }
-      });
-      console.log("AddressCity: " + AddressCity+
-      "treatment Number: "+treatmentNumber+
-      "Is_client_house: "+Is_client_house
-      );
-      const obj = {
-        AddressCity: AddressCity,
-        TreatmentNumber: treatmentNumber,
-        // sort: "דירוג גבוהה תחילה",
-        gender: gender,
-        Is_client_house: Is_client_house,
-      };
+
+    categories.map((z) => {
+      //שומר את מספר ההטיפול בשביל הקריאה לשמירת תור עתידי
+      if (z.Name == NameTreatment) {
+        num = z.Type_treatment_Number;
+        console.log(
+          "treatment number: " + num,
+          "treatment name: " + NameTreatment
+        );
+      }
+    });
+    console.log(
+      "AddressCity: " +
+        AddressCity +
+        "treatment Number: " +
+        treatmentNumber +
+        "Is_client_house: " +
+        Is_client_house
+    );
+    const obj = {
+      AddressCity: AddressCity,
+      TreatmentNumber: treatmentNumber,
+      // sort: "דירוג גבוהה תחילה",
+      gender: gender,
+      Is_client_house: Is_client_house,
+    };
     //   // SetResponse([{"Appointment_status": null, "Business_Number": 1, "Date": "2023-04-09T00:00:00", "End_time": "12:30:00", "Is_client_house": "YES       ", "Number_appointment": 4, "Start_time": "12:00:00"}, {"Appointment_status": null, "Business_Number": 2, "Date": "2023-04-10T00:00:00", "End_time": "13:30:00", "Is_client_house": "YES       ", "Number_appointment": 6, "Start_time": "13:00:00"}])
-      NewSearchPost(obj).then(
-        (result) => {
-          console.log("yes", result.data);
-          if (result.data) {
-            GetData(result.data);
-            console.log("amount of results: " + result.data);
-            //מפעיל את הכפתור תצוגת מפה
-          }
-        },
-        (error) => {
-          console.log("error", error);
+    NewSearchPost(obj).then(
+      (result) => {
+        console.log("yes", result.data);
+        if (result.data) {
+          GetData(result.data);
+          console.log("amount of results: " + JSON.stringify(result.data));
+          //מפעיל את הכפתור תצוגת מפה
         }
-      );
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
     // }
   }
   const FilterTreatment = (text) => {
-    console.log(
-      filter_catgories && filter_catgories.length > 0
-    );
+    console.log(filter_catgories && filter_catgories.length > 0);
 
     const filterSearch = categories.filter((value) =>
       value.Name.includes(text)
@@ -264,89 +265,93 @@ export default function NewSearch3() {
     console.log(filterSearch);
     console.log(text);
   };
-  return (<>
-    {result&&result.length>0&&<Maps_Inbar result={result}/>}
-    <View>
-    <View>
-        <Text style={styles.title}>שלום {ClientData.First_name} </Text>
-        <View style={{ flexDirection: "column" }}>
-          <TextInput
-            style={{
-              height: 40,
-              borderColor: "gray",
-              borderWidth: 1,
-              marginBottom: 10,
-              placeholderTextColor: "#E6E6FA",
-            }}
-            onChangeText={(text) => FilterTreatment(text)}
-            placeholder="הקלדי טיפול יופי"
-          >
-            {" "}
-          </TextInput>
-
-          <View style={styles.buttonContainer}>
-            <Button
-              title="חפש"
-              onPress={btnSearch}
-              buttonStyle={{
-                backgroundColor: "rgb(92, 71, 205)",
-                borderWidth: 2,
-                borderColor: "white",
-                borderRadius: 30,
+  return (
+    <>
+      {/* {result&&result.length>0&&<Maps_Inbar result={result}/>} */}
+      <View>
+        <View>
+          {/* <Text style={styles.title}>שלום {ClientData.First_name} </Text> */}
+          <Text style={styles.title}>שלום </Text>
+          <View style={{ flexDirection: "column" }}>
+            <TextInput
+              style={{
+                height: 40,
+                borderColor: "gray",
+                borderWidth: 1,
+                marginBottom: 10,
+                placeholderTextColor: "#E6E6FA",
               }}
-              icon={<Icon name="search" size={24} color="white" />}
-            />
-            {result.length > 0 && (
+              onChangeText={(text) => FilterTreatment(text)}
+              placeholder="הקלדי טיפול יופי"
+            >
+              {" "}
+            </TextInput>
+
+            <View style={styles.buttonContainer}>
               <Button
-                style={{ Color: "rgb(92, 71, 205)" }}
-                title="תצוגת מפה"
+                title="חפש"
+                onPress={btnSearch}
                 buttonStyle={{
                   backgroundColor: "rgb(92, 71, 205)",
                   borderWidth: 2,
                   borderColor: "white",
                   borderRadius: 30,
                 }}
-                // containerStyle={{
-                //   width: 200,
-                //   marginHorizontal: 50,
-                //   marginVertical: 10,
-                // }}
-                // titleStyle={{ fontWeight: "bold" }}
-                onPress={() => {
-                  props.navigation.navigate("SearchOnMap", {
-                    results: result,
-                  });
-                }}
-                icon={<Icon name="place" size={24} color="white" />}
+                icon={<Icon name="search" size={24} color="white" />}
               />
-            )}
-            <Button
-              title="סינון"
-              buttonStyle={{
-                backgroundColor: "rgb(92, 71, 205)",
-                borderWidth: 2,
-                borderColor: "white",
-                borderRadius: 30,
-              }}
-              icon={<Icon name="filter-list" size={24} color="white" />}
-              onPress={() => SethowFilter(!ShowFilter)}
-            />
+              {result.length > 0 && (
+                <Button
+                  style={{ Color: "rgb(92, 71, 205)" }}
+                  title="תצוגת מפה"
+                  buttonStyle={{
+                    backgroundColor: "rgb(92, 71, 205)",
+                    borderWidth: 2,
+                    borderColor: "white",
+                    borderRadius: 30,
+                  }}
+                  // containerStyle={{
+                  //   width: 200,
+                  //   marginHorizontal: 50,
+                  //   marginVertical: 10,
+                  // }}
+                  // titleStyle={{ fontWeight: "bold" }}
+                  onPress={() => {
+                    props.navigation.navigate("SearchOnMap", {
+                      results: result,
+                    });
+                  }}
+                  icon={<Icon name="place" size={24} color="white" />}
+                />
+              )}
+              <Button
+                title="סינון"
+                buttonStyle={{
+                  backgroundColor: "rgb(92, 71, 205)",
+                  borderWidth: 2,
+                  borderColor: "white",
+                  borderRadius: 30,
+                }}
+                icon={<Icon name="filter-list" size={24} color="white" />}
+                onPress={() => SethowFilter(!ShowFilter)}
+              />
+            </View>
           </View>
-        </View>
 
-<Picker
-selectedValue={treatmentNumber}
-onValueChange={(value) => SetTreatmentNumber(value)}
-style={styles.picker}>
-{categories&&categories.map((category,i)=>(
-  <Picker.Item
-  label={category.Name}
-  value={category.Type_treatment_Number}
-  key={i+"catgore"}
-  />
-  ))}
-</Picker>
-        {/* <Picker
+          <Picker
+            selectedValue={treatmentNumber}
+            onValueChange={(value) => SetTreatmentNumber(value)}
+            style={styles.picker}
+          >
+            {categories &&
+              categories.map((category, i) => (
+                <Picker.Item
+                  label={category.Name}
+                  value={category.Type_treatment_Number}
+                  key={i + "catgore"}
+                />
+              ))}
+          </Picker>
+          {/* <Picker
           selectedValue={NameTreatment}
           onValueChange={(value) => setNameTreatment(value)}
           style={styles.picker}
@@ -364,72 +369,69 @@ style={styles.picker}>
           )}
         </Picker> */}
 
-        {ShowFilter && (
-          <View style={styles.filterContainer}>
-            <View>
-              <TextInput
-                style={styles.input}
-                placeholder="עיר"
-                value={AddressCity}
-                onChangeText={(value) => setAddressCity(value)}
-              />
-            </View>
-            <View>
-              <Text style={styles.sectionTitle}>מין מטפל:</Text>
-              <View style={styles.radioButtonContainer}>
-                <RadioButton
-                  value="M"
-                  status={gender === "M" ? "checked" : "unchecked"}
-                  onPress={() => setGender("M")}
+          {ShowFilter && (
+            <View style={styles.filterContainer}>
+              <View>
+                <TextInput
+                  style={styles.input}
+                  placeholder="עיר"
+                  value={AddressCity}
+                  onChangeText={(value) => setAddressCity(value)}
                 />
-                <Text style={styles.radioButtonLabel}>זכר</Text>
               </View>
-              <View style={styles.radioButtonContainer}>
-                <RadioButton
-                  value="F"
-                  status={gender === "F" ? "checked" : "unchecked"}
-                  onPress={() => setGender("F")}
-                />
-                <Text style={styles.radioButtonLabel}>נקבה</Text>
+              <View>
+                <Text style={styles.sectionTitle}>מין מטפל:</Text>
+                <View style={styles.radioButtonContainer}>
+                  <RadioButton
+                    value="M"
+                    status={gender === "M" ? "checked" : "unchecked"}
+                    onPress={() => setGender("M")}
+                  />
+                  <Text style={styles.radioButtonLabel}>זכר</Text>
+                </View>
+                <View style={styles.radioButtonContainer}>
+                  <RadioButton
+                    value="F"
+                    status={gender === "F" ? "checked" : "unchecked"}
+                    onPress={() => setGender("F")}
+                  />
+                  <Text style={styles.radioButtonLabel}>נקבה</Text>
+                </View>
               </View>
-            </View>
 
-            <View>
-              <Text style={styles.sectionTitle}>טיפול ביתי:</Text>
-              <View style={styles.radioButtonContainer}>
-                <RadioButton
-                  value="YES"
-                  status={Is_client_house === "YES" ? "checked" : "unchecked"}
-                  onPress={() => setIs_client_house("YES")}
-                />
-                <Text style={styles.radioButtonLabel}>כן</Text>
-              </View>
-              <View style={styles.radioButtonContainer}>
-                <RadioButton
-                  value="NO"
-                  status={Is_client_house === "NO" ? "checked" : "unchecked"}
-                  onPress={() => setIs_client_house("NO")}
-                />
-                <Text style={styles.radioButtonLabel}>לא</Text>
+              <View>
+                <Text style={styles.sectionTitle}>טיפול ביתי:</Text>
+                <View style={styles.radioButtonContainer}>
+                  <RadioButton
+                    value="YES"
+                    status={Is_client_house === "YES" ? "checked" : "unchecked"}
+                    onPress={() => setIs_client_house("YES")}
+                  />
+                  <Text style={styles.radioButtonLabel}>כן</Text>
+                </View>
+                <View style={styles.radioButtonContainer}>
+                  <RadioButton
+                    value="NO"
+                    status={Is_client_house === "NO" ? "checked" : "unchecked"}
+                    onPress={() => setIs_client_house("NO")}
+                  />
+                  <Text style={styles.radioButtonLabel}>לא</Text>
+                </View>
               </View>
             </View>
-          </View>
-        )}
+          )}
+        </View>
+        <ScrollView>
+          {result.map((r) => (
+            <AvailableAppointmentToBook
+              key={r.id}
+              result={r}
+              treatmentNumber={treatmentNumber}
+            />
+          ))}
+        </ScrollView>
       </View>
-   
-    <ScrollView>
-      {result.map((r) => {
-        return(
-        <View key={r.id}>
-        <AvailableAppointmentToBook
-        result={r}
-        />
-        </View>)
-      })}
-    
-    </ScrollView>
-    
-    </View></>
+    </>
   );
 }
 
@@ -480,8 +482,8 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderWidth: 1,
     margin: 10,
-    maxHeight: '80%',  // Add a maxHeight property
-    overflow: 'scroll',  // If content exceeds the maxHeight, allow scrolling
+    maxHeight: "80%", // Add a maxHeight property
+    overflow: "scroll", // If content exceeds the maxHeight, allow scrolling
   },
   titleText: {
     fontSize: 18,

@@ -8,72 +8,16 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { GetAllAppointmentForProWithClient } from "./obj/FunctionAPICode";
 export default function NewBusinessDiary_Ofir() {
-  //  מביא את התורים שלי לבעל העסק כולל פרטי לקוח לצפייה בפרופיל
-
-//   useEffect(() => {
-//     const data = Data; // לשים קריאה לשרת למשוך את המידע
-//     let arr = [];
-//     let obj = {
-//       Number_appointment: data[0].Number_appointment,
-//       Date: data[0].Date,
-//       Appointment_status: data[0].Appointment_status,
-//       Start_Hour: data[0].Start_Hour,
-//       End_Hour: data[0].End_Hour,
-//       Client: {
-//         ID_Client: data[0].ID_Client,
-//         First_name: data[0].First_name,
-//         Last_name: data[0].Last_name,
-//         ClientPhone: data[0].phone,
-//         AddressStreet: data[0].AddressStreet,
-//         AddressCity: data[0].AddressCity,
-//         AddressHouseNumber: data[0].AddressHouseNumber,
-//         Facebook_link: data[0].Facebook_link,
-//         Instagram_link: data[0].Instagram_link,
-//         ProfilPic: data[0].ProfilPic,
-//         token: data[0].token,
-//       },
-//     };
-//     arr.push(obj);
-//     for (let i = 1; i < data.length; i++) {
-//       //רץ על המערך הכללי
-//       if (data[i].Number_appointment !== data[i - 1].Number_appointment) {
-//         //בודק אם המספר תור שווה לקודם הקיים במערך
-//         obj = {
-//           Number_appointment: data[i].Number_appointment,
-//           Date: data[i].Date,
-//           Appointment_status: data[i].Appointment_status,
-//           Start_Hour: data[i].Start_Hour,
-//           End_Hour: data[i].End_Hour,
-//           Client: {
-//             ID_Client: data[i].ID_Client,
-//             First_name: data[i].First_name,
-//             Last_name: data[i].Last_name,
-//             ClientPhone: data[i].phone,
-//             AddressStreet: data[i].AddressStreet,
-//             AddressCity: data[i].AddressCity,
-//             AddressHouseNumber: data[i].AddressHouseNumber,
-//             Facebook_link: data[i].Facebook_link,
-//             Instagram_link: data[i].Instagram_link,
-//             ProfilPic: data[i].ProfilPic,
-//             token: data[i].token,
-//           },
-//         };
-//         arr.push(obj);
-//       }
-//     }
-//     console.log(
-//       `Business ${data[0].Business_Number} has ${arr.length} appointments on ${data[0].Date}:` +
-//         JSON.stringify(arr)
-//     );
-//   }, []);
-//   return <></>;
-// }
-
+  
 const hoursArray = ["10-20"];
+//הועבר 
 const occupiedHoursArray = ["15-16", "11-12"];
 const firstHour = occupiedHoursArray.map(time => parseInt(time.split("-")[0]));
+//[15,11]
 const endHour = occupiedHoursArray.map(time => parseInt(time.split("-")[1]));
+//[16,12]
 const HoursAndGap = [];
 const [pressedHour, setPressedHour] = useState(null);
 
@@ -82,8 +26,11 @@ const hours = Array.from( //מערך שמטרתו לייצר את כמות הש�
     (v, i) => 10 + i * 1
   );
   const handlePressedHour = (hour) => {
-    // Your code here
-    setPressedHour(hour);
+    if (hour === pressedHour) {
+      setPressedHour(null); // If the hour is already selected, clear the selection
+    } else {
+      setPressedHour(hour); // Otherwise, select the hour
+    }
   }
 function getOccupiedHoursWithGap(firstHour, endHour) {
   let occupiedHoursWithGap = [];
@@ -164,6 +111,86 @@ return(<>
     </View>
 </>);
 }
+
+//   // מביא את התורים שלי לבעל העסק כולל פרטי לקוח לצפייה בפרופיל
+
+//   useEffect(() => {
+//     GetAllAppointmentForProWithClient(4).then(
+//       (result) => {
+//         console.log("1111 - ", result);
+//         GetArr(result)
+//       },
+//       (error) => {
+//         console.log("error", error);
+//       }
+//     );
+//     // const data = Data; // לשים קריאה לשרת למשוך את המידע
+    
+//   }, []);
+//   function GetArr(data){
+//     let arr = [];
+//     let obj = {
+//       Number_appointment: data[0].Number_appointment,
+//       Date: data[0].Date,
+//       Appointment_status: data[0].Appointment_status,
+//       Start_Hour: data[0].Start_Hour,
+//       End_Hour: data[0].End_Hour,
+//       Client: {
+//         ID_Client: data[0].ID_Client,
+//         First_name: data[0].First_name,
+//         Last_name: data[0].Last_name,
+//         ClientPhone: data[0].phone,
+//         AddressStreet: data[0].AddressStreet,
+//         AddressCity: data[0].AddressCity,
+//         AddressHouseNumber: data[0].AddressHouseNumber,
+//         Facebook_link: data[0].Facebook_link,
+//         Instagram_link: data[0].Instagram_link,
+//         ProfilPic: data[0].ProfilPic,
+//         token: data[0].token,
+//       },
+//     };
+//     arr.push(obj);
+//     for (let i = 1; i < data.length; i++) {
+//       //רץ על המערך הכללי
+//       if (data[i].Number_appointment !== data[i - 1].Number_appointment) {
+//         //בודק אם המספר תור שווה לקודם הקיים במערך
+//         obj = {
+//           Number_appointment: data[i].Number_appointment,
+//           Date: data[i].Date,
+//           Appointment_status: data[i].Appointment_status,
+//           Start_Hour: data[i].Start_Hour,
+//           End_Hour: data[i].End_Hour,
+//           Client: {
+//             ID_Client: data[i].ID_Client,
+//             First_name: data[i].First_name,
+//             Last_name: data[i].Last_name,
+//             ClientPhone: data[i].phone,
+//             AddressStreet: data[i].AddressStreet,
+//             AddressCity: data[i].AddressCity,
+//             AddressHouseNumber: data[i].AddressHouseNumber,
+//             Facebook_link: data[i].Facebook_link,
+//             Instagram_link: data[i].Instagram_link,
+//             ProfilPic: data[i].ProfilPic,
+//             token: data[i].token,
+//           },
+//         };
+//         arr.push(obj);
+//       }
+//     }
+//     console.log(
+//       `Business ${data[0].Business_Number} has ${arr.length} appointments on ${data[0].Date}:` +
+//         JSON.stringify(arr)
+//     );
+//   }
+
+//   return (<>
+  
+//   </>);
+// }
+
+
+
+
 const styles = StyleSheet.create({
   modalView: {
     flex: 1,

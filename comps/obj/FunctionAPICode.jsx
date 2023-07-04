@@ -63,6 +63,11 @@ export const Type_treatment_for_businnes = (businnes_number) => {
     console.log(`Business_can_give_treatmentController/All_the_treatments_appointment_can_give${businnes_number}/${password}`)
     return Fetch(`Professional/OneProfessional`, 'post')
 }
+//מחזיר את כל סוגי הטיפולים שעסק יכול לעשות
+export const GetAllAppointmentForProWithClient = (businnes_number) => {
+    console.log(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`)
+    return Fetch(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`, 'Get')
+}
 //שינוי התור מתורים פתוחים לתורים עתידיים
 //appointment => future_apointment
 export const New_Future_Apointment = (body) => {
