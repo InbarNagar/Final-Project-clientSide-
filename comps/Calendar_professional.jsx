@@ -142,7 +142,7 @@ export default function Calendar_professional() {
       <ScrollView>
         <View style={styles.view}>
 
-          <ScrollView horizontal={true}>
+          {/* <ScrollView horizontal={true}>
             <View style={styles.container}>
 
               <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="rgb(92, 71, 205)" colortext="white"/>
@@ -150,8 +150,8 @@ export default function Calendar_professional() {
               <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="rgb(92, 71, 205)" colortext="white"/>
               <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="rgb(92, 71, 205)" colortext="white"  />
               {/* <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" /> */}
-            </View>
-          </ScrollView>
+            {/* </View>
+          </ScrollView> */} 
 
 
           {showText2 && <View style={styles.view1}>
