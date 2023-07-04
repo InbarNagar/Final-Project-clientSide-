@@ -17,6 +17,11 @@ import expo.modules.ReactNativeHostWrapper;
 
 import java.util.List;
 
+
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
+
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
@@ -66,6 +71,10 @@ public class MainApplication extends Application implements ReactApplication {
     }
     ReactNativeFlipper.initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
     ApplicationLifecycleDispatcher.onApplicationCreate(this);
+
+    FacebookSdk.sdkInitialize(getApplicationContext());
+AppEventsLogger.activateApp(this);
+
   }
 
   @Override

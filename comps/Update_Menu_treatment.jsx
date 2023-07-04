@@ -12,9 +12,10 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import LogIn from './GenralComps/LogIn'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './obj/Header';
+import Update_Menu_treatment from './Update_Menu_treatment'
 
 
-const Menu_treatment_registration = (props) => {
+const Update_Menu_treatment = (props) => {
 
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -65,7 +66,6 @@ const Menu_treatment_registration = (props) => {
   };
 
 
-  const navigation = useNavigation();
 
   // const { navigation, route } = props
   //  let businessID = route.params.businessId
@@ -74,24 +74,7 @@ const Menu_treatment_registration = (props) => {
   const bus = 1;
 
 
-  const handelLocalstorage = async () => { //קבלת הנתונים הרצויים מהלוקאלסטורג
-    try {
-      console.log("qq")
-      const idbusiness = await AsyncStorage.getItem('businessId');
-      console.log("bb")
-      console.log(idbusiness)
-      console.log('idNumber loaded successfully', idbusiness);
-      setIdNumber(idbusiness || '');
-      console.log(idNumberbusiness)
-    } catch (error) {
-      console.log('Failed to load idNumber from AsyncStorage', error);
-    }
-  }
 
-  const printAsyncStorageKeys = async () => { // פונקציה שכל מטרתה הוא לבדוק איזה מפתחות יש בלוקאלסטורג ואיך קוראים להם
-    const keys = await AsyncStorage.getAllKeys();
-    console.log("AsyncStorage keys: ", keys);
-  }
 
   const getHoursInterface = () => {
     let data = []
@@ -115,60 +98,16 @@ const Menu_treatment_registration = (props) => {
     console.log(e)
   }
 
-  async function loadData() {
-    await handelLocalstorage();
-    printAsyncStorageKeys();
-    await fetchTreatments();
-    await fetchCategories();
-    console.log("dddd" + idNumberbusiness)
-  }
+
+
+
+  const { userDetails, setUserDetails } = useContext(UserContext);
+  const navigation=useNavigation();
+ 
   useEffect(() => {
-    loadData();
-    console.log(idNumberbusiness, "%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-    // handelLocalstorage();
-    // printAsyncStorageKeys();
-    //   fetchTreatments();
-    //   fetchCategories();
-    //   console.log("dddd" + idbusiness)
-    //   // PushNotificationIOS.localNotification({
-    //   //     alertTitle: "New message",
-    //   //     alertBody: "You have a new message!",
-    //   //     userInfo: { messageId: "123" },
-    //   //   });
+    console.log("profile pro = "+JSON.stringify(userDetails));
   }, []);
 
-  const fetchTreatments = async () => {
-    try {
-      console.log("222")
-      const response = await Treatment_type_GET();
-      console.log(response);
-      //   const data = await response.json();
-      //   console.log(data);
-      console.log("111");
-      setTreatments(response);
-      console.log("333");
-      console.log(treatments);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const fetchCategories = async () => {
-    try {
-      console.log("444")
-      const responseCategory = await Category_GET();
-      console.log("777");
-      console.log(responseCategory);
-      //   const data = await response.json();
-      //   console.log(data);
-      console.log("555");
-      setCategories(responseCategory);
-      console.log("666");
-      console.log(categories);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const addTreatment = () => {
     if (selectedTreatment && selectedCategory && price && duration) {
@@ -187,7 +126,7 @@ const Menu_treatment_registration = (props) => {
         console.log(result.status)
         Alert.alert(
           'העסק נוסף בהצלחה',
-          'שמחים שהצטרפתם למשפחת Beauty Me. ' +
+           +
           'תרצו להוסיף טיפול נוסף?',
           [
             {
@@ -198,7 +137,7 @@ const Menu_treatment_registration = (props) => {
                 setDuration(null)
               }
             },
-            { text: 'ייאאלה בואו נתחיל', onPress: () => { props.navigation.navigate('LogInGenral', { userType: 'Pro' }) } },
+            { text: 'חזור לאיזור האישי', onPress: () => { props.navigation.navigate('Profil_pro') } },
           ],
           { cancelable: false }
         );
@@ -208,27 +147,10 @@ const Menu_treatment_registration = (props) => {
     };
   }
 
-  // const handledurationTime = (event, selectedTime) => {
-  //     const currentTime = selectedTime || startTime;
-  //     setdurationTimePicker(false);
-  //     setdurationTime(currentTime);
-  //   };
-
-  // const handleConfirm = (selectedDate) => {
-  //     setDuration(selectedDate.getMinutes());
-  //     setIsPickerVisible(false);
-  //   };
-
-  //   setTreatments([...treatments, newTreatment]);
-  //   setSelectedTreatment('');
-  //   setSelectedCategory('');
-  //   setPrice('');
-  //   setDuration('');
-
-
 
   return (
     <ScrollView >
+      <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <Header text="צור את תפריט הטיפולים שלך" fontSize={50} height={200} color={"rgb(92, 71, 205)"} />
           <DropDownPicker
@@ -246,7 +168,7 @@ const Menu_treatment_registration = (props) => {
             listMode="MODAL"
             positionFixed={true}
             itemStyle={{ justifyContent: 'flex-end' }}
-            placeholderStyle={{ color: 'gray', textAlign: 'right' }}
+            placeholderStyle={{ color: 'gray' }}
             labelStyle={{ fontSize: 14, color: '#000' }}
           />
           <Text>{'\n'}</Text>
@@ -262,20 +184,18 @@ const Menu_treatment_registration = (props) => {
             onChangeItem={item => setSelectedCategory(item.value)}
             searchable={true}
             style={{backgroundColor: '#fafafa', zIndex: 10000 }}
-            dropDownContainerStyle={{ backgroundColor: '#FFFFFF' , alignSelf: 'flex-end'  }}
-            dropDownStyle={{ backgroundColor: '#FFFFFF', alignSelf: 'flex-end' }} 
+            dropDownContainerStyle={{ backgroundColor: '#FFFFFF' }}
             listMode="MODAL"  // שימוש במצב מודאל
             positionFixed={true}
             itemStyle={{ justifyContent: 'flex-end' }}
-            placeholderStyle={{ color: 'gray', textAlign: 'right' }}
+            placeholderStyle={{ color: 'gray' }}
             labelStyle={{ fontSize: 14, color: '#000' }}
-            dropDownDirection="RTL"
           />
           <Text>{'\n'}</Text>
 
-          {/* <View>
+          <View>
             <Button onPress={showTimepicker} title=" בחר משך זמן טיפול" />
-  
+          </View>
           {show && (
             <DateTimePicker
               testID="dateTimePicker"
@@ -286,51 +206,8 @@ const Menu_treatment_registration = (props) => {
               onChange={onChange}
             />
           )}
-          </View> */}
-
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={onChange}
-            />
-          )}
-
-          <View style={styles.but} onPress={showTimepicker}>
-                <Text style={styles.thachtext}>בחר משך זמן הטיפול</Text>
-              </View>
-
-        </View>
-          {duration && <Text style={styles.titp}>משך זמן הטיפול: {duration}</Text>}
-          {/* <DropDownPicker
-                      open={openD}
-                      items={getHoursInterface()}
-                      setOpen={setOpenD}
-                      setValue={setdurationTime}  // שינוי כאן
-                      placeholder="זמן הטיפול"
-                      value={durationTime}
-                      containerStyle={{ height: 40 }}
-                      onChangeItem={item => setdurationTime(item.value)}  // שינוי כאן
-                      searchable={true} // ניתן לחפש באמצעות טקסט
-                      style={{ zIndex: 9999 }} // סגנון נוסף לרשימה הנגללת
-                      dropDownContainerStyle={{backgroundColor: '#FFFFFF'}}
-                      listMode="SCROLLVIEW"
-                      positionFixed={true}
-                    /> */}
-          {/* { (
-                        // <DateTimePicker
-                        // value={durationTime}
-                        // mode="time"
-                        // display="default"
-                        // onChange={handledurationTime}
-                        // />
-                        
-                    )} */}
+          {duration && <Text>משך זמן הטיפול: {duration}</Text>}
+          
           <Text>{'\n'}</Text>
           <Text style={styles.title}>מחיר</Text>
           <View style={styles.inp}>
@@ -343,20 +220,15 @@ const Menu_treatment_registration = (props) => {
 
           </View>
 
-          {/* <Button
-            title="צור תפריט טיפולים"
+          <Button
+            title="הוספת הטיפול לתפריט הטיפולים"
             onPress={addTreatment}
             disabled={!selectedTreatment || !selectedCategory || !price || !duration}
           />
-                  </View> */}
 
-                  <Text>{'\n'}</Text>
-
-      <View style={styles.but} onPress={addTreatment}   disabled={!selectedTreatment || !selectedCategory || !price || !duration}>
-                <Text style={styles.thachtext}>צור תפריט טיפולים</Text>
-      </View>
 
         </View>
+      </TouchableOpacity>
 
     </ScrollView>
   );
@@ -377,13 +249,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: 'right', // Align text to the right
   },
-  titp: {
-    textAlign: 'center',
-    color: '#fffaf0',
-    fontSize: 25,
-    color: "rgb(92, 71, 205)",
-    padding: 10
-  },
   label: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -403,35 +268,8 @@ const styles = StyleSheet.create({
     padding: 2,
     justifyContent: 'space-between',
   },
-  but: {
-    textAlign: 'center',
-    borderRadius: 25,
-    height: 50,
-    marginBottom: 20,
-    backgroundColor: "rgb(92, 71, 205)",
-    padding: 15,
-    margin: 10,
-    marginTop: 10,
-    marginLeft: 20
-
-  },
-  thachtext: {
-    textAlign: 'center',
-    color: '#fffaf0',
-    fontSize: 20,
-    fontWeight: 'bold',
-    //borderRadius: 10,
-    height: 50,
-    // marginBottom: 20,
-    // backgroundColor: '#fffaf0',
-    // padding: 15,
-    // margin: 10,
-    // marginTop: 20,
-
-
-  },
 });
 
 
-export default Menu_treatment_registration;
+export default Update_Menu_treatment;
 
