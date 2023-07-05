@@ -153,7 +153,7 @@ console.log(userDetails.ID_number);
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
                   status={appointment.Appointment_status}
-                  Date={appointment.Date}
+                  Date1={appointment.Date}
                   Start_time={appointment.Start_time}
                   End_time={appointment.End_time}
                   AddressStreet={appointment.AddressStreet}
