@@ -254,7 +254,7 @@ return out_Fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${nu
 //      reject(error)
 // })})
 }
-export const GetAllAppointmentForProWithClient = (businnes_number) => {
-    console.log(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`)
-    return Fetch(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`, 'Get')
-}
+// export const GetAllAppointmentForProWithClient = (businnes_number) => {
+//     console.log(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`)
+//     return Fetch(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`, 'Get')
+// }

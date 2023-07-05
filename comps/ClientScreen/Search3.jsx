@@ -52,7 +52,6 @@ export default function Search3(props) {
   // אזור טיפול בהצגה והעלמת אזורים
   const [showSearchSection, setShowSearchSection] = useState(true); //להפעיל תצוגת חיפוש תור
 
-
   const handleSearchToggleSection = () => {
     console.log("מסך חיפוש : " + showSearchSection);
     setShowSAppointmenthSectionn(false);
@@ -61,10 +60,8 @@ export default function Search3(props) {
   };
 
 
-  const [showSAppointmenthSection, setShowSAppointmenthSectionn] =
-    useState(false); //להפעיל תצוגת תורים
-
-
+  const [showSAppointmenthSection, setShowSAppointmenthSectionn] = useState(false); //להפעיל תצוגת תורים
+  
   const handleAppointmentToggleSection = () => {
     setShowSearchSection(false);
     setShowProfileSection(false);
@@ -91,11 +88,14 @@ export default function Search3(props) {
 
     console.log("התורים שלי: " + showSAppointmenthSection);
     setShowSAppointmenthSectionn(!showSAppointmenthSection);
-    console.log("התורים שלי: " + showSAppointmenthSection);
+    console.log(": " + showSAppointmenthSection);
 console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-console.log(userDetails.ID_number);
+console.log(userDetails.ID_number, "22222222222222222222222");
+   console.log(AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).data)
+
   AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
 
+    console.log("1111111111111111111111111111111111111111111")
        console.log(result.data,"**************************************************************************************");
         setallAppointment(result.data)
     }, (error) => {

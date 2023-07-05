@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Header = (props) => {
-    const {text, color, fontSize, backgroundColor, height} = props
+    const {text, color, fontSize, backgroundColor, height, paddingTop} = props
 
     Header.defaultProps = {
       backgroundColor: 'transparent',
       fontSize: 30,
-      color: '#9acd32',
+      color: 'black',
       height: 80,
+      paddingTop: 10
     };
     
     const styles = StyleSheet.create({
@@ -17,7 +18,7 @@ const Header = (props) => {
         justifyContent: 'center',
         backgroundColor: backgroundColor,
         height: height,
-        paddingTop: 10,
+        paddingTop: paddingTop,
         shadowColor: '#000',
         shadowOffset: { width: 5, height: 5 },
         shadowOpacity: 0.2,
