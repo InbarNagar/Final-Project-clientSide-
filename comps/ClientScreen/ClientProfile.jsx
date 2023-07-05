@@ -1,10 +1,10 @@
-import { React, useContext, useEffect, useState, useCallback  } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {View, Text, TouchableOpacity, Linking, StyleSheet, Image, BackHandler, Alert} from "react-native";
 import {Button} from 'react-native-elements';
 import { AntDesign, Feather, FontAwesome } from "@expo/vector-icons";
 import { UserContext } from "../UserDietails";
 import { exp } from "react-native-reanimated";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation} from "@react-navigation/core";
 import { DeleteClient } from "../obj/FunctionAPICode";
 import { TextInput } from "react-native-gesture-handler";
 import { string } from "prop-types";
@@ -13,10 +13,11 @@ import { openURL, canOpenURL } from "expo-linking";
 
 
 
-const ClientProfile = (props) => {
+
+const ClientProfile = (Props) => {
 
   // זה של התמונת פרופיל
-  // const [src, setsrc] = useState()
+  const [src, setsrc] = useState()
   // useFocusEffect(
   //     React.useCallback(() => {
   //    setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg`)
@@ -103,9 +104,7 @@ else{
     <View style={styles.view1}>
            <Text style={styles.tit}> שלום {userDetails.First_name}</Text>
          
- {/* <TouchableOpacity onPress={() => Props.navigation.navigate('CameraUse', { imageName: "profil" + userDetails.ID_number })}>
-<Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
-</TouchableOpacity> */}
+
 
 
 {/* העליון לא נכון!! התחתון אמור לעבוד אבל לא מצליח למצוא את התמונה של אם אין תמונת פרופיל אז לא יכולה בנתיים לבדוק את זה */}
@@ -113,11 +112,14 @@ else{
   {src ? (
     <Image style={styles.img} source={{ uri: src }} />
   ) : (
-    <Image style={styles.img} source={require('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} />
+    <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
   )}
 </TouchableOpacity> */}
 
 
+<TouchableOpacity onPress={() => navigation.navigate('CameraUse', { imageName: "profil" + userDetails.ID_number })}>
+  <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
+</TouchableOpacity>
 
 <View style={styles.iconContainer}> 
 <TouchableOpacity onPress={handleInstagramLink}>
