@@ -187,20 +187,20 @@ const New_Calendar = () => {
 
   const cancel = (Number_appointment, token) => {
     CancelAppointmentByClient(Number_appointment).then((result) => {
-        if (result.data) {
-          console.log(result.data);
-          setAlert(
-            <Alert
-              text="התור בוטל נשלחה הודעה ללקוח על ביטול התור"
-              type="worng"
-              time={1000}
-              bottom={100}
-            />
-          );
-          console.log(token,"**********************************************")
-          setToken(token);
-        }
-      })
+      if (result.data) {
+        console.log(result.data, "**********************");
+        setAlert(
+          <Alert
+            text="התור בוטל נשלחה הודעה ללקוח על ביטול התור"
+            type="worng"
+            time={1000}
+            bottom={600}
+          />
+        )
+        console.log(token, "**********************************************cancellll")
+        setToken(token);
+      }
+    })
       .catch((error) => {
         console.log("error", error);
 
@@ -376,15 +376,15 @@ const New_Calendar = () => {
                       </TouchableOpacity>
                     ) : null}
                   </View>
+                  <View style={styles.container1}>
+                    <TouchableOpacity onPress={cancel(appointment.Number_appointment, appointment.Client.token)
+                    }>
 
-                  <TouchableOpacity onPress={ cancel( appointment.Number_appointment, appointment.Client.token )
-                        }>
-                    <View style={styles.container1}>
                       <Icon name="times-circle" size={30} color="#900" />
                       <Text style={styles.text}>ביטול תור</Text>
-                    </View>
-                  </TouchableOpacity>
 
+                    </TouchableOpacity>
+                  </View>
                 </ScrollView>
               </>
             )}

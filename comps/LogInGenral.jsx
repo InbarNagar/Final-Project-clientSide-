@@ -101,9 +101,7 @@ if(userDetails){
   },[userDetails])
 
   const handleLogin =  async () => {
-    // console.log(isLoading, "1111111111111")
-    // setIsLoading(true);
-    // console.log(isLoading, "2222222222222")
+  
     const data = {
         id_number: ID_number,
         password: password,
@@ -129,8 +127,7 @@ if(userDetails){
     />)
         console.log('error', error)
       })
-      // setIsLoading(false);
-      
+     
   }
   const Registration = () => {
    
