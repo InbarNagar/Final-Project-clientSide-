@@ -50,7 +50,6 @@ export default function Search3(props) {
   // אזור טיפול בהצגה והעלמת אזורים
   const [showSearchSection, setShowSearchSection] = useState(true); //להפעיל תצוגת חיפוש תור
 
-
   const handleSearchToggleSection = () => {
     console.log("מסך חיפוש : " + showSearchSection);
     setShowSAppointmenthSectionn(false);
@@ -59,7 +58,8 @@ export default function Search3(props) {
   };
 
 
-  const [showSAppointmenthSection, setShowSAppointmenthSectionn] = useState(false); //להפעיל תצוגת תורים
+  const [showSAppointmenthSection, setShowSAppointmenthSectionn] =
+    useState(false); //להפעיל תצוגת תורים
 
 
   const handleAppointmentToggleSection = () => {
@@ -85,12 +85,13 @@ export default function Search3(props) {
 // }
 
     console.log("התורים שלי: " + showSAppointmenthSection);
-    setShowSAppointmenthSectionn(true);
+    setShowSAppointmenthSectionn(!showSAppointmenthSection);
     console.log("התורים שלי: " + showSAppointmenthSection);
-    console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-    console.log(userDetails.ID_number)
-    AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
+console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+console.log(userDetails.ID_number);
+  AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
 
+    console.log("1111111111111111111111111111111111111111111")
        console.log(result.data,"**************************************************************************************");
         setallAppointment(result.data)
     }, (error) => {
@@ -148,7 +149,7 @@ export default function Search3(props) {
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
                   status={appointment.Appointment_status}
-                  Date={appointment.Date}
+                  Date1={appointment.Date}
                   Start_time={appointment.Start_time}
                   End_time={appointment.End_time}
                   AddressStreet={appointment.AddressStreet}

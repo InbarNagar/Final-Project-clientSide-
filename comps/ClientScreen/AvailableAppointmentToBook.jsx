@@ -126,7 +126,7 @@ const AvailableAppointmentToBook = (props) => {
     }
     const betweenHours=getMissingHours(result.diary[0].time);
     console.log("betweenHours: "+betweenHours); // [11,12,13]
-    firstHour.push(betweenHours)
+    // firstHour.push(betweenHours)
     console.log("Minimum number:", minNumber);
     console.log("Maximum number:", maxNumber);
     const hours = Array.from(
@@ -161,6 +161,7 @@ const AvailableAppointmentToBook = (props) => {
     // ...
     console.log("hours : " + hours);
     console.log("firstHour: "+firstHour);
+    console.log("endHour: "+endHour);
     let str="";
     console.log("result.diary[i].time)" + result.diary[0].time +" - "+result.diary[0].time.length);
     if(result.diary[0].time.length==1){ //בודק האם מערך השעות מפוצל (גדול מ-1)
@@ -180,42 +181,45 @@ const AvailableAppointmentToBook = (props) => {
     }}
     else{
       console.log("else "+result.id);
-     tempArr= getUnusedIntervals(hours,firstHour,endHour,betweenHours)
+      for (let i = 0; i < hours.length; i++) {
+        console.log(i+ " "+ hours[i] + "str= "+str);
+        if(!firstHour.includes(hours[i])){
+        if(!endHour.includes(hours[i])){
+          if(!betweenHours.includes(hours[i])){
+        if(str===""){
+          console.log(i+" :"+hours[i]);
+          str=`${hours[i]}`;
+        }}}}
+        else if(str!=="" || betweenHours.includes(hours[i]+duration)){
+          console.log("else if : "+hours[i]);
+          str+=`-${hours[i]}`;
+          tempArr.push(str);
+          str="";
+        }
+         if(str==="" && hours[i]===hours[hours.length-1] && !endHour.includes(hours[hours.length-1])){
+          console.log("else if 3: "+hours[i]);
+          str=`${hours[i]}-${hours[hours.length-1]+duration}`
+          tempArr.push(str);
+        }
+        if((endHour.includes(hours[i]) && str==="" )&& 
+        !betweenHours.includes(hours[i]+duration)&&!firstHour.includes(hours[i])){
+          console.log("last if");
+          console.log(i+" :"+hours[i]);
+          str=`${hours[i]}`;
+        }
+      }
+      
+      if(str!==""){
+        console.log(str+" = last hour to add"+hours[hours.length-1]+duration);
+      str+=`-${hours[hours.length-1]+duration}`;
+      tempArr.push(str);
+      }
     }
+    console.log("final str= "+str);
     console.log(
       `Diary of ${result.id}: ` + tempArr + " length: " + tempArr.length
     );
-
-    function getUnusedIntervals(hours, start, end, between) {
-      let intervals = [];
-      let usedHours = new Set();
-  
-      for (let i = 0; i < start.length; i++) {
-          for (let j = start[i]; j <= end[i]; j++) {
-              usedHours.add(j);
-          }
-      }
-  
-      for (let hour of between) {
-          usedHours.add(hour);
-      }
-  
-      for (let i = 0; i < hours.length; i++) {
-          if (!usedHours.has(hours[i])) {
-              let intervalStart = hours[i];
-  
-              while (i < hours.length && !usedHours.has(hours[i])) {
-                  i++;
-              }
-              
-              let intervalEnd = i === hours.length ? 20 : hours[i];
-  
-              intervals.push(`${intervalStart}-${intervalEnd}`);
-          }
-      }
-  
-      return intervals;
-  }
+    
     // update newArr state variable with new values
     SetNewArr(tempArr);
     console.log("array of diary to print: " + typeof newArr[1]);
@@ -278,6 +282,7 @@ const AvailableAppointmentToBook = (props) => {
         <BusinessSchedule
           businessNumber={result.id}
           hours={newArr}
+          duration={duration}
           typeTreatmentNumber={treatmentNumber}
           // duration={result.typeTritment[0].duration}
           // min={minNumber}
