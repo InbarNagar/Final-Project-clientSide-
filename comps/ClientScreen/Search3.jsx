@@ -7,16 +7,14 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
-import {
-  AllApointemtDetailesForClient_With_BusinessReview
-} from "../obj/FunctionAPICode";
+import { AllApointemtDetailesForClient_With_BusinessReview } from "../obj/FunctionAPICode";
 import { UserContext } from "../UserDietails";
 import Geocoder from 'react-native-geocoding';
-
 import ClientProfile from "./ClientProfile";
 import SearchFiltersMenu from "./SearchFiltersMenu";
 import NewSearch3 from "./NewSearch3";
 import AppointmentCard_forClient from "./AppointmentCard_forClient";
+
 
 export default function Search3(props) {
   const { navigation } = props;
@@ -61,8 +59,7 @@ export default function Search3(props) {
   };
 
 
-  const [showSAppointmenthSection, setShowSAppointmenthSectionn] =
-    useState(false); //להפעיל תצוגת תורים
+  const [showSAppointmenthSection, setShowSAppointmenthSectionn] = useState(false); //להפעיל תצוגת תורים
 
 
   const handleAppointmentToggleSection = () => {
@@ -88,11 +85,11 @@ export default function Search3(props) {
 // }
 
     console.log("התורים שלי: " + showSAppointmenthSection);
-    setShowSAppointmenthSectionn(!showSAppointmenthSection);
+    setShowSAppointmenthSectionn(true);
     console.log("התורים שלי: " + showSAppointmenthSection);
-console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-console.log(userDetails.ID_number);
-  AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
+    console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+    console.log(userDetails.ID_number)
+    AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
 
        console.log(result.data,"**************************************************************************************");
         setallAppointment(result.data)
@@ -150,7 +147,7 @@ console.log(userDetails.ID_number);
                   Review_Number={appointment.Review_Number}
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
-
+                  status={appointment.Appointment_status}
                   Date={appointment.Date}
                   Start_time={appointment.Start_time}
                   End_time={appointment.End_time}
