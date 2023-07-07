@@ -97,7 +97,7 @@ console.log(userDetails.ID_number, "22222222222222222222222");
 
     console.log("1111111111111111111111111111111111111111111")
        console.log(result.data,"**************************************************************************************");
-        setallAppointment(result.data)
+        setallAppointment(result)
     }, (error) => {
       console.log('error', error)
     })

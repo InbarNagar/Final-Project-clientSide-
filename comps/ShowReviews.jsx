@@ -2,6 +2,9 @@ import { useNavigation,useRoute } from "@react-navigation/core";
 import React, { useState,useEffect } from "react";
 import {View,Text,StyleSheet,ScrollView} from "react-native";
 import { AllBusinessReviews } from "./obj/FunctionAPICode";
+import Menu_professional from './obj/Menu_professional';
+import Header from "./obj/Header";
+
 
 const ShowReviews =()=>{
     const route = useRoute();
@@ -10,22 +13,32 @@ const ShowReviews =()=>{
     const [allReviews,SetAllReviews]=useState([]);
     useEffect(() => {
         console.log("business reviews= " + BusinessNumber);
+        console.log(AllBusinessReviews(BusinessNumber))
         AllBusinessReviews(BusinessNumber)
           .then((result) => {
+            console.log(result, "10101010101010101")
             console.log(result.data);
-            SetAllReviews(result.data);
+            SetAllReviews(result);
           })
+          // .then((result) => {
+          //   jjjjj = result.
+          //   console.log(result.data);
+          //   SetAllReviews(result.data);
+          // })
           .catch((error) => {
             console.log('error', error);
           });
       }, []);
     
       useEffect(() => {
-        console.log(JSON.stringify(allReviews));
+        console.log(JSON.stringify(allReviews), "5555555555555555555555555555555555");
       }, [allReviews]);
 
     return (
+      <>
     <ScrollView>
+    <Header text="ביקורות על העסק שלך" fontSize={35} height={200} color={"rgb(92, 71, 205)"} />
+
         {allReviews.map((review)=>
         {
         console.log(review);
@@ -38,6 +51,9 @@ const ShowReviews =()=>{
       </View>);
         })} 
       </ScrollView>
+      <Menu_professional />
+      </>
+
     );
   };
 
