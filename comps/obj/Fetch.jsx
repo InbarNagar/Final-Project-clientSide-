@@ -13,8 +13,10 @@ export const Fetch = (url, method) =>
       .then(res => {
         if (res && res.status == 200|| res.status === 201) {
           resolve(res.json());
+          // console.log(resolve, res.json, res, res.status, reject,   "8888888888888") //בדיקות
         } else {
           throw new Error(res.status)
+          // console.log("7777777777777777") //בדיקות
         }
       })
       .catch(err => {
@@ -22,6 +24,7 @@ export const Fetch = (url, method) =>
         console.log("method=>", method)
         console.log("status=>", err)
         reject("status code: " + err);
+        // console.log("66666666666666666") //בדיקות
       });
   })
 
@@ -29,10 +32,15 @@ export const Axios = (url, method, body) =>
   new Promise((resolve, reject) => {
     const configurationObject = {
       url:Baseurl+url,
-      method: method,
+      method: method, 
       data: body
     }
+<<<<<<< HEAD
    
+=======
+    // console.log(configurationObject, "!!!")  //בדיקות
+
+>>>>>>> eea5fa235f7d4ded62d51b4076b444e796f58686
     axios(configurationObject)
       .then((response) => {
         if (response.status === 200 || response.status === 201) {
@@ -47,6 +55,11 @@ export const Axios = (url, method, body) =>
         console.log("body=>",body);
         console.log("url=>", Baseurl + url)
         console.log("method=>", method)
+<<<<<<< HEAD
+=======
+        // reject(error); //בדיקות
+        // reject(error.response);  //בדיקות
+>>>>>>> eea5fa235f7d4ded62d51b4076b444e796f58686
         reject(error.response.status);
       });
   })
