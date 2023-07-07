@@ -7,15 +7,13 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
-import {
-  AllApointemtDetailesForClient_With_BusinessReview
-} from "../obj/FunctionAPICode";
+import { AllApointemtDetailesForClient_With_BusinessReview } from "../obj/FunctionAPICode";
 import { UserContext } from "../UserDietails";
 import Geocoder from 'react-native-geocoding';
-import AppointmentCard_forClient from "./AppointmentCard_forClient";
 import ClientProfile from "./ClientProfile";
 import SearchFiltersMenu from "./SearchFiltersMenu";
 import NewSearch3 from "./NewSearch3";
+import AppointmentCard_forClient from "./AppointmentCard_forClient";
 
 
 export default function Search3(props) {
@@ -60,8 +58,10 @@ export default function Search3(props) {
   };
 
 
-  const [showSAppointmenthSection, setShowSAppointmenthSectionn] = useState(false); //להפעיל תצוגת תורים
-  
+  const [showSAppointmenthSection, setShowSAppointmenthSectionn] =
+    useState(false); //להפעיל תצוגת תורים
+
+
   const handleAppointmentToggleSection = () => {
     setShowSearchSection(false);
     setShowProfileSection(false);
@@ -84,15 +84,11 @@ export default function Search3(props) {
 //   "userType": "Cli"
 // }
 
-
-
     console.log("התורים שלי: " + showSAppointmenthSection);
     setShowSAppointmenthSectionn(!showSAppointmenthSection);
-    console.log(": " + showSAppointmenthSection);
+    console.log("התורים שלי: " + showSAppointmenthSection);
 console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-console.log(userDetails.ID_number, "22222222222222222222222");
-   console.log(AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).data)
-
+console.log(userDetails.ID_number);
   AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
 
     console.log("1111111111111111111111111111111111111111111")
@@ -153,7 +149,7 @@ console.log(userDetails.ID_number, "22222222222222222222222");
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
                   status={appointment.Appointment_status}
-                  Date={appointment.Date}
+                  Date1={appointment.Date}
                   Start_time={appointment.Start_time}
                   End_time={appointment.End_time}
                   AddressStreet={appointment.AddressStreet}

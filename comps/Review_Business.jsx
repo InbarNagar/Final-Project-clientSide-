@@ -126,7 +126,7 @@ const Review_Business = ({ route }) => {
     console.log(Business_Number + ' ' + BusinessName + ' ' + Number_appointment + ' ' + ClientIDnumber);
   }, []);
 
-  function publishReview() {
+  function publsihReview() {
     try {
       // Check if appointmentDetails is not undefined
       let Overall = (cleanliness + Professionalism + On_time) / 3;
@@ -219,7 +219,7 @@ const Review_Business = ({ route }) => {
                 console.log(`שירות: ${On_time}`);
                 console.log(`מוצר: ${Professionalism}`);
                 console.log(`הערות: ${Comment}`);
-                publishReview();
+                publsihReview();
               }}
             >
 
