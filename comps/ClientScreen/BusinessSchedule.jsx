@@ -19,11 +19,11 @@ import { useNavigation } from "@react-navigation/native";
 const BusinessSchedule = (props) => {
   const [token, settoken] = useState(null);
   const { userDetails } = useContext(UserContext);
-  const { duration,hours, Is_client_house,typeTreatmentNumber, businessNumber, isVisible, date, onClose } = props;
+  const { duration,hours, Is_client_house,Type_Treatment_Number, businessNumber, isVisible, date, onClose } = props;
   const [pressedHour, setPressedHour] = useState(null);
   const navigation = useNavigation();
   useEffect(() => {
-    console.log(`props ${businessNumber} : ${date}  treatment number: ${typeTreatmentNumber} Is_client_house ${Is_client_house}`);
+    console.log(`props ${businessNumber} : ${date}  treatment number: ${Type_Treatment_Number} Is_client_house ${Is_client_house}`);
     if (token) {
       const body = {
         to: token,
@@ -43,7 +43,7 @@ const BusinessSchedule = (props) => {
 
   const btnBookApiontment = (item) => {
     const [start, end] = item.split('-').map(Number);
-    console.log(`book Appointment: start- ${start} end- ${end} ${date} ${typeTreatmentNumber} `);
+    console.log(`book Appointment: start- ${start} end- ${end} ${date} ${Type_Treatment_Number} `);
     const pickedApointment = {
       Date: date,
       ID_Client: userDetails.ID_number,
@@ -51,6 +51,7 @@ const BusinessSchedule = (props) => {
       End_Hour: end,
       Business_Number: businessNumber,
       Is_client_house: "YES",
+      Type_Treatment_Number:Type_Treatment_Number  
     };
     NewAppointmentToClient(pickedApointment).then(
       (result) => {

@@ -15,21 +15,15 @@ import Button from './obj/Button';
 import Alert from './Alert';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
 import Client_registration from './Client_registration';
-import Loading from './CTools/Loading';
-
 
 export default function LogInGenral(props) {
   const [ID_number, setID_number] = useState('');
   const [password, setPassword] = useState('');
   const { navigation, route } = props
-
    const { userDetails, setUserDetails } = useContext(UserContext);
    const [islogin,setlogin]= useState();
-   const [alert, setAlert] = useState()
+   const [alert, setAlert] = useState();
    const [hidePassword, setHidePassword] = useState(true)
-
-  //  const [isLoading, setIsLoading] = useState(false);
-
 
    const onPressEye = () => {
     setHidePassword(!hidePassword);
@@ -37,7 +31,7 @@ export default function LogInGenral(props) {
  
   const eyeIcon = hidePassword ? 'visibility' : 'visibility-off';
    useEffect( () => {
-    // setLoading(true)
+
    if(islogin&&userDetails) {PushNofitictaion().then((token) => {
         let data = { "pushtoken": token };
         console.log('***',token)
@@ -101,8 +95,7 @@ if(userDetails){
   },[userDetails])
 
   const handleLogin =  async () => {
-  
-    const data = {
+      const data = {
         id_number: ID_number,
         password: password,
       } 
@@ -110,13 +103,6 @@ if(userDetails){
         console.log('yes', result.data);
          setUserDetails(result.data)
          setlogin(true);
-
-         const dataLoading = {
-          text: "טוען...",
-          opacity: "#ffffff70",
-        } 
-        Loading(dataLoading)
-
        
       }, (error) => {
         setAlert(<Alert
@@ -127,7 +113,7 @@ if(userDetails){
     />)
         console.log('error', error)
       })
-     
+    
   }
   const Registration = () => {
    
@@ -141,10 +127,7 @@ if(userDetails){
  
   return (
     <>
-    {/* {isLoading && <Loading opacity="#ffffff70" text="טוען..." />} */}
-    {/* {isLoading ? <Loading opacity="#ffffff70" text="טוען..." /> : null} */}
-
-      <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+        <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
         <ScrollView>
     {alert && alert}
     <View style={styles.container}>

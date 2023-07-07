@@ -251,7 +251,7 @@ const AvailableAppointmentToBook = (props) => {
       <Text style={styles.titleText}>
         פרטי עסק: {result.businessName}, {result.city}
       </Text>
-      <Text> {result.Is_client_house === "YES" ? "טיפול ביתי" : ""} </Text>
+      <Text> {result.Is_client_house === "YES" ? "טיפול ביתי" : "טיפול בבית העסק"} </Text>
       <Text style={styles.titleText}>שעות פנויות: </Text>
       {newArr.map((d, index) => (
         <Text style={styles.text} key={index}>
@@ -283,7 +283,7 @@ const AvailableAppointmentToBook = (props) => {
           businessNumber={result.id}
           hours={newArr}
           duration={duration}
-          typeTreatmentNumber={treatmentNumber}
+          Type_Treatment_Number={treatmentNumber}
           // duration={result.typeTritment[0].duration}
           // min={minNumber}
           // max={maxNumber}

@@ -65,7 +65,7 @@ export default function Search3(props) {
   const handleAppointmentToggleSection = () => {
     setShowSearchSection(false);
     setShowProfileSection(false);
-
+   setShowSAppointmenthSectionn(true);
 // const data={
 //   "AddressCity":userDetails.AddressCity ,
 //   "AddressHouseNumber":userDetails.AddressHouseNumber ,
@@ -85,7 +85,7 @@ export default function Search3(props) {
 // }
 
     console.log("התורים שלי: " + showSAppointmenthSection);
-    setShowSAppointmenthSectionn(!showSAppointmenthSection);
+   
     console.log("התורים שלי: " + showSAppointmenthSection);
 console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 console.log(userDetails.ID_number);
@@ -148,7 +148,6 @@ console.log(userDetails.ID_number);
                   Review_Number={appointment.Review_Number}
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
-                  status={appointment.Appointment_status}
                   Date1={appointment.Date}
                   Start_time={appointment.Start_time}
                   End_time={appointment.End_time}

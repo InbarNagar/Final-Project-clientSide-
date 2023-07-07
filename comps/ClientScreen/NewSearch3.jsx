@@ -217,7 +217,7 @@ export default function NewSearch3() {
     categories.map((z) => {
       //שומר את מספר ההטיפול בשביל הקריאה לשמירת תור עתידי
       if (z.Name == NameTreatment) {
-        num = z.Type_treatment_Number;
+        num = z.Type_treatment_Number1;
         console.log(
           "treatment number: " + num,
           "treatment name: " + NameTreatment

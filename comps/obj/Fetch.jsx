@@ -32,8 +32,7 @@ export const Axios = (url, method, body) =>
       method: method,
       data: body
     }
-    console.log(configurationObject, "33333333333333")
-
+   
     axios(configurationObject)
       .then((response) => {
         if (response.status === 200 || response.status === 201) {
@@ -48,8 +47,6 @@ export const Axios = (url, method, body) =>
         console.log("body=>",body);
         console.log("url=>", Baseurl + url)
         console.log("method=>", method)
-        reject(error);
-        reject(error.response);
         reject(error.response.status);
       });
   })

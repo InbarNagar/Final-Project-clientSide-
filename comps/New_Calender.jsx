@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { Linking } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import Alert from './Alert';
+import { Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import { GetAllAppointmentForProWithClient } from './obj/FunctionAPICode';
 import { ConfirmAppointment } from './obj/FunctionAPICode';
@@ -14,6 +14,7 @@ import { faSpa } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../comps/UserDietails';
 import { CancelAppointmentByClient } from './obj/FunctionAPICode';
 import { Post_SendPushNotification } from './obj/FunctionAPICode';
+
 const New_Calendar = () => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const BussinesNumber = userDetails.Business_Number;
@@ -24,7 +25,7 @@ const New_Calendar = () => {
   const [alert, setAlert] = useState();
   const [tokenClient, setToken] = useState();
   const [markedDates, setMarkedDates] = useState({});
-
+  
   useEffect(() => {
     if (tokenClient) {
       const body = {
@@ -39,7 +40,7 @@ const New_Calendar = () => {
       }
       Post_SendPushNotification(body).then
         (() => {
-          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%")
+          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%% טקקקקקקקק", tokenClient)
         }
         )
     }
@@ -155,54 +156,53 @@ const New_Calendar = () => {
     setShowDetails(true);
   };
 
-  const confirmStatus = (Number_appointment, token) => {
-    ConfirmAppointment(Number_appointment)
-      .then((result) => {
-        if (result.data) {
-          console.log(result.data);
-          setAlert(
-            <Alert
-              text="התור אושר בהצלחה, נשלחה הודעה ללקוח"
-              type="worng"
-              time={1000}
-              bottom={100}
-            />
-          );
-          setToken(token);
-        }
-      })
-      .catch((error) => {
-        console.log("error", error);
-        setAlert(
-          <Alert
-            text="לא הצלחנו לאשר, אנא נסה שוב מאוחר יותר"
-            type="worng"
-            time={1000}
-            bottom={100}
-          />
-        );
-      });
-  };
+  // const confirmStatus = (Number_appointment, token) => {
+  //   ConfirmAppointment(Number_appointment)
+  //     .then((result) => {
+  //       if (result.data) {
+  //         console.log(result.data);
+  //         setAlert(
+  //           <Alert
+  //             text="התור אושר בהצלחה, נשלחה הודעה ללקוח"
+  //             type="worng"
+  //             time={1000}
+  //             bottom={100}
+  //           />
+  //         );
+  //         setToken(token);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("error", error);
+  //       setAlert(
+  //         <Alert
+  //           text="לא הצלחנו לאשר, אנא נסה שוב מאוחר יותר"
+  //           type="worng"
+  //           time={1000}
+  //           bottom={100}
+  //         />
+  //       );
+  //     });
+  // };
 
 
-  const cancel = (Number_appointment, token) => {
+  const cancel = (Number_appointment) => {
     CancelAppointmentByClient(Number_appointment).then((result) => {
       if (result.data) {
         console.log(result.data, "**********************");
-        setAlert(
-          <Alert
-            text="התור בוטל נשלחה הודעה ללקוח על ביטול התור"
-            type="worng"
-            time={1000}
-            bottom={600}
-          />
+        Alert.alert(
+          "התראה",
+          "התור בוטל בהצלחה",
+          [
+            { text: "אישור", onPress: () => console.log("אישור Pressed") }
+          ]
         )
-        console.log(token, "**********************************************cancellll")
-        setToken(token);
+     
       }
     })
       .catch((error) => {
         console.log("error", error);
+       
 
       });
   };
@@ -243,14 +243,13 @@ const New_Calendar = () => {
 
   return (
     <ScrollView>
-      {alert && alert}
       <View>
         <Calendar
           style={styles.calendarContainer}
           markedDates={markedDates}
           onDayPress={handleDayPress}
         />
-
+{alert && alert}
         {selectedAppointments.map((appointment) => (
           <TouchableOpacity
             style={styles.card}
@@ -376,15 +375,17 @@ const New_Calendar = () => {
                       </TouchableOpacity>
                     ) : null}
                   </View>
-                  <View style={styles.container1}>
-                    <TouchableOpacity onPress={cancel(appointment.Number_appointment, appointment.Client.token)
-                    }>
 
+                  <TouchableOpacity onPress={() => {
+                    setToken(appointment.Client.token);
+                    cancel(appointment.Number_appointment);
+                  }}>
+                    <View style={styles.container1}>
                       <Icon name="times-circle" size={30} color="#900" />
                       <Text style={styles.text}>ביטול תור</Text>
+                    </View>
+                  </TouchableOpacity>
 
-                    </TouchableOpacity>
-                  </View>
                 </ScrollView>
               </>
             )}
