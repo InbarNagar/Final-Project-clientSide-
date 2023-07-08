@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -14,6 +14,7 @@ import { faSpa } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../comps/UserDietails';
 import { CancelAppointmentByClient } from './obj/FunctionAPICode';
 import { Post_SendPushNotification } from './obj/FunctionAPICode';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const New_Calendar = () => {
   const { userDetails, setUserDetails } = useContext(UserContext);
@@ -25,7 +26,9 @@ const New_Calendar = () => {
   const [alert, setAlert] = useState();
   const [tokenClient, setToken] = useState();
   const [markedDates, setMarkedDates] = useState({});
-  
+  const [selectedDay, setSelectedDay] = useState(null);
+ 
+
   useEffect(() => {
     if (tokenClient) {
       const body = {
@@ -119,11 +122,11 @@ const New_Calendar = () => {
         marked: true,
         dotColor: "rgb(92, 71, 205)",
         activeOpacity: 0.7,
-        selectedColor: "green",
         customStyles: {
-          text: {
-            color: "red",
+          container: {
+            backgroundColor: "purple",
           },
+
         },
       };
       // אם התאריך כבר קיים במערך, מוסיף את התוויות החדשות לתאריך הקיים
@@ -153,8 +156,38 @@ const New_Calendar = () => {
 
     setSelectedDate(selectedDate);
     setSelectedAppointments(selectedAppointments);
+    setSelectedDay(selectedDate); // עדכון התאריך הנבחר
+
+    const updatedMarkedDates = { ...markedDates }; // יצירת מערך חדש כדי לא לשנות את המערך המקורי
+
+    if (selectedDay) {
+      updatedMarkedDates[selectedDay] = {
+        ...updatedMarkedDates[selectedDay],
+        selected: false,
+        customStyles: {
+          container: {},
+          text: {},
+        },
+      };
+    }
+
+    updatedMarkedDates[selectedDate] = {
+      ...updatedMarkedDates[selectedDate],
+      selected: true,
+      customStyles: {
+        container: {
+          backgroundColor: "purple",
+        },
+        text: {
+          color: "white",
+        },
+      },
+    };
+
+    setMarkedDates(updatedMarkedDates); // עדכון מערך ה־`markedDates`
     setShowDetails(true);
   };
+
 
   // const confirmStatus = (Number_appointment, token) => {
   //   ConfirmAppointment(Number_appointment)
@@ -197,15 +230,35 @@ const New_Calendar = () => {
             { text: "אישור", onPress: () => console.log("אישור Pressed") }
           ]
         )
-     
+
       }
     })
       .catch((error) => {
         console.log("error", error);
-       
+
 
       });
   };
+
+  const send=(token,Name_type,Date,Start_Hour,End_Hour)=>{
+    const body = {
+      "to": token,
+      "title": "BeautyMe",
+      "body": `תזכורת לטיפול ${Name_type} שנקבע לתאריך ${Date} בין השעות ${moment(Start_Hour, "HH:mm").format("HH:mm")} ל-${moment(End_Hour).format("HH:mm")}`,
+      "badge": "0",
+      "ttl": "1",
+      "data": {
+        "to": token
+      }}
+    Post_SendPushNotification(body).then
+      (() => {
+        console.log("נשלחה התראה,", token)
+      }
+      )
+  };
+
+ 
+
   LocaleConfig.locales["he"] = {
     monthNames: [
       "ינואר",
@@ -249,7 +302,7 @@ const New_Calendar = () => {
           markedDates={markedDates}
           onDayPress={handleDayPress}
         />
-{alert && alert}
+        {alert && alert}
         {selectedAppointments.map((appointment) => (
           <TouchableOpacity
             style={styles.card}
@@ -257,18 +310,20 @@ const New_Calendar = () => {
             onPress={() => setShowDetails(!showDetails)}
           >
             {showDetails && (
-              <>
-                <ScrollView>
+
+              <View style={{ flexDirection: 'row', flex: 2 }}>
+
+                <View style={{ flex: 1 }}>
                   <View>
                     <Text style={styles.title}>פרטי התור:</Text>
                   </View>
                   <View style={styles.iconContainer}>
-                    <Icon name="leaf" size={20} color="black" style={styles.icon} />
+                    <Icon name="leaf" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
                     <Text style={styles.text}>{appointment.Name_type}</Text>
                   </View>
 
                   <View style={styles.iconContainer}>
-                    <Icon name="clock-o" size={20} color="black" style={styles.icon} />
+                    <Icon name="clock-o" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
                     <Text style={styles.text}>
                       {moment(appointment.Start_Hour, "HH:mm").format("HH:mm")} -{" "}
                       {moment(appointment.End_Hour, "HH:mm").format("HH:mm")}
@@ -306,35 +361,62 @@ const New_Calendar = () => {
 
                   {appointment.Is_client_house === "YES" || "YES       " ? (
                     <View style={styles.iconContainer}>
-                      <Icon name="home" size={20} color="black" />
+                      <Icon name="home" size={20} color="rgb(92, 71, 205)" />
                       <Text style={styles.text}>  טיפול בבית הלקוח </Text>
 
                     </View>
 
                   ) : (
                     <>
-
-                      <Icon name="briefcase" size={20} color="black" style={styles.icon} />
+                      <Icon name="briefcase" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
                       טיפול בבית העסק
                     </>
                   )}
 
-
-                  <Text style={styles.title}>פרטי הלקוח:</Text>
-
-                  <Text style={styles.text}>
-                    {appointment.Client.First_name} {appointment.Client.Last_name}
-                  </Text>
-
-                  {appointment.Is_client_house === "YES" || "YES       " ? (
+                  <TouchableOpacity onPress={() => {
+                    setToken(appointment.Client.token);
+                    cancel(appointment.Number_appointment);
+                  }}>
                     <View style={styles.iconContainer}>
-                      <Icon name="map-marker" size={20} color="#000" style={styles.icon} />
-                      <Text style={styles.text}>
-                        {`${appointment.Client.AddressCity}, ${appointment.Client.AddressStreet} ${appointment.Client.AddressHouseNumber}`}
-                      </Text>
-
+                      <Icon name="times-circle" size={20} color="#900" style={styles.icon} />
+                      <Text style={styles.text}>ביטול תור</Text>
                     </View>
-                  ) : null}
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress={() => {
+                    send(appointment.Client.token,appointment.Name_type, appointment.Date, appointment.Start_Hour, appointment.End_Hour);
+                  }}>
+                    <View style={styles.iconContainer}>
+                      <MaterialCommunityIcons
+                        name="bell" size={20} color="#FFA500" style={styles.icon} />
+                      <Text style={styles.text}>שלח תזכורת</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{ flex: 1 }}>
+                  <View>
+                    <Text style={styles.title}>פרטי הלקוח:</Text>
+                  </View>
+                  <View style={{ flexDirection: 'column', alignItems: 'flex-start', marginTop: -5 }}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                      <Image style={styles.img}
+                        // onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} 
+                        source={{ uri: `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${appointment.Client.ID_Client}.jpg` }} />
+                      <Text style={styles.text}>
+                        {appointment.Client.First_name} {appointment.Client.Last_name}
+                      </Text>
+                    </View>
+                    {appointment.Is_client_house === "YES" || "YES       " ? (
+                      <View style={[styles.iconContainer1, { marginTop: -20 }]}>
+                        <Icon name="map-marker" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
+                        <Text style={styles.text}>
+                          {`${appointment.Client.AddressCity}, ${appointment.Client.AddressStreet} ${appointment.Client.AddressHouseNumber}`}
+                        </Text>
+                      </View>
+                    ) : null}
+                  </View>
+
 
                   <View style={styles.iconContainer}>
                     <TouchableOpacity
@@ -344,7 +426,7 @@ const New_Calendar = () => {
                     >
                       <Icon
                         name="phone"
-                        size={25}
+                        size={20}
                         color="rgb(92, 71, 205)"
                         style={styles.icon}
                       />
@@ -355,7 +437,7 @@ const New_Calendar = () => {
                       >
                         <Icon
                           name="instagram"
-                          size={25}
+                          size={20}
                           color="rgb(92, 71, 205)"
                           style={styles.icon}
                         />
@@ -368,26 +450,32 @@ const New_Calendar = () => {
                       >
                         <Icon
                           name="facebook"
-                          size={25}
+                          size={20}
                           color="rgb(92, 71, 205)"
                           style={styles.icon}
                         />
                       </TouchableOpacity>
                     ) : null}
+                    <TouchableOpacity onPress={() => {
+                      const scheme = Platform.select({ ios: 'waze://', android: 'https://waze.com/ul' });
+                      const address = `${appointment.Client.AddressCity},${appointment.Client.AddressHouseNumber} ${appointment.Client.AddressStreet} `
+                      const url = `${scheme}?q=${encodeURIComponent(address)}&navigate=yes`;
+
+                      Linking.canOpenURL(url).then((supported) => {
+                        if (supported) {
+                          return Linking.openURL(url);
+                        } else {
+                          console.log(`Can't handle url: ${url}`);
+                        }
+                      }).catch((err) => console.error('An error occurred', err));
+                    }}>
+                      <MaterialCommunityIcons name="waze" size={20} color="rgb(92, 71, 205)" />
+                    </TouchableOpacity>
                   </View>
+                </View>
 
-                  <TouchableOpacity onPress={() => {
-                    setToken(appointment.Client.token);
-                    cancel(appointment.Number_appointment);
-                  }}>
-                    <View style={styles.container1}>
-                      <Icon name="times-circle" size={30} color="#900" />
-                      <Text style={styles.text}>ביטול תור</Text>
-                    </View>
-                  </TouchableOpacity>
+              </View>
 
-                </ScrollView>
-              </>
             )}
           </TouchableOpacity>
         ))}
@@ -399,9 +487,9 @@ const New_Calendar = () => {
 const styles = StyleSheet.create({
   card: {
     borderWidth: 2,
-    borderRadius: 20,
+    borderRadius: 30,
     borderColor: "rgb(92, 71, 205)",
-    padding: 10,
+    padding: 20,
     marginVertical: 5,
     backgroundColor: "white",
   },
@@ -415,11 +503,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     textAlign: "left",
-    marginLeft: 10
+    paddingBottom: 10
   },
   iconContainer: {
     flexDirection: "row",
-    alignItems: "center",
   },
   row: {
     flexDirection: "row-reverse",
@@ -427,6 +514,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+
   },
   linkText: {
     color: "rgb(92, 71, 205)",
@@ -439,11 +527,11 @@ const styles = StyleSheet.create({
   },
   calendarContainer: {
     backgroundColor: "white",
-    borderRadius: 10,
+    borderRadius: 15,
     padding: 10,
   },
   selectedText: {
-    color: "blue",
+    color: "rgb(92, 71, 205)",
     fontWeight: "bold",
   },
   defaultText: {
@@ -457,20 +545,54 @@ const styles = StyleSheet.create({
   dateTextWithEvents: {
     fontSize: 18,
     textAlign: "center",
-    color: "blue",
+    color: "rgb(92, 71, 205)",
     fontWeight: "bold",
   },
   dot: {
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: "blue",
+    backgroundColor: "rgb(92, 71, 205)",
     alignSelf: "center",
     marginTop: 2,
   },
   container1: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  img: {
+    borderRadius: 15,
+    width: 50,
+    height: 50,
+  },
+  iconContainer1: {
+    flexDirection: "row",
+
+  },
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  itemContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  img: {
+    borderRadius: 15,
+    marginBottom: 20,
+    width: 30,
+    height: 30,
+    marginRight: 7,
+
+  },
+  text: {
+    fontSize: 15,
+    textAlign: 'left',
+    paddingBottom: 10,
+    marginRight: 10,
+  },
+  icon: {
+    marginRight: 10,
   },
 });
 

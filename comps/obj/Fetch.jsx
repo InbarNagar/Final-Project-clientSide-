@@ -35,12 +35,7 @@ export const Axios = (url, method, body) =>
       method: method, 
       data: body
     }
-<<<<<<< HEAD
-   
-=======
-    // console.log(configurationObject, "!!!")  //בדיקות
 
->>>>>>> eea5fa235f7d4ded62d51b4076b444e796f58686
     axios(configurationObject)
       .then((response) => {
         if (response.status === 200 || response.status === 201) {
@@ -55,11 +50,7 @@ export const Axios = (url, method, body) =>
         console.log("body=>",body);
         console.log("url=>", Baseurl + url)
         console.log("method=>", method)
-<<<<<<< HEAD
-=======
-        // reject(error); //בדיקות
-        // reject(error.response);  //בדיקות
->>>>>>> eea5fa235f7d4ded62d51b4076b444e796f58686
+
         reject(error.response.status);
       });
   })

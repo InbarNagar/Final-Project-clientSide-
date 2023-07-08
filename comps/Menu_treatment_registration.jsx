@@ -229,51 +229,51 @@ const Menu_treatment_registration = (props) => {
 
   return (
     <ScrollView >
-        <View style={styles.container}>
-          <Header text="צור את תפריט הטיפולים שלך" fontSize={50} height={200} color={"rgb(92, 71, 205)"} />
-          <DropDownPicker
-            open={openT}
-            items={treatments.map(treatment => ({ label: treatment.Name, value: treatment.Type_treatment_Number }))}
-            setOpen={setOpenT}
-            setValue={setSelectedTreatment}
-            placeholder="בחר טיפול"
-            value={selectedTreatment}
-            containerStyle={{ height: 40, borderColor: '#d3d3d3', borderRadius: 10 }}
-            onChangeItem={item => setSelectedTreatment(item.value)}
-            searchable={true}
-            style={{ backgroundColor: '#fafafa', zIndex: 10000 }}
-            dropDownContainerStyle={{ backgroundColor: '#FFFFFF' }}
-            listMode="MODAL"
-            positionFixed={true}
-            itemStyle={{ justifyContent: 'flex-end' }}
-            placeholderStyle={{ color: 'gray', textAlign: 'right' }}
-            labelStyle={{ fontSize: 14, color: '#000' }}
-          />
-          <Text>{'\n'}</Text>
+      <View style={styles.container}>
+        <Header text="צור את תפריט הטיפולים שלך" fontSize={50} height={200} color={"rgb(92, 71, 205)"} />
+        <DropDownPicker
+          open={openT}
+          items={treatments.map(treatment => ({ label: treatment.Name, value: treatment.Type_treatment_Number }))}
+          setOpen={setOpenT}
+          setValue={setSelectedTreatment}
+          placeholder="בחר טיפול"
+          value={selectedTreatment}
+          containerStyle={{ height: 40, borderColor: '#d3d3d3', borderRadius: 10 }}
+          onChangeItem={item => setSelectedTreatment(item.value)}
+          searchable={true}
+          style={{ backgroundColor: '#fafafa', zIndex: 10000 }}
+          dropDownContainerStyle={{ backgroundColor: '#FFFFFF' }}
+          listMode="MODAL"
+          positionFixed={true}
+          itemStyle={{ justifyContent: 'flex-end' }}
+          placeholderStyle={{ color: 'gray', textAlign: 'right' }}
+          labelStyle={{ fontSize: 14, color: '#000' }}
+        />
+        <Text>{'\n'}</Text>
 
-          <DropDownPicker
-            open={openC}
-            items={categories.map(category => ({ label: category.Name, value: category.Category_Number }))}
-            setOpen={setOpenC}
-            setValue={setSelectedCategory}
-            placeholder="בחר קטגוריה"
-            value={selectedCategory}
-            containerStyle={{ height: 40 }}
-            onChangeItem={item => setSelectedCategory(item.value)}
-            searchable={true}
-            style={{backgroundColor: '#fafafa', zIndex: 10000 }}
-            dropDownContainerStyle={{ backgroundColor: '#FFFFFF' , alignSelf: 'flex-end'  }}
-            dropDownStyle={{ backgroundColor: '#FFFFFF', alignSelf: 'flex-end' }} 
-            listMode="MODAL"  // שימוש במצב מודאל
-            positionFixed={true}
-            itemStyle={{ justifyContent: 'flex-end' }}
-            placeholderStyle={{ color: 'gray', textAlign: 'right' }}
-            labelStyle={{ fontSize: 14, color: '#000' }}
-            dropDownDirection="RTL"
-          />
-          <Text>{'\n'}</Text>
+        <DropDownPicker
+          open={openC}
+          items={categories.map(category => ({ label: category.Name, value: category.Category_Number }))}
+          setOpen={setOpenC}
+          setValue={setSelectedCategory}
+          placeholder="בחר קטגוריה"
+          value={selectedCategory}
+          containerStyle={{ height: 40 }}
+          onChangeItem={item => setSelectedCategory(item.value)}
+          searchable={true}
+          style={{ backgroundColor: '#fafafa', zIndex: 10000 }}
+          dropDownContainerStyle={{ backgroundColor: '#FFFFFF', alignSelf: 'flex-end' }}
+          dropDownStyle={{ backgroundColor: '#FFFFFF', alignSelf: 'flex-end' }}
+          listMode="MODAL"  // שימוש במצב מודאל
+          positionFixed={true}
+          itemStyle={{ justifyContent: 'flex-end' }}
+          placeholderStyle={{ color: 'gray', textAlign: 'right' }}
+          labelStyle={{ fontSize: 14, color: '#000' }}
+          dropDownDirection="RTL"
+        />
+        <Text>{'\n'}</Text>
 
-          {/* <View>
+        {/* <View>
             <Button onPress={showTimepicker} title=" בחר משך זמן טיפול" />
   
           {show && (
@@ -288,7 +288,7 @@ const Menu_treatment_registration = (props) => {
           )}
           </View> */}
 
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
 
           {show && (
             <DateTimePicker
@@ -300,14 +300,14 @@ const Menu_treatment_registration = (props) => {
               onChange={onChange}
             />
           )}
-
-          <View style={styles.but} onPress={showTimepicker}>
-                <Text style={styles.thachtext}>בחר משך זמן הטיפול</Text>
-              </View>
-
+          <TouchableOpacity onPress={showTimepicker}>
+            <View style={styles.but}>
+              <Text style={styles.thachtext}>בחר משך זמן הטיפול</Text>
+            </View>
+          </TouchableOpacity>
         </View>
-          {duration && <Text style={styles.titp}>משך זמן הטיפול: {duration}</Text>}
-          {/* <DropDownPicker
+        {duration && <Text style={styles.titp}>משך זמן הטיפול: {duration}</Text>}
+        {/* <DropDownPicker
                       open={openD}
                       items={getHoursInterface()}
                       setOpen={setOpenD}
@@ -322,7 +322,7 @@ const Menu_treatment_registration = (props) => {
                       listMode="SCROLLVIEW"
                       positionFixed={true}
                     /> */}
-          {/* { (
+        {/* { (
                         // <DateTimePicker
                         // value={durationTime}
                         // mode="time"
@@ -331,32 +331,32 @@ const Menu_treatment_registration = (props) => {
                         // />
                         
                     )} */}
-          <Text>{'\n'}</Text>
-          <Text style={styles.title}>מחיר</Text>
-          <View style={styles.inp}>
-            <TextInput
-              style={styles.input}
-              placeholder="מחיר"
-              value={price}
-              onChangeText={setPrice}
-            />
+        <Text>{'\n'}</Text>
+        <Text style={styles.title}>מחיר</Text>
+        <View style={styles.inp}>
+          <TextInput
+            style={styles.input}
+            placeholder="מחיר"
+            value={price}
+            onChangeText={setPrice}
+          />
 
-          </View>
+        </View>
 
-          {/* <Button
+        {/* <Button
             title="צור תפריט טיפולים"
             onPress={addTreatment}
             disabled={!selectedTreatment || !selectedCategory || !price || !duration}
           />
                   </View> */}
 
-                  <Text>{'\n'}</Text>
+        <Text>{'\n'}</Text>
+        <TouchableOpacity onPress={addTreatment} >
+          <View style={styles.but} disabled={!selectedTreatment || !selectedCategory || !price || !duration}>
+            <Text style={styles.thachtext}>צור תפריט טיפולים</Text>
+          </View></TouchableOpacity>
 
-      <View style={styles.but} onPress={addTreatment}   disabled={!selectedTreatment || !selectedCategory || !price || !duration}>
-                <Text style={styles.thachtext}>צור תפריט טיפולים</Text>
       </View>
-
-        </View>
 
     </ScrollView>
   );
