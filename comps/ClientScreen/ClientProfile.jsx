@@ -10,6 +10,7 @@ import { TextInput } from "react-native-gesture-handler";
 import { string } from "prop-types";
 import { useFocusEffect } from '@react-navigation/native';
 import { openURL, canOpenURL } from "expo-linking";
+import Menu_Client from "../obj/Menu_Client";
 
 
 
@@ -96,6 +97,7 @@ else{
 }
 }
   return (
+    <>
     <View style={styles.container}>
 
    
@@ -146,6 +148,9 @@ else{
     {/* </View> */}
     </View>
     </View>
+    <Menu_Client/>
+
+    </>
 
 
     
@@ -155,13 +160,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#e6e6fa',
-    paddingTop: 20,
+    // paddingTop: 20,
     marginTop: 0,
-    paddingBottom:500,
+    // paddingBottom:500,
   },
   view: {
     flex: 1,
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
     // backgroundColor: '#e6e6fa',
     padding:10,

@@ -25,6 +25,7 @@ const Create_Business_Pro = (props) => {
   const [LongCordinate, setLongCordinate] = useState('')
   const [LetCordinate, setLetCordinate] = useState('')
   const [isRadioVisible, setRadioVisible] = useState(false);
+  const [p, setp] = useState('');
   const openRadio = () => setRadioVisible(true);
   const closeRadio = () => setRadioVisible(false);
   const { navigation, route } = props
@@ -57,6 +58,7 @@ const Create_Business_Pro = (props) => {
       AddressCity: AddressCity,
       Professional_ID_number: Id_Pro,
       about: About,
+      phone:p,
       // Professional_ID_number: Professional_ID_number
       LongCordinate: LongCordinate,
       LetCordinate: LetCordinate,
@@ -119,6 +121,16 @@ const Create_Business_Pro = (props) => {
               placeholderTextColor="#92a2bd"
               value={Name}
               onChangeText={(text) => setName(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder="טלפון"
+              placeholderTextColor="#92a2bd"
+              value={p}
+              onChangeText={(text) => setp(text)}
             />
 
           </View>

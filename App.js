@@ -42,6 +42,11 @@ import New_Calender from './comps/New_Calender';
 import NewBusinessDiary_Ofir from './comps/NewBusinessDiary_Ofir';
 import LocationPicker from './comps/LocationHandler/LocationPicker';
 import Maps_Inbar from './comps/Maps_Inbar';
+import My_Appintments from './comps/ClientScreen/My_Appointments';
+import ClientHome from './comps/ClientScreen/ClientHome';
+import AvailableAppointmentToBook_New from './comps/ClientScreen/AvailableAppointmentToBook_New';
+import Update_MenuTreatment from './comps/Update_MenuTreatment';
+
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -86,7 +91,8 @@ function App() {
           <Stack.Screen name="Calendar_professional" component={Calendar_professional}options={{ title: 'היומן שלי' }}/>
 
           <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} />
-          <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} />
+          {/* <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} /> */}
+          <Stack.Screen name="My_Appintments" component={My_Appintments}/>
           <Stack.Screen name="Map" component={Map} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
           <Stack.Screen name='Professional_registration' component={Professional_registration}options={{ title: 'הרשמת בעל עסק פרטים אישים' }} />
@@ -109,6 +115,10 @@ function App() {
            <Stack.Screen name="New_Calender" component={New_Calender} options={{ title:'הוספת זמינות לפרסום'}} /> 
           <Stack.Screen name="NewBusinessDiary_Ofir" component={NewBusinessDiary_Ofir} options={{ title:'הוספת זמינות לפרסום'}} />
           <Stack.Screen name="Maps_Inbar" component={Maps_Inbar} options={{ title:'הוספת זמינות לפרסום'}} />
+          <Stack.Screen name="ClientHome" component={ClientHome}/>
+          <Stack.Screen name="AvailableAppointmentToBook_New" component={AvailableAppointmentToBook_New}/>
+          <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment}/>
+
 
         </Stack.Navigator>
       </NavigationContainer>

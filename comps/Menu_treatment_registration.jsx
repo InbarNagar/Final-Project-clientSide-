@@ -37,6 +37,7 @@ const Menu_treatment_registration = (props) => {
   const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  
 
   // התחל עם זמן כלשהו, אך עם דקות שהן אפס
   const initialTime = new Date();

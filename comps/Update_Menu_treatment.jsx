@@ -12,7 +12,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import LogIn from './GenralComps/LogIn'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './obj/Header';
-import Update_Menu_treatment from './Update_Menu_treatment'
+// import Update_Menu_treatment from './Update_Menu_treatment'
 
 
 const Update_Menu_treatment = (props) => {
