@@ -9,7 +9,7 @@ import {
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
 import { AllApointemtDetailesForClient_With_BusinessReview } from "../obj/FunctionAPICode";
 import { UserContext } from "../UserDietails";
-import Geocoder from 'react-native-geocoding';
+// import Geocoder from 'react-native-geocoding';
 import ClientProfile from "./ClientProfile";
 import SearchFiltersMenu from "./SearchFiltersMenu";
 import NewSearch3 from "./NewSearch3";
@@ -18,7 +18,7 @@ import AppointmentCard_forClient from "./AppointmentCard_forClient";
 
 export default function Search3(props) {
   const { navigation } = props;
-  Geocoder.init('AIzaSyBMwN0NknaPibHnpv8laiFYUKmQFz1FHZY');
+  // Geocoder.init('AIzaSyBMwN0NknaPibHnpv8laiFYUKmQFz1FHZY');
 
   const [token, settoken] = useState();// ענבר
   const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
@@ -140,6 +140,7 @@ console.log(userDetails.ID_number);
         !showProfileSection &&
         !showSearchSection && (
           <View style={styles.view1}>
+          <Text>11111111111111</Text>
             {allAppointment.map((appointment) => {
               console.log("key: "+appointment.Number_appointment);
               return (

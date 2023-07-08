@@ -170,8 +170,14 @@ export const AllApointemtDetailes= () => {
 //כל התורים שלי של הלקוח - כולל טבלת דירוג
 export const AllApointemtDetailesForClient_With_BusinessReview = (ID_Client) => {
     console.log(`BusinessReview/AllAppointmentForClient/${ID_Client}`)
-    return Fetch(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'get')
+    return Fetch(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'GET')
 }
+
+export const DDD = (ID_Client) => {
+    console.log(`BusinessReview/AllAppointmentForClient/${ID_Client}`)
+    return Fetch(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'Get')
+}
+
 
 
 //כל התורים ללקוח

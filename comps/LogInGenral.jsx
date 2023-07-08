@@ -86,7 +86,8 @@ export default function LogInGenral(props) {
 if(userDetails){
   console.log('########',userDetails.userType)
   if (userDetails.userType == 'Cli') {
-    navigation.navigate('Search3')
+    // navigation.navigate('Search3')
+    navigation.navigate('NewSearch3')
   }
   else {
     navigation.navigate('Calendar_professional')
