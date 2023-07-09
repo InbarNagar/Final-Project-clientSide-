@@ -46,6 +46,9 @@ import My_Appintments from './comps/ClientScreen/My_Appointments';
 import ClientHome from './comps/ClientScreen/ClientHome';
 import AvailableAppointmentToBook_New from './comps/ClientScreen/AvailableAppointmentToBook_New';
 import Update_MenuTreatment from './comps/Update_MenuTreatment';
+import AvailableAppointmentForTreatment from './comps/ClientScreen/AvailableAppointmentForTreatment';
+import AvailableAppointmentForTreatmentAndCity from './comps/ClientScreen/AvailableAppointmentForTreatment';
+
 
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
@@ -118,6 +121,9 @@ function App() {
           <Stack.Screen name="ClientHome" component={ClientHome}/>
           <Stack.Screen name="AvailableAppointmentToBook_New" component={AvailableAppointmentToBook_New}/>
           <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment}/>
+          <Stack.Screen name="AvailableAppointmentForTreatment" component={AvailableAppointmentForTreatment}/>
+          <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity}/>
+
 
 
         </Stack.Navigator>
