@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import {Modal,  StyleSheet, Text, TextInput, View, ScrollView, Keyboard, KeyboardAvoidingView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LogIn from './GenralComps/LogIn';
@@ -9,10 +9,16 @@ import { Professional_Registration } from './obj/FunctionAPICode';
 import {Input} from './obj/Input'
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from "moment";
-
-
-
+import { RadioButton } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
+import Button from './obj/Button';
+//import PushNofitictaion from './PushNofitictaion';
+//import { SaveTokenforIDPro } from './obj/FunctionAPICode';
 // http://proj.ruppin.ac.il/cgroup93/prod/api/
+
+
+
+
 
 const Professional_registration = (props) => {
 
@@ -27,12 +33,42 @@ const Professional_registration = (props) => {
   const [AddressHouseNumber, setHouseNumber] = useState('');
   const [AddressCity, setCity] = useState('');
   const [password, setPassword] = useState('');
-  const [instagramUserName, setinstagramUserName] = useState('');
 
+  const [isPickerVisible, setPickerVisible] = useState(false);
+
+  const openPicker = () => {
+    setPickerVisible(true);
+  };
+
+  const closePicker = () => {
+    setPickerVisible(false);
+    console.log(gender)
+  };
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isFemaleChecked, setFemaleChecked] = useState(false);
   const [isMaleChecked, setMaleChecked] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
+
+
+//   useEffect( () => {
+// if(ID_number){
+//      PushNofitictaion().then((token) => {
+//          let data = { "pushtoken": token };
+//          console.log('***',token)
+      
+//              let temp = Object.assign({ Token: token });
+             
+//              SaveTokenforIDPro(ID_number,token).then(()=>{
+//              console.log("token saved")
+//               })    
+     
+//      }).catch((error) => {
+         
+//          console.log("error in function post_pushToken " + error);
+       
+//      });
+//    }
+//  }, [ID_number])
 
 
   const handleRegistration = () => {
@@ -49,7 +85,7 @@ const Professional_registration = (props) => {
       AddressCity: AddressCity,
       password: password,
       ProfilPic:"profil"+ID_number,
-      Instagram_link: instagramUserName,
+     
 
     }
     Professional_Registration(data).then((result) => {
@@ -106,14 +142,14 @@ const handleConfirm = (date) => {
 
 
   return (
-    <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={{ flex: 1 }}>
     <ScrollView>
 
         <View style={styles.container}>
           <Text style={styles.title}>איזה כיף שהחלטת להצטרף לקהילת בעלי העסקים שלנו!</Text>
           <Text style={styles.titp}>רק עוד כמה פרטים קטנים בשביל שנוכל להמשיך</Text>
 
-       
+    
           <View style={styles.inp}>
             <TextInput style={styles.textInputS}
               placeholder="תעודת זהות"
@@ -144,18 +180,40 @@ const handleConfirm = (date) => {
             {/* <Text>שם משפחה</Text> */}
           </View>
 
-          <View style={styles.inp}>
-            <TextInput style={styles.textInputS}
-              placeholder="מין"
-              value={gender}
-              placeholderTextColor="#92a2bd"
-              onChangeText={(text) => setGender(text)}
-            />
-            {/* <Text>מין</Text> */}
+          <View style={styles.inp}>   
+          <TouchableOpacity onPress={openPicker}>
+            <Text style={styles.textInputS}>בחר מין</Text>
+          </TouchableOpacity>
           </View>
-
+<Modal
+  animationType="slide"
+  transparent={true}
+  visible={isPickerVisible}
+  onRequestClose={closePicker}
+>
+  <View style={styles.modalContainer}>
+    <View style={styles.pickerContainer}>
+      <Picker
+        selectedValue={gender}
+        style={styles.picker}
+        onValueChange={(itemValue, itemIndex) => setGender(itemValue)}
+      >
+        <Picker.Item label="בחר מין" value="" />
+        <Picker.Item label="נקבה" value="F" />
+        <Picker.Item label="זכר" value="M" />
+      </Picker>
+      <View style={{height:80}} />
+      <View>   
+          <TouchableOpacity style={styles.but} onPress={closePicker}>
+            <Text style={styles.textInputS}> סיום</Text>
+          </TouchableOpacity>
+          </View>
+    </View>
+  </View>
+</Modal>
 
           <View>
+
                 <TouchableOpacity style={styles.dateContainer} onPress={showDatePicker}>
                       <View
                         style={styles.inpd}>
@@ -248,18 +306,8 @@ const handleConfirm = (date) => {
             {/* <Text>סיסמא</Text> */}
           </View>
 
-          <View style={styles.inp}>
-            <TextInput style={styles.textInputS}
-              placeholder="שם המשתמש באינסטגרם"
-              placeholderTextColor="#92a2bd"
-              value={instagramUserName}
-              onChangeText={(text) => setinstagramUserName(text)}
-            />
-          </View>
-
-  
-
-          <View>
+       
+          <View>     
             <TouchableOpacity style={styles.but} onPress={()=>props.navigation.navigate('CameraUse',{imageName:"profil"+ID_number})}>
               <View>
                 <Text style={styles.thachtext}>הוספת תמונת פרופיל</Text>
@@ -381,6 +429,25 @@ const styles = StyleSheet.create({
     // padding: 15,
     // margin: 10,
     // marginTop: 20,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)', 
+  },
+  pickerContainer: {
+    backgroundColor: '#e6e6fa',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+    marginBottom: 20,
+    backgroundColor: 'transparent',
   },
 
 });
