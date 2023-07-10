@@ -199,6 +199,9 @@ function GetData(data) {
   }
 
   
+  const handleCardClick = (treatment) => {
+    navigation.navigate('AvailableAppointmentForTreatmentAndCity',{treatmentName: treatment})
+};
 
   
 
@@ -211,10 +214,13 @@ function GetData(data) {
       data={Type_treatment}
       renderItem={({ item }) => (
         <AvailableAppointmentForTreatment
+        key={item.Type_treatment_Number}
           result={item}
           title={item.Name}
         />
       )}
+      onPress ={() => handleCardClick(item.Type_treatment_Number)}
+
       sliderWidth={400}
       itemWidth={180} // Each item width is 100 (adjust as needed)
       activeSlideOffset={20} // Adjust the spacing between active and inactive items

@@ -178,6 +178,13 @@ export const DDD = (ID_Client) => {
     return Fetch(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'Get')
 }
 
+//מחזיר את כל סוגי הטיפולים של לקוח
+export const AllAppointmentForClientt = (clientID) => {
+    console.log(`Appointment/AllAppointmentForClientt/${clientID}`)
+    return Fetch(`Appointment/AllAppointmentForClientt/${clientID}`, 'Get')
+    // return Axios(`Appointment/AllAppointmentForClientt/${clientID}`, 'GET',{})
+}
+
 
 
 //כל התורים ללקוח

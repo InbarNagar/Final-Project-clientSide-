@@ -12,7 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const AvailableAppointmentForTreatment = (props) => {
   const { userDetails, setUserDetails } = useContext(UserContext);
-  const { result, title } = props;
+  const { result, title, key } = props;
 //   const { Name, Type_treatment_Number } = result; // מפצל את התכונות מתוך אובייקט ה-'result'
 
 
@@ -31,9 +31,16 @@ console.log(result, title, "12121212120000000000000000000000000000000000000")
 
   
   return (
-  <View style={styles.container}>
+
+
+
+
+
+//   <View style={styles.container} key={result.Type_treatment_Number}>
+    <View style={styles.container} >
+
      <View style={styles.containerBut}>
-            <TouchableOpacity style={styles.but}  onPress={() => navigation.navigate('AvailableAppointmentForTreatmentAndCity')} >
+            <TouchableOpacity style={styles.but}   >
             {/* <TouchableOpacity style={styles.but}  onPress={handle} > */}
 
               <View style={styles.buttonContent}>

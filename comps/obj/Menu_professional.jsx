@@ -17,7 +17,7 @@ const Menu_professional = () => {
     
     <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Profil_pro')}>
         <Ionicons name="person-outline" size={24} color="white"  />
-        <Text style={styles.menuText}>פרופיל</Text>
+        <Text style={styles.menuText}>איזור אישי</Text>
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewAvilableHours')}>
