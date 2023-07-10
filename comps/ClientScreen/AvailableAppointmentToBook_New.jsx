@@ -26,16 +26,16 @@ const AvailableAppointmentToBook_New = (props) => {
   const duration = result.typeTritment[0].duration; //משך זמן תור
   const [newArr, SetNewArr] = useState([]);
   // const newArr = [];
-  console.log("duration: " + duration);
+  // console.log("duration: " + duration);
   // חדש לפי הצגת שעות פנויות בלבד
   const [openHours, SetOpenHours] = useState();
   const [date, SetDate] = useState(
     moment(result.diary[0].date).format("YYYY-MM-DD")
   );
   useEffect(() => {
-    console.log("result: " + JSON.stringify(result));
-    console.log("result.diary[0].date: " + result.diary[0].date);
-    console.log("treatment: " + treatmentNumber);
+    // console.log("result: " + JSON.stringify(result));
+    // console.log("result.diary[0].date: " + result.diary[0].date);
+    // console.log("treatment: " + treatmentNumber);
     let appArr = [result.apointemnt[0].time]; //תורים תפוסים
     let firstHour = [
       parseInt(result.apointemnt[0].time.toString().split("-")[0]),
@@ -43,11 +43,11 @@ const AvailableAppointmentToBook_New = (props) => {
     let endHour = [
       parseInt(result.apointemnt[0].time.toString().split("-")[1]),
     ];
-    console.log("firstHour: " + firstHour);
-    console.log("endHour: " + endHour);
-    console.log("result.apointemnt[0].time" + result.apointemnt[0].time);
+    // console.log("firstHour: " + firstHour);
+    // console.log("endHour: " + endHour);
+    // console.log("result.apointemnt[0].time" + result.apointemnt[0].time);
     for (let i = 1; i < result.apointemnt.length; i++) {
-      console.log("loop number: " + i);
+      // console.log("loop number: " + i);
       if (!appArr.includes(result.apointemnt[i].time)) {
         firstHour.push(
           parseInt(result.apointemnt[i].time.toString().split("-")[0])
@@ -56,25 +56,25 @@ const AvailableAppointmentToBook_New = (props) => {
           parseInt(result.apointemnt[i].time.toString().split("-")[1])
         );
         appArr.push(result.apointemnt[i].time);
-        console.log(result.apointemnt[i].time);
+        // console.log(result.apointemnt[i].time);
       }
     }
-    console.log("appArr after the loop: " + appArr);
-    console.log("firstHour after the loop: " + firstHour);
-    console.log("endHour after the loop: " + endHour);
-    /// סוף אזור חדש
+    // console.log("appArr after the loop: " + appArr);
+    // console.log("firstHour after the loop: " + firstHour);
+    // console.log("endHour after the loop: " + endHour);
+    // /// סוף אזור חדש
     SetBookedAppointment(appArr);
-    console.log("appArr: " + appArr);
+    // console.log("appArr: " + appArr);
     AllBusinessReviews(result.id).then(
       (result) => {
-        console.log("yes", result.data);
+        // console.log("yes", result.data);
         SetBusinessRankArr(result.data);
       },
       (error) => {
         console.log("error", error);
       }
     );
-    console.log("rendering: " + result.id);
+    // console.log("rendering: " + result.id);
     let today1 = "2023-06-02T00:00:00"; //הגדרת תאריך של היום
     let minNumber = 24;
     let maxNumber = 0;
@@ -100,7 +100,7 @@ const AvailableAppointmentToBook_New = (props) => {
             }
           }
           diaryArr.push(JSON.stringify(result.diary[i].time)); //דוחף למערך החדש את השעות
-          console.log(i+ ": "+JSON.stringify(result.diary[i].time));
+          // console.log(i+ ": "+JSON.stringify(result.diary[i].time));
         }
       }
     }
@@ -127,15 +127,15 @@ const AvailableAppointmentToBook_New = (props) => {
       return missingHours;
     }
     const betweenHours=getMissingHours(result.diary[0].time);
-    console.log("betweenHours: "+betweenHours); // [11,12,13]
+    // console.log("betweenHours: "+betweenHours); // [11,12,13]
     // firstHour.push(betweenHours)
-    console.log("Minimum number:", minNumber);
-    console.log("Maximum number:", maxNumber);
+    // console.log("Minimum number:", minNumber);
+    // console.log("Maximum number:", maxNumber);
     const hours = Array.from(
       { length: Math.ceil((maxNumber - minNumber) / duration) },
       (v, i) => minNumber + i * duration
     );
-    console.log("hours (" + hours.length + ") : " + hours);
+    // console.log("hours (" + hours.length + ") : " + hours);
     
     const HoursAndGap = [];
     function getOccupiedHoursWithGap(firstHour, endHour) {
@@ -155,19 +155,19 @@ const AvailableAppointmentToBook_New = (props) => {
       return occupiedHoursWithGap;
     }
     const occupiedHoursWithGap = getOccupiedHoursWithGap(firstHour, endHour);
-    console.log(
-      "occupiedHoursWithGap :" + JSON.stringify(occupiedHoursWithGap)
-    );
+    // console.log(
+    //   "occupiedHoursWithGap :" + JSON.stringify(occupiedHoursWithGap)
+    // );
 
     let tempArr = [...newArr]; // make a copy of newArr
     // ...
-    console.log("hours : " + hours);
-    console.log("firstHour: "+firstHour);
-    console.log("endHour: "+endHour);
+    // console.log("hours : " + hours);
+    // console.log("firstHour: "+firstHour);
+    // console.log("endHour: "+endHour);
     let str="";
-    console.log("result.diary[i].time)" + result.diary[0].time +" - "+result.diary[0].time.length);
+    // console.log("result.diary[i].time)" + result.diary[0].time +" - "+result.diary[0].time.length);
     if(result.diary[0].time.length==1){ //בודק האם מערך השעות מפוצל (גדול מ-1)
-      console.log("if "+result.id);
+      // console.log("if "+result.id);
     for (let i = 0; i < hours.length; i++) {
      if(!firstHour.includes(hours[i])) {
       if(str===""){
@@ -182,69 +182,69 @@ const AvailableAppointmentToBook_New = (props) => {
      }
     }}
     else{
-      console.log("else "+result.id);
+      // console.log("else "+result.id);
       for (let i = 0; i < hours.length; i++) {
-        console.log(i+ " "+ hours[i] + "str= "+str);
+        // console.log(i+ " "+ hours[i] + "str= "+str);
         if(!firstHour.includes(hours[i])){
         if(!endHour.includes(hours[i])){
           if(!betweenHours.includes(hours[i])){
         if(str===""){
-          console.log(i+" :"+hours[i]);
+          // console.log(i+" :"+hours[i]);
           str=`${hours[i]}`;
         }}}}
         else if(str!=="" || betweenHours.includes(hours[i]+duration)){
-          console.log("else if : "+hours[i]);
+          // console.log("else if : "+hours[i]);
           str+=`-${hours[i]}`;
           tempArr.push(str);
           str="";
         }
          if(str==="" && hours[i]===hours[hours.length-1] && !endHour.includes(hours[hours.length-1])){
-          console.log("else if 3: "+hours[i]);
+          // console.log("else if 3: "+hours[i]);
           str=`${hours[i]}-${hours[hours.length-1]+duration}`
           tempArr.push(str);
         }
         if((endHour.includes(hours[i]) && str==="" )&& 
         !betweenHours.includes(hours[i]+duration)&&!firstHour.includes(hours[i])){
-          console.log("last if");
-          console.log(i+" :"+hours[i]);
+          // console.log("last if");
+          // console.log(i+" :"+hours[i]);
           str=`${hours[i]}`;
         }
       }
       
       if(str!==""){
-        console.log(str+" = last hour to add"+hours[hours.length-1]+duration);
+        // console.log(str+" = last hour to add"+hours[hours.length-1]+duration);
       str+=`-${hours[hours.length-1]+duration}`;
       tempArr.push(str);
       }
     }
-    console.log("final str= "+str);
-    console.log(
-      `Diary of ${result.id}: ` + tempArr + " length: " + tempArr.length
-    );
+    // console.log("final str= "+str);
+    // console.log(
+    //   `Diary of ${result.id}: ` + tempArr + " length: " + tempArr.length
+    // );
     
     // update newArr state variable with new values
     SetNewArr(tempArr);
-    console.log("array of diary to print: " + typeof newArr[1]);
+    // console.log("array of diary to print: " + typeof newArr[1]);
     SetDiary(diaryArr);
   }, [result]);
 
   //הצגה של פרופיל עסק
   function handleBusinessProfilePOPUP() {
-    console.log("open pop-up window");
+    // console.log("open pop-up window");
     SetModalVisible(!modalVisible);
-    console.log("modalVisible - ", modalVisible);
+    // console.log("modalVisible - ", modalVisible);
     SetBusinessProfilePOPUP(!businessProfilePOPUP);
-    console.log("businessProfilePOPUP - ", businessProfilePOPUP);
-    console.log("business number: " + JSON.stringify(result.id));
+    // console.log("businessProfilePOPUP - ", businessProfilePOPUP);
+    // console.log("business number: " + JSON.stringify(result.id));
   }
   //הצגה של יומן עסק
   function handleBusinessSchedulePOPUP() {
-    console.log("book appointment POPUP");
+    // console.log("book appointment POPUP");
     SetBookModalVisible(!bookModalVisible);
-    console.log("modalVisible - ", bookModalVisible);
+    // console.log("modalVisible - ", bookModalVisible);
     SetBusinessSchedulePOPUP(!businessSchedulePOPUP);
-    console.log("businessProfilePOPUP - ", businessSchedulePOPUP);
-    console.log("business number: " + JSON.stringify(result.id));
+    // console.log("businessProfilePOPUP - ", businessSchedulePOPUP);
+    // console.log("business number: " + JSON.stringify(result.id));
   }
   let today = "2023-06-02T00:00:00";
   let prevNumber = null;

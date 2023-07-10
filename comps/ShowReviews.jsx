@@ -65,7 +65,7 @@ const ShowReviews =()=>{
       borderColor: '#d3d3d3',
       padding: 10,
       marginVertical: 5,
-      backgroundColor: "grey",
+      // backgroundColor: "'###",
     },
     title: {
       fontWeight: 'bold',

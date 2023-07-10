@@ -7,7 +7,7 @@ import { FutureAppointmentB, allApoB } from "../obj/FunctionAPICode";
 import { useState } from "react";
 import { UserContext } from '../UserDietails';
 import React, { useContext } from "react";
-import { FutureAppointmenB } from "../obj/FunctionAPICode";
+import { FutureAppointmenB, AllAppointmentForClientt } from "../obj/FunctionAPICode";
 import { Post_SendPushNotification } from "../obj/FunctionAPICode";
 import AppointmentCard_forProfessional_Calendar from "../obj/AppointmentCard_forProfessional_Calendar";
 import { ClientDetailes } from "../obj/FunctionAPICode";
@@ -64,7 +64,7 @@ export default function My_Appintments() {
   const handleSubmit = () => {
     console.log(allAppointment, allAppointment.length)
 
-    AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
+    AllAppointmentForClientt(userDetails.ID_number).then((result) => {
 
       if (result)
         setallAppointment(result)
@@ -82,7 +82,7 @@ export default function My_Appintments() {
 
   const handleSubmit2 = () => {
     let filterresult1=""
-    AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
+    AllAppointmentForClientt(userDetails.ID_number).then((result) => {
 
       if (result) {
         filterresult1= result.filter(apo=> apo.Appointment_status =="Awaiting_approval")
@@ -100,7 +100,7 @@ export default function My_Appintments() {
 
   const handleSubmit4 = () => {
 
-    AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
+    AllAppointmentForClientt(userDetails.ID_number).then((result) => {
         let filterresult=""
       if(result)
      filterresult = result.filter(apo=> apo.Appointment_status =="Appointment_ended")
@@ -117,7 +117,7 @@ export default function My_Appintments() {
 
   const handleSubmit3 = () => {
 
-    AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
+    AllAppointmentForClientt(userDetails.ID_number).then((result) => {
         let filterresult3=""
       if(result)
      filterresult3= result.filter(apo=> apo.Appointment_status =="confirmed")

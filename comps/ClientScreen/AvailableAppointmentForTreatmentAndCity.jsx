@@ -17,7 +17,7 @@ import AvailableAppointmentForTreatment from './AvailableAppointmentForTreatment
 
 
 
-const ClientHome = (Props) => {
+const AvailableAppointmentForTreatmentAndCity = (props) => {
     const [result, SetResult] = useState([]);
     const [treatmentNumber, SetTreatmentNumber] = useState("");
     const [categories, setCategories] = useState([]);
@@ -28,23 +28,26 @@ const ClientHome = (Props) => {
     const { userDetails, setUserDetails } = useContext(UserContext);
 const navigation=useNavigation();
 useEffect(()=>{
-    // console.log("profile pro = "+JSON.stringify(userDetails));
+    console.log("profile pro = "+JSON.stringify(userDetails));
 
-    // console.log(userDetails.AddressCity, "11111111111")
+    console.log(userDetails.AddressCity, "11111111111")
     const obj = {
         // AddressCity: userDetails.AddressCity,
-        TreatmentNumber: 4,
-    //    AddressCity: "נתניה",
+        // TreatmentNumber: props,
+        TreatmentNumber: 20,
+       AddressCity: "תל אביב",
 
         // TreatmentNumber: treatmentNumber,
         // sort: "דירוג גבוהה תחילה",
         // Is_client_house: Is_client_house,
       };
+      console.log(obj, "objjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
       NewSearchPost(obj).then(
         (result) => {
-        //   console.log("yes", result.data, "556565655656565");
+          console.log("yes", result.data);
           if (result.data) {
-            GetData(result.data);
+            console.log(result.data)
+            // GetData(result.data);
           }
         },
         (error) => {
@@ -52,20 +55,7 @@ useEffect(()=>{
         }
       );
 
-      Treatment_type_GET().then(
-        (result) => {
-        //   console.log("categories: ", result);
-          if (result) {
-            setType_treatment(result);
-            console.log(result, "gfgfgfgfg")
-            SetTreatmentNumber(result[0].Type_treatment_Number);
-          }
-        },
-        (error) => {
-          console.log("error", error);
-        }
-      );
-
+    
 },[])
 
 function GetData(data) {
@@ -191,76 +181,21 @@ function GetData(data) {
         };
       }
     }
-    // console.log(obj);
+    console.log(obj);
     res.push(obj);
     SetResult(res);
-    // console.log(res, "333333333333333444444444444444444444444444333333333333333333")
     return res;
   }
 
   
-  const handleCardClick = (treatment) => {
-    navigation.navigate('AvailableAppointmentForTreatmentAndCity',{treatmentName: treatment})
-};
 
   
 
     return (
         <View style={styles.container}>
         <Header text="דף הבית" fontSize={50} height={200} color={"rgb(92, 71, 205)"} />
-        <Text>בא לי היום:</Text>
-
-        <Carousel
-      data={Type_treatment}
-      renderItem={({ item }) => (
-        <AvailableAppointmentForTreatment
-        key={item.Type_treatment_Number}
-          result={item}
-          title={item.Name}
-        />
-      )}
-      onPress ={() => handleCardClick(item.Type_treatment_Number)}
-
-      sliderWidth={400}
-      itemWidth={180} // Each item width is 100 (adjust as needed)
-      activeSlideOffset={20} // Adjust the spacing between active and inactive items
-      inactiveSlideOpacity={1} // Adjust the opacity of inactive items
-      inactiveSlideScale={1} // Adjust the scale of inactive items
-      loop={true} // Enable infinite loop
-      enableSnap={true} // Enable snap behavior
-    />
-
-
         
-            <Text>עסקים פנויים היום באיזורך:</Text>
-
-            <Carousel
-      data={result}
-      renderItem={({ item }) => (
-        <AvailableAppointmentToBook_New
-          result={item}
-          treatmentNumber={4}
-        />
-      )}
-      sliderWidth={400}
-      itemWidth={180} // Each item width is 100 (adjust as needed)
-      activeSlideOffset={20} // Adjust the spacing between active and inactive items
-      inactiveSlideOpacity={1} // Adjust the opacity of inactive items
-      inactiveSlideScale={1} // Adjust the scale of inactive items
-      loop={true} // Enable infinite loop
-      enableSnap={true} // Enable snap behavior
-    />
-
-
-     <Text>העסקים המובילים:    אלמנט חכם</Text>
-
-
-
-
-
-
-
-            {/* <ScrollView>
+            <ScrollView>
           {result.map((r) => (
             <AvailableAppointmentToBook_New
               key={r.id}
@@ -268,7 +203,7 @@ function GetData(data) {
               treatmentNumber= {4}
             />
           ))}
-        </ScrollView> */}
+        </ScrollView>
 
                
        
@@ -349,4 +284,4 @@ const styles = StyleSheet.create({
       },
 });
 
-export default ClientHome; 
+export default AvailableAppointmentForTreatmentAndCity; 
