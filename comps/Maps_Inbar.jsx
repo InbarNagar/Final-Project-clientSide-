@@ -1591,9 +1591,9 @@ import * as Location from 'expo-location'
 //         "LongCordinate": 34.773688
 //     }
 // ]
-export default function Maps_Inbar(props) {
-    const { result } = props;
-
+export default function Maps_Inbar({ route }) {
+    const {result} = route.params;
+console.log(result)
     const Google_Api = "AIzaSyBuYjLYxY6iSSVfQ755luh6KPM0mD4QfrM";
 
     const [pickedLocation, setPickedLocation] = useState({ lat: '', lng: '' });
@@ -1685,7 +1685,7 @@ export default function Maps_Inbar(props) {
                 <Marker
 
                     coordinate={pin}
-                    pinColor='blue'
+                    pinColor='red'
                     draggable={true}
                     onDragStart={(e) => { console.log("Drag start:", Number(e.nativeEvent.coordinate)); }}
                     onDragEnd={(e) => {
@@ -1695,37 +1695,35 @@ export default function Maps_Inbar(props) {
                         })
                     }}>
 
-                    <Callout>
-                        <Text>I Want to be Here!</Text>
-                    </Callout>
-
                 </Marker>
 
                 <Circle
                     center={region}
                     radius={1}
                 />
-                {result&&result.map(x => {
-                        if(x.LetCordinate&&x.LongCordinate){
-                            return(
-                                <Marker
-key={Number(x.LetCordinate)}
-                                coordinate={{ 
-                                  latitude: Number(x.LetCordinate),
-                                    longitude: Number(x.LongCordinate)}}
-                                pinColor='green'
-                                draggable={false}
-                           >
-            
+                {result && result.map(x => {
+                    console.log(x,"nmappppppppppppppppppppppp")
+                    if (x.LetCordinate && x.LongCordinate) {
+                        return (
+                            <Marker
+                                key={Number(x.LetCordinate)}
+                                coordinate={{
+                                    latitude: Number(x.LetCordinate),
+                                    longitude: Number(x.LongCordinate)
+                                }}
+                                pinColor='blue'
+                                draggable={true}
+                            >
+
                                 <Callout>
-                                    <Text>{x.About}</Text>
+                                    <Text>{x.about}</Text>
                                 </Callout>
-            
+
                             </Marker>
-            
-                    
-                            )
-                        }
+
+
+                        )
+                    }
                 })}
             </MapView>
 
