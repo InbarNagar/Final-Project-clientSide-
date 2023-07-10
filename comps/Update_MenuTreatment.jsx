@@ -126,7 +126,7 @@ const Update_MenuTreatment = (props) => {
         console.log(result.data)
         console.log(result.status)
         Alert.alert(
-          'העסק נוסף בהצלחה',
+          'הטיפול נוסף בהצלחה',
            +
           'תרצו להוסיף טיפול נוסף?',
           [
