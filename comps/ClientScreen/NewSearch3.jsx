@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, TextInput, Button } from "react-native";
-import {NewSearchPost, Treatment_type_GET, Post_SendPushNotification,} from "../obj/FunctionAPICode";
+import { NewSearchPost, Treatment_type_GET, Post_SendPushNotification, } from "../obj/FunctionAPICode";
 import { ScrollView } from "react-native-gesture-handler";
 import AvailableAppointmentToBook from "./AvailableAppointmentToBook";
 import { UserContext } from "../UserDietails";
@@ -13,10 +13,10 @@ import Menu_Client from "../obj/Menu_Client";
 import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableOpacity } from 'react-native';
 import Header from "../obj/Header";
+import { useNavigation } from "@react-navigation/core";
 
 
-
-export default function NewSearch3() {
+export default function NewSearch3({ navigation }) {
   const [NameTreatment, setNameTreatment] = useState("");
   const [treatmentNumber, SetTreatmentNumber] = useState("");
   const [ShowFilter, SethowFilter] = useState(false);
@@ -37,7 +37,7 @@ export default function NewSearch3() {
 
   const [open, setOpen] = useState(false); // משתנה הבודק אם הרשימה הנגללת פתוחה או סגורה
 
-
+  // const navigation = useNavigation();
   const ClientData = userDetails;
   useEffect(() => {
     if (token) {
@@ -58,7 +58,7 @@ export default function NewSearch3() {
     }
   }, [token]);
 
- 
+
   useEffect(() => {
     Treatment_type_GET().then(
       (result) => {
@@ -72,7 +72,7 @@ export default function NewSearch3() {
         console.log("error", error);
       }
     );
-   
+
   }, []);
 
   function GetData(data) {
@@ -83,7 +83,7 @@ export default function NewSearch3() {
       streetAddress: data[0].AddressStreet,
       houseNumber: data[0].AddressHouseNumber,
       city: data[0].AddressCity,
-      about: data[0].about,
+      about: data[0].About,
       phone: data[0].phone,
       facebook: data[0].Facebook_link,
       instagram: data[0].Instagram_link,
@@ -136,7 +136,7 @@ export default function NewSearch3() {
         }
         if (
           data[i].Type_treatment_Number !=
-            obj.typeTritment[obj.typeTritment.length - 1].type &&
+          obj.typeTritment[obj.typeTritment.length - 1].type &&
           !typeTritment.includes(data[i].Type_treatment_Number)
         ) {
           //אם הסוג טיפול שונה מקודמו
@@ -168,7 +168,7 @@ export default function NewSearch3() {
           streetAddress: data[i].AddressStreet,
           houseNumber: data[i].AddressHouseNumber,
           city: data[i].AddressCity,
-          about: data[i].about,
+          about: data[i].About,
           phone: data[i].phone,
           facebook: data[i].Facebook_link,
           instagram: data[i].Instagram_link,
@@ -201,7 +201,9 @@ export default function NewSearch3() {
     console.log(obj);
     res.push(obj);
     SetResult(res);
+    console.log("INBAR HERE",result)
     return res;
+    
   }
   function btnSearch() {
     let num = 0;
@@ -218,11 +220,11 @@ export default function NewSearch3() {
     // });
     console.log(
       "AddressCity: " +
-        AddressCity +
-        "treatment Number: " +
-        treatmentNumber +
-        "Is_client_house: " +
-        Is_client_house
+      AddressCity +
+      "treatment Number: " +
+      treatmentNumber +
+      "Is_client_house: " +
+      Is_client_house
     );
     const obj = {
       AddressCity: AddressCity,
@@ -246,65 +248,60 @@ export default function NewSearch3() {
     );
     // }
   }
- 
+
 
   return (
     <>
-      
+
       <View style={styles.container}>
         <View>
-        <Header text="חיפוש תורים פנויים" fontSize={40} color={"rgb(92, 71, 205)"} />
+          <Header text="חיפוש תורים פנויים" fontSize={40} color={"rgb(92, 71, 205)"} />
           <Text style={styles.title}>בחר את הטיפול הרצוי </Text>
           <View style={{ flexDirection: "column" }}>
-          <DropDownPicker
-          open={open}
-          value={treatmentNumber}
-          items={categories.map((category, i) => ({
-            label: category.Name,
-            value: category.Type_treatment_Number,
-            key: i + 'category',
-          }))}
-          setOpen={setOpen}
-          setValue={SetTreatmentNumber}
-          style={styles.picker}
-          zIndex={9999}
+            <DropDownPicker
+              open={open}
+              value={treatmentNumber}
+              items={categories.map((category, i) => ({
+                label: category.Name,
+                value: category.Type_treatment_Number,
+                key: i + 'category',
+              }))}
+              setOpen={setOpen}
+              setValue={SetTreatmentNumber}
+              style={styles.picker}
+              zIndex={9999}
 
-        />
-          
+            />
 
-            <View style={styles.buttonContainer}>            
 
-             
+            <View style={styles.buttonContainer}>
 
-            <View style={styles.containerBut}>
-            <TouchableOpacity style={styles.but} onPress={btnSearch}>
-              <View style={styles.buttonContent}>
-                <Text style={styles.thachtext}>חפש</Text>
-                <Icon name="search" size={24} color="white" />
+
+
+              <View style={styles.containerBut}>
+                <TouchableOpacity style={styles.but} onPress={btnSearch}>
+                  <View style={styles.buttonContent}>
+                    <Text style={styles.thachtext}>חפש</Text>
+                    <Icon name="search" size={24} color="white" />
+                  </View>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
-          </View>
-              
+
               {result.length > 0 && (
-                <Button
-                  style={{ Color: "rgb(92, 71, 205)" }}
-                  title="תצוגת מפה"
-                  buttonStyle={{
-                    backgroundColor: "rgb(92, 71, 205)",
-                    borderWidth: 2,
-                    borderColor: "white",
-                    borderRadius: 30,
-                  }}
-                  
-                  onPress={() => {
-                    props.navigation.navigate("SearchOnMap", {
-                      results: result,
-                    });
-                  }}
-                  icon={<Icon name="place" size={24} color="white" />}
-                />
+
+                <TouchableOpacity onPress={() => {
+                  navigation.navigate("Maps_Inbar",{
+                    result: result,
+                  });
+                }}>
+                  <View style={styles.buttonContent}>
+                    <Text style={styles.thachtext}>הצג תוצאות במפה</Text>
+                    <Icon name="place" size={24} color="white" />
+                  </View>
+                </TouchableOpacity>
+                // <Maps_Inbar result={result}/>
               )}
-              
+
             </View>
           </View>
         </View>
@@ -318,8 +315,8 @@ export default function NewSearch3() {
           ))}
         </ScrollView>
       </View>
-         {result&&result.length><Maps_Inbar result={result}/>}
-      <Menu_Client/>
+      {/* {result&&result.length>0<Maps_Inbar result={result}/>} */}
+      <Menu_Client />
     </>
   );
 }
@@ -404,15 +401,15 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 50, // שולט על הגודל של הכפתור
     marginTop: 10,
-    
+
   },
   thachtext: {
     textAlign: 'center',
     color: '#fffaf0',
-    fontSize:20,
-    fontWeight:'bold',
+    fontSize: 20,
+    fontWeight: 'bold',
     //borderRadius: 10,
-     height: 50,
+    height: 50,
     // marginBottom: 20,
     // backgroundColor: '#fffaf0',
     // padding: 15,
