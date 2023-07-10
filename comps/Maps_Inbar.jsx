@@ -1705,27 +1705,28 @@ export default function Maps_Inbar(props) {
                     center={region}
                     radius={1}
                 />
-                {result&&result.map(x => {
-                        if(x.LetCordinate&&x.LongCordinate){
-                            return(
-                                <Marker
-key={Number(x.LetCordinate)}
-                                coordinate={{ 
-                                  latitude: Number(x.LetCordinate),
-                                    longitude: Number(x.LongCordinate)}}
+                {result && result.map(x => {
+                    if (x.LetCordinate && x.LongCordinate) {
+                        return (
+                            <Marker
+                                key={Number(x.LetCordinate)}
+                                coordinate={{
+                                    latitude: Number(x.LetCordinate),
+                                    longitude: Number(x.LongCordinate)
+                                }}
                                 pinColor='green'
                                 draggable={false}
-                           >
-            
+                            >
+
                                 <Callout>
                                     <Text>{x.About}</Text>
                                 </Callout>
-            
+
                             </Marker>
-            
-                    
-                            )
-                        }
+
+
+                        )
+                    }
                 })}
             </MapView>
 

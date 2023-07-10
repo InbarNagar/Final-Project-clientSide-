@@ -318,6 +318,7 @@ export default function NewSearch3() {
           ))}
         </ScrollView>
       </View>
+         {result&&result.length><Maps_Inbar result={result}/>}
       <Menu_Client/>
     </>
   );
