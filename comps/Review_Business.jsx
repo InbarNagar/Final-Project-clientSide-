@@ -94,11 +94,12 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet } from 'react-native';
+import { Alert, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
 import { ReviewBusiness } from './obj/FunctionAPICode';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const Review_Business = ({ route }) => {
@@ -159,11 +160,13 @@ const Review_Business = ({ route }) => {
   }
 
   return (
+    <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+    <ScrollView>
     <PaperProvider>
       <View style={styles.container}>
         <Card style={styles.card}>
           <Card.Content>
-            <Title style={styles.title}>דרג את {BusinessName}</Title>
+            <Title style={styles.title}>נשמח אם תוכל להקדיש כמה דקות מזמנך ולדרג את {'\n'} {BusinessName}</Title>
 
             <Paragraph style={styles.subtitle}>ניקיון</Paragraph>
             <Rating
@@ -187,6 +190,7 @@ const Review_Business = ({ route }) => {
               ratingCount={5}
               imageSize={30}
               onFinishRating={(rating) => SetOn_time(rating)}
+              style={{ backgroundColor: 'transparent', overflow: 'visible' }}
             />
 
             <Paragraph style={styles.subtitle}>הערות</Paragraph>
@@ -208,7 +212,7 @@ const Review_Business = ({ route }) => {
            */}
             <Button
             style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number })}
-            ></Button>
+            >הוסף תמונה</Button>
 
             <Button
               style={styles.button}
@@ -222,13 +226,15 @@ const Review_Business = ({ route }) => {
                 publsihReview();
               }}
             >
-
               שלח דירוג
             </Button>
           </Card.Content>
         </Card>
       </View>
     </PaperProvider>
+    </ScrollView>
+    </KeyboardAvoidingView>
+
   );
 };
 
@@ -237,27 +243,40 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#FFEBEE'
+    backgroundColor: '#e6e6fa'
   },
   card: {
     borderRadius: 12,
-    backgroundColor: '#FCE4EC',
+    backgroundColor: 'rgb(255, 255, 255)',
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+
   },
   title: {
-    color: '#AD1457',
+    color: 'rgb(92, 71, 205)',
     fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center'
   },
   subtitle: {
     marginTop: 20,
     marginBottom: 10,
-    color: '#AD1457',
+    color: 'rgb(92, 71, 205)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   input: {
     marginBottom: 20,
+    backgroundColor: 'transparent',
   },
   button: {
     marginTop: 20,
-    backgroundColor: '#AD1457',
+    backgroundColor: 'rgb(92, 71, 205)',
   },
 });
 

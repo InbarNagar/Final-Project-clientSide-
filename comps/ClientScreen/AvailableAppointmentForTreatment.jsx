@@ -18,11 +18,11 @@ const AvailableAppointmentForTreatment = (props) => {
 
   const navigation = useNavigation();
 
-  useEffect(()=>{
-console.log(result, title, "12121212120000000000000000000000000000000000000")
-// console.log(Name, Type_treatment_Number, "######")
+//   useEffect(()=>{
+// console.log(result, title, "12121212120000000000000000000000000000000000000")
+// // console.log(Name, Type_treatment_Number, "######")
 
-},[])
+// },[])
    
 // function handle(){
 //     navigation.navigate('AvailableAppointmentForTreatmentAndCity',{treatmentName:result.Type_treatment_Number})
@@ -40,7 +40,7 @@ console.log(result, title, "12121212120000000000000000000000000000000000000")
     <View style={styles.container} >
 
      <View style={styles.containerBut}>
-            <TouchableOpacity style={styles.but}  onPress={() => navigation.navigate('AvailableAppointmentForTreatmentAndCity',{treatmentName:result.Type_treatment_Number})} >
+            <TouchableOpacity style={styles.but} onPress={onPress} >
             {/* <TouchableOpacity style={styles.but}  onPress={handle} > */}
 
               <View style={styles.buttonContent}>

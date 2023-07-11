@@ -254,6 +254,15 @@ export const AllBusinessReviews = (BusinessNumber) => {
 export const AddNewAvailableHours=(body)=>{
     return Axios(`BusinessDiary/AddNewOption`, 'post',body)
 }
+
+// אלמנט חכם - מחזיר רשימה של העסקים לפי הדירוג שלהם
+export const RateBussines = () => {
+    console.log(`Business/getRank`)
+    return Fetch(`Business/getRank`,'get')
+}
+
+
+
 //פונקציית חיפוש חדשה לפי יומן עסק
 // export const ReviewBusiness=(body)=>{
 //     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)

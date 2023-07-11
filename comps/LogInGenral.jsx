@@ -15,6 +15,7 @@ import Button from './obj/Button';
 import Alert from './Alert';
 import { MaterialIcons as Icon } from '@expo/vector-icons';
 import Client_registration from './Client_registration';
+import { ViewPropTypes } from 'deprecated-react-native-prop-types';
 
 export default function LogInGenral(props) {
   const [ID_number, setID_number] = useState('');

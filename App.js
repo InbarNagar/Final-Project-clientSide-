@@ -122,7 +122,7 @@ function App() {
           <Stack.Screen name="AvailableAppointmentToBook_New" component={AvailableAppointmentToBook_New}/>
           <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment} options={{ title: ''}} />
           <Stack.Screen name="AvailableAppointmentForTreatment" component={AvailableAppointmentForTreatment}/>
-          <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity} options={{ title: ''}} />
+          <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity} options={{ title: '1111111111'}} />
 
 
 
