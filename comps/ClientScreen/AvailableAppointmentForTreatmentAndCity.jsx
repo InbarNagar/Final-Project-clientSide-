@@ -11,13 +11,18 @@ import {NewSearchPost, Treatment_type_GET, Post_SendPushNotification,} from "../
 import AvailableAppointmentToBook_New from './AvailableAppointmentToBook_New';
 import Carousel from 'react-native-snap-carousel';
 import AvailableAppointmentForTreatment from './AvailableAppointmentForTreatment';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 
     
 
 
 
-const AvailableAppointmentForTreatmentAndCity = (props) => {
+const AvailableAppointmentForTreatmentAndCity = ( {route}) => {
+    const { treatmentNumberr } = route.params;
+
+    // const [TreatmentNumber] = props
     const [result, SetResult] = useState([]);
     const [treatmentNumber, SetTreatmentNumber] = useState("");
     const [categories, setCategories] = useState([]);
@@ -26,16 +31,22 @@ const AvailableAppointmentForTreatmentAndCity = (props) => {
 
 
     const { userDetails, setUserDetails } = useContext(UserContext);
-const navigation=useNavigation();
+// const navigation=useNavigation();
+
+useFocusEffect(
+  console.log("1111111111111111111111")
+,[])
+
 useEffect(()=>{
+  console.log("1111111111111111111111")
     console.log("profile pro = "+JSON.stringify(userDetails));
 
     console.log(userDetails.AddressCity, "11111111111")
     const obj = {
         // AddressCity: userDetails.AddressCity,
-        // TreatmentNumber: props,
-        TreatmentNumber: 20,
-       AddressCity: "תל אביב",
+        // TreatmentNumber: treatmentNumberr,
+        TreatmentNumber: 4,
+       AddressCity: "נתניה",
 
         // TreatmentNumber: treatmentNumber,
         // sort: "דירוג גבוהה תחילה",
@@ -47,15 +58,13 @@ useEffect(()=>{
           console.log("yes", result.data);
           if (result.data) {
             console.log(result.data)
-            // GetData(result.data);
+            GetData(result.data);
           }
         },
         (error) => {
           console.log("error", error);
         }
       );
-
-    
 },[])
 
 function GetData(data) {

@@ -33,6 +33,7 @@ const AvailableAppointmentToBook_New = (props) => {
     moment(result.diary[0].date).format("YYYY-MM-DD")
   );
   useEffect(() => {
+    console.log(result, "resssssssssssssssssssssss")
     // console.log("result: " + JSON.stringify(result));
     // console.log("result.diary[0].date: " + result.diary[0].date);
     // console.log("treatment: " + treatmentNumber);
