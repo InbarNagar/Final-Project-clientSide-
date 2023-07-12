@@ -32,7 +32,10 @@ const [src, setsrc] = useState()
 // useFocusEffect(
 
 //   },[]))
-
+let onTimeSum = 0;
+        let professionalismSum = 0;
+        let cleanlinessSum = 0;
+        let overallRatingSum = 0;
 
 const handleInstagramLink = async () => {
   try {
@@ -62,25 +65,25 @@ const handleInstagramLink = async () => {
           console.log("error", error);
         }
       );
-        let onTimeSum = 0;
+        // let onTimeSum = 0;
         let professionalismSum = 0;
         let cleanlinessSum = 0;
         let overallRatingSum = 0;
-        // businessRankArr.forEach(bus => {
-        //   onTimeSum += bus.On_time;
-        //   professionalismSum += bus.Professionalism;
-        //   cleanlinessSum += bus.Cleanliness;
-        //   overallRatingSum += bus.Overall_rating;
-        // });
+        businessRankArr.map(bus => {
+          onTimeSum += bus.On_time;
+          professionalismSum += bus.Professionalism;
+          cleanlinessSum += bus.Cleanliness;
+          overallRatingSum += bus.Overall_rating;
+        });
   
-        // SetOn_time(onTimeSum / businessRankArr.length);
-        // console.log(On_time);
-        // SetProfessionalism(professionalismSum / businessRankArr.length);
-        // console.log(Professionalism);
-        // SetCleanliness(cleanlinessSum / businessRankArr.length);
-        // console.log(Cleanliness);
-        // SetOverall_rating(overallRatingSum / businessRankArr.length);
-        // console.log(Overall_rating);
+        SetOn_time(onTimeSum / businessRankArr.length);
+        console.log(On_time);
+        SetProfessionalism(professionalismSum / businessRankArr.length);
+        console.log(Professionalism);
+        SetCleanliness(cleanlinessSum / businessRankArr.length);
+        console.log(Cleanliness);
+        SetOverall_rating(overallRatingSum / businessRankArr.length);
+        console.log(Overall_rating);
       
     }, [businessRankArr]);
   
@@ -210,23 +213,39 @@ const handleInstagramLink = async () => {
             Add more images as needed 
           </ScrollView> */}
 <View style={styles.rankingContainer}>
-  <Text style={styles.rankingTitle}>ציון עסק: {Overall_rating}</Text>
+  {/* <Text style={styles.rankingTitle}>ציון עסק: {Overall_rating}</Text>
   <Text style={styles.rankingItem}>ניקיון: {Cleanliness}</Text>
   <Text style={styles.rankingItem}>מקצועיות: {Professionalism}</Text>
-  <Text style={styles.rankingItem}>זמנים: {On_time}</Text>
+  <Text style={styles.rankingItem}>זמנים: {On_time}</Text> */}
   <TouchableOpacity onPress={()=>{SetShowReviewsSection(!ShowReviewsSection)}}>
+  <View style={styles.view2}>
+  <Text style={styles.textview2}>ביקורות של לקוחות</Text>
   <AntDesign name="downcircleo" size={24} color="black" />
-     </TouchableOpacity>
+  </View>
+  </TouchableOpacity>
   {ShowReviewsSection&&businessRankArr.length>0&&
   <ScrollView>
   {businessRankArr.map((bus) => {
               console.log("key: "+bus.Number_appointment);
               return (
+                <>
                 <View style={styles.card}>
-        <Text style={styles.title}>ציון כלללי: {bus.Overall_rating}</Text>
-        <Text style={styles.title}>ניקיון: {bus.Cleanliness}     זמנים: {bus.On_time}     מקצועיות: {bus.Professionalism}</Text>
-        <Text style={styles.title}>תגובת לקוח: </Text><Text style={styles.title}>{bus.Comment}</Text>
-      </View>
+  <View style={styles.row}>
+    <Text style={styles.titleCard}>ציון כללי: {bus.Overall_rating}</Text>
+  </View>
+  <View style={styles.row}>
+    <Text style={styles.rightText}>ניקיון: {bus.Cleanliness}</Text>
+    <Text style={styles.rightText}>זמנים: {bus.On_time}</Text>
+    <Text style={styles.rightText}>מקצועיות: {bus.Professionalism}</Text>
+  </View>
+  <View style={styles.customerCommentContainer}>
+    <Text style={styles.titleCard} >תגובת הלקוח: </Text>
+    <Text style={styles.customerComment}>{bus.Comment}</Text>
+  </View>
+</View>
+</>
+
+               
               );
             })}
   </ScrollView>}
@@ -258,6 +277,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 2,
     },
+    
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
@@ -283,6 +303,18 @@ const styles = StyleSheet.create({
     width: "10%",
     marginBottom: 20,
   },
+  view2:{
+   textAlign: 'center',
+   justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  textview2:{
+    fontSize: 20,
+    marginBottom: 20,
+    color: 'rgb(92, 71, 205)',
+    fontWeight: 'bold',
+  },
   img: {
     borderRadius: 150,
     marginBottom: 20,
@@ -296,14 +328,14 @@ view1:{
     // backgroundColor: 'fff',
     
 },
-  card: {
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#d3d3d3',
-    padding: 10,
-    marginVertical: 5,
-    backgroundColor: "grey",
-  },
+  // card: {
+  //   borderWidth: 1,
+  //   borderRadius: 10,
+  //   borderColor: '#d3d3d3',
+  //   padding: 10,
+  //   marginVertical: 5,
+  //   backgroundColor: "grey",
+  // },
   title: {
     fontWeight: 'bold',
     marginBottom: 5,
@@ -377,6 +409,49 @@ view1:{
   reviewItem: {
     marginBottom: 10,
   },
+
+
+  card: {
+    borderWidth: 3,
+    borderRadius: 10,
+    borderColor: 'rgb(92, 71, 205)',
+    padding: 5,
+    marginVertical: 5,
+    width:'100%',
+    
+    // backgroundColor: '#e6e6fa',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  titleCard: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    flex: 1,
+    textAlign: 'center',
+    marginBottom: 10
+  },
+  rightText: {
+    textAlign: 'center',
+    marginBottom: 10
+  },
+  customerCommentContainer: {
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  customerComment: {
+    textAlign: 'center',
+    fontSize: 20
+  },
+
 });
 
 export default BusinessProfilePOPUP;
+
+
+//  {/* <View style={styles.card}>
+//         <Text style={styles.title}>ציון כלללי: {bus.Overall_rating}</Text>
+//         <Text style={styles.title}>ניקיון: {bus.Cleanliness}     זמנים: {bus.On_time}     מקצועיות: {bus.Professionalism}</Text>
+//         <Text style={styles.title}>תגובת לקוח: </Text><Text style={styles.title}>{bus.Comment}</Text>
+//       </View> */}

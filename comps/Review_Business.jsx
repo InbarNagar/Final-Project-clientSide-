@@ -130,7 +130,11 @@ const Review_Business = ({ route }) => {
   function publsihReview() {
     try {
       // Check if appointmentDetails is not undefined
-      let Overall = (cleanliness + Professionalism + On_time) / 3;
+      // let Overall = (cleanliness + Professionalism + On_time) / 3;
+      let cleanlinessRating = Math.round(cleanliness);
+      let professionalismRating = Math.round(Professionalism);
+      let onTimeRating = Math.round(On_time);
+      let Overall = Math.round((cleanlinessRating + professionalismRating + onTimeRating) / 3);
       const reviewDetails = {
         Number_appointment: Number_appointment,
         Client_ID_number: ClientIDnumber,

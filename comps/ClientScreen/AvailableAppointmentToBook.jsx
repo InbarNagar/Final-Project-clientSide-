@@ -67,8 +67,8 @@ const AvailableAppointmentToBook = (props) => {
     console.log("appArr: " + appArr);
     AllBusinessReviews(result.id).then(
       (result) => {
-        console.log("yes", result.data);
-        SetBusinessRankArr(result.data);
+        console.log("yes", "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", result);
+        SetBusinessRankArr(result);
       },
       (error) => {
         console.log("error", error);

@@ -304,7 +304,7 @@ enableSnap={true} // Enable snap behavior
 
  <ScrollView >
           {rateBus.map((r) => (
-<Text>{r.Business_Number}</Text>
+          <Text>{r.Business_Number}</Text>
              
            
           ))}
