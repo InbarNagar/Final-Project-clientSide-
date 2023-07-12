@@ -105,8 +105,8 @@ export default function NewSearch3({ navigation }) {
       ],
       apointemnt: [
         {
-          number: data[0].Number_appointment,
-          status: data[0].Appointment_status,
+          number: data[0].Number_appointment,    ///////////////////
+          status: data[0].Appointment_status,   /////////////////////////////
           date: data[0].Date,
           time: [data[0].Start_Hour + "-" + data[0].End_Hour],
         },
@@ -148,13 +148,13 @@ export default function NewSearch3({ navigation }) {
           });
         }
         if (
-          data[i].Number_appointment !=
-          obj.apointemnt[obj.apointemnt.length - 1].number
+          data[i].Number_appointment !=    //////////////////////////////////////////////////////
+          obj.apointemnt[obj.apointemnt.length - 1].number //////////////////////////////////////////////
         ) {
           //אם המספר תור שונה מקודמו
           obj.apointemnt.push({
-            number: data[i].Number_appointment,
-            status: data[i].Appointment_status,
+            number: data[i].Number_appointment,  //////////////////////////////////////
+            status: data[i].Appointment_status,  ///////////////////////////////////////
             date: data[i].Date,
             time: data[i].Start_Hour + "-" + data[i].End_Hour,
           });
@@ -189,8 +189,8 @@ export default function NewSearch3({ navigation }) {
           ],
           apointemnt: [
             {
-              number: data[i].Number_appointment,
-              status: data[i].Appointment_status,
+              number: data[i].Number_appointment,   ////////////////////////////////////////
+              status: data[i].Appointment_status,   /////////////////////////////////////////
               date: data[i].Date,
               time: [data[i].Start_Hour + "-" + data[i].End_Hour],
             },
@@ -252,7 +252,7 @@ export default function NewSearch3({ navigation }) {
 
   return (
     <>
-
+<ScrollView>
       <View style={styles.container}>
         <View>
           <Header text="חיפוש תורים פנויים" fontSize={40} color={"rgb(92, 71, 205)"} />
@@ -315,8 +315,10 @@ export default function NewSearch3({ navigation }) {
           ))}
         </ScrollView>
       </View>
+      </ScrollView>
       {/* {result&&result.length>0<Maps_Inbar result={result}/>} */}
       <Menu_Client />
+      
     </>
   );
 }
