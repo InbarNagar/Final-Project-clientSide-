@@ -252,8 +252,8 @@ const AvailableAppointmentToBook = (props) => {
         פרטי עסק: {result.businessName}, {result.city}
       </Text>
       <Text> {result.Is_client_house === "YES" ? "טיפול ביתי" : "טיפול בבית העסק"} </Text>
-      <Text>תאריך{result.diary[0].date}</Text>
-      <Text>מספר תור {result.apointemnt.number}</Text>
+      {/* <Text>תאריך{result.diary[0].date}</Text>
+      <Text>מספר תור {result.apointemnt.number}</Text> */}
       <Text style={styles.titleText}>שעות פנויות: </Text>
       {newArr.map((d, index) => (
         <Text style={styles.text} key={index}>
