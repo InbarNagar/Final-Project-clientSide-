@@ -23,11 +23,15 @@ const BusinessProfilePOPUP = (props) => {
 const[ShowReviewsSection,SetShowReviewsSection]=useState(false);
 
 const [src, setsrc] = useState()
-useFocusEffect(
-    React.useCallback(() => {
-   setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${businessDetails.Professional_ID_number}.jpg`)
-   console.log(src, "111111111111111")
-  },[]))
+// useFocusEffect(
+//     React.useCallback(() => {
+//    setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${businessDetails.Professional_ID_number}.jpg`)
+//    console.log(src, "111111111111111")
+//   },[]))
+
+// useFocusEffect(
+
+//   },[]))
 
 
 const handleInstagramLink = async () => {
@@ -51,6 +55,8 @@ const handleInstagramLink = async () => {
         (result) => {
           console.log("yes", result.data);
           SetBusinessDetails( result.data);
+          console.log(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`)
+          setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`);
         },
         (error) => {
           console.log("error", error);

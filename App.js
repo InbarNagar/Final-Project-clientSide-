@@ -115,9 +115,9 @@ function App() {
           <Stack.Screen name="ShowReviews" component={ShowReviews} options={{ title: ''}} />
           <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} options={{ title: ''}} />
           <Stack.Screen name="NewAvilableHours" component={NewAvilableHours} options={{ title:'הוספת זמינות לפרסום'}} />
-           <Stack.Screen name="New_Calender" component={New_Calender} options={{ title:'הוספת זמינות לפרסום'}} /> 
+           <Stack.Screen name="New_Calender" component={New_Calender} options={{ title:'היומן שלי'}} /> 
           <Stack.Screen name="NewBusinessDiary_Ofir" component={NewBusinessDiary_Ofir} options={{ title:'הוספת זמינות לפרסום'}} />
-          <Stack.Screen name="Maps_Inbar" component={Maps_Inbar} options={{ title:'הוספת זמינות לפרסום'}} />
+          <Stack.Screen name="Maps_Inbar" component={Maps_Inbar} options={{ title:''}} />
           <Stack.Screen name="ClientHome" component={ClientHome} options={{ title: ''}} />
           <Stack.Screen name="AvailableAppointmentToBook_New" component={AvailableAppointmentToBook_New}/>
           <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment} options={{ title: ''}} />

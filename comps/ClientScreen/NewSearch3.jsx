@@ -248,27 +248,41 @@ export default function NewSearch3({ navigation }) {
     );
     // }
   }
-
+  const RtlText = ({ text }) => (
+    <Text style={{ textAlign: 'left' }}>{text}</Text>
+  );
 
   return (
     <>
-<ScrollView>
+
+  <ScrollView>
       <View style={styles.container}>
         <View>
           <Header text="חיפוש תורים פנויים" fontSize={40} color={"rgb(92, 71, 205)"} />
-          <Text style={styles.title}>בחר את הטיפול הרצוי </Text>
-          <View style={{ flexDirection: "column" }}>
+          <Text style={styles.title}>בחר את הטיפול הרצוי: </Text>
+          <View style={{ flexDirection: "column", alignItems: 'flex-end'  }}>
             <DropDownPicker
+           
               open={open}
               value={treatmentNumber}
               items={categories.map((category, i) => ({
-                label: category.Name,
+                label: <RtlText text={category.Name} />,
                 value: category.Type_treatment_Number,
                 key: i + 'category',
               }))}
               setOpen={setOpen}
               setValue={SetTreatmentNumber}
-              style={styles.picker}
+              style={{
+               
+              }}
+              itemStyle={{
+                alignItems: 'flex-start',
+                textAlign: 'left'
+              }}
+              labelStyle={{
+                textAlign: 'left',
+              }}
+              activeItemStyle={{alignItems:'flex-start'}}
               zIndex={9999}
 
             />
@@ -282,23 +296,24 @@ export default function NewSearch3({ navigation }) {
                 <TouchableOpacity style={styles.but} onPress={btnSearch}>
                   <View style={styles.buttonContent}>
                     <Text style={styles.thachtext}>חפש</Text>
-                    <Icon name="search" size={24} color="white" />
+                    <Icon name="search" size={25} color="white" />
                   </View>
                 </TouchableOpacity>
               </View>
 
               {result.length > 0 && (
-
-                <TouchableOpacity onPress={() => {
+                <View style={styles.containerBut}>
+                <TouchableOpacity  style={styles.but} onPress={() => {
                   navigation.navigate("Maps_Inbar",{
                     result: result,
                   });
                 }}>
                   <View style={styles.buttonContent}>
-                    <Text style={styles.thachtext}>הצג תוצאות במפה</Text>
-                    <Icon name="place" size={24} color="white" />
+                    <Text style={styles.thachtext}>הצג במפה</Text>
+                    <Icon name="place" size={20} color="white" />
                   </View>
                 </TouchableOpacity>
+                </View>
                 // <Maps_Inbar result={result}/>
               )}
 
@@ -357,9 +372,8 @@ const styles = StyleSheet.create({
   title: {
     padding: 10,
     justifyContent: "center",
-    textAlign: "right",
-    fontSize: 20,
-    color: "#000", // Change color to black for better visibility
+    textAlign: "left",
+    fontSize: 15,
     fontWeight: "bold",
     color: "rgb(92, 71, 205)",
   },
@@ -397,12 +411,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     textAlign: 'center',
     borderRadius: 25,
-    height: 50,
+    height: 45,
     // marginBottom: 20,
     backgroundColor: "rgb(92, 71, 205)",
     padding: 10,
-    margin: 50, // שולט על הגודל של הכפתור
-    marginTop: 10,
+    margin:45, // שולט על הגודל של הכפתור
+    marginTop: 5,
 
   },
   thachtext: {
@@ -411,7 +425,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     //borderRadius: 10,
-    height: 50,
+    height: 20,
     // marginBottom: 20,
     // backgroundColor: '#fffaf0',
     // padding: 15,
@@ -427,6 +441,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     // alignItems: 'center',
     width: '50%'
+  },
+  labelStyle: {
+    textAlign:'left', // מגדיר את הטקסט להיות מימין לשמאל
+  },
+  containerStyle: {
+    height: 40,
+    width: 150,
+    marginRight:10,
+  },
+  itemStyle: {
+    textAlign:'center',
+    justifyContent: 'flex-end' // מגדיר את הפריטים להיות ממורכזים לשמאל
+  },
+  picker: {
+  alignItems:'center'  },
+  dropDownContainerStyle: {
+    alignSelf: 'flex-start', // מגדיר את התפריט הנפתח להיות מימין לשמאל
   },
 });
 
