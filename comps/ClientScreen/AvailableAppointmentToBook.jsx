@@ -9,6 +9,8 @@ import {
 } from "../obj/FunctionAPICode";
 import BusinessSchedule from "./BusinessSchedule";
 import moment from "moment";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const AvailableAppointmentToBook = (props) => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const { result, treatmentNumber } = props;
@@ -98,34 +100,34 @@ const AvailableAppointmentToBook = (props) => {
             }
           }
           diaryArr.push(JSON.stringify(result.diary[i].time)); //דוחף למערך החדש את השעות
-          console.log(i+ ": "+JSON.stringify(result.diary[i].time));
+          console.log(i + ": " + JSON.stringify(result.diary[i].time));
         }
       }
     }
     function getMissingHours(times) {
       // Split each string into start and end times
       const ranges = times.map(time => time.split('-').map(Number));
-    
+
       // Create an array of all hours
       const allHours = Array.from({ length: 24 }, (_, i) => i);
-    
+
       // Filter out hours that are within the ranges
       const missingHours = allHours.filter(hour => {
-        for(let i = 0; i < ranges.length - 1; i++) {
+        for (let i = 0; i < ranges.length - 1; i++) {
           const currentRangeEnd = ranges[i][1];
-          const nextRangeStart = ranges[i+1][0];
-    
-          if(hour > currentRangeEnd && hour < nextRangeStart) {
+          const nextRangeStart = ranges[i + 1][0];
+
+          if (hour > currentRangeEnd && hour < nextRangeStart) {
             return true;
           }
         }
         return false;
       });
-    
+
       return missingHours;
     }
-    const betweenHours=getMissingHours(result.diary[0].time);
-    console.log("betweenHours: "+betweenHours); // [11,12,13]
+    const betweenHours = getMissingHours(result.diary[0].time);
+    console.log("betweenHours: " + betweenHours); // [11,12,13]
     // firstHour.push(betweenHours)
     console.log("Minimum number:", minNumber);
     console.log("Maximum number:", maxNumber);
@@ -134,7 +136,7 @@ const AvailableAppointmentToBook = (props) => {
       (v, i) => minNumber + i * duration
     );
     console.log("hours (" + hours.length + ") : " + hours);
-    
+
     const HoursAndGap = [];
     function getOccupiedHoursWithGap(firstHour, endHour) {
       let occupiedHoursWithGap = [];
@@ -160,66 +162,71 @@ const AvailableAppointmentToBook = (props) => {
     let tempArr = [...newArr]; // make a copy of newArr
     // ...
     console.log("hours : " + hours);
-    console.log("firstHour: "+firstHour);
-    console.log("endHour: "+endHour);
-    let str="";
-    console.log("result.diary[i].time)" + result.diary[0].time +" - "+result.diary[0].time.length);
-    if(result.diary[0].time.length==1){ //בודק האם מערך השעות מפוצל (גדול מ-1)
-      console.log("if "+result.id);
-    for (let i = 0; i < hours.length; i++) {
-     if(!firstHour.includes(hours[i])) {
-      if(str===""){
-        str=`${hours[i]}`
-      }}
-      else{
-        if(str!==""){
-          str+=`-${hours[i]}`
-          tempArr.push(str);
-          str="";
-        }
-     }
-    }}
-    else{
-      console.log("else "+result.id);
+    console.log("firstHour: " + firstHour);
+    console.log("endHour: " + endHour);
+    let str = "";
+    console.log("result.diary[i].time)" + result.diary[0].time + " - " + result.diary[0].time.length);
+    if (result.diary[0].time.length == 1) { //בודק האם מערך השעות מפוצל (גדול מ-1)
+      console.log("if " + result.id);
       for (let i = 0; i < hours.length; i++) {
-        console.log(i+ " "+ hours[i] + "str= "+str);
-        if(!firstHour.includes(hours[i])){
-        if(!endHour.includes(hours[i])){
-          if(!betweenHours.includes(hours[i])){
-        if(str===""){
-          console.log(i+" :"+hours[i]);
-          str=`${hours[i]}`;
-        }}}}
-        else if(str!=="" || betweenHours.includes(hours[i]+duration)){
-          console.log("else if : "+hours[i]);
-          str+=`-${hours[i]}`;
-          tempArr.push(str);
-          str="";
+        if (!firstHour.includes(hours[i])) {
+          if (str === "") {
+            str = `${hours[i]}`
+          }
         }
-         if(str==="" && hours[i]===hours[hours.length-1] && !endHour.includes(hours[hours.length-1])){
-          console.log("else if 3: "+hours[i]);
-          str=`${hours[i]}-${hours[hours.length-1]+duration}`
-          tempArr.push(str);
+        else {
+          if (str !== "") {
+            str += `-${hours[i]}`
+            tempArr.push(str);
+            str = "";
+          }
         }
-        if((endHour.includes(hours[i]) && str==="" )&& 
-        !betweenHours.includes(hours[i]+duration)&&!firstHour.includes(hours[i])){
-          console.log("last if");
-          console.log(i+" :"+hours[i]);
-          str=`${hours[i]}`;
-        }
-      }
-      
-      if(str!==""){
-        console.log(str+" = last hour to add"+hours[hours.length-1]+duration);
-      str+=`-${hours[hours.length-1]+duration}`;
-      tempArr.push(str);
       }
     }
-    console.log("final str= "+str);
+    else {
+      console.log("else " + result.id);
+      for (let i = 0; i < hours.length; i++) {
+        console.log(i + " " + hours[i] + "str= " + str);
+        if (!firstHour.includes(hours[i])) {
+          if (!endHour.includes(hours[i])) {
+            if (!betweenHours.includes(hours[i])) {
+              if (str === "") {
+                console.log(i + " :" + hours[i]);
+                str = `${hours[i]}`;
+              }
+            }
+          }
+        }
+        else if (str !== "" || betweenHours.includes(hours[i] + duration)) {
+          console.log("else if : " + hours[i]);
+          str += `-${hours[i]}`;
+          tempArr.push(str);
+          str = "";
+        }
+        if (str === "" && hours[i] === hours[hours.length - 1] && !endHour.includes(hours[hours.length - 1])) {
+          console.log("else if 3: " + hours[i]);
+          str = `${hours[i]}-${hours[hours.length - 1] + duration}`
+          tempArr.push(str);
+        }
+        if ((endHour.includes(hours[i]) && str === "") &&
+          !betweenHours.includes(hours[i] + duration) && !firstHour.includes(hours[i])) {
+          console.log("last if");
+          console.log(i + " :" + hours[i]);
+          str = `${hours[i]}`;
+        }
+      }
+
+      if (str !== "") {
+        console.log(str + " = last hour to add" + hours[hours.length - 1] + duration);
+        str += `-${hours[hours.length - 1] + duration}`;
+        tempArr.push(str);
+      }
+    }
+    console.log("final str= " + str);
     console.log(
       `Diary of ${result.id}: ` + tempArr + " length: " + tempArr.length
     );
-    
+
     // update newArr state variable with new values
     SetNewArr(tempArr);
     console.log("array of diary to print: " + typeof newArr[1]);
@@ -249,21 +256,37 @@ const AvailableAppointmentToBook = (props) => {
   return (
     <View style={styles.container} key={result.id}>
       <Text style={styles.titleText}>
-        פרטי עסק: {result.businessName}, {result.city}
+        {result.businessName},{result.city}
       </Text>
-      <Text> {result.Is_client_house === "YES" ? "טיפול ביתי" : "טיפול בבית העסק"} </Text>
+      {/* <Text style={styles.text}> {result.Is_client_house === "YES" ? "טיפול בבית הלקוח" : "טיפול בבית העסק"} </Text> */}
+
+      {result.Is_client_house === "YES" || "YES       " ? (
+        <View style={styles.iconContainer}>
+          <Icon name="home" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
+          <Text style={styles.text}>טיפול בבית הלקוח</Text>
+        </View>
+      ) : (
+        <>
+          <Icon name="briefcase" size={25} color="rgb(92, 71, 205)" style={styles.icon} />
+          טיפול בבית העסק
+        </>
+      )}
+      {result.typeTritment.map((t, i) => (
+        <View style={styles.iconContainer}>
+          <MaterialCommunityIcons name="cash-multiple" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
+        <Text style={styles.text} key={i}>   
+             מחיר: {t.price} ₪  
+        </Text>
+        </View>
+      ))}
       <Text style={styles.titleText}>שעות פנויות: </Text>
       {newArr.map((d, index) => (
         <Text style={styles.text} key={index}>
           {d}
         </Text>
       ))}
-      <Text style={styles.titleText}>טיפול:</Text>
-      {result.typeTritment.map((t, i) => (
-        <Text style={styles.text} key={i}>
-          מחיר: {t.price} זמן: {t.duration}
-        </Text>
-      ))}
+      {/* <Text style={styles.titleText}>טיפול:</Text> */}
+
       <View style={styles.buttonContainer}>
         <Button
           title="צפה בפרופיל העסק"
@@ -309,7 +332,7 @@ export default AvailableAppointmentToBook;
 
 const styles = StyleSheet.create({
   container: {
-    textAlign: "right",
+    textAlign: "left",
     backgroundColor: "#F5FCFF",
     padding: 20,
     borderRadius: 10,
@@ -318,16 +341,14 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   titleText: {
-    textAlign: "right",
+    textAlign: "left",
     fontSize: 18,
     fontWeight: "bold",
-    textAlign: "right",
     marginVertical: 10,
   },
   text: {
-    textAlign: "right",
+    textAlign: "left",
     fontSize: 16,
-    textAlign: "right",
     marginVertical: 5,
   },
   buttonContainer: {
@@ -345,5 +366,11 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontWeight: "bold",
     color: "white",
+  },
+  iconContainer: {
+    flexDirection: "row",
+  },
+  icon: {
+    marginRight: 10,
   },
 });
