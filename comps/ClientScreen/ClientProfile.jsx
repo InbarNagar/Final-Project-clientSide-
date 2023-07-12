@@ -22,6 +22,7 @@ const ClientProfile = (Props) => {
   useFocusEffect(
       React.useCallback(() => {
      setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg`)
+     console.log(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg`)
     },[]))
     
   const { userDetails, setUserDetails } = useContext(UserContext);
