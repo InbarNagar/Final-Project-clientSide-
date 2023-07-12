@@ -253,8 +253,19 @@ const AvailableAppointmentToBook = (props) => {
   }
   let today = "2023-06-02T00:00:00";
   let prevNumber = null;
+
+  function formatDuration(duration) {
+    const hours = Math.floor(duration);
+    const minutes = (duration - hours) * 60;
+    let hoursText = 'שעה';
+    if (hours > 1) {
+      hoursText = hours === 2 ? 'שעתיים' : hours + ' שעות';
+    }
+    return `${hoursText} ${minutes > 0 ? `ו-${minutes} דקות` : ''}`;
+  }
   return (
     <View style={styles.container} key={result.id}>
+      
       <Text style={styles.titleText}>
         {result.businessName},{result.city}
       </Text>
@@ -272,15 +283,18 @@ const AvailableAppointmentToBook = (props) => {
           טיפול בבית העסק
         </>
       )}
-      {result.typeTritment.map((t, i) => (
-        <View style={styles.iconContainer}>
-          <MaterialCommunityIcons name="cash-multiple" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
-        <Text style={styles.text} key={i}>   
-             מחיר: {t.price} ₪  
-        </Text>
-        </View>
-      ))}
-
+   {result.typeTritment.map((t, i) => (
+  <View key={i}>
+    <View style={styles.iconContainer}>
+      <MaterialCommunityIcons name="cash-multiple" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
+      <Text style={styles.text}>מחיר: {t.price} ₪</Text>
+    </View>
+    <View style={styles.iconContainer}>
+      <MaterialCommunityIcons name="clock-outline" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
+      <Text style={styles.text}>זמן הטיפול: {formatDuration(t.duration)}</Text>
+    </View>
+  </View>
+))}
       <Text style={styles.titleText}>שעות פנויות: </Text>
       {newArr.map((d, index) => (
         <Text style={styles.text} key={index}>
@@ -290,19 +304,27 @@ const AvailableAppointmentToBook = (props) => {
       {/* <Text style={styles.titleText}>טיפול:</Text> */}
 
       <View style={styles.buttonContainer}>
-        <Button
-          title="צפה בפרופיל העסק"
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTitle}
-          onPress={handleBusinessProfilePOPUP}
-        />
-        <Button
-          title="הזמן תור"
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTitle}
-          onPress={() => handleBusinessSchedulePOPUP()}
-        />
-      </View>
+  <View style={styles.buttonContent}>
+    <MaterialCommunityIcons name="store" size={25} color="rgb(92, 71, 205)" />
+    <Button
+    color={"rgb(92, 71, 205)"}
+      title="צפה בפרופיל העסק"
+      buttonStyle={styles.buttonStyle}
+      titleStyle={styles.buttonTitle}
+      onPress={handleBusinessProfilePOPUP}
+    />
+  </View>
+  <View style={styles.buttonContent}>
+    <MaterialCommunityIcons name="calendar-clock" size={24} color="rgb(92, 71, 205)" />
+    <Button
+    color={"rgb(92, 71, 205)"}
+      title="הזמן תור"
+      buttonStyle={styles.buttonStyle}
+      titleStyle={styles.buttonTitle}
+      onPress={() => handleBusinessSchedulePOPUP()}
+    />
+  </View>
+</View>
       {businessSchedulePOPUP && !businessProfilePOPUP && (
         <BusinessSchedule
           businessNumber={result.id}
@@ -359,20 +381,30 @@ const styles = StyleSheet.create({
     marginTop: 10, // Adjust the margin as needed
   },
   buttonStyle: {
-    backgroundColor: "rgb(92, 71, 205)",
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 30,
-    width: "45%",
+    fontSize: 18, // שינוי הגודל
+    color: 'white', // שינוי הצבע
+    fontWeight: 'bold', // הופך את הטקסט לבולט
+    textShadowColor: 'rgba(0, 0, 0, 0.75)', // צללה שחורה
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   },
   buttonTitle: {
-    fontWeight: "bold",
-    color: "white",
+    fontSize: 18, // שינוי הגודל
+    color: 'white', // שינוי הצבע
+    fontWeight: 'bold', // הופך את הטקסט לבולט
+    textShadowColor: 'rgba(0, 0, 0, 0.75)', // צללה שחורה
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   },
   iconContainer: {
     flexDirection: "row",
   },
   icon: {
     marginRight: 10,
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

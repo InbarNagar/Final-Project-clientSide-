@@ -16,12 +16,15 @@ import {
 } from "../obj/FunctionAPICode";
 import { UserContext } from "../UserDietails";
 import { useNavigation } from "@react-navigation/native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import moment from 'moment';
 const BusinessSchedule = (props) => {
   const [token, settoken] = useState(null);
   const { userDetails } = useContext(UserContext);
-  const { duration,hours, Is_client_house,Type_Treatment_Number, businessNumber, isVisible, date, onClose } = props;
+  const { duration, hours, Is_client_house, Type_Treatment_Number, businessNumber, isVisible, date, onClose } = props;
   const [pressedHour, setPressedHour] = useState(null);
   const navigation = useNavigation();
+
   useEffect(() => {
     console.log(`props ${businessNumber} : ${date}  treatment number: ${Type_Treatment_Number} Is_client_house ${Is_client_house}`);
     if (token) {
@@ -41,19 +44,19 @@ const BusinessSchedule = (props) => {
     }
   }, [token]);
 
-  const btnBookApiontment = (item) => {
+  const btnBookAppointment = (item) => {
     const [start, end] = item.split('-').map(Number);
     console.log(`book Appointment: start- ${start} end- ${end} ${date} ${Type_Treatment_Number} `);
-    const pickedApointment = {
+    const pickedAppointment = {
       Date: date,
       ID_Client: userDetails.ID_number,
       Start_Hour: start,
       End_Hour: end,
       Business_Number: businessNumber,
       Is_client_house: "YES",
-      Type_Treatment_Number:Type_Treatment_Number  
+      Type_Treatment_Number: Type_Treatment_Number
     };
-    NewAppointmentToClient(pickedApointment).then(
+    NewAppointmentToClient(pickedAppointment).then(
       (result) => {
         if (result.data) {
           AllApointemtDetailes().then((res) => {
@@ -71,46 +74,51 @@ const BusinessSchedule = (props) => {
         console.log("error", error);
       }
     );
-}
+  };
 
-const renderItem = ({ item }) => {
-  // Split the hours and convert them to numbers
-  const [start, end] = item.split('-').map(Number);
+  const renderItem = ({ item }) => {
+    // Split the hours and convert them to numbers
+    const [start, end] = item.split('-').map(Number);
 
-  // Calculate the number of slots
-  const slotsCount = (end - start) / duration;
+    // Calculate the number of slots
+    const slotsCount = (end - start) / duration;
 
-  // Create an array of slots
-  const slots = Array.from({ length: slotsCount }, (_, i) => {
-    const slotStart = start + i * duration;
-    const slotEnd = slotStart + duration;
-    return `${slotStart}-${slotEnd}`;
-  });
+    // Create an array of slots
+    const slots = Array.from({ length: slotsCount }, (_, i) => {
+      const slotStart = start + i * duration;
+      const slotEnd = slotStart + duration;
+      // return `${slotStart}-${slotEnd}`;
+      return `${slotStart.toString().slice(0, 5)}-${slotEnd.toString().slice(0, 5)}`;
+    });
 
-  // Render each slot
-  return slots.map((slot) => {
-    const formattedSlot = slot.split('-').map(hour => `${hour}:00`).join(' - ');
-    return (
-      <TouchableOpacity
-        key={slot}
-        style={[
-          styles.touchable,
-          { backgroundColor: slot === pressedHour ? "green" : "white" },
-        ]}
-        onPress={() => setPressedHour(prev => prev === slot ? null : slot)}
-      >
-        <View style={styles.innerContainer}>
-          <Text style={styles.text}>{formattedSlot}</Text>
-          {slot === pressedHour && (
-            <Button title="הזמן תור" onPress={() => btnBookApiontment(slot)} />
-          )}
-        </View>
-      </TouchableOpacity>
-    );
-  });
-}
+    // Render each slot
+    return slots.map((slot) => {
+      const formattedSlot = slot.split('-').map(hour => `${hour}:00`).join(' - ');
+      const isSlotPressed = slot === pressedHour;
 
-  
+      return (
+        <TouchableOpacity
+          key={slot}
+          style={[
+            styles.touchable,
+            { backgroundColor: isSlotPressed ? "rgb(0, 255, 0)" : "white",  borderRadius: 10, },
+          ]}
+          onPress={() => setPressedHour(prev => prev === slot ? null : slot)}
+        >
+          <View style={styles.innerContainer}>
+            <View style={styles.slotInfoContainer}>
+              <Text style={styles.slotText}>{formattedSlot}</Text>
+              {isSlotPressed && (
+                <TouchableOpacity style={styles.slotIconContainer} onPress={() => btnBookAppointment(slot)}>
+                  <MaterialCommunityIcons name="calendar-plus" size={20} color="white" />
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
+        </TouchableOpacity>
+      );
+    });
+  };
 
   return (
     <Modal
@@ -120,54 +128,78 @@ const renderItem = ({ item }) => {
       onRequestClose={onClose}
     >
       <View style={styles.modalView}>
-        <View style={{ flex: 1, justifyContent: "center" }}>
-          <FlatList
-            data={hours}
-            keyExtractor={(item) => item}
-            renderItem={renderItem}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button title="סגור" onPress={onClose} />
-        </View>
+        <FlatList
+          data={hours}
+          keyExtractor={(item) => item}
+          renderItem={renderItem}
+          contentContainerStyle={styles.flatListContainer}
+        />
+        <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+          <Text style={styles.closeButtonText}>סגור</Text>
+        </TouchableOpacity>
       </View>
     </Modal>
   );
 };
+
 const styles = StyleSheet.create({
   modalView: {
-    flex: 1,
+    position: "absolute",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft: 20,
-    marginRight: 20,
-    borderRadius: 10, // optional, to round the edges
+    backgroundColor: "rgba(125, 100, 235, 0.8)",
+    borderRadius: 10,
+    width: "80%", // רוחב המודל ביחס לחלון
+    aspectRatio: 1, // נותן את הצורה הריבועית
+    padding: 20,
+    top:300, // ממרכז את המודל אנכית
+    left: -10, // ממרכז את המודל אופקית
+    transform: [{ translateX: -50 }, { translateY: -50 }], // מסדר את המודל למרכז המסך
   },
-  itemContainer1: {
-    backgroundColor: "#ffcccc",
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+  flatListContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   touchable: {
-    padding: 10,
-    borderBottomWidth: 1,
+    paddingVertical: 10,
+    marginBottom: 10,
+    borderBottomWidth: 2,
     borderBottomColor: "#ccc",
   },
   innerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
-  text: {
+  slotInfoContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  slotText: {
     fontSize: 16,
     fontWeight: "bold",
+    color: "#4c288c",
+    marginRight: 10,
   },
-  buttonContainer: {
-    marginTop: 10, // Adjust the margin as needed
+  slotIconContainer: {
+    backgroundColor: "purple",
+    padding: 10,
+    borderRadius: 5,
+  },
+  closeButton: {
+    marginTop: 10,
+    backgroundColor: "#4c288c",
+    padding: 10,
+    borderRadius: 5,
+    width: "100%",
+  },
+  closeButtonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

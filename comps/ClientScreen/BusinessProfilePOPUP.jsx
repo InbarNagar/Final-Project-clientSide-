@@ -169,13 +169,15 @@ const handleInstagramLink = async () => {
 
           <View style={styles.linksContainer}>
   <View style={styles.iconContainer}>
-    <TouchableOpacity onPress={handleInstagramLink}>
-      <FontAwesome name="instagram" size={24} color="black" style={{ marginRight: 50 }} />
+    <TouchableOpacity   onPress={() => Linking.openURL(`https://www.instagram.com/${businessDetails.Instagram_link}`)}>
+      <FontAwesome name="instagram" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
     </TouchableOpacity>
   </View>
   <View style={styles.iconContainer}>
-    <TouchableOpacity style={styles.link} onPress={() => dialNumber(userDetails.phone)}>
-      <AntDesign name="phone" size={24} color="black" />
+    <TouchableOpacity style={styles.link} onPress={() =>
+                        Linking.openURL(`tel:${businessDetails.phoneNumber}`)
+                      }>
+      <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" />
     </TouchableOpacity>
   </View>
 </View>
