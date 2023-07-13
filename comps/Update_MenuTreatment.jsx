@@ -152,7 +152,7 @@ const Update_MenuTreatment = (props) => {
   return (
     <ScrollView >
         <View style={styles.container}>
-          <Header text="הוסף טיפול לטפריט הטיפולים שלך" fontSize={30} height={150} color={"rgb(92, 71, 205)"} />
+          <Header text="הוסף טיפול לתפריט הטיפולים שלך" fontSize={30} height={150} color={"rgb(92, 71, 205)"} />
           <DropDownPicker
             open={openT}
             items={treatments.map(treatment => ({ label: treatment.Name, value: treatment.Type_treatment_Number }))}
