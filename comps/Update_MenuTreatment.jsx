@@ -151,9 +151,8 @@ const Update_MenuTreatment = (props) => {
 
   return (
     <ScrollView >
-      <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Header text="צור את תפריט הטיפולים שלך" fontSize={50} height={200} color={"rgb(92, 71, 205)"} />
+          <Header text="הוסף טיפול לטפריט הטיפולים שלך" fontSize={30} height={150} color={"rgb(92, 71, 205)"} />
           <DropDownPicker
             open={openT}
             items={treatments.map(treatment => ({ label: treatment.Name, value: treatment.Type_treatment_Number }))}
@@ -194,7 +193,30 @@ const Update_MenuTreatment = (props) => {
           />
           <Text>{'\n'}</Text>
 
-          <View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+{show && (
+  <DateTimePicker
+    testID="dateTimePicker"
+    value={date}
+    mode={mode}
+    is24Hour={true}
+    display="default"
+    onChange={onChange}
+  />
+)}
+<TouchableOpacity onPress={showTimepicker}>
+  <View style={styles.but}>
+    <Text style={styles.thachtext}>בחר משך זמן הטיפול</Text>
+  </View>
+</TouchableOpacity>
+</View>
+{duration && <Text style={styles.titp}>משך זמן הטיפול: {duration}</Text>}
+
+<Text>{'\n'}</Text>
+
+          {/* <View>
             <Button onPress={showTimepicker} title=" בחר משך זמן טיפול" />
           </View>
           {show && (
@@ -208,7 +230,8 @@ const Update_MenuTreatment = (props) => {
             />
           )}
           {duration && <Text>משך זמן הטיפול: {duration}</Text>}
-          
+           */}
+
           <Text>{'\n'}</Text>
           <Text style={styles.title}>מחיר</Text>
           <View style={styles.inp}>
@@ -221,17 +244,23 @@ const Update_MenuTreatment = (props) => {
 
           </View>
 
-          <Button
+          <TouchableOpacity onPress={addTreatment} >
+          <View style={styles.but} disabled={!selectedTreatment || !selectedCategory || !price || !duration}>
+            <Text style={styles.thachtext}>צור תפריט טיפולים</Text>
+          </View></TouchableOpacity>
+
+          {/* <Button
             title="הוספת הטיפול לתפריט הטיפולים"
             onPress={addTreatment}
             disabled={!selectedTreatment || !selectedCategory || !price || !duration}
-          />
+          /> */}
 
 
         </View>
-      </TouchableOpacity>
 
     </ScrollView>
+
+   
   );
 };
 
@@ -243,12 +272,20 @@ const styles = StyleSheet.create({
     alignItems: 'center', // Center items horizontally
     justifyContent: 'center', // Center items vertically
     flexDirection: 'column', // Ensure the direction is from top to bottom
+    paddingBottom:150
   },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
     textAlign: 'right', // Align text to the right
+  },
+  titp: {
+    textAlign: 'center',
+    color: '#fffaf0',
+    fontSize: 25,
+    color: "rgb(92, 71, 205)",
+    padding: 10
   },
   label: {
     fontSize: 20,
@@ -269,8 +306,152 @@ const styles = StyleSheet.create({
     padding: 2,
     justifyContent: 'space-between',
   },
+  but: {
+    textAlign: 'center',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 20,
+    backgroundColor: "rgb(92, 71, 205)",
+    padding: 15,
+    margin: 10,
+    marginTop: 10,
+    marginLeft: 20
+
+  },
+  thachtext: {
+    textAlign: 'center',
+    color: '#fffaf0',
+    fontSize: 20,
+    fontWeight: 'bold',
+    //borderRadius: 10,
+    height: 50,
+    // marginBottom: 20,
+    // backgroundColor: '#fffaf0',
+    // padding: 15,
+    // margin: 10,
+    // marginTop: 20,
+
+
+  },
+  // container: {
+  //   flex: 1, // Ensure the container takes all available space
+  //   padding: 20,
+  //   backgroundColor: '#e6e6fa', // Change background color here
+  //   alignItems: 'center', // Center items horizontally
+  //   justifyContent: 'center', // Center items vertically
+  //   flexDirection: 'column', // Ensure the direction is from top to bottom
+  // },
+  // title: {
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   marginBottom: 10,
+  //   textAlign: 'right', // Align text to the right
+  // },
+  // label: {
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   textAlign: 'right', // Align text to the right
+  // },
+  // input: {
+  //   borderWidth: 1,
+  //   borderColor: "rgb(92, 71, 205)",
+  //   width: "100%",
+  //   marginRight: 8,
+  //   borderRadius: 20,
+  //   height: 50,
+  //   textAlign: 'right', // Align text to the right
+  // },
+  // inp: {
+  //   flexDirection: 'row-reverse', // Reverse the row direction
+  //   padding: 2,
+  //   justifyContent: 'space-between',
+  // },
 });
 
 
 export default Update_MenuTreatment;
 
+
+
+ // <ScrollView >
+    //   <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
+    //     <View style={styles.container}>
+    //       <Header text="צור את תפריט הטיפולים שלך" fontSize={50} height={200} color={"rgb(92, 71, 205)"} />
+    //       <DropDownPicker
+    //         open={openT}
+    //         items={treatments.map(treatment => ({ label: treatment.Name, value: treatment.Type_treatment_Number }))}
+    //         setOpen={setOpenT}
+    //         setValue={setSelectedTreatment}
+    //         placeholder="בחר טיפול"
+    //         value={selectedTreatment}
+    //         containerStyle={{ height: 40, borderColor: '#d3d3d3', borderRadius: 10 }}
+    //         onChangeItem={item => setSelectedTreatment(item.value)}
+    //         searchable={true}
+    //         style={{ backgroundColor: '#fafafa', zIndex: 10000 }}
+    //         dropDownContainerStyle={{ backgroundColor: '#FFFFFF' }}
+    //         listMode="MODAL"
+    //         positionFixed={true}
+    //         itemStyle={{ justifyContent: 'flex-end' }}
+    //         placeholderStyle={{ color: 'gray' }}
+    //         labelStyle={{ fontSize: 14, color: '#000' }}
+    //       />
+    //       <Text>{'\n'}</Text>
+
+    //       <DropDownPicker
+    //         open={openC}
+    //         items={categories.map(category => ({ label: category.Name, value: category.Category_Number }))}
+    //         setOpen={setOpenC}
+    //         setValue={setSelectedCategory}
+    //         placeholder="בחר קטגוריה"
+    //         value={selectedCategory}
+    //         containerStyle={{ height: 40 }}
+    //         onChangeItem={item => setSelectedCategory(item.value)}
+    //         searchable={true}
+    //         style={{backgroundColor: '#fafafa', zIndex: 10000 }}
+    //         dropDownContainerStyle={{ backgroundColor: '#FFFFFF' }}
+    //         listMode="MODAL"  // שימוש במצב מודאל
+    //         positionFixed={true}
+    //         itemStyle={{ justifyContent: 'flex-end' }}
+    //         placeholderStyle={{ color: 'gray' }}
+    //         labelStyle={{ fontSize: 14, color: '#000' }}
+    //       />
+    //       <Text>{'\n'}</Text>
+
+    //       <View>
+    //         <Button onPress={showTimepicker} title=" בחר משך זמן טיפול" />
+    //       </View>
+    //       {show && (
+    //         <DateTimePicker
+    //           testID="dateTimePicker"
+    //           value={date}
+    //           mode={mode}
+    //           is24Hour={true}
+    //           display="default"
+    //           onChange={onChange}
+    //         />
+    //       )}
+    //       {duration && <Text>משך זמן הטיפול: {duration}</Text>}
+          
+    //       <Text>{'\n'}</Text>
+    //       <Text style={styles.title}>מחיר</Text>
+    //       <View style={styles.inp}>
+    //         <TextInput
+    //           style={styles.input}
+    //           placeholder="מחיר"
+    //           value={price}
+    //           onChangeText={setPrice}
+    //         />
+
+    //       </View>
+
+    //       <Button
+    //         title="הוספת הטיפול לתפריט הטיפולים"
+    //         onPress={addTreatment}
+    //         disabled={!selectedTreatment || !selectedCategory || !price || !duration}
+    //       />
+
+
+    //     </View>
+    //   </TouchableOpacity>
+
+    // </ScrollView>

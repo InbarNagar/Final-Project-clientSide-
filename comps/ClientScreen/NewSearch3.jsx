@@ -378,7 +378,10 @@ const styles = StyleSheet.create({
     color: "rgb(92, 71, 205)",
   },
   container: {
+    // flex:1,
     backgroundColor: '#e6e6fa',
+    // textAlign: "right",
+
   },
   titleText: {
     fontSize: 18,

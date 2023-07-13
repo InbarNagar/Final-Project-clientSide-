@@ -304,7 +304,7 @@ const New_Calendar = () => {
         />
         {alert && alert}
         {selectedAppointments.map((appointment) => (
-          <TouchableOpacity
+          <View
             style={styles.card}
             key={appointment.Number_appointment}
             onPress={() => setShowDetails(!showDetails)}
@@ -477,7 +477,7 @@ const New_Calendar = () => {
               </View>
 
             )}
-          </TouchableOpacity>
+          </View>
         ))}
       </View>
     </ScrollView>

@@ -8,6 +8,8 @@ import { UserContext } from "../UserDietails";
 import { useNavigation} from "@react-navigation/core";
 import Header from "../obj/Header";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 
 
@@ -33,10 +35,14 @@ const [src, setsrc] = useState()
 // useFocusEffect(
 
 //   },[]))
-let onTimeSum = 0;
-        let professionalismSum = 0;
-        let cleanlinessSum = 0;
-        let overallRatingSum = 0;
+
+
+
+
+// let onTimeSum = 0;
+//         let professionalismSum = 0;
+//         let cleanlinessSum = 0;
+//         let overallRatingSum = 0;
 
 // const handleInstagramLink = async () => {
 //   try {
@@ -66,7 +72,7 @@ let onTimeSum = 0;
           console.log("error", error);
         }
       );
-        // let onTimeSum = 0;
+        let onTimeSum = 0;
         let professionalismSum = 0;
         let cleanlinessSum = 0;
         let overallRatingSum = 0;
@@ -175,11 +181,41 @@ let onTimeSum = 0;
     </TouchableOpacity>
   </View>
   <View style={styles.iconContainer}>
+  <TouchableOpacity
+                        onPress={() => Linking.openURL(businessDetails.Facebook_link)}
+                      >
+                        <Icon
+                          name="facebook"
+                          size={20}
+                          color="rgb(92, 71, 205)"
+                          // style={styles.icon}
+                          style={{ marginRight: 50 }}
+                        />
+      </TouchableOpacity>
+  </View>
+  <View style={styles.iconContainer}>
     <TouchableOpacity style={styles.link} onPress={() =>
                         Linking.openURL(`tel:${businessDetails.phoneNumber}`)
                       }>
-      <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" />
+      <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
     </TouchableOpacity>
+  </View>
+  <View style={styles.iconContainer}>
+  <TouchableOpacity onPress={() => {
+                      const scheme = Platform.select({ ios: 'waze://', android: 'https://waze.com/ul' });
+                      const address = `${businessDetails.AddressCity},${businessDetails.AddressHouseNumber} ${businessDetails.AddressStreet} `
+                      const url = `${scheme}?q=${encodeURIComponent(address)}&navigate=yes`;
+
+                      Linking.canOpenURL(url).then((supported) => {
+                        if (supported) {
+                          return Linking.openURL(url);
+                        } else {
+                          console.log(`Can't handle url: ${url}`);
+                        }
+                      }).catch((err) => console.error('An error occurred', err));
+                    }}>
+                      <MaterialCommunityIcons name="waze" size={24} color="rgb(92, 71, 205)" />
+                    </TouchableOpacity>
   </View>
 </View>
           {/* האייקונים של אופיר */}
@@ -220,6 +256,13 @@ let onTimeSum = 0;
   <Text style={styles.rankingItem}>ניקיון: {Cleanliness}</Text>
   <Text style={styles.rankingItem}>מקצועיות: {Professionalism}</Text>
   <Text style={styles.rankingItem}>זמנים: {On_time}</Text> */}
+<View style={styles.view2}>
+  <Text style={styles.title}>קצת על העסק:</Text>
+  <Text style={styles.text1}>{businessDetails.About}</Text>
+</View>
+
+
+
   <TouchableOpacity onPress={()=>{SetShowReviewsSection(!ShowReviewsSection)}}>
   <View style={styles.view2}>
   <Text style={styles.textview2}>ביקורות של לקוחות</Text>
@@ -327,6 +370,11 @@ const styles = StyleSheet.create({
     width: "90%",
     // height: "80%",
     // maxWidth: 500,
+    // alignItems: "flex-end"
+    },
+
+    text1: {
+fontSize:20
     },
 
   scrollView: {
@@ -366,9 +414,11 @@ view1:{
     
 },
   title: {
+    color: 'rgb(92, 71, 205)',
     fontWeight: 'bold',
     marginBottom: 5,
     textAlign: 'right',
+    fontSize: 20
     },
   
   profileImage: {
