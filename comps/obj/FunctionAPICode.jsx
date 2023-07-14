@@ -180,7 +180,8 @@ export const DDD = (ID_Client) => {
 
 //מחזיר את כל סוגי הטיפולים של לקוח
 export const AllAppointmentForClientt = (clientID) => {
-    return out_Fetch(`http://proj.ruppin.ac.il/cgroup93/prod/api/Appointment/AllAppointmentForClientt/${clientID}`, 'Get')
+    console.log(typeof clientID)
+    return Fetch(`Appointment/AllAppointmentForClientt/${parseInt(clientID)}`, 'Get')
     // return Axios(`Appointment/AllAppointmentForClientt/${clientID}`, 'GET',{})
 }
 

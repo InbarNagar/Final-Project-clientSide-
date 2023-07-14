@@ -215,15 +215,11 @@ export default function My_Appintments() {
   }
 
   const handleSubmit = () => {
-    // console.log(allAppointment, allAppointment.length)
-    // setallAppointment(all)
-    // console.log(allAppointment, allAppointment.length)
-
-
+   
     AllAppointmentForClientt(userDetails.ID_number).then((result) => {
 
       if (result)
-        setallAppointment(result.data)
+        setallAppointment(result)
         console.log(result, "1111")
         console.log(result.data, "2222")
 
@@ -234,7 +230,6 @@ export default function My_Appintments() {
     setShowText2(!showText2);
 
   }
-
 
   // const handleSubmit2 = () => {
   //   let filterresult1=""
@@ -261,7 +256,7 @@ export default function My_Appintments() {
       if(result)
      filterresult = result.filter(apo=> apo.Appointment_status =="Appointment_ended")
     // console.log(filterresult,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    setallAppointmentEnd(result.data)
+    setallAppointmentEnd(result)
 
 
     }, (error) => {
