@@ -48,7 +48,7 @@ import AvailableAppointmentToBook_New from './comps/ClientScreen/AvailableAppoin
 import Update_MenuTreatment from './comps/Update_MenuTreatment';
 import AvailableAppointmentForTreatment from './comps/ClientScreen/AvailableAppointmentForTreatment';
 import AvailableAppointmentForTreatmentAndCity from './comps/ClientScreen/AvailableAppointmentForTreatment';
-
+import Photos_BUS from './comps/Photos_BUS';
 
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
@@ -123,7 +123,7 @@ function App() {
           <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment} options={{ title: ''}} />
           <Stack.Screen name="AvailableAppointmentForTreatment" component={AvailableAppointmentForTreatment}/>
           <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity} options={{ title: '1111111111'}} />
-
+          <Stack.Screen name="Photos_BUS" component={Photos_BUS} options={{ title: 'אלבום תמונות'}} />
 
 
         </Stack.Navigator>

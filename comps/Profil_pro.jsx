@@ -70,9 +70,9 @@ useEffect(()=>{
                  {/* <Image style={styles.img}  onError={({ currentTarget }) => {
                     setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg');
                 }} source={{ uri: src }} /> */}
-          
+           <TouchableOpacity onPress={()=>Props.navigation.navigate('CameraUse',{imageName:"profil"+userDetails.ID_number})}> 
        <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
-
+       </TouchableOpacity>
 
 {/*לא עובד כי בתחלה לא אישרתי להשתמש בטלפון בהגדרות אפליקציה*/}
   <View style={styles.iconContainer}> 
@@ -112,12 +112,12 @@ useEffect(()=>{
                 <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('Update_MenuTreatment',{BusinessNumber:JSON.stringify(userDetails.Business_Number)})}>
                     <Text style={styles.buttonText}>הוספת טיפול לתפריט הטיפולים</Text>
                 </TouchableOpacity>
-
-               
-            <TouchableOpacity style={styles.button} onPress={()=>Props.navigation.navigate('CameraUse',{imageName:"profil"+userDetails.ID_number})}>            
-                <Text style={styles.buttonText}>החלף תמונת פרופיל</Text>           
-            </TouchableOpacity>
        
+          
+            <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Photos_BUS')}>            
+                <Text style={styles.buttonText}>הוספת תמונה לאלבום תמונות</Text>           
+            </TouchableOpacity>
+            
             </View>
             <Menu_professional />
         </View>

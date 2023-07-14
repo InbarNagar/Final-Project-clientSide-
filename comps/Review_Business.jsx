@@ -94,7 +94,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { Alert, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
@@ -110,9 +110,9 @@ const Review_Business = ({ route }) => {
   const [Professionalism, SetProfessionalism] = useState(0);
   const [On_time, SetOn_time] = useState(0);
   const [Comment, SetComment] = useState('');
-  const [ImageID,setImageID]= useState();
+  const [ImageID, setImageID] = useState();
 
- 
+
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -164,79 +164,85 @@ const Review_Business = ({ route }) => {
   }
 
   return (
-    <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
-    <ScrollView>
-    <PaperProvider>
-      <View style={styles.container}>
-        <Card style={styles.card}>
-          <Card.Content>
-            <Title style={styles.title}>נשמח אם תוכל להקדיש כמה דקות מזמנך ולדרג את {'\n'} {BusinessName}</Title>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <ScrollView>
+        <PaperProvider>
+          <View style={styles.container}>
+            <Card style={styles.card}>
+              <Card.Content>
+                <Title style={styles.title}>נשמח אם תוכל להקדיש כמה דקות מזמנך ולדרג את {'\n'} {BusinessName}</Title>
 
-            <Paragraph style={styles.subtitle}>ניקיון</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => SetCleanliness(rating)}
-            />
+                <Paragraph style={styles.subtitle}>ניקיון</Paragraph>
+                <Rating
+                  type='star'
+                  ratingCount={5}
+                  imageSize={30}
+                  onFinishRating={(rating) => SetCleanliness(rating)}
+                />
 
-            <Paragraph style={styles.subtitle}>שירות</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => SetProfessionalism(rating)}
-            />
+                <Paragraph style={styles.subtitle}>שירות</Paragraph>
+                <Rating
+                  type='star'
+                  ratingCount={5}
+                  imageSize={30}
+                  onFinishRating={(rating) => SetProfessionalism(rating)}
+                />
 
-            <Paragraph style={styles.subtitle}>מקצועיות</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => SetOn_time(rating)}
-              style={{ backgroundColor: 'transparent', overflow: 'visible' }}
-            />
+                <Paragraph style={styles.subtitle}>מקצועיות</Paragraph>
+                <Rating
+                  type='star'
+                  ratingCount={5}
+                  imageSize={30}
+                  onFinishRating={(rating) => SetOn_time(rating)}
+                  style={{ backgroundColor: 'transparent', overflow: 'visible' }}
+                />
 
-            <Paragraph style={styles.subtitle}>הערות</Paragraph>
-            <TextInput
-              style={styles.input}
-              mode='outlined'
-              multiline
-              numberOfLines={4}
-              value={Comment}
-              onChangeText={(value) => SetComment(value)}
-            />
+                <Paragraph style={styles.subtitle}>הערות</Paragraph>
+                <TextInput
+                  style={styles.input}
+                  mode='outlined'
+                  multiline
+                  numberOfLines={4}
+                  value={Comment}
+                  onChangeText={(value) => SetComment(value)}
+                />
 
-          
-              {/* <TouchableOpacity  style={styles.button}  onPress={() => props.navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number})}>
+
+                <TouchableOpacity  style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName:"profil"+ Number_appointment })}>
                 <View>
                   <Text>צלם</Text>
                 </View>
               </TouchableOpacity>
-           */}
-            <Button
+          
+                 {/* <Button
             style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number })}
-            >הוסף תמונה</Button>
+            >הוסף תמונה</Button>  */}
+{/* 
+                <Button
+                  style={styles.button} onPress={() => navigation.navigate('CameraUse', { imageName: Number_appointment })}
+                > 
+                </Button> */}
 
-            <Button
-              style={styles.button}
-              icon='check'
-              mode='contained'
-              onPress={() => {
-                console.log(`ניקיון: ${cleanliness}`);
-                console.log(`שירות: ${On_time}`);
-                console.log(`מוצר: ${Professionalism}`);
-                console.log(`הערות: ${Comment}`);
-                publsihReview();
-              }}
-            >
-              שלח דירוג
-            </Button>
-          </Card.Content>
-        </Card>
-      </View>
-    </PaperProvider>
-    </ScrollView>
+
+                <Button
+                  style={styles.button}
+                  icon='check'
+                  mode='contained'
+                  onPress={() => {
+                    console.log(`ניקיון: ${cleanliness}`);
+                    console.log(`שירות: ${On_time}`);
+                    console.log(`מוצר: ${Professionalism}`);
+                    console.log(`הערות: ${Comment}`);
+                    publsihReview();
+                  }}
+                >
+                  שלח דירוג
+                </Button>
+              </Card.Content>
+            </Card>
+          </View>
+        </PaperProvider>
+      </ScrollView>
     </KeyboardAvoidingView>
 
   );

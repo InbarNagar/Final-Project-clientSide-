@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Modal, View, Button, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform, Linking} from "react-native";
-import {  GetOneBusiness } from "../obj/FunctionAPICode";
+import React, { useContext, useEffect, useState } from "react";
+import { Modal, View, Button, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform, Linking } from "react-native";
+import { GetOneBusiness } from "../obj/FunctionAPICode";
 import { FontAwesome5, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { openURL, canOpenURL } from "expo-linking";
 import { useFocusEffect } from '@react-navigation/native';
 import { UserContext } from "../UserDietails";
-import { useNavigation} from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/core";
 import Header from "../obj/Header";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -14,89 +14,89 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const BusinessProfilePOPUP = (props) => {
 
-  const { isVisible, onClose, Business_Number,businessRankArr } = props;
+  const { isVisible, onClose, Business_Number, businessRankArr } = props;
   const [businessDetails, SetBusinessDetails] = useState({});
   // const [businessRankArr, SetBusinessRankArr] = useState();
-  const [Overall_rating,SetOverall_rating]=useState();
-  const [Professionalism,SetProfessionalism]=useState();
-  const [Cleanliness,SetCleanliness]=useState();
-  const [On_time,SetOn_time]=useState();
-const[ShowReviewsSection,SetShowReviewsSection]=useState(false);
+  const [Overall_rating, SetOverall_rating] = useState();
+  const [Professionalism, SetProfessionalism] = useState();
+  const [Cleanliness, SetCleanliness] = useState();
+  const [On_time, SetOn_time] = useState();
+  const [ShowReviewsSection, SetShowReviewsSection] = useState(false);
 
-const [src, setsrc] = useState()
-// useFocusEffect(
-//     React.useCallback(() => {
-//    setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${businessDetails.Professional_ID_number}.jpg`)
-//    console.log(src, "111111111111111")
-//   },[]))
+  const [src, setsrc] = useState()
+  // useFocusEffect(
+  //     React.useCallback(() => {
+  //    setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${businessDetails.Professional_ID_number}.jpg`)
+  //    console.log(src, "111111111111111")
+  //   },[]))
 
-// useFocusEffect(
+  // useFocusEffect(
 
-//   },[]))
-let onTimeSum = 0;
-        let professionalismSum = 0;
-        let cleanlinessSum = 0;
-        let overallRatingSum = 0;
+  //   },[]))
+  let onTimeSum = 0;
+  let professionalismSum = 0;
+  let cleanlinessSum = 0;
+  let overallRatingSum = 0;
 
-// const handleInstagramLink = async () => {
-//   try {
-//     // const url = 'https://www.instagram.com/your_instagram_account';
-//     const url = `https://www.instagram.com/${businessDetails.Instagram_link}`;
-//     await Linking.openURL(url);
-//     console.log(Linking.openURL(url))
-//   } catch (error) {
-//     console.error('שגיאה בפתיחת האינסטגרם:', error);
-//   }
-// };
+  // const handleInstagramLink = async () => {
+  //   try {
+  //     // const url = 'https://www.instagram.com/your_instagram_account';
+  //     const url = `https://www.instagram.com/${businessDetails.Instagram_link}`;
+  //     await Linking.openURL(url);
+  //     console.log(Linking.openURL(url))
+  //   } catch (error) {
+  //     console.error('שגיאה בפתיחת האינסטגרם:', error);
+  //   }
+  // };
 
 
 
   // const image =
   //   "https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedias.timeout.co.il%2Fwww%2Fuploads%2F2017%2F03%2F%25D7%259E%25D7%25A8%25D7%259E%25D7%2595%25D7%25A8%25D7%25A7_17_T-1140x641.jpg&tbnid=uEfqyzHNmhL4UM&vet=12ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ..i&imgrefurl=https%3A%2F%2Ftimeout.co.il%2F%25D7%2594%25D7%259E%25D7%25A1%25D7%25A4%25D7%25A8%25D7%2595%25D7%25AA-%25D7%2594%25D7%259B%25D7%2599-%25D7%2598%25D7%2595%25D7%2591%25D7%2595%25D7%25AA%2F&docid=BMiIRS3jiJIo_M&w=1140&h=641&q=%D7%9E%D7%A1%D7%A4%D7%A8%D7%94&ved=2ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ";
-    useEffect(() => {
-      console.log(businessRankArr, "gggggggggggggggggggggggggg");
-      GetOneBusiness(Business_Number).then(
-        (result) => {
-          console.log("yes", result.data);
-          SetBusinessDetails( result.data);
-          console.log(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`)
-          setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`);
-        },
-        (error) => {
-          console.log("error", error);
-        }
-      );
-        // let onTimeSum = 0;
-        let professionalismSum = 0;
-        let cleanlinessSum = 0;
-        let overallRatingSum = 0;
-        businessRankArr.map(bus => {
-          onTimeSum += bus.On_time;
-          professionalismSum += bus.Professionalism;
-          cleanlinessSum += bus.Cleanliness;
-          overallRatingSum += bus.Overall_rating;
-        });
-  
-        SetOn_time(onTimeSum / businessRankArr.length);
-        console.log(On_time);
-        SetProfessionalism(professionalismSum / businessRankArr.length);
-        console.log(Professionalism);
-        SetCleanliness(cleanlinessSum / businessRankArr.length);
-        console.log(Cleanliness);
-        SetOverall_rating(overallRatingSum / businessRankArr.length);
-        console.log(Overall_rating);
-      
-    }, [businessRankArr]);
-  
+  useEffect(() => {
+    console.log(businessRankArr, "gggggggggggggggggggggggggg");
+    GetOneBusiness(Business_Number).then(
+      (result) => {
+        console.log("yes", result.data);
+        SetBusinessDetails(result.data);
+        console.log(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`)
+        setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`);
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
+    // let onTimeSum = 0;
+    let professionalismSum = 0;
+    let cleanlinessSum = 0;
+    let overallRatingSum = 0;
+    businessRankArr.map(bus => {
+      onTimeSum += bus.On_time;
+      professionalismSum += bus.Professionalism;
+      cleanlinessSum += bus.Cleanliness;
+      overallRatingSum += bus.Overall_rating;
+    });
+
+    SetOn_time(onTimeSum / businessRankArr.length);
+    console.log(On_time);
+    SetProfessionalism(professionalismSum / businessRankArr.length);
+    console.log(Professionalism);
+    SetCleanliness(cleanlinessSum / businessRankArr.length);
+    console.log(Cleanliness);
+    SetOverall_rating(overallRatingSum / businessRankArr.length);
+    console.log(Overall_rating);
+
+  }, [businessRankArr]);
+
   // function handleInstagramLink() {
   //   // openURL(businessDetails.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
   //   openURL('https://www.instagram.com');}
 
-    function handleFacebookLink() {
+  function handleFacebookLink() {
     // openURL(businessDetails.Facebook_link); // לשים משתנה של כתובת פייסבוק שהמשתמש יזין
     openURL('https://www.facebook.com');
-  
-}
+
+  }
 
   const dialNumber = (number) => { //לא עובד כי בתחלה לא אישרתי להשתמש בטלפון בהגדרות אפליקציה
     console.log(number);
@@ -128,18 +128,18 @@ let onTimeSum = 0;
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-        <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
+          <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollViewContent}>
 
 
-        <View style={styles.view1}>
-  <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
+            <View style={styles.view1}>
+              <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
 
 
-{/* <TouchableOpacity onPress={() => navigation.navigate('CameraUse', { imageName: "profil" + userDetails.ID_number })}>
+              {/* <TouchableOpacity onPress={() => navigation.navigate('CameraUse', { imageName: "profil" + userDetails.ID_number })}>
   <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
 </TouchableOpacity> */}
 
-{/* <View style={styles.iconContainer}> 
+              {/* <View style={styles.iconContainer}> 
 <TouchableOpacity onPress={handleInstagramLink}>
 <FontAwesome name="instagram" size={24} color="black" style={{ marginRight: 100 }} />
 </TouchableOpacity>
@@ -151,38 +151,38 @@ let onTimeSum = 0;
 </TouchableOpacity>
 </View> */}
 
-    </View>
-          {/* <Image
+            </View>
+            {/* <Image
             style={styles.profileImage}
             source={{ uri: "https://example.com/your-image.jpg" }} // replace with your image url
           /> */}
-          <Header text={businessDetails.Name} paddingTop={0} fontSize={25} color={"rgb(92, 71, 205)"} />
+            <Header text={businessDetails.Name} paddingTop={0} fontSize={25} color={"rgb(92, 71, 205)"} />
 
-          {/* <Text style={styles.textBox}>{businessDetails.Name}</Text> */}
-          <Text style={styles.textBox}>
-            {businessDetails.AddressStreet +
-              " " +
-              businessDetails.AddressHouseNumber +
-              ", " +
-              businessDetails.AddressCity}
-          </Text>
-          <Text>{businessDetails.about}</Text> 
+            {/* <Text style={styles.textBox}>{businessDetails.Name}</Text> */}
+            <Text style={styles.textBox}>
+              {businessDetails.AddressStreet +
+                " " +
+                businessDetails.AddressHouseNumber +
+                ", " +
+                businessDetails.AddressCity}
+            </Text>
+            <Text>{businessDetails.about}</Text>
 
-          <View style={styles.linksContainer}>
-  <View style={styles.iconContainer}>
-    <TouchableOpacity   onPress={() => Linking.openURL(`https://www.instagram.com/${businessDetails.Instagram_link}`)}>
-      <FontAwesome name="instagram" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
-    </TouchableOpacity>
-  </View>
-  <View style={styles.iconContainer}>
-    <TouchableOpacity style={styles.link} onPress={() =>
-                        Linking.openURL(`tel:${businessDetails.phoneNumber}`)
-                      }>
-      <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" />
-    </TouchableOpacity>
-  </View>
-</View>
-          {/* האייקונים של אופיר */}
+            <View style={styles.linksContainer}>
+              <View style={styles.iconContainer}>
+                <TouchableOpacity onPress={() => Linking.openURL(`https://www.instagram.com/${businessDetails.Instagram_link}`)}>
+                  <FontAwesome name="instagram" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.iconContainer}>
+                <TouchableOpacity style={styles.link} onPress={() =>
+                  Linking.openURL(`tel:${businessDetails.phoneNumber}`)
+                }>
+                  <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" />
+                </TouchableOpacity>
+              </View>
+            </View>
+            {/* האייקונים של אופיר */}
             {/* <TouchableOpacity
               style={styles.link}
               onPress={() => Linking.openURL("https://waze.com/ul")}
@@ -201,7 +201,7 @@ let onTimeSum = 0;
             >
               <AntDesign name="phone" size={24} color="black" />
             </TouchableOpacity> */}
-{/* 
+            {/* 
           <ScrollView horizontal>
              <Image
             style={styles.imageInScrollView}
@@ -215,26 +215,29 @@ let onTimeSum = 0;
             source={{ uri:{image}}}          /> 
             Add more images as needed 
           </ScrollView> */}
-<View style={styles.rankingContainer}>
-  {/* <Text style={styles.rankingTitle}>ציון עסק: {Overall_rating}</Text>
+            <View style={styles.rankingContainer}>
+              {/* <Text style={styles.rankingTitle}>ציון עסק: {Overall_rating}</Text>
   <Text style={styles.rankingItem}>ניקיון: {Cleanliness}</Text>
   <Text style={styles.rankingItem}>מקצועיות: {Professionalism}</Text>
   <Text style={styles.rankingItem}>זמנים: {On_time}</Text> */}
-  <TouchableOpacity onPress={()=>{SetShowReviewsSection(!ShowReviewsSection)}}>
-  <View style={styles.view2}>
-  <Text style={styles.textview2}>ביקורות של לקוחות</Text>
-  <AntDesign name="downcircleo" size={24} color="black" />
-  </View>
-  </TouchableOpacity>
+              <TouchableOpacity onPress={() => { SetShowReviewsSection(!ShowReviewsSection) }}>
+                <View style={styles.view2}>
+                  <Text style={styles.textview2}>ביקורות של לקוחות</Text>
+                  <AntDesign name="downcircleo" size={24} color="black" />
+                </View>
+              </TouchableOpacity>
 
-  
-  {ShowReviewsSection&&businessRankArr.length>0&&
-      <ScrollView>
-        <View style={styles.container}>
-      {businessRankArr.map((bus) => {
-        console.log("key: " + bus.Number_appointment);
-        return (
-          <View key={bus.Number_appointment} style={styles.card}>
+
+              {ShowReviewsSection && businessRankArr.length > 0 &&
+                <ScrollView>
+                  <View style={styles.container}>
+                  {businessRankArr.map((bus) => {
+  console.log("key: " + bus.Number_appointment);
+  return (
+    <View key={bus.Number_appointment} style={styles.card}>
+      <View style={styles.rowContainer}>
+       
+        <View style={styles.textContainer}>
           <View style={styles.reviewRow}>
             <MaterialCommunityIcons
               name="star"
@@ -242,7 +245,9 @@ let onTimeSum = 0;
               color="gold"
               style={styles.icon}
             />
-            <Text style={styles.ratingTitle}>ציון כללי: {bus.Overall_rating}</Text>
+            <Text style={styles.ratingTitle}>
+              ציון כללי: {bus.Overall_rating}
+            </Text>
           </View>
           <View style={styles.parameterRow}>
             <View style={styles.parameterContainer}>
@@ -286,12 +291,22 @@ let onTimeSum = 0;
             <Text style={styles.customerComment}>"{bus.Comment}"</Text>
           </View>
         </View>
-        );
-      })}
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.img1}
+            source={{
+              uri: `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${bus.Number_appointment}.jpg`,
+            }}
+          />
+        </View>
       </View>
-    </ScrollView>
-}
-  </View>
+    </View>
+  );
+                    })}
+                  </View>
+                </ScrollView>
+              }
+            </View>
 
 
           </ScrollView>
@@ -327,7 +342,7 @@ const styles = StyleSheet.create({
     width: "90%",
     // height: "80%",
     // maxWidth: 500,
-    },
+  },
 
   scrollView: {
     width: '100%', // קביעת רוחב התוכן ל-100% של הכרטיסייה
@@ -341,13 +356,13 @@ const styles = StyleSheet.create({
     width: "10%",
     marginBottom: 20,
   },
-  view2:{
-   textAlign: 'center',
-   justifyContent: 'center',
+  view2: {
+    textAlign: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
-  textview2:{
+  textview2: {
     fontSize: 20,
     marginBottom: 20,
     color: 'rgb(92, 71, 205)',
@@ -358,19 +373,26 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     width: 250,
     height: 250,
-},
-view1:{
-    flexDirection:'column',
+  },
+  img1: {
+    borderRadius:0,
+    marginTop: 10,
+    width: 120,
+    height:120,
+  
+  },
+  view1: {
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    
-},
+
+  },
   title: {
     fontWeight: 'bold',
     marginBottom: 5,
     textAlign: 'right',
-    },
-  
+  },
+
   profileImage: {
     width: 100,
     height: 100,
@@ -385,8 +407,8 @@ view1:{
     textAlign: "center",
   },
   linksContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'center', 
+    flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
     // width: '80%', 
     marginBottom: 20,
@@ -427,7 +449,7 @@ view1:{
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
-    textAlign: 'right', 
+    textAlign: 'right',
   },
   rankingItem: {
     fontSize: 16,
@@ -440,30 +462,30 @@ view1:{
   container: {
     padding: -90,
     backgroundColor: "#fff",
+    flexDirection: "column",
   },
   card: {
     backgroundColor: "#f2f2f2",
     borderRadius: 10,
     marginBottom: 20,
     padding: 0,
-  
   },
   reviewRow: {
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
   },
-  
+
   ratingTitle: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
-    
+
   },
   parameterRow: {
     flexDirection: "column",
     alignItems: "flex-start",
-    marginBottom:0,
+    marginBottom: 0,
   },
   parameterContainer: {
     flexDirection: "row",
@@ -475,20 +497,30 @@ view1:{
   },
   parameterText: {
     color: "#666",
-    textAlign:'left'
+    textAlign: 'left'
   },
   parameterValue: {
     color: "#333",
     fontWeight: "bold",
-    margin:6,
-    marginLeft:-29
+    margin: 6,
+    marginLeft: -29
   },
   customerCommentContainer: {
     flexDirection: "row"
   },
   customerComment: {
     color: "#666",
-    textAlign:'left'
+    textAlign: 'left'
+  },
+  rowContainer: {
+    flexDirection: 'row',
+    alignItems: 'left',
+  },
+  imageContainer: {
+    marginRight: 10,
+  },
+  textContainer: {
+    flex: 1,
   },
 
 });

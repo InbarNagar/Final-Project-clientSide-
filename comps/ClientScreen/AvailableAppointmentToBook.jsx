@@ -184,44 +184,69 @@ const AvailableAppointmentToBook = (props) => {
       }
     }
     else {
-      console.log("else " + result.id);
-      for (let i = 0; i < hours.length; i++) {
-        console.log(i + " " + hours[i] + "str= " + str);
-        if (!firstHour.includes(hours[i])) {
-          if (!endHour.includes(hours[i])) {
-            if (!betweenHours.includes(hours[i])) {
-              if (str === "") {
-                console.log(i + " :" + hours[i]);
-                str = `${hours[i]}`;
-              }
-            }
-          }
-        }
-        else if (str !== "" || betweenHours.includes(hours[i] + duration)) {
-          console.log("else if : " + hours[i]);
-          str += `-${hours[i]}`;
-          tempArr.push(str);
-          str = "";
-        }
-        if (str === "" && hours[i] === hours[hours.length - 1] && !endHour.includes(hours[hours.length - 1])) {
-          console.log("else if 3: " + hours[i]);
-          str = `${hours[i]}-${hours[hours.length - 1] + duration}`
-          tempArr.push(str);
-        }
-        if ((endHour.includes(hours[i]) && str === "") &&
-          !betweenHours.includes(hours[i] + duration) && !firstHour.includes(hours[i])) {
-          console.log("last if");
-          console.log(i + " :" + hours[i]);
-          str = `${hours[i]}`;
-        }
-      }
+      // console.log("else " + result.id);
+      // for (let i = 0; i < hours.length; i++) {
+      //   console.log(i + " " + hours[i] + "str= " + str);
+      //   if (!firstHour.includes(hours[i])) {
+      //     if (!endHour.includes(hours[i])) {
+      //       if (!betweenHours.includes(hours[i])) {
+      //         if (str === "") {
+      //           console.log(i + " :" + hours[i]);
+      //           str = `${hours[i]}`;
+      //         }
+      //       }
+      //     }
+      //   }
+      //   else if (str !== "" || betweenHours.includes(hours[i] + duration)) {
+      //     console.log("else if : " + hours[i]);
+      //     str += `-${hours[i]}`;
+      //     tempArr.push(str);
+      //     str = "";
+      //   }
+      //   if (str === "" && hours[i] === hours[hours.length - 1] && !endHour.includes(hours[hours.length - 1])) {
+      //     console.log("else if 3: " + hours[i]);
+      //     str = `${hours[i]}-${hours[hours.length - 1] + duration}`
+      //     tempArr.push(str);
+      //   }
+      //   if ((endHour.includes(hours[i]) && str === "") &&
+      //     !betweenHours.includes(hours[i] + duration) && !firstHour.includes(hours[i])) {
+      //     console.log("last if");
+      //     console.log(i + " :" + hours[i]);
+      //     str = `${hours[i]}`;
+      //   }
+      // }
 
-      if (str !== "") {
-        console.log(str + " = last hour to add" + hours[hours.length - 1] + duration);
-        str += `-${hours[hours.length - 1] + duration}`;
-        tempArr.push(str);
+      // if (str !== "") {
+      //   console.log(str + " = last hour to add" + hours[hours.length - 1] + duration);
+      //   str += `-${hours[hours.length - 1] + duration}`;
+      //   tempArr.push(str);
+      // }
+      let newArray = hours.filter((num) => !betweenHours.includes(num)); // filter out numbers present in temp array}
+      // let newArray = hours; // filter out numbers present in temp array}
+  console.log("hours after filter between numbers: "+ newArray);
+  let finalArray = [];
+  
+  for (let i = 0; i < newArray.length; i++) {
+    if (firstHour.includes(newArray[i])){
+      const o = occupiedHoursWithGap.find(x => x.time === newArray[i]);
+      if(o && newArray[i+1] && newArray[i]+o.gap === newArray[i+1]){
+        //don't include this number in the finalArray
       }
+      else if(o && newArray[i+1]){
+        tempArr.push(newArray[i]+o.gap);
+      }
+      else{
+        tempArr.push(newArray[i]);
+      }
+    } 
+    else{
+      tempArr.push(newArray[i]);
     }
+  }
+
+    }
+
+
     console.log("final str= " + str);
     console.log(
       `Diary of ${result.id}: ` + tempArr + " length: " + tempArr.length
