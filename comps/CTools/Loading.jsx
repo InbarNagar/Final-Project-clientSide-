@@ -8,7 +8,7 @@ import PopUp from './PopUp'
 
 
 export default function Loading(props) {
-  const { opacity = '#ffffff70', text } = props
+  const { opacity = '#e6e6fa', text } = props
 
   const element = <View style={styles.container}>
     <ImageBackground source={require('./logoo.png')} style={styles.image} resizeMode='cover' >

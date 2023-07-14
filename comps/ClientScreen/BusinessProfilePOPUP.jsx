@@ -34,23 +34,17 @@ const BusinessProfilePOPUP = (props) => {
 
   // useFocusEffect(
 
-<<<<<<< HEAD
+
   //   },[]))
-  let onTimeSum = 0;
-  let professionalismSum = 0;
-  let cleanlinessSum = 0;
-  let overallRatingSum = 0;
-=======
-//   },[]))
 
 
 
 
-// let onTimeSum = 0;
-//         let professionalismSum = 0;
-//         let cleanlinessSum = 0;
-//         let overallRatingSum = 0;
->>>>>>> c2cecd5a00ca6a5c74a972b22690d854ed1264e3
+  // let onTimeSum = 0;
+  //         let professionalismSum = 0;
+  //         let cleanlinessSum = 0;
+  //         let overallRatingSum = 0;
+
 
   // const handleInstagramLink = async () => {
   //   try {
@@ -67,7 +61,7 @@ const BusinessProfilePOPUP = (props) => {
 
   // const image =
   //   "https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedias.timeout.co.il%2Fwww%2Fuploads%2F2017%2F03%2F%25D7%259E%25D7%25A8%25D7%259E%25D7%2595%25D7%25A8%25D7%25A7_17_T-1140x641.jpg&tbnid=uEfqyzHNmhL4UM&vet=12ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ..i&imgrefurl=https%3A%2F%2Ftimeout.co.il%2F%25D7%2594%25D7%259E%25D7%25A1%25D7%25A4%25D7%25A8%25D7%2595%25D7%25AA-%25D7%2594%25D7%259B%25D7%2599-%25D7%2598%25D7%2595%25D7%2591%25D7%2595%25D7%25AA%2F&docid=BMiIRS3jiJIo_M&w=1140&h=641&q=%D7%9E%D7%A1%D7%A4%D7%A8%D7%94&ved=2ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ";
-<<<<<<< HEAD
+
   useEffect(() => {
     console.log(businessRankArr, "gggggggggggggggggggggggggg");
     GetOneBusiness(Business_Number).then(
@@ -81,7 +75,7 @@ const BusinessProfilePOPUP = (props) => {
         console.log("error", error);
       }
     );
-    // let onTimeSum = 0;
+    let onTimeSum = 0;
     let professionalismSum = 0;
     let cleanlinessSum = 0;
     let overallRatingSum = 0;
@@ -103,43 +97,7 @@ const BusinessProfilePOPUP = (props) => {
 
   }, [businessRankArr]);
 
-=======
-    useEffect(() => {
-      console.log(businessRankArr, "gggggggggggggggggggggggggg");
-      GetOneBusiness(Business_Number).then(
-        (result) => {
-          console.log("yes", result.data);
-          SetBusinessDetails( result.data);
-          console.log(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`)
-          setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${result.data.Professional_ID_number}.jpg`);
-        },
-        (error) => {
-          console.log("error", error);
-        }
-      );
-        let onTimeSum = 0;
-        let professionalismSum = 0;
-        let cleanlinessSum = 0;
-        let overallRatingSum = 0;
-        businessRankArr.map(bus => {
-          onTimeSum += bus.On_time;
-          professionalismSum += bus.Professionalism;
-          cleanlinessSum += bus.Cleanliness;
-          overallRatingSum += bus.Overall_rating;
-        });
-  
-        SetOn_time(onTimeSum / businessRankArr.length);
-        console.log(On_time);
-        SetProfessionalism(professionalismSum / businessRankArr.length);
-        console.log(Professionalism);
-        SetCleanliness(cleanlinessSum / businessRankArr.length);
-        console.log(Cleanliness);
-        SetOverall_rating(overallRatingSum / businessRankArr.length);
-        console.log(Overall_rating);
-      
-    }, [businessRankArr]);
-  
->>>>>>> c2cecd5a00ca6a5c74a972b22690d854ed1264e3
+
   // function handleInstagramLink() {
   //   // openURL(businessDetails.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
   //   openURL('https://www.instagram.com');}
@@ -220,7 +178,7 @@ const BusinessProfilePOPUP = (props) => {
             </Text>
             <Text>{businessDetails.about}</Text>
 
-<<<<<<< HEAD
+
             <View style={styles.linksContainer}>
               <View style={styles.iconContainer}>
                 <TouchableOpacity onPress={() => Linking.openURL(`https://www.instagram.com/${businessDetails.Instagram_link}`)}>
@@ -228,61 +186,45 @@ const BusinessProfilePOPUP = (props) => {
                 </TouchableOpacity>
               </View>
               <View style={styles.iconContainer}>
+                <TouchableOpacity
+                  onPress={() => Linking.openURL(businessDetails.Facebook_link)}
+                >
+                  <Icon
+                    name="facebook"
+                    size={20}
+                    color="rgb(92, 71, 205)"
+                    // style={styles.icon}
+                    style={{ marginRight: 50 }}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.iconContainer}>
                 <TouchableOpacity style={styles.link} onPress={() =>
                   Linking.openURL(`tel:${businessDetails.phoneNumber}`)
                 }>
-                  <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" />
+                  <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.iconContainer}>
+                <TouchableOpacity onPress={() => {
+                  const scheme = Platform.select({ ios: 'waze://', android: 'https://waze.com/ul' });
+                  const address = `${businessDetails.AddressCity},${businessDetails.AddressHouseNumber} ${businessDetails.AddressStreet} `
+                  const url = `${scheme}?q=${encodeURIComponent(address)}&navigate=yes`;
+
+                  Linking.canOpenURL(url).then((supported) => {
+                    if (supported) {
+                      return Linking.openURL(url);
+                    } else {
+                      console.log(`Can't handle url: ${url}`);
+                    }
+                  }).catch((err) => console.error('An error occurred', err));
+                }}>
+                  <MaterialCommunityIcons name="waze" size={24} color="rgb(92, 71, 205)" />
                 </TouchableOpacity>
               </View>
             </View>
             {/* האייקונים של אופיר */}
-=======
-          <View style={styles.linksContainer}>
-  <View style={styles.iconContainer}>
-    <TouchableOpacity   onPress={() => Linking.openURL(`https://www.instagram.com/${businessDetails.Instagram_link}`)}>
-      <FontAwesome name="instagram" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
-    </TouchableOpacity>
-  </View>
-  <View style={styles.iconContainer}>
-  <TouchableOpacity
-                        onPress={() => Linking.openURL(businessDetails.Facebook_link)}
-                      >
-                        <Icon
-                          name="facebook"
-                          size={20}
-                          color="rgb(92, 71, 205)"
-                          // style={styles.icon}
-                          style={{ marginRight: 50 }}
-                        />
-      </TouchableOpacity>
-  </View>
-  <View style={styles.iconContainer}>
-    <TouchableOpacity style={styles.link} onPress={() =>
-                        Linking.openURL(`tel:${businessDetails.phoneNumber}`)
-                      }>
-      <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
-    </TouchableOpacity>
-  </View>
-  <View style={styles.iconContainer}>
-  <TouchableOpacity onPress={() => {
-                      const scheme = Platform.select({ ios: 'waze://', android: 'https://waze.com/ul' });
-                      const address = `${businessDetails.AddressCity},${businessDetails.AddressHouseNumber} ${businessDetails.AddressStreet} `
-                      const url = `${scheme}?q=${encodeURIComponent(address)}&navigate=yes`;
 
-                      Linking.canOpenURL(url).then((supported) => {
-                        if (supported) {
-                          return Linking.openURL(url);
-                        } else {
-                          console.log(`Can't handle url: ${url}`);
-                        }
-                      }).catch((err) => console.error('An error occurred', err));
-                    }}>
-                      <MaterialCommunityIcons name="waze" size={24} color="rgb(92, 71, 205)" />
-                    </TouchableOpacity>
-  </View>
-</View>
-          {/* האייקונים של אופיר */}
->>>>>>> c2cecd5a00ca6a5c74a972b22690d854ed1264e3
             {/* <TouchableOpacity
               style={styles.link}
               onPress={() => Linking.openURL("https://waze.com/ul")}
@@ -320,104 +262,96 @@ const BusinessProfilePOPUP = (props) => {
   <Text style={styles.rankingItem}>ניקיון: {Cleanliness}</Text>
   <Text style={styles.rankingItem}>מקצועיות: {Professionalism}</Text>
   <Text style={styles.rankingItem}>זמנים: {On_time}</Text> */}
-<<<<<<< HEAD
+              <View style={styles.view2}>
+                <Text style={styles.title}>קצת על העסק:</Text>
+                <Text style={styles.text1}>{businessDetails.About}</Text>
+              </View>
+
+
+
               <TouchableOpacity onPress={() => { SetShowReviewsSection(!ShowReviewsSection) }}>
                 <View style={styles.view2}>
                   <Text style={styles.textview2}>ביקורות של לקוחות</Text>
                   <AntDesign name="downcircleo" size={24} color="black" />
                 </View>
               </TouchableOpacity>
-=======
-<View style={styles.view2}>
-  <Text style={styles.title}>קצת על העסק:</Text>
-  <Text style={styles.text1}>{businessDetails.About}</Text>
-</View>
 
-
-
-  <TouchableOpacity onPress={()=>{SetShowReviewsSection(!ShowReviewsSection)}}>
-  <View style={styles.view2}>
-  <Text style={styles.textview2}>ביקורות של לקוחות</Text>
-  <AntDesign name="downcircleo" size={24} color="black" />
-  </View>
-  </TouchableOpacity>
->>>>>>> c2cecd5a00ca6a5c74a972b22690d854ed1264e3
 
 
               {ShowReviewsSection && businessRankArr.length > 0 &&
                 <ScrollView>
                   <View style={styles.container}>
-                  {businessRankArr.map((bus) => {
-  console.log("key: " + bus.Number_appointment);
-  return (
-    <View key={bus.Number_appointment} style={styles.card}>
-      <View style={styles.rowContainer}>
-       
-        <View style={styles.textContainer}>
-          <View style={styles.reviewRow}>
-            <MaterialCommunityIcons
-              name="star"
-              size={24}
-              color="gold"
-              style={styles.icon}
-            />
-            <Text style={styles.ratingTitle}>
-              ציון כללי: {bus.Overall_rating}
-            </Text>
-          </View>
-          <View style={styles.parameterRow}>
-            <View style={styles.parameterContainer}>
-              <MaterialCommunityIcons
-                name="broom"
-                size={24}
-                color="gray"
-                style={styles.parameterIcon}
-              />
-              <Text style={styles.parameterText}>ניקיון:</Text>
-              <Text style={styles.parameterValue}>{bus.Cleanliness}</Text>
-            </View>
-            <View style={styles.parameterContainer}>
-              <MaterialCommunityIcons
-                name="timer"
-                size={24}
-                color="gray"
-                style={styles.parameterIcon}
-              />
-              <Text style={styles.parameterText}>זמנים:</Text>
-              <Text style={styles.parameterValue}>{bus.On_time}</Text>
-            </View>
-            <View style={styles.parameterContainer}>
-              <MaterialCommunityIcons
-                name="briefcase"
-                size={24}
-                color="gray"
-                style={styles.parameterIcon}
-              />
-              <Text style={styles.parameterText}>מקצועיות:</Text>
-              <Text style={styles.parameterValue}>{bus.Professionalism}</Text>
-            </View>
-          </View>
-          <View style={styles.customerCommentContainer}>
-            <MaterialCommunityIcons
-              name="comment"
-              size={24}
-              color="gray"
-              style={styles.parameterIcon}
-            />
-            <Text style={styles.customerComment}>"{bus.Comment}"</Text>
-          </View>
-        </View>
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.img1}
-            source={{
-              uri: `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${bus.Number_appointment}.jpg`,
-            }}
-          />
-        </View>
-      </View>
-    </View>
-  );
+                    {businessRankArr.map((bus) => {
+                      console.log("key: " + bus.Number_appointment);
+                      return (
+                        <View key={bus.Number_appointment} style={styles.card}>
+                          <View style={styles.rowContainer}>
+
+                            <View style={styles.textContainer}>
+                              <View style={styles.reviewRow}>
+                                <MaterialCommunityIcons
+                                  name="star"
+                                  size={24}
+                                  color="gold"
+                                  style={styles.icon}
+                                />
+                                <Text style={styles.ratingTitle}>
+                                  ציון כללי: {bus.Overall_rating}
+                                </Text>
+                              </View>
+                              <View style={styles.parameterRow}>
+                                <View style={styles.parameterContainer}>
+                                  <MaterialCommunityIcons
+                                    name="broom"
+                                    size={24}
+                                    color="gray"
+                                    style={styles.parameterIcon}
+                                  />
+                                  <Text style={styles.parameterText}>ניקיון:</Text>
+                                  <Text style={styles.parameterValue}>{bus.Cleanliness}</Text>
+                                </View>
+                                <View style={styles.parameterContainer}>
+                                  <MaterialCommunityIcons
+                                    name="timer"
+                                    size={24}
+                                    color="gray"
+                                    style={styles.parameterIcon}
+                                  />
+                                  <Text style={styles.parameterText}>זמנים:</Text>
+                                  <Text style={styles.parameterValue}>{bus.On_time}</Text>
+                                </View>
+                                <View style={styles.parameterContainer}>
+                                  <MaterialCommunityIcons
+                                    name="briefcase"
+                                    size={24}
+                                    color="gray"
+                                    style={styles.parameterIcon}
+                                  />
+                                  <Text style={styles.parameterText}>מקצועיות:</Text>
+                                  <Text style={styles.parameterValue}>{bus.Professionalism}</Text>
+                                </View>
+                              </View>
+                              <View style={styles.customerCommentContainer}>
+                                <MaterialCommunityIcons
+                                  name="comment"
+                                  size={24}
+                                  color="gray"
+                                  style={styles.parameterIcon}
+                                />
+                                <Text style={styles.customerComment}>"{bus.Comment}"</Text>
+                              </View>
+                            </View>
+                            <View style={styles.imageContainer}>
+                              <Image
+                                style={styles.img1}
+                                source={{
+                                  uri: `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${bus.Number_appointment}.jpg`,
+                                }}
+                              />
+                            </View>
+                          </View>
+                        </View>
+                      );
                     })}
                   </View>
                 </ScrollView>
@@ -458,16 +392,14 @@ const styles = StyleSheet.create({
     width: "90%",
     // height: "80%",
     // maxWidth: 500,
-<<<<<<< HEAD
-  },
-=======
-    // alignItems: "flex-end"
-    },
 
-    text1: {
-fontSize:20
-    },
->>>>>>> c2cecd5a00ca6a5c74a972b22690d854ed1264e3
+    // alignItems: "flex-end"
+  },
+
+  text1: {
+    fontSize: 20
+  },
+
 
   scrollView: {
     width: '100%', // קביעת רוחב התוכן ל-100% של הכרטיסייה
@@ -500,11 +432,11 @@ fontSize:20
     height: 250,
   },
   img1: {
-    borderRadius:0,
+    borderRadius: 0,
     marginTop: 10,
     width: 120,
-    height:120,
-  
+    height: 120,
+
   },
   view1: {
     flexDirection: 'column',
@@ -517,14 +449,13 @@ fontSize:20
     fontWeight: 'bold',
     marginBottom: 5,
     textAlign: 'right',
-<<<<<<< HEAD
+    fontSize: 20
   },
 
-=======
-    fontSize: 20
-    },
-  
->>>>>>> c2cecd5a00ca6a5c74a972b22690d854ed1264e3
+
+
+
+
   profileImage: {
     width: 100,
     height: 100,
@@ -654,7 +585,6 @@ fontSize:20
   textContainer: {
     flex: 1,
   },
-
 });
 
 export default BusinessProfilePOPUP;

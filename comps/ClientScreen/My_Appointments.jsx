@@ -20,154 +20,154 @@ import AppointmentCard_forClient from "./AppointmentCard_forClient";
 
 
 
-const all = [
-  {
-    "Number_appointment": 1128,
-    "Date": "2023-05-22",
-    "Is_client_house": "NO",
-    "Business_Number": 4,
-    "Appointment_status": "Appointment_ended",
-    "ID_Client": 123456789,
-    "Start_Hour": 10,
-    "End_Hour": 10,
-    "Type_Treatment_Number": null,
-    "Review_Number": 5,
-    "Cleanliness": 3,
-    "Professionalism": 3,
-    "On_time": 3,
-    "Overall_rating": 3,
-    "Comment": "היה מקצועי מאוד ואחזור אליה!",
-    "Client_ID_number": 123456789,
-    "Business_Name": "עולם היופי",
-    "AddressStreet": "פנחס לבון",
-    "AddressCity": "נתניה",
-    "Professional_ID_number": 123455555,
-    "About": "עולם היופי של נתניה",
-    "phone": "0528710098",
-    "Facebook_link": "https://www.facebook.com/ofir.bidani/",
-    "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
-    "AddressHouseNumber": 16,
-    "LetCordinate": 32.2838812,
-    "LongCordinate": 34.8540928
-  },
-  {
-    "Number_appointment": 1135,
-    "Date": "2023-05-24",
-    "Is_client_house": "YES",
-    "Business_Number": 4,
-    "Appointment_status": "Appointment_ended",
-    "ID_Client": 123456789,
-    "Start_Hour": 17.033333,
-    "End_Hour": 17.033333,
-    "Type_Treatment_Number": null,
-    "Review_Number": null,
-    "Cleanliness": null,
-    "Professionalism": null,
-    "On_time": null,
-    "Overall_rating": null,
-    "Comment": null,
-    "Client_ID_number": 123456789,
-    "Business_Name": "עולם היופי",
-    "AddressStreet": "פנחס לבון",
-    "AddressCity": "נתניה",
-    "Professional_ID_number": 123455555,
-    "About": "עולם היופי של נתניה",
-    "phone": "0528710098",
-    "Facebook_link": "https://www.facebook.com/ofir.bidani/",
-    "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
-    "AddressHouseNumber": 16,
-    "LetCordinate": 32.2838812,
-    "LongCordinate": 34.8540928
-  },
-  {
-    "Number_appointment": 1136,
-    "Date": "2023-05-30",
-    "Is_client_house": "YES",
-    "Business_Number": 4,
-    "Appointment_status": "Appointment_ended",
-    "ID_Client": 123456789,
-    "Start_Hour": 10.5,
-    "End_Hour": 10.5,
-    "Type_Treatment_Number": null,
-    "Review_Number": null,
-    "Cleanliness": null,
-    "Professionalism": null,
-    "On_time": null,
-    "Overall_rating": null,
-    "Comment": null,
-    "Comment": "כיף חיים",
-    "Client_ID_number": 123456789,
-    "Business_Name": "עולם היופי",
-    "AddressStreet": "פנחס לבון",
-    "AddressCity": "נתניה",
-    "Professional_ID_number": 123455555,
-    "About": "עולם היופי של נתניה",
-    "phone": "0528710098",
-    "Facebook_link": "https://www.facebook.com/ofir.bidani/",
-    "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
-    "AddressHouseNumber": 16,
-    "LetCordinate": 32.2838812,
-    "LongCordinate": 34.8540928
-  },
-  {
-    "Number_appointment": 1137,
-    "Date": "2023-06-08",
-    "Is_client_house": "YES",
-    "Business_Number": 1049,
-    "Appointment_status": "Awaiting_approval",
-    "ID_Client": 123456789,
-    "Start_Hour": 16,
-    "End_Hour": 16,
-    "Type_Treatment_Number": null,
-    "Review_Number": 10,
-    "Cleanliness": 7,
-    "Professionalism": 7,
-    "On_time": 5,
-    "Overall_rating": 5,
-    "Comment": "מעולה",
-    "Client_ID_number": 123456789,
-    "Business_Name": "By Neta",
-    "AddressStreet": "פרישמן",
-    "AddressCity": "תל אביב",
-    "Professional_ID_number": 308547631,
-    "About": null,
-    "phone": null,
-    "Facebook_link": null,
-    "Instagram_link": null,
-    "AddressHouseNumber": 39,
-    "LetCordinate": 32.0798131,
-    "LongCordinate": 34.773688
-  },
-  {
-    "Number_appointment": 1130,
-    "Date": "2023-05-22",
-    "Is_client_house": "NO",
-    "Business_Number": 4,
-    "Appointment_status": "Confirmed",
-    "ID_Client": 123456789,
-    "Start_Hour": 13,
-    "End_Hour": 13,
-    "Type_Treatment_Number": null,
-    "Review_Number": 11,
-    "Cleanliness": null,
-    "Professionalism": 7,
-    "On_time": 7,
-    "Overall_rating": 7,
-    "Comment": "כן נחמד מאוד",
-    "Client_ID_number": 123456789,
-    "Business_Name": "עולם היופי",
-    "AddressStreet": "פנחס לבון",
-    "AddressCity": "נתניה",
-    "Professional_ID_number": 123455555,
-    "About": "עולם היופי של נתניה",
-    "phone": "0528710098",
-    "Facebook_link": "https://www.facebook.com/ofir.bidani/",
-    "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
-    "AddressHouseNumber": 16,
-    "LetCordinate": 32.2838812,
-    "LongCordinate": 34.8540928
-  }
-]
+// const all = [
+//   {
+//     "Number_appointment": 1128,
+//     "Date": "2023-05-22",
+//     "Is_client_house": "NO",
+//     "Business_Number": 4,
+//     "Appointment_status": "Appointment_ended",
+//     "ID_Client": 123456789,
+//     "Start_Hour": 10,
+//     "End_Hour": 10,
+//     "Type_Treatment_Number": null,
+//     "Review_Number": 5,
+//     "Cleanliness": 3,
+//     "Professionalism": 3,
+//     "On_time": 3,
+//     "Overall_rating": 3,
+//     "Comment": "היה מקצועי מאוד ואחזור אליה!",
+//     "Client_ID_number": 123456789,
+//     "Business_Name": "עולם היופי",
+//     "AddressStreet": "פנחס לבון",
+//     "AddressCity": "נתניה",
+//     "Professional_ID_number": 123455555,
+//     "About": "עולם היופי של נתניה",
+//     "phone": "0528710098",
+//     "Facebook_link": "https://www.facebook.com/ofir.bidani/",
+//     "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
+//     "AddressHouseNumber": 16,
+//     "LetCordinate": 32.2838812,
+//     "LongCordinate": 34.8540928
+//   },
+//   {
+//     "Number_appointment": 1135,
+//     "Date": "2023-05-24",
+//     "Is_client_house": "YES",
+//     "Business_Number": 4,
+//     "Appointment_status": "Appointment_ended",
+//     "ID_Client": 123456789,
+//     "Start_Hour": 17.033333,
+//     "End_Hour": 17.033333,
+//     "Type_Treatment_Number": null,
+//     "Review_Number": null,
+//     "Cleanliness": null,
+//     "Professionalism": null,
+//     "On_time": null,
+//     "Overall_rating": null,
+//     "Comment": null,
+//     "Client_ID_number": 123456789,
+//     "Business_Name": "עולם היופי",
+//     "AddressStreet": "פנחס לבון",
+//     "AddressCity": "נתניה",
+//     "Professional_ID_number": 123455555,
+//     "About": "עולם היופי של נתניה",
+//     "phone": "0528710098",
+//     "Facebook_link": "https://www.facebook.com/ofir.bidani/",
+//     "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
+//     "AddressHouseNumber": 16,
+//     "LetCordinate": 32.2838812,
+//     "LongCordinate": 34.8540928
+//   },
+//   {
+//     "Number_appointment": 1136,
+//     "Date": "2023-05-30",
+//     "Is_client_house": "YES",
+//     "Business_Number": 4,
+//     "Appointment_status": "Appointment_ended",
+//     "ID_Client": 123456789,
+//     "Start_Hour": 10.5,
+//     "End_Hour": 10.5,
+//     "Type_Treatment_Number": null,
+//     "Review_Number": null,
+//     "Cleanliness": null,
+//     "Professionalism": null,
+//     "On_time": null,
+//     "Overall_rating": null,
+//     "Comment": null,
+//     "Comment": "כיף חיים",
+//     "Client_ID_number": 123456789,
+//     "Business_Name": "עולם היופי",
+//     "AddressStreet": "פנחס לבון",
+//     "AddressCity": "נתניה",
+//     "Professional_ID_number": 123455555,
+//     "About": "עולם היופי של נתניה",
+//     "phone": "0528710098",
+//     "Facebook_link": "https://www.facebook.com/ofir.bidani/",
+//     "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
+//     "AddressHouseNumber": 16,
+//     "LetCordinate": 32.2838812,
+//     "LongCordinate": 34.8540928
+//   },
+//   {
+//     "Number_appointment": 1137,
+//     "Date": "2023-06-08",
+//     "Is_client_house": "YES",
+//     "Business_Number": 1049,
+//     "Appointment_status": "Awaiting_approval",
+//     "ID_Client": 123456789,
+//     "Start_Hour": 16,
+//     "End_Hour": 16,
+//     "Type_Treatment_Number": null,
+//     "Review_Number": 10,
+//     "Cleanliness": 7,
+//     "Professionalism": 7,
+//     "On_time": 5,
+//     "Overall_rating": 5,
+//     "Comment": "מעולה",
+//     "Client_ID_number": 123456789,
+//     "Business_Name": "By Neta",
+//     "AddressStreet": "פרישמן",
+//     "AddressCity": "תל אביב",
+//     "Professional_ID_number": 308547631,
+//     "About": null,
+//     "phone": null,
+//     "Facebook_link": null,
+//     "Instagram_link": null,
+//     "AddressHouseNumber": 39,
+//     "LetCordinate": 32.0798131,
+//     "LongCordinate": 34.773688
+//   },
+//   {
+//     "Number_appointment": 1130,
+//     "Date": "2023-05-22",
+//     "Is_client_house": "NO",
+//     "Business_Number": 4,
+//     "Appointment_status": "Confirmed",
+//     "ID_Client": 123456789,
+//     "Start_Hour": 13,
+//     "End_Hour": 13,
+//     "Type_Treatment_Number": null,
+//     "Review_Number": 11,
+//     "Cleanliness": null,
+//     "Professionalism": 7,
+//     "On_time": 7,
+//     "Overall_rating": 7,
+//     "Comment": "כן נחמד מאוד",
+//     "Client_ID_number": 123456789,
+//     "Business_Name": "עולם היופי",
+//     "AddressStreet": "פנחס לבון",
+//     "AddressCity": "נתניה",
+//     "Professional_ID_number": 123455555,
+//     "About": "עולם היופי של נתניה",
+//     "phone": "0528710098",
+//     "Facebook_link": "https://www.facebook.com/ofir.bidani/",
+//     "Instagram_link": "https://www.instagram.com/ofir_bidani1/",
+//     "AddressHouseNumber": 16,
+//     "LetCordinate": 32.2838812,
+//     "LongCordinate": 34.8540928
+//   }
+// ]
 
 
 
@@ -215,21 +215,21 @@ export default function My_Appintments() {
   }
 
   const handleSubmit = () => {
-    console.log(allAppointment, allAppointment.length)
-    setallAppointment(all)
-    console.log(allAppointment, allAppointment.length)
+    // console.log(allAppointment, allAppointment.length)
+    // setallAppointment(all)
+    // console.log(allAppointment, allAppointment.length)
 
 
-    // AllAppointmentForClientt(userDetails.ID_number).then((result) => {
+    AllAppointmentForClientt(userDetails.ID_number).then((result) => {
 
-    //   if (result)
-    //     setallAppointment(result)
-    //     console.log(result, "1111")
-    //     console.log(result.data, "2222")
+      if (result)
+        setallAppointment(result.data)
+        console.log(result, "1111")
+        console.log(result.data, "2222")
 
-    // }, (error) => {
-    //   console.log('error', error)
-    // })
+    }, (error) => {
+      console.log('error', error)
+    })
 
     setShowText2(!showText2);
 
@@ -261,7 +261,7 @@ export default function My_Appintments() {
       if(result)
      filterresult = result.filter(apo=> apo.Appointment_status =="Appointment_ended")
     // console.log(filterresult,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    setallAppointmentEnd(filterresult)
+    setallAppointmentEnd(result.data)
 
 
     }, (error) => {
