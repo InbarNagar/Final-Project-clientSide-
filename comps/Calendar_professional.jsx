@@ -206,7 +206,7 @@ import Button from "./obj/Button";
 import Menu_professional from "./obj/Menu_professional";
 import moment from "moment";
 import { FutureAppointmentB, allApoB } from "./obj/FunctionAPICode";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { UserContext } from '../comps/UserDietails';
 import React, { useContext } from "react";
 import { FutureAppointmenB } from "./obj/FunctionAPICode";
@@ -215,13 +215,15 @@ import AppointmentCard_forProfessional_Calendar from "./obj/AppointmentCard_forP
 import { ClientDetailes } from "./obj/FunctionAPICode";
 import ShowReviews from "./ShowReviews";
 import New_Calendar from "./New_Calender";
+
 //מסך ראשי בעל עסק
 export default function Calendar_professional() {
 
-
+ 
   const { userDetails, setUserDetails } = useContext(UserContext);
   const BussinesNumber = userDetails.Business_Number;
 
+  // const [showLoading,setshowLoading]=useState(true)
   const [allAppointment, setallAppointment] = useState([])
   const [allAppointmentAvilable, setallAppointmentAvilable] = useState([])
   const [allAppointmentEnd, setallAppointmentEnd] = useState([])
@@ -232,6 +234,14 @@ export default function Calendar_professional() {
   const [showText2, setShowText2] = useState(false);
   const [showText3, setShowText3] = useState(false);
   const [showText4, setShowText4] = useState(false);
+
+
+//   useEffect(()=>{
+// setInterval(() => {
+//   showLoading&&setshowLoading(false)
+// }, 4000);
+//   },[]
+//   )
 
   const namecli = "";
 
@@ -441,6 +451,7 @@ export default function Calendar_professional() {
         </View>
 
       </ScrollView>
+     {/* {showLoading&&<Loading text='מביא את נתוני הלקוח'/>}  */}
       <Menu_professional />
     </>
   )

@@ -260,8 +260,16 @@ export const RateBussines = () => {
     console.log(`Business/getRank`)
     return Fetch(`Business/getRank`,'get')
 }
-
-
+//איפוס סיסמט
+export const  forgotPassword= (mail) => {
+   
+    return Fetch(`user/sendMail/${mail}/sub/body`, 'Get')
+}
+//איפוס סיסמא
+export const  resetPassword= (mail,password) => {
+   
+    return Fetch(`user/sendMail/${mail}/${password}`, 'Get')
+}
 
 //פונקציית חיפוש חדשה לפי יומן עסק
 // export const ReviewBusiness=(body)=>{

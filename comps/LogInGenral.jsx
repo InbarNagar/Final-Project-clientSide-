@@ -183,7 +183,7 @@ if(userDetails){
 
       <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} text="התחברות" onPress={handleLogin} colortext="white" />
 
-
+      <Button color='transparent' text="שכחתי סיסמה" onPress={() => { navigation.navigate("ForgotPassword") }} />
       <Button color='transparent' text="עדיין לא נרשמתם? לחצו כאן" onPress={Registration} />
       <Button color='transparent' text="הרשמת עסקים" onPress={Registration2} />
 </View>

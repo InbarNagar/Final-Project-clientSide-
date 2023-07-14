@@ -15,7 +15,7 @@ import { UserContext } from '../comps/UserDietails';
 import { CancelAppointmentByClient } from './obj/FunctionAPICode';
 import { Post_SendPushNotification } from './obj/FunctionAPICode';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import Loading from './CTools/Loading';
 const New_Calendar = () => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const BussinesNumber = userDetails.Business_Number;
@@ -27,7 +27,7 @@ const New_Calendar = () => {
   const [tokenClient, setToken] = useState();
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDay, setSelectedDay] = useState(null);
- 
+  const [showLoading,setshowLoading]=useState(false)
 
   useEffect(() => {
     if (tokenClient) {
@@ -51,6 +51,7 @@ const New_Calendar = () => {
   }, [tokenClient]);
 
   useEffect(() => {
+    setshowLoading(true)
     GetAllAppointmentForProWithClient(BussinesNumber)
       .then((data) => {
         let arr1 = [];
@@ -111,6 +112,11 @@ const New_Calendar = () => {
       })
       .catch((error) => {
         console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
+      }).finally(()=>{
+        setInterval(() => {
+            showLoading&&setshowLoading(false)
+           }, 4000);
+
       });
   }, []);
 
@@ -480,6 +486,7 @@ const New_Calendar = () => {
           </View>
         ))}
       </View>
+      {showLoading&&<Loading text='מביא את נתוני הלקוח'/>} 
     </ScrollView>
   );
 };

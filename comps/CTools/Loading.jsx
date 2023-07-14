@@ -11,16 +11,22 @@ export default function Loading(props) {
   const { opacity = '#e6e6fa', text } = props
 
   const element = <View style={styles.container}>
-    <ImageBackground source={require('./logoo.png')} style={styles.image} resizeMode='cover' >
-      <Progress.Circle style={styles.progress(text?10:2)} size={131} indeterminate={true} progress={0.2} borderWidth={4} borderColor='#3CA6CD' />
+    <ImageBackground source={require('./logoo.png')} style={styles.image} resizeMode='contain' >
+      <Progress.Bar useNativeDriver={true}
+                borderWidth={2}
+                indeterminate={true}
+                animationConfig={{ bounciness: 20 }}
+                 progress={0.1}
+                  indeterminateAnimationDuration={700} 
+                  size={200}  style={styles.bar} color='rgb(92, 71, 205)' />
       {text && <Text style={{ position: 'relative', top: '95%', flexWrap: 'wrap', fontSize: 18, textAlign: 'center' }}>{text}</Text>}
     </ImageBackground>
   </View>;
 // C:\Users\Asus\Documents\beautyme2\beautyMe_clientSide\assets\logoo.png
 
   return (<PopUp
-    width={100}
-    height={100}
+    width={200}
+    height={200}
     animationType='fade'
     backgroundColor={opacity}
     isButton={false}
@@ -36,15 +42,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   image: {
-    width: '100%',
+    width: 150,
+    height:150,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
-    position: 'absolute'
+    position: 'absolute',
+
   }, progress: (top) => {
     return {
       alignItems: 'flex-end',
       top: top + '%'
     }
+  },
+  bar:{
+    position:'absolute',
+    top:175,
+   borderColor:"rgb(92, 71, 205)",
   }
 })
