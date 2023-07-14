@@ -5,8 +5,6 @@ import { forgotPassword } from '../obj/FunctionAPICode';
 import { resetPassword } from '../obj/FunctionAPICode';
 
 
-
-
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [codefromS, setcodefromS] = useState('');

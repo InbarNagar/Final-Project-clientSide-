@@ -233,7 +233,7 @@
 
 //       <Button color='#9acd32' width={300} fontSize={30} borderRadius={30} text="התחברות" onPress={handleLogin} />
 
-//       <Button color='transparent' text="שכחתי סיסמה" onPress={() => { navigation.navigate(ForgotPassword) }} />
+//    
       
 //       <Button color='transparent' text="עדיין לא נרשמתם? לחצו כאן" onPress={Registration} /> 
 

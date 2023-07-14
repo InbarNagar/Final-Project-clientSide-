@@ -115,7 +115,7 @@ const New_Calendar = () => {
       }).finally(()=>{
         setInterval(() => {
             showLoading&&setshowLoading(false)
-           }, 4000);
+           }, 2000);
 
       });
   }, []);
@@ -486,7 +486,7 @@ const New_Calendar = () => {
           </View>
         ))}
       </View>
-      {showLoading&&<Loading text='מביא את נתוני הלקוח'/>} 
+      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(false)}><Loading text='מביא את נתוני הלקוח'/></TouchableOpacity>}
     </ScrollView>
   );
 };

@@ -97,7 +97,7 @@ function App() {
           {/* <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} /> */}
           <Stack.Screen name="My_Appintments" component={My_Appintments} options={{ title: 'התורים שלי'}} />
           <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          
           <Stack.Screen name='Professional_registration' component={Professional_registration}options={{ title: 'הרשמת בעל עסק פרטים אישים' }} />
           <Stack.Screen name='Client_registration' component={Client_registration} options={{ title: ''}}  />
           <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} options={{ title: ' הרשמת בעל עסק  ' }} />
