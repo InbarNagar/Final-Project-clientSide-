@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Modal } from 'react-native';
 import { Button, Input } from 'react-native-elements';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { NewTreatmentForBussines, Treatment_type_GET, Category_GET } from './obj/FunctionAPICode';
@@ -12,10 +12,11 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import LogIn from './GenralComps/LogIn'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Header from './obj/Header';
-
+import { Picker } from '@react-native-picker/picker';
 
 const Menu_treatment_registration = (props) => {
-
+  const [modalVisibleT, setModalVisibleT] = useState(false);
+  const [modalVisibleC, setModalVisibleC] = useState(false);
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedTreatment, setSelectedTreatment] = useState(null);
@@ -30,9 +31,6 @@ const Menu_treatment_registration = (props) => {
 
   // const [duration, setDuration] = useState(null);
 
-  const [openC, setOpenC] = useState(false);
-  const [openT, setOpenT] = useState(false);
-  const [openD, setOpenD] = useState(false);
 
   const [duration, setDuration] = useState(null);
   const [mode, setMode] = useState("date");
@@ -232,47 +230,76 @@ const Menu_treatment_registration = (props) => {
     <ScrollView >
       <View style={styles.container}>
         <Header text="צור את תפריט הטיפולים שלך" fontSize={50} height={200} color={"rgb(92, 71, 205)"} />
-        <DropDownPicker
-          open={openT}
-          items={treatments.map(treatment => ({ label: treatment.Name, value: treatment.Type_treatment_Number }))}
-          setOpen={setOpenT}
-          setValue={setSelectedTreatment}
-          placeholder="בחר טיפול"
-          value={selectedTreatment}
-          containerStyle={{ height: 40, borderColor: '#d3d3d3', borderRadius: 10 }}
-          onChangeItem={item => setSelectedTreatment(item.value)}
-          searchable={true}
-          style={{ backgroundColor: '#fafafa', zIndex: 10000 }}
-          dropDownContainerStyle={{ backgroundColor: '#FFFFFF' }}
-          listMode="MODAL"
-          positionFixed={true}
-          itemStyle={{ justifyContent: 'flex-end' }}
-          placeholderStyle={{ color: 'gray', textAlign: 'right' }}
-          labelStyle={{ fontSize: 14, color: '#000' }}
-        />
-        <Text>{'\n'}</Text>
+        <View style={styles.centeredView}>
+      <TouchableOpacity style={styles.button} onPress={() => setModalVisibleT(true)}>
+        <Text style={styles.buttonText}>בחר טיפול</Text>
+      </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisibleT}
+        onRequestClose={() => {
+          setModalVisibleT(!modalVisibleT);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Picker
+              selectedValue={selectedTreatment}
+              style={{ height: '90%', width: '90%' }} 
+              onValueChange={(itemValue, itemIndex) => setSelectedTreatment(itemValue)}
+              itemStyle={{ textAlign: 'right' }} // Text align right
+            >
+              {treatments.map((treatment, index) => (
+                <Picker.Item 
+                  key={index} 
+                  label={treatment.Name} 
+                  value={treatment.Type_treatment_Number} 
+                />
+              ))}
+            </Picker>
+            <TouchableOpacity style={styles.button} onPress={() => setModalVisibleT(false)}>
+              <Text style={styles.buttonText}>סגור</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
-        <DropDownPicker
-          open={openC}
-          items={categories.map(category => ({ label: category.Name, value: category.Category_Number }))}
-          setOpen={setOpenC}
-          setValue={setSelectedCategory}
-          placeholder="בחר קטגוריה"
-          value={selectedCategory}
-          containerStyle={{ height: 40 }}
-          onChangeItem={item => setSelectedCategory(item.value)}
-          searchable={true}
-          style={{ backgroundColor: '#fafafa', zIndex: 10000 }}
-          dropDownContainerStyle={{ backgroundColor: '#FFFFFF', alignSelf: 'flex-end' }}
-          dropDownStyle={{ backgroundColor: '#FFFFFF', alignSelf: 'flex-end' }}
-          listMode="MODAL"  // שימוש במצב מודאל
-          positionFixed={true}
-          itemStyle={{ justifyContent: 'flex-end' }}
-          placeholderStyle={{ color: 'gray', textAlign: 'right' }}
-          labelStyle={{ fontSize: 14, color: '#000' }}
-          dropDownDirection="RTL"
-        />
-        <Text>{'\n'}</Text>
+      <TouchableOpacity style={styles.button} onPress={() => setModalVisibleC(true)}>
+        <Text style={styles.buttonText}>בחר קטגוריה</Text>
+      </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true} 
+        visible={modalVisibleC}
+        onRequestClose={() => {
+          setModalVisibleC(!modalVisibleC);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Picker
+              selectedValue={selectedCategory}
+              style={{ height: '90%', width: '90%' }} 
+              onValueChange={(itemValue, itemIndex) => setSelectedCategory(itemValue)}
+              itemStyle={{ textAlign: 'right' }} // Text align right
+            >
+              {categories.map((category, index) => (
+                <Picker.Item 
+                  key={index} 
+                  label={category.Name} 
+                  value={category.Category_Number} 
+                />
+              ))}
+            </Picker>
+            <TouchableOpacity style={styles.button} onPress={() => setModalVisibleC(false)}>
+              <Text style={styles.buttonText}>סגור</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
+    </View>
 
         {/* <View>
             <Button onPress={showTimepicker} title=" בחר משך זמן טיפול" />
@@ -430,6 +457,41 @@ const styles = StyleSheet.create({
     // marginTop: 20,
 
 
+  },centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor:'#e6e6fa', // Purple background
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    width: '90%', // Set width to 80% of the screen width
+    height: '70%', // Set height to 60% of the screen height
+  },
+  button: {
+    backgroundColor: "rgb(92, 71, 205)", // Purple background
+    padding: 10,
+    borderRadius: 10,
+    margin: 10,
+    width: 200,
+    marginBottom:20,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "white", // White text
+    fontSize: 16,
   },
 });
 

@@ -120,12 +120,12 @@ function App() {
           <Stack.Screen name="Maps_Inbar" component={Maps_Inbar} options={{ title:''}} />
           <Stack.Screen name="ClientHome" component={ClientHome} options={{ title: ''}} />
           <Stack.Screen name="AvailableAppointmentToBook_New" component={AvailableAppointmentToBook_New}/>
-          <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment} options={{ title: ''}} />
+          <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment} options={{ title: 'עדכון'}} />
           <Stack.Screen name="AvailableAppointmentForTreatment" component={AvailableAppointmentForTreatment}/>
           <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity} options={{ title: '1111111111'}} />
           <Stack.Screen name="Photos_BUS" component={Photos_BUS} options={{ title: 'אלבום תמונות'}} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: 'שכחתי סיסמא'}} />
-
+    
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>

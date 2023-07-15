@@ -58,7 +58,7 @@ const Create_Business_Pro = (props) => {
       AddressCity: AddressCity,
       Professional_ID_number: Id_Pro,
       about: About,
-      phone:p,
+      phone: p,
       // Professional_ID_number: Professional_ID_number
       LongCordinate: LongCordinate,
       LetCordinate: LetCordinate,
@@ -205,6 +205,27 @@ const Create_Business_Pro = (props) => {
               </View>
             </View>
           </Modal>
+          <View style={styles.inp}>
+
+            <TextInput style={styles.textInputAbout}
+              placeholder=" שם משתמש באינסטגרם"
+              placeholderTextColor="#92a2bd"
+              value={Instagram_link}
+              onChangeText={(text) => setInstagram_link(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+
+            <TextInput style={styles.textInputAbout}
+              placeholder="קישור לפייסבוק"
+              placeholderTextColor="#92a2bd"
+              value={Facebook_link}
+              onChangeText={(text) => setFacebook_link(text)}
+            />
+
+          </View>
 
           <Text style={styles.titp}> כתוב בבקשה כמה פרטים על העסק כדי שהלקוח יוכל להכיר יותר טוב את העסק שלך {'\n'}</Text>
 
@@ -219,27 +240,7 @@ const Create_Business_Pro = (props) => {
 
           </View>
 
-          <View style={styles.inpAbout}>
 
-            <TextInput style={styles.textInputAbout}
-              placeholder=" שם משתמש באינסטגרם"
-              placeholderTextColor="#92a2bd"
-              value={Instagram_link}
-              onChangeText={(text) => setInstagram_link(text)}
-            />
-
-          </View>
-
-          <View style={styles.inpAbout}>
-
-            <TextInput style={styles.textInputAbout}
-              placeholder="קישור לפייסבוק"
-              placeholderTextColor="#92a2bd"
-              value={Facebook_link}
-              onChangeText={(text) => setFacebook_link(text)}
-            />
-
-          </View>
 
           <View>
             <TouchableOpacity onPress={handleRegistrationB}>
@@ -381,7 +382,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)', 
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   pickerContainer: {
     backgroundColor: '#e6e6fa',
@@ -393,7 +394,7 @@ const styles = StyleSheet.create({
   picker: {
     height: 50,
     width: '100%',
-    marginBottom: 20, 
+    marginBottom: 20,
     backgroundColor: 'transparent',
   },
 

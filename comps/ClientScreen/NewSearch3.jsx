@@ -14,7 +14,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { TouchableOpacity } from 'react-native';
 import Header from "../obj/Header";
 import { useNavigation } from "@react-navigation/core";
-
+import Loading from "../CTools/Loading";
 
 export default function NewSearch3({ navigation }) {
   const [NameTreatment, setNameTreatment] = useState("");
@@ -28,7 +28,7 @@ export default function NewSearch3({ navigation }) {
   const [AddressCity, setAddressCity] = useState(null);
   const [Is_client_house, setIs_client_house] = useState(null);
   // const [categories, setCategories] = useState(["קטגוריה"]);
-
+  const [showLoading,setshowLoading]=useState(false)
 
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -60,6 +60,7 @@ export default function NewSearch3({ navigation }) {
 
 
   useEffect(() => {
+    setshowLoading(true)
     Treatment_type_GET().then(
       (result) => {
         console.log("categories: ", result);
@@ -71,7 +72,14 @@ export default function NewSearch3({ navigation }) {
       (error) => {
         console.log("error", error);
       }
-    );
+    ).catch((error) => {
+      console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
+    }).finally(()=>{
+      setInterval(() => {
+          showLoading&&setshowLoading(false)
+         }, 1000);
+
+    });
 
   }, []);
 
@@ -333,7 +341,7 @@ export default function NewSearch3({ navigation }) {
       </ScrollView>
       {/* {result&&result.length>0<Maps_Inbar result={result}/>} */}
       <Menu_Client />
-      
+      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(false)}><Loading text='מביא נתונים..' /></TouchableOpacity>}
     </>
   );
 }

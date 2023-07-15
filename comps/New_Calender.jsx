@@ -27,7 +27,7 @@ const New_Calendar = () => {
   const [tokenClient, setToken] = useState();
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDay, setSelectedDay] = useState(null);
-  const [showLoading,setshowLoading]=useState(false)
+  const [showLoading,setshowLoading]=useState(true)
 
   useEffect(() => {
     if (tokenClient) {
@@ -49,9 +49,15 @@ const New_Calendar = () => {
     }
 
   }, [tokenClient]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setshowLoading(false);
+    }, 3000); // הפונקציה תקרא אחרי 5 שניות
+
+    return () => clearTimeout(timer); // ניקוי הטיימר כאשר הקומפוננטה מתנתקת
+  }, []);
 
   useEffect(() => {
-    setshowLoading(true)
     GetAllAppointmentForProWithClient(BussinesNumber)
       .then((data) => {
         let arr1 = [];
@@ -112,12 +118,13 @@ const New_Calendar = () => {
       })
       .catch((error) => {
         console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
-      }).finally(()=>{
-        setInterval(() => {
-            showLoading&&setshowLoading(false)
-           }, 2000);
+       })
+      // .finally(()=>{
+      //   setInterval(() => {
+      //       showLoading&&setshowLoading(false)
+      //      },5000);
 
-      });
+      // });
   }, []);
 
   useEffect(() => {
@@ -250,7 +257,8 @@ const New_Calendar = () => {
     const body = {
       "to": token,
       "title": "BeautyMe",
-      "body": `תזכורת לטיפול ${Name_type} שנקבע לתאריך ${Date} בין השעות ${moment(Start_Hour, "HH:mm").format("HH:mm")} ל-${moment(End_Hour).format("HH:mm")}`,
+      "body": `תזכורת לטיפול ${Name_type} שנקבע לתאריך ${moment(Date).format('L')} בין השעות ${moment(Start_Hour, "HH:mm").format("HH:mm")} 
+      ${moment(End_Hour, "HH:mm").format("HH:mm")}`,
       "badge": "0",
       "ttl": "1",
       "data": {
@@ -258,7 +266,7 @@ const New_Calendar = () => {
       }}
     Post_SendPushNotification(body).then
       (() => {
-        console.log("נשלחה התראה,", token)
+        console.log("נשלחה התראה", token)
       }
       )
   };
@@ -486,7 +494,7 @@ const New_Calendar = () => {
           </View>
         ))}
       </View>
-      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(false)}><Loading text='מביא את נתוני הלקוח'/></TouchableOpacity>}
+      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(!showLoading)}><Loading text='מביא את נתוני בעל העסק'/></TouchableOpacity>}
     </ScrollView>
   );
 };
