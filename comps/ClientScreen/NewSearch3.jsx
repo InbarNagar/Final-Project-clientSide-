@@ -28,7 +28,7 @@ export default function NewSearch3({ navigation }) {
   const [AddressCity, setAddressCity] = useState(null);
   const [Is_client_house, setIs_client_house] = useState(null);
   // const [categories, setCategories] = useState(["קטגוריה"]);
-  const [showLoading,setshowLoading]=useState(false)
+  const [showLoading,setshowLoading]=useState(true)
 
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -74,15 +74,17 @@ export default function NewSearch3({ navigation }) {
       }
     ).catch((error) => {
       console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
-    }).finally(()=>{
-      setInterval(() => {
-          showLoading&&setshowLoading(false)
-         }, 1000);
-
-    });
+    })
 
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setshowLoading(false);
+    }, 3000); // הפונקציה תקרא אחרי 5 שניות
+
+    return () => clearTimeout(timer); // ניקוי הטיימר כאשר הקומפוננטה מתנתקת
+  }, []);
   function GetData(data) {
     let res = [];
     let obj = {
@@ -341,7 +343,7 @@ export default function NewSearch3({ navigation }) {
       </ScrollView>
       {/* {result&&result.length>0<Maps_Inbar result={result}/>} */}
       <Menu_Client />
-      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(false)}><Loading text='מביא נתונים..' /></TouchableOpacity>}
+      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(!showLoading)}><Loading text='מביא נתונים..' /></TouchableOpacity>}
     </>
   );
 }

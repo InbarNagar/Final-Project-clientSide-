@@ -1,74 +1,135 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Image, StyleSheet, ScrollView, TouchableOpacity, Text } from 'react-native';
 import { UserContext } from './UserDietails';
-import { useContext, useEffect, useState } from 'react';
 import { useNavigation } from "@react-navigation/core";
+import Header from './obj/Header';
+import Swiper from 'react-native-swiper';
 
-const Photos_BUS = () => {
+const Photos_BUS = (Props) => {
     const { userDetails, setUserDetails } = useContext(UserContext);
+    const [userType, setUserType] = useState(userDetails.userType);
     const navigation = useNavigation();
+    const {Business_Number} = Props;
+    const [imagesExist, setImagesExist] = useState([]);
+    let imageUrls =[]
+    // const imageUrls = [
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil1${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil2${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil3${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil4${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil5${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil6${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil7${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil8${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil9${userDetails.Business_Number}.jpg`,
+    //     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil10${userDetails.Business_Number}.jpg`,
+    // ];
 
-    // מערך של תמונות
-    const images = ['2001', '20', 'url3', 'url4', 'url5', 'url6', 'url7', 'url8', 'url9'];
+    useEffect(() => {
+        if(userType === 'Pro'){
+        imageUrls = [
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil1${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil2${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil3${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil4${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil5${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil6${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil7${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil8${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil9${userDetails.Business_Number}.jpg`,
+            `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil10${userDetails.Business_Number}.jpg`,
+        ]}
 
-    const SquareButton = ({ id }) => {
-        return (
-          <TouchableOpacity style={styles.square}>
-            <Text style={styles.text}>{`Button ${id}`}</Text>
-          </TouchableOpacity>
-        );
-      };
+        if(userType === 'Cli'){
+             imageUrls = [
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil1${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil2${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil3${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil4${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil5${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil6${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil7${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil8${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil9${Business_Number}.jpg`,
+                `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil10${Business_Number}.jpg`,
+            ];
+            console.log(imageUrls)
+        }
+
+        console.log(userType)
+        Promise.all(
+            imageUrls.map((url) =>
+                Image.prefetch(url)
+                    .then(() => true)
+                    .catch(() => false)
+            )
+        ).then(setImagesExist);
+    }, []);
+
     return (
-        <ScrollView>
-            <View style={styles.container}>
-
-                <TouchableOpacity onPress={() => navigation.navigate('CameraUse', { imageName: "album" + userDetails.Business_Number })}>
-                    <Text style={styles.buttonText}>כפתור</Text>
-                </TouchableOpacity>
-
-
-                {images.map((url, index) => (
-                    <Image key={index} source={{ uri: `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg` }} style={styles.image} />
-                ))}
-
-
-                <View style={styles.container}>
-                    {[...Array(9)].map((_, i) => (
-                        <SquareButton key={i + 1} id={i + 1} />
-                    ))}
+        <ScrollView style={styles.container}>
+        {userType === 'Pro' && <Header text="הוספת תמונות" fontSize={20} height={200} color={"rgb(92, 71, 205)"} />}
+        <Swiper style={styles.wrapper} showsButtons={true} height={300} 
+            autoplay={true}
+            autoplayTimeout={2}
+            activeDotColor="rgb(92, 71, 205)"
+            paginationStyle={{ bottom: 0 }}
+            removeClippedSubviews={false}>
+            {imageUrls.map((url, index) => (
+                <View key={index} style={styles.slide}>
+                    {imagesExist[index] ? (
+                        <Image
+                            style={styles.img}
+                            source={{ uri: url }}
+                            onError={(error) => {
+                                console.log('Failed to load image', url, error);
+                                const updatedImagesExist = [...imagesExist];
+                                updatedImagesExist[index] = false;
+                                setImagesExist(updatedImagesExist);
+                            }}
+                        />
+                    ) : (
+                        userType === 'Pro' ? (
+                            <TouchableOpacity onPress={() => {
+                                console.log(`button${index + 1}`);
+                                Props.navigation.navigate('CameraUse', { imageName: `profil${index + 1}` + userDetails.Business_Number });
+                            }}>
+                                <Text style={styles.text}>הוסף תמונה</Text>
+                            </TouchableOpacity>
+                        ) : null
+                    )}
                 </View>
-
-            </View>
-        </ScrollView>
+            ))}
+        </Swiper>
+    </ScrollView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 10,
-        borderWidth: 2,
-        borderColor: 'black',
-        padding: 10,
+        backgroundColor: 'lavender',
     },
-    square: {
-        width: '30%',
-        aspectRatio: 1,
+    wrapper: {},
+    slide: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth: 1,
-        borderColor: 'black',
-        margin: 5,
-        backgroundColor: '#ddd',
+        backgroundColor: 'transparent',
+    },
+    img: {
+        width: '100%',
+        height: '100%',
     },
     text: {
-        fontSize: 14,
-        textAlign: 'center',
+        color: '#fff',
+        fontSize: 30,
+        fontWeight: 'bold',
     },
 });
 
 export default Photos_BUS;
+
+
+       
+   

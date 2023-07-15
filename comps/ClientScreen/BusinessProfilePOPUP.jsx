@@ -9,10 +9,7 @@ import { useNavigation } from "@react-navigation/core";
 import Header from "../obj/Header";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
-
-
+import Swiper from 'react-native-swiper';
 
 const BusinessProfilePOPUP = (props) => {
 
@@ -24,6 +21,9 @@ const BusinessProfilePOPUP = (props) => {
   const [Cleanliness, SetCleanliness] = useState();
   const [On_time, SetOn_time] = useState();
   const [ShowReviewsSection, SetShowReviewsSection] = useState(false);
+
+
+  const [imagesExist, setImagesExist] = useState([]);
 
   const [src, setsrc] = useState()
   // useFocusEffect(
@@ -62,6 +62,31 @@ const BusinessProfilePOPUP = (props) => {
   // const image =
   //   "https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedias.timeout.co.il%2Fwww%2Fuploads%2F2017%2F03%2F%25D7%259E%25D7%25A8%25D7%259E%25D7%2595%25D7%25A8%25D7%25A7_17_T-1140x641.jpg&tbnid=uEfqyzHNmhL4UM&vet=12ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ..i&imgrefurl=https%3A%2F%2Ftimeout.co.il%2F%25D7%2594%25D7%259E%25D7%25A1%25D7%25A4%25D7%25A8%25D7%2595%25D7%25AA-%25D7%2594%25D7%259B%25D7%2599-%25D7%2598%25D7%2595%25D7%2591%25D7%2595%25D7%25AA%2F&docid=BMiIRS3jiJIo_M&w=1140&h=641&q=%D7%9E%D7%A1%D7%A4%D7%A8%D7%94&ved=2ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ";
 
+  imageUrls = [
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil1${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil2${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil3${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil4${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil5${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil6${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil7${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil8${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil9${Business_Number}.jpg`,
+    `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil10${Business_Number}.jpg`,
+];
+
+useEffect(() => {
+  Promise.all(
+      imageUrls.map((url) =>
+          Image.prefetch(url)
+              .then(() => true)
+              .catch(() => false)
+      )
+  ).then(setImagesExist);
+}, []);
+
+
+
   useEffect(() => {
     console.log(businessRankArr, "gggggggggggggggggggggggggg");
     GetOneBusiness(Business_Number).then(
@@ -75,6 +100,8 @@ const BusinessProfilePOPUP = (props) => {
         console.log("error", error);
       }
     );
+
+
     let onTimeSum = 0;
     let professionalismSum = 0;
     let cleanlinessSum = 0;
@@ -167,7 +194,31 @@ const BusinessProfilePOPUP = (props) => {
             source={{ uri: "https://example.com/your-image.jpg" }} // replace with your image url
           /> */}
             <Header text={businessDetails.Name} paddingTop={0} fontSize={25} color={"rgb(92, 71, 205)"} />
-
+            
+            <Swiper style={styles.wrapper} showsButtons={true} height={300} 
+            autoplay={true}
+            autoplayTimeout={2}
+            activeDotColor="rgb(92, 71, 205)"
+            paginationStyle={{ bottom: 0 }}
+            removeClippedSubviews={false}>
+            {imageUrls.map((url, index) => (
+                <View key={index} style={styles.slide}>
+                    {imagesExist[index] ? (
+                        <Image
+                            style={styles.img2}
+                            source={{ uri: url }}
+                            onError={(error) => {
+                                console.log('Failed to load image', url, error);
+                                const updatedImagesExist = [...imagesExist];
+                                updatedImagesExist[index] = false;
+                                setImagesExist(updatedImagesExist);
+                            }}
+                        />
+                    ) :  null
+                    }
+                </View>
+            ))}
+        </Swiper>
             {/* <Text style={styles.textBox}>{businessDetails.Name}</Text> */}
             <Text style={styles.textBox}>
               {businessDetails.AddressStreet +
@@ -267,15 +318,12 @@ const BusinessProfilePOPUP = (props) => {
                 <Text style={styles.text1}>{businessDetails.About}</Text>
               </View>
 
-
-
-              <TouchableOpacity onPress={() => { SetShowReviewsSection(!ShowReviewsSection) }}>
+              <TouchableOpacity onPress={() => {SetShowReviewsSection(!ShowReviewsSection) }}>
                 <View style={styles.view2}>
                   <Text style={styles.textview2}>ביקורות של לקוחות</Text>
                   <AntDesign name="downcircleo" size={24} color="black" />
                 </View>
               </TouchableOpacity>
-
 
 
               {ShowReviewsSection && businessRankArr.length > 0 &&
@@ -450,7 +498,16 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     textAlign: 'right',
     fontSize: 20
-  },
+  }, slide: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+},
+img2: {
+    width: '100%',
+    height: '100%',
+},
 
 
 
