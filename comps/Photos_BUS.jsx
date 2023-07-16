@@ -23,8 +23,6 @@ const Photos_BUS = (Props) => {
     ];
 
     useEffect(() => {
-    
-        console.log(userType)
         Promise.all(
             imageUrls.map((url) =>
                 Image.prefetch(url)

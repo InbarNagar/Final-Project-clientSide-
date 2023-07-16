@@ -193,26 +193,26 @@ export default function My_Appintments() {
 
   const namecli = "";
 
-  const test = () => {
+  // const test = () => {
 
-    const body = {
-      "to": userDetails.Token,
-      "title": "BeautyMe",
-      "body": `${userDetails.First_name} הוספת תור חדש`,
-      "badge": "0",
-      "ttl": "1",// מספר שניות לשליחה
-      "data": {
-        "to": userDetails.Token
-      }
-    }
-    console.log({ userDetails })
-    Post_SendPushNotification(body).then(() => {
+  //   const body = {
+  //     "to": userDetails.Token,
+  //     "title": "BeautyMe",
+  //     "body": `${userDetails.First_name} הוספת תור חדש`,
+  //     "badge": "0",
+  //     "ttl": "1",// מספר שניות לשליחה
+  //     "data": {
+  //       "to": userDetails.Token
+  //     }
+  //   }
+  //   console.log({ userDetails })
+  //   Post_SendPushNotification(body).then(() => {
 
-    }).catch((error) => {
-      console.log("error", error);
-    })
+  //   }).catch((error) => {
+  //     console.log("error", error);
+  //   })
 
-  }
+  // }
 
   const handleSubmit = () => {
    
@@ -222,8 +222,8 @@ export default function My_Appintments() {
         setallAppointment(result)
         console.log(result, "1111")
         console.log(result.data, "2222")
-
-    }, (error) => {
+        console.log(result.data)
+     }, (error) => {
       console.log('error', error)
     })
 
@@ -322,18 +322,24 @@ export default function My_Appintments() {
                 <AppointmentCard_forClient
                   key={appointment.Number_appointment}
                   Review_Number={appointment.Review_Number}
-                  Number_appointment={appointment.Number_appointment}
-                  backgroundColor={"rgb(229, 222, 255)"}
+                  backgroundColor={"white"}
                   Date1={appointment.Date}
-                  Start_time={appointment.Start_time}
-                  End_time={appointment.End_time}
+                  Start_time={appointment.Start_Hour}
+                  End_time={appointment.End_Hour}
                   AddressStreet={appointment.AddressStreet}
                   AddressHouseNumber={appointment.AddressHouseNumber}
                   AddressCity={appointment.AddressCity}
-                  BusinessName={appointment.Business_Name}
+                  BusinessName={appointment.Name}
                   Business_Number={appointment.Business_Number}
-                  ClientIDnumber={userDetails.ID_number}
-                  Appointment_status={appointment.Appointment_status}
+                  ClientIDnumber={appointment.ID_Client}
+                  Type_Treatment_Number={appointment.Type_Treatment_Number}
+                  phone={appointment.phone}
+                  Is_client_house={appointment.Is_client_house1}
+                  Treatment_Type={appointment.Treatment_Name}
+                  token={appointment.token}
+                  Number_appointment={appointment.Number_appointment}
+                  idb={appointment.Professional_ID_number}
+                
                 />
               );
             })}
