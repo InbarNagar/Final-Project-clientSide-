@@ -1,131 +1,239 @@
-import { View, Text, StyleSheet, TouchableOpacity} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity,Image } from "react-native";
 import moment from "moment";
 import Button from "../obj/Button";
-import {CancelAppointmentByClient} from '../obj/FunctionAPICode'
+import { CancelAppointmentByClient } from "../obj/FunctionAPICode";
 import Review_Business from "../Review_Business";
 import { useNavigation } from '@react-navigation/native';
 import { toDate } from "date-fns";
 import { useState } from "react";
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { ScrollView } from "react-native-gesture-handler";
 
 const AppointmentCard_forClient = (props) => {
-  const {Review_Number,Business_Number,ClientIDnumber,Number_appointment, AddressCity,AddressHouseNumber,AddressStreet,backgroundColor, Treatment_Type, Client_Name, Start_time, End_time, Date1, BusinessName, Appointment_status } = props;
+  const { Type_Treatment_Number,idb, token, Review_Number, Business_Number, ClientIDnumber, Number_appointment, AddressCity, AddressHouseNumber, AddressStreet, backgroundColor, Treatment_Type, Start_time, End_time, Date1, BusinessName, Appointment_status, phone, Is_client_house } = props;
   const navigation = useNavigation();
   const [bookModalVisible, SetBookModalVisible] = useState(false);
   const [POPUP, SetPOPUP] = useState(false);
+  const [tokenPro, setToken] = useState();
+ const [Message,setmes]=useState();
 
-  function cancelAppointment(Number_appointment){
-    console.log("appoinment: "+ Number_appointment);
-    CancelAppointmentByClient(Number_appointment).then(
-    (result) => {
-      console.log(`appointment ${Number_appointment} canceled!! `);
-    },
-    (error) => {
-      console.log("error", error);
-      // Handle error, including finding a way to display to the user that deletion failed.
+  useEffect(() => {
+    if (tokenPro) {
+      const body = {
+        "to": tokenPro,
+        "title": "BeautyMe",
+        "body": `לצערנו התור שקבעת התבטל`,
+        "badge": "0",
+        "ttl": "1",
+        "data": {
+          "to": tokenPro
+        }
+      }
+      Post_SendPushNotification(body).then
+        (() => {
+          console.log("%%%%%%%%%%%%%%%%%%%%%%%%%% טקקקקקקקק", tokenPro)
+        }
+        )
     }
-  );
-}
 
-// function handlePOPUP() {
-//   SetBookModalVisible(!bookModalVisible);
-//   SetPOPUP(!POPUP);
-//   // console.log(POPUP, bookModalVisible, "popop", Number_appointment, ClientIDnumber, BusinessName, Business_Number )
-
-// }
-
-const styles = StyleSheet.create({
-  card: {
-    alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: '#d3d3d3',
-    padding: 10,
-    marginVertical: 5,
-    backgroundColor: backgroundColor,
-  },
-  title: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-    textAlign: "center",
-  },
-  text: {
-
-    fontSize: 20,
+  }, [tokenPro]);
+  function cancelAppointment(Number_appointment) {
+    CancelAppointmentByClient(Number_appointment).then((result) => {
+      if (result.data) {
+        console.log(result.data, "**********************");
+        Alert.alert(
+          "התראה",
+          "התור בוטל בהצלחה",
+          [
+            { text: "אישור", onPress: () => console.log("אישור Pressed") }
+          ]
+        )
+      }
+    })
+      .catch((error) => {
+        console.log("error", error);
+      });
   }
-});
+
+  // function handlePOPUP() {
+  //   SetBookModalVisible(!bookModalVisible);
+  //   SetPOPUP(!POPUP);
+  //   // console.log(POPUP, bookModalVisible, "popop", Number_appointment, ClientIDnumber, BusinessName, Business_Number )
+
+  // }
+
+  const styles = StyleSheet.create({
+    card: {
+      alignItems: 'left',
+      borderWidth: 1,
+      borderRadius: 10,
+      borderColor: '#d3d3d3',
+      padding: 10,
+      marginVertical: 5,
+      backgroundColor: backgroundColor,
+      flexDirection: 'row',
+      marginBottom:20,
+      flex: 2
+    },
+    title: {
+      fontWeight: 'bold',
+      marginBottom: 5,
+      textAlign: "left",
+      paddingBottom: 10,
+    }, 
+    title1: {
+      fontWeight: 'bold',
+      marginBottom: 5,
+      marginTop:-10,
+    
+    },
+    text: {
+
+      fontSize: 20,
+    },
+    icon: {
+      marginRight: 10,
+    },
+    iconContainer: {
+      flexDirection: "row",
+    },
+    img: {
+      borderRadius: 15,
+      width: 100,
+      height:100,
+    },
+
+
+  });
+  function timeToNumber(timeString) {
+    let parts = timeString.split(":");
+    let hours = parseInt(parts[0], 10);
+    let minutes = parseInt(parts[1], 10);
+    return hours * 60 + minutes;
+  }
 
   const massage = () => {
-    console.log(Appointment_status, Review_Number,  "aappppp")
-    if ((Appointment_status == "Appointment_ended" && Review_Number == null)) {
+    let givenDate = new Date(Date1);
+    let today = new Date();
+    givenDate.setHours(0, 0, 0, 0)
+
+    let currentHour = today.getHours(); // השעה של עכשיו
+    let currentMinute = today.getMinutes(); // הדקות של עכשיו
+
+
+    let currentTime = `${currentHour}:${currentMinute}`;
+    console.log(currentTime, End_time, timeToNumber(currentTime))
+    console.log(givenDate, today, "aappppp")
+
+    if (((floatToTime(Start_time) <= currentTime ||floatToTime(End_time) <= currentTime) && today.setHours(0, 0, 0, 0) >= givenDate) && Review_Number == null) {
       return (
-      <>
-      <Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
+        <>
 
-      {/* <TouchableOpacity style={styles.button} onPress={handlePOPUP} >
-      <View>
-          <Text style={styles.buttonText}>דרג עסק</Text>
-          </View>
-      </TouchableOpacity> */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('Review_Business', {
+                Number_appointment,
+                ClientIDnumber,
+                BusinessName,
+                Business_Number
+              })
+            }
+          >
+            <View style={styles.iconContainer}>
+              <Icon name="star" size={20} color="#ffd700" style={styles.icon} />
+              <Text style={styles.title}>דרג עסק</Text>
+            </View>
+          </TouchableOpacity>
 
-
-     <Button
-
-     color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff" 
-      text="דרג עסק" 
-
-      onPress={() => 
-        navigation.navigate('Review_Business', {
-          Number_appointment,
-          ClientIDnumber,
-          BusinessName,
-          Business_Number
-        })
-      }
-      // onPress={handlePOPUP()}
-
-    />
-      {/* {POPUP &&(
-        <Review_Business
-         Number_appointment={Number_appointment}
-         ClientIDnumber={ClientIDnumber}
-         BusinessName={BusinessName}
-         Business_Number={Business_Number}
-        />
-      )} */}
-    
-      </>)
+        </>)
     }
-    if (Appointment_status == "Appointment_ended" && Review_Number != null ) {
+    if (((floatToTime(Start_time) <= currentTime ||floatToTime(End_time) <= currentTime) && today.setHours(0, 0, 0, 0) >= givenDate) && Review_Number != null) {
       // if ( Date1 < new Date() && Review_Number != null ) {
       return (
-      <><Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
-      <Text style={styles.title}>העסק דורג!</Text>
-      </>)
+        <><Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
+          <Text style={styles.title}>העסק דורג!</Text>
+        </>)
     }
-    if (Appointment_status == "Awaiting_approval") // if status =
-  {return (<>
-      <Text style={styles.title}>ממתין לאישור בעל עסק</Text>
-      <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff"  text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
-      </>)}
-
-    else
-     { 
+    else {
       return (<>
-      <Text style={styles.title}>{Treatment_Type} תור מאושר</Text>
-      <Button color="rgb(92, 71, 205)" width={300} fontSize={20} borderRadius={20} colortext="#f0f8ff" text="ביטול תור" onPress={() => cancelAppointment(Number_appointment)} />
+        <TouchableOpacity onPress={() => {
+                    setToken(token);
+                    setmes(`שלום,
+                    רצינו ליידע אותך שהתור מספר ${Number_appointment}, שהיה אמור להתקיים בתאריך ${Date1}, עם סוג הטיפול ${Treatment_Type}, בין השעות ${floatToTime(Start_time)} ל-${floatToTime(End_time)}, בוטל.
+                    אנא עדכן את לוח הזמנים שלך בהתאם.
+                    תודה,
+                   Beauty Me`)
+                    cancelAppointment(Number_appointment);
+                  }}>
+                    <View style={styles.iconContainer}>
+                      <Icon name="times-circle" size={20} color="#900" style={styles.icon} />
+                      <Text style={styles.title}>ביטול תור</Text>
+                    </View>
+                  </TouchableOpacity>
       </>
       )
     }
   }
-
+  function floatToTime(floatNumber) {
+    let hours = Math.floor(floatNumber);
+    let minutes = Math.floor((floatNumber - hours) * 60);
+    return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+  }
   return (
+    <ScrollView  style={{ padding:0 }} >
     <View style={styles.card}>
-      <Text style={styles.title}>{moment(Date1).format('DD/MM/YYYY')}</Text>
-      <Text style={styles.title}>שם העסק: {BusinessName}{'\n'} כתובת: {AddressStreet} {AddressHouseNumber},{AddressCity}</Text>
-      {/* <Text style={styles.title}>{Start_time} - {End_time}</Text> */}
-      {massage()}
+
+      <View style={{ flex: 1 }}>
+      
+
+        <View style={styles.iconContainer}>
+          <Icon name="calendar" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
+          <Text style={styles.title}>{moment(Date1).format('DD/MM/YYYY')}</Text>
+        </View>
+        <View style={styles.iconContainer}>
+          <Icon name="clock-o" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
+          <Text style={styles.title}>{floatToTime(Start_time)}-{floatToTime(End_time)}</Text>
+        </View>
+        <View style={styles.iconContainer}>
+          <Icon name="leaf" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
+          <Text style={styles.title}>{Treatment_Type}</Text>
+        </View>
+        <View>
+
+          {Is_client_house === "YES" || "YES       " ? (
+            <View style={styles.iconContainer}>
+              <Icon name="home" size={20} color="rgb(92, 71, 205)" />
+              <Text style={styles.title}>  טיפול בבית הלקוח </Text>
+
+            </View>
+
+          ) : (
+            <>
+              <Icon name="briefcase" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
+              טיפול בבית העסק
+            </>
+          )}
+        </View>
+        {massage()}
+        
+      </View>
+      <View style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'column', alignItems: 'center', }}>
+          <Image style={styles.img}
+            // onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} 
+            source={{ uri: `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${idb}.jpg` }} />
+
+          <Text style={styles.title}> {BusinessName}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center',marginTop:-5,margin:10}}>
+            <Icon name="map-marker" size={25} color="rgb(92, 71, 205)" style={{margin:5,marginTop:-20}} />
+            <Text style={styles.title1}>
+              {`${AddressCity}, ${AddressStreet} ${AddressHouseNumber}`}
+            </Text>
+          </View>
+      </View>
     </View>
+    </ScrollView>
   );
 };
 

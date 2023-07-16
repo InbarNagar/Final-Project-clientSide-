@@ -21,7 +21,8 @@ const BusinessProfilePOPUP = (props) => {
   const [Cleanliness, SetCleanliness] = useState();
   const [On_time, SetOn_time] = useState();
   const [ShowReviewsSection, SetShowReviewsSection] = useState(false);
-
+  const [src, setsrc] = useState('');
+  
 const handleInstagramLink = async () => {
   try {
     // const url = 'https://www.instagram.com/your_instagram_account';
