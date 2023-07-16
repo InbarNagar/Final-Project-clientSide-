@@ -19,11 +19,11 @@ import { useNavigation } from "@react-navigation/native";
 const BusinessSchedule = (props) => {
   const [token, settoken] = useState(null);
   const { userDetails } = useContext(UserContext);
-  const { duration,hours, Is_client_house,typeTreatmentNumber, businessNumber, isVisible, date, onClose } = props;
+  const { duration,hours ,Is_client_house,typeTreatmentNumber, businessNumber, isVisible, date, onClose } = props;
   const [pressedHour, setPressedHour] = useState(null);
   const navigation = useNavigation();
   useEffect(() => {
-    console.log(`props ${businessNumber} : ${date}  treatment number: ${typeTreatmentNumber} Is_client_house ${Is_client_house}`);
+    console.log(`props ${businessNumber} : hours: ${hours} ${date}  treatment number: ${typeTreatmentNumber} Is_client_house ${Is_client_house}`);
     if (token) {
       const body = {
         to: token,

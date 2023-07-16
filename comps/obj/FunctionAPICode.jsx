@@ -164,7 +164,7 @@ export const AllApointemtDetailes= () => {
 }
 //כל התורים שלי של הלקוח - כולל טבלת דירוג
 export const AllApointemtDetailesForClient_With_BusinessReview= (ID_Client) => {
-    return Axios(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'GET',{})
+    return Fetch(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'GET')
 }
 //כל התורים ללקוח
 export const AllApointemtDetailesForClient= (body) => {

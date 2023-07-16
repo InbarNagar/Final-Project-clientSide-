@@ -40,7 +40,16 @@ const handleInstagramLink = async () => {
     console.error('שגיאה בפתיחת האינסטגרם:', error);
   }
 };
-
+const handleFacebookLink = async () => {
+  try {
+    // const url = 'https://www.instagram.com/your_instagram_account';
+    const url = `https://www.Facebook.com/${businessDetails.Facebook_link}`;
+    await Linking.openURL(url);
+    console.log(Linking.openURL(url))
+  } catch (error) {
+    console.error('שגיאה בפתיחת הפייסבוק:', error);
+  }
+};
 
 
   // const image =
@@ -82,11 +91,11 @@ const handleInstagramLink = async () => {
   //   // openURL(businessDetails.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
   //   openURL('https://www.instagram.com');}
 
-    function handleFacebookLink() {
+    // function handleFacebookLink() {
     // openURL(businessDetails.Facebook_link); // לשים משתנה של כתובת פייסבוק שהמשתמש יזין
-    openURL('https://www.facebook.com');
+//     openURL('https://www.facebook.com');
   
-}
+// }
 
   const dialNumber = (number) => { //לא עובד כי בתחלה לא אישרתי להשתמש בטלפון בהגדרות אפליקציה
     console.log(number);
@@ -159,6 +168,11 @@ const handleInstagramLink = async () => {
           <Text>{businessDetails.about}</Text> 
 
           <View style={styles.linksContainer}>
+          <View style={styles.iconContainer}>
+    <TouchableOpacity onPress={handleFacebookLink}>
+      <FontAwesome name="facebook" size={24} color="black" style={{ marginRight: 50 }} />
+    </TouchableOpacity>
+  </View>
   <View style={styles.iconContainer}>
     <TouchableOpacity onPress={handleInstagramLink}>
       <FontAwesome name="instagram" size={24} color="black" style={{ marginRight: 50 }} />
