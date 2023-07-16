@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export const Fetch = (url, method) =>
   new Promise((resolve, reject) => {
+    console.log(Baseurl + url)
+    console.log(method)
     fetch(Baseurl + url, {
       method: method,
       headers: new Headers({
@@ -13,8 +15,10 @@ export const Fetch = (url, method) =>
       .then(res => {
         if (res && res.status == 200|| res.status === 201) {
           resolve(res.json());
+         
         } else {
           throw new Error(res.status)
+          
         }
       })
       .catch(err => {
@@ -22,6 +26,7 @@ export const Fetch = (url, method) =>
         console.log("method=>", method)
         console.log("status=>", err)
         reject("status code: " + err);
+        
       });
   })
 
@@ -29,10 +34,9 @@ export const Axios = (url, method, body) =>
   new Promise((resolve, reject) => {
     const configurationObject = {
       url:Baseurl+url,
-      method: method,
+      method: method, 
       data: body
     }
-    console.log(configurationObject, "33333333333333")
 
     axios(configurationObject)
       .then((response) => {
@@ -48,8 +52,7 @@ export const Axios = (url, method, body) =>
         console.log("body=>",body);
         console.log("url=>", Baseurl + url)
         console.log("method=>", method)
-        reject(error);
-        reject(error.response);
+
         reject(error.response.status);
       });
   })
@@ -71,7 +74,7 @@ export const Axios = (url, method, body) =>
         }
       })
       .catch(err => {
-        console.log("url=>", Baseurl + url)
+        console.log("url=>",  url)
         console.log("method=>", method)
         console.log("status=>", err)
         reject("status code: " + err);

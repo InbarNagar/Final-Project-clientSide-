@@ -94,11 +94,12 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet } from 'react-native';
+import { Alert, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity } from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
 import { ReviewBusiness } from './obj/FunctionAPICode';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const Review_Business = ({ route }) => {
@@ -109,9 +110,9 @@ const Review_Business = ({ route }) => {
   const [Professionalism, SetProfessionalism] = useState(0);
   const [On_time, SetOn_time] = useState(0);
   const [Comment, SetComment] = useState('');
-  const [ImageID,setImageID]= useState();
+  const [ImageID, setImageID] = useState();
 
- 
+
 
   // useFocusEffect(
   //   React.useCallback(() => {
@@ -129,7 +130,11 @@ const Review_Business = ({ route }) => {
   function publsihReview() {
     try {
       // Check if appointmentDetails is not undefined
-      let Overall = (cleanliness + Professionalism + On_time) / 3;
+      // let Overall = (cleanliness + Professionalism + On_time) / 3;
+      let cleanlinessRating = Math.round(cleanliness);
+      let professionalismRating = Math.round(Professionalism);
+      let onTimeRating = Math.round(On_time);
+      let Overall = Math.round((cleanlinessRating + professionalismRating + onTimeRating) / 3);
       const reviewDetails = {
         Number_appointment: Number_appointment,
         Client_ID_number: ClientIDnumber,
@@ -159,76 +164,87 @@ const Review_Business = ({ route }) => {
   }
 
   return (
-    <PaperProvider>
-      <View style={styles.container}>
-        <Card style={styles.card}>
-          <Card.Content>
-            <Title style={styles.title}>דרג את {BusinessName}</Title>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <ScrollView>
+        <PaperProvider>
+          <View style={styles.container}>
+            <Card style={styles.card}>
+              <Card.Content>
+                <Title style={styles.title}>נשמח אם תוכל להקדיש כמה דקות מזמנך ולדרג את {'\n'} {BusinessName}</Title>
 
-            <Paragraph style={styles.subtitle}>ניקיון</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => SetCleanliness(rating)}
-            />
+                <Paragraph style={styles.subtitle}>ניקיון</Paragraph>
+                <Rating
+                  type='star'
+                  ratingCount={5}
+                  imageSize={30}
+                  onFinishRating={(rating) => SetCleanliness(rating)}
+                />
 
-            <Paragraph style={styles.subtitle}>שירות</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => SetProfessionalism(rating)}
-            />
+                <Paragraph style={styles.subtitle}>שירות</Paragraph>
+                <Rating
+                  type='star'
+                  ratingCount={5}
+                  imageSize={30}
+                  onFinishRating={(rating) => SetProfessionalism(rating)}
+                />
 
-            <Paragraph style={styles.subtitle}>מקצועיות</Paragraph>
-            <Rating
-              type='star'
-              ratingCount={5}
-              imageSize={30}
-              onFinishRating={(rating) => SetOn_time(rating)}
-            />
+                <Paragraph style={styles.subtitle}>מקצועיות</Paragraph>
+                <Rating
+                  type='star'
+                  ratingCount={5}
+                  imageSize={30}
+                  onFinishRating={(rating) => SetOn_time(rating)}
+                  style={{ backgroundColor: 'transparent', overflow: 'visible' }}
+                />
 
-            <Paragraph style={styles.subtitle}>הערות</Paragraph>
-            <TextInput
-              style={styles.input}
-              mode='outlined'
-              multiline
-              numberOfLines={4}
-              value={Comment}
-              onChangeText={(value) => SetComment(value)}
-            />
+                <Paragraph style={styles.subtitle}>הערות</Paragraph>
+                <TextInput
+                  style={styles.input}
+                  mode='outlined'
+                  multiline
+                  numberOfLines={4}
+                  value={Comment}
+                  onChangeText={(value) => SetComment(value)}
+                />
 
-          
-              {/* <TouchableOpacity  style={styles.button}  onPress={() => props.navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number})}>
+
+                <TouchableOpacity  style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName:"profil"+ Number_appointment })}>
                 <View>
                   <Text>צלם</Text>
                 </View>
               </TouchableOpacity>
-           */}
-            <Button
+          
+                 {/* <Button
             style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number })}
-            ></Button>
+            >הוסף תמונה</Button>  */}
+{/* 
+                <Button
+                  style={styles.button} onPress={() => navigation.navigate('CameraUse', { imageName: Number_appointment })}
+                > 
+                </Button> */}
 
-            <Button
-              style={styles.button}
-              icon='check'
-              mode='contained'
-              onPress={() => {
-                console.log(`ניקיון: ${cleanliness}`);
-                console.log(`שירות: ${On_time}`);
-                console.log(`מוצר: ${Professionalism}`);
-                console.log(`הערות: ${Comment}`);
-                publsihReview();
-              }}
-            >
 
-              שלח דירוג
-            </Button>
-          </Card.Content>
-        </Card>
-      </View>
-    </PaperProvider>
+                <Button
+                  style={styles.button}
+                  icon='check'
+                  mode='contained'
+                  onPress={() => {
+                    console.log(`ניקיון: ${cleanliness}`);
+                    console.log(`שירות: ${On_time}`);
+                    console.log(`מוצר: ${Professionalism}`);
+                    console.log(`הערות: ${Comment}`);
+                    publsihReview();
+                  }}
+                >
+                  שלח דירוג
+                </Button>
+              </Card.Content>
+            </Card>
+          </View>
+        </PaperProvider>
+      </ScrollView>
+    </KeyboardAvoidingView>
+
   );
 };
 
@@ -237,27 +253,40 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
-    backgroundColor: '#FFEBEE'
+    backgroundColor: '#e6e6fa'
   },
   card: {
     borderRadius: 12,
-    backgroundColor: '#FCE4EC',
+    backgroundColor: 'rgb(255, 255, 255)',
+    // flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+
   },
   title: {
-    color: '#AD1457',
+    color: 'rgb(92, 71, 205)',
     fontWeight: 'bold',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center'
   },
   subtitle: {
     marginTop: 20,
     marginBottom: 10,
-    color: '#AD1457',
+    color: 'rgb(92, 71, 205)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   input: {
     marginBottom: 20,
+    backgroundColor: 'transparent',
   },
   button: {
     marginTop: 20,
-    backgroundColor: '#AD1457',
+    backgroundColor: 'rgb(92, 71, 205)',
   },
 });
 

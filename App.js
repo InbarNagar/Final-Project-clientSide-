@@ -42,6 +42,14 @@ import New_Calender from './comps/New_Calender';
 import NewBusinessDiary_Ofir from './comps/NewBusinessDiary_Ofir';
 import LocationPicker from './comps/LocationHandler/LocationPicker';
 import Maps_Inbar from './comps/Maps_Inbar';
+import My_Appintments from './comps/ClientScreen/My_Appointments';
+import ClientHome from './comps/ClientScreen/ClientHome';
+import AvailableAppointmentToBook_New from './comps/ClientScreen/AvailableAppointmentToBook_New';
+import Update_MenuTreatment from './comps/Update_MenuTreatment';
+import AvailableAppointmentForTreatment from './comps/ClientScreen/AvailableAppointmentForTreatment';
+import AvailableAppointmentForTreatmentAndCity from './comps/ClientScreen/AvailableAppointmentForTreatment';
+import Photos_BUS from './comps/Photos_BUS';
+
 // import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 // PushNotificationIOS.requestPermissions();
@@ -85,31 +93,39 @@ function App() {
           <Stack.Screen name="NewAppointment" component={NewAppointment} options={{ title: 'הוספת תור חדש' }} />
           <Stack.Screen name="Calendar_professional" component={Calendar_professional}options={{ title: 'היומן שלי' }}/>
 
-          <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} />
-          <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} />
+          <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} options={{ title: ''}}  />
+          {/* <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} /> */}
+          <Stack.Screen name="My_Appintments" component={My_Appintments} options={{ title: 'התורים שלי'}} />
           <Stack.Screen name="Map" component={Map} />
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+          
           <Stack.Screen name='Professional_registration' component={Professional_registration}options={{ title: 'הרשמת בעל עסק פרטים אישים' }} />
-          <Stack.Screen name='Client_registration' component={Client_registration} />
+          <Stack.Screen name='Client_registration' component={Client_registration} options={{ title: ''}}  />
           <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} options={{ title: ' הרשמת בעל עסק  ' }} />
           <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} options={{ title: ' הרשמת בעל עסק  ' }}/>
           <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
           <Stack.Screen name="Profil_pro" component={Profil_pro} options={{ title: 'אזור אישי' }} />
-          <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} />
+          <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} options={{ title: ''}}  />
           <Stack.Screen name="Set_notifications" component={Set_notifications} />
-          <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} />
-          <Stack.Screen name="Update_ClientDetailes" component={Update_ClientDetailes} />
-          <Stack.Screen name="ClientProfile" component={ClientProfile} />
-          <Stack.Screen name="Review_Business" component={Review_Business} />
-          <Stack.Screen name="NewSearch3" component={NewSearch3} />
+          <Stack.Screen name="Update_personal_details_Bussines" component={Update_personal_details_Bussines} options={{ title: ''}} />
+          <Stack.Screen name="Update_ClientDetailes" component={Update_ClientDetailes} options={{ title: ''}} />
+          <Stack.Screen name="ClientProfile" component={ClientProfile} options={{ title: ''}} />
+          <Stack.Screen name="Review_Business" component={Review_Business} options={{ title: ''}} />
+          <Stack.Screen name="NewSearch3" component={NewSearch3} options={{ title: ''}} />
           <Stack.Screen name="CameraUse" component={CameraUse} options={{ title:'מצלמה'}} />
-          <Stack.Screen name="ShowReviews" component={ShowReviews} />
-          <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} />
+          <Stack.Screen name="ShowReviews" component={ShowReviews} options={{ title: ''}} />
+          <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} options={{ title: ''}} />
           <Stack.Screen name="NewAvilableHours" component={NewAvilableHours} options={{ title:'הוספת זמינות לפרסום'}} />
-           <Stack.Screen name="New_Calender" component={New_Calender} options={{ title:'הוספת זמינות לפרסום'}} /> 
+           <Stack.Screen name="New_Calender" component={New_Calender} options={{ title:'היומן שלי'}} /> 
           <Stack.Screen name="NewBusinessDiary_Ofir" component={NewBusinessDiary_Ofir} options={{ title:'הוספת זמינות לפרסום'}} />
-          <Stack.Screen name="Maps_Inbar" component={Maps_Inbar} options={{ title:'הוספת זמינות לפרסום'}} />
-
+          <Stack.Screen name="Maps_Inbar" component={Maps_Inbar} options={{ title:''}} />
+          <Stack.Screen name="ClientHome" component={ClientHome} options={{ title: ''}} />
+          <Stack.Screen name="AvailableAppointmentToBook_New" component={AvailableAppointmentToBook_New}/>
+          <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment} options={{ title: 'עדכון'}} />
+          <Stack.Screen name="AvailableAppointmentForTreatment" component={AvailableAppointmentForTreatment}/>
+          <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity} options={{ title: '1111111111'}} />
+          <Stack.Screen name="Photos_BUS" component={Photos_BUS} options={{ title: 'אלבום תמונות'}} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: 'שכחתי סיסמא'}} />
+    
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>

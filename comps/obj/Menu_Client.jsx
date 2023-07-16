@@ -7,27 +7,31 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 
-// onPress={() => navigation.navigate('Profil_pro')}
-const Menu_professional = () => {
+const Menu_Client = () => {
 
   const navigation = useNavigation();
 
   return (
     <View style={styles.menu}>
     
-    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Profil_pro')}>
+    <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('ClientProfile')}>
         <Ionicons name="person-outline" size={24} color="white"  />
         <Text style={styles.menuText}>איזור אישי</Text>
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewAvilableHours')}>
-        <Ionicons name="add-circle-outline" size={24} color="white"  />
-        <Text style={styles.menuText}>הוספת תורים</Text>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('NewSearch3')}>
+      <Ionicons name="search" size={24} color="white" />
+        <Text style={styles.menuText}>חיפוש</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('Calendar_professional')}>
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('ClientHome')}>
+      <Ionicons name="home" size={24} color="white" />
+        <Text style={styles.menuText}>מסך הבית</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('My_Appintments')}>
         <Ionicons name="calendar-outline" size={24} color="white" />
-        <Text style={styles.menuText}>צפייה בתורים</Text>
+        <Text style={styles.menuText}>התורים שלי</Text>
       </TouchableOpacity>
       
     </View>
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Menu_professional
+export default Menu_Client
 
 
 

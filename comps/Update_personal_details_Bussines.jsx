@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Keyboard, TextInput, KeyboardAvoidingView, Image } from 'react-native'
-import Alert from './Alert';
+import { Alert } from 'react-native';
 import { RadioButton } from "react-native-paper";
 import { UserContext } from './UserDietails';
 import React, { useState, useEffect, useContext } from 'react';
@@ -39,7 +39,7 @@ export default function Update_personal_details_Bussines() {
       setCity(result.data.AddressCity);
       setLocation(result.data.Is_client_house);
       setIdPro(result.data.Professional_ID_number);
-      setAbout(resolt.data.About);
+      setAbout(result.data.About);
 
     }, (error) => {
       console.log('error', error)
@@ -60,12 +60,12 @@ export default function Update_personal_details_Bussines() {
       Business_Number: BussinesNumber,
       About: About
     }
-    console.log("%%%%%%%%%%%%%%%%%%%%%", data)
+   
     UpdateapiBusiness(data).then(
       (res) => {
 
         console.log('yes', res.data)
-
+        Alert.alert("הפרטים עודכנו בהצלחה")
 
       }, (error) => {
         console.log('error', error)
@@ -91,7 +91,7 @@ export default function Update_personal_details_Bussines() {
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
                   labelHeight={24}
-                  labelStyle={{ color: '#ac83c4', textAlign:'right' }}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
                   placeholder={Name}
                   placeholderTextColor="#92a2bd"
                   // value={Name}
@@ -104,7 +104,7 @@ export default function Update_personal_details_Bussines() {
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
                   labelHeight={24}
-                  labelStyle={{ color: '#ac83c4', textAlign:'right' }}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
                   placeholder={AddressStreet}
                   placeholderTextColor="#92a2bd"
                   // value={AddressStreet}
@@ -117,7 +117,7 @@ export default function Update_personal_details_Bussines() {
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
                   labelHeight={24}
-                  labelStyle={{ color: '#ac83c4', textAlign:'right' }}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
                   placeholder={AddressHouseNumber}
                   placeholderTextColor="#92a2bd"
                   // value={AddressHouseNumber}
@@ -130,7 +130,7 @@ export default function Update_personal_details_Bussines() {
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
                   labelHeight={24}
-                  labelStyle={{ color: '#ac83c4', textAlign:'right' }}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left'}}
                   placeholder={AddressCity}
                   placeholderTextColor="#92a2bd"
                   // value={AddressCity}
@@ -143,7 +143,7 @@ export default function Update_personal_details_Bussines() {
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
                   labelHeight={24}
-                  labelStyle={{ color: '#ac83c4', textAlign:'right' }}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
                   placeholder={Is_client_house}
                   placeholderTextColor="#92a2bd"
                   // value={Is_client_house}
@@ -156,7 +156,7 @@ export default function Update_personal_details_Bussines() {
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
                   labelHeight={24}
-                  labelStyle={{ color: '#ac83c4', textAlign:'right' }}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
                   placeholder={About}
                   placeholderTextColor="#92a2bd"
                   // value={AddressHouseNumber}
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
   textInputS: {
     color: '#808080',
     fontSize: 20,
-    textAlign: 'right',
+    textAlign: 'left',
     fontWeight: 'bold',
     opacity: 0.5,
   },
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
 
   },
   text: {
-    textAlign: 'right',
+    textAlign: 'left',
     paddingBottom: 10,
   },
   but: {

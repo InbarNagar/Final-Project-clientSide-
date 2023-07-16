@@ -11,6 +11,8 @@ import {
 } from "../obj/FunctionAPICode";
 import BusinessSchedule from "./BusinessSchedule";
 import moment from "moment";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const AvailableAppointmentToBook = (props) => {
   const [finalHours, setFinalHours] = useState([]); // שומר את המערך הסופי
 
@@ -118,8 +120,8 @@ const AvailableAppointmentToBook = (props) => {
     console.log("appArr: " + appArr);
     AllBusinessReviews(result.id).then(
       (result) => {
-        console.log("yes", result.data);
-        SetBusinessRankArr(result.data);
+        console.log("yes", "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", result);
+        SetBusinessRankArr(result);
       },
       (error) => {
         console.log("error", error);
@@ -361,7 +363,6 @@ const AvailableAppointmentToBook = (props) => {
     // tempArr.push(str);
     // }
     // }
-
     // update newArr state variable with new values
     // SetNewArr(tempArr);
     console.log("array of diary to print: " + typeof newArr[1]);
@@ -439,12 +440,48 @@ const AvailableAppointmentToBook = (props) => {
       }
     );
 }
+
+  function formatDuration(duration) {
+    const hours = Math.floor(duration);
+    const minutes = (duration - hours) * 60;
+    let hoursText = 'שעה';
+    if (hours > 1) {
+      hoursText = hours === 2 ? 'שעתיים' : hours + ' שעות';
+    }
+    return `${hoursText} ${minutes > 0 ? `ו-${minutes} דקות` : ''}`;
+  }
   return (
     <View style={styles.container} key={result.id}>
+      
       <Text style={styles.titleText}>
-        פרטי עסק: {result.businessName}, {result.city}
+        {result.businessName},{result.city}
       </Text>
-      <Text> {result.Is_client_house === "YES" ? "טיפול ביתי" : ""} </Text>
+
+      {/* <Text style={styles.text}> {result.Is_client_house === "YES" ? "טיפול בבית הלקוח" : "טיפול בבית העסק"} </Text> */}
+
+      {result.Is_client_house === "YES" || "YES       " ? (
+        <View style={styles.iconContainer}>
+          <Icon name="home" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
+          <Text style={styles.text}>טיפול בבית הלקוח</Text>
+        </View>
+      ) : (
+        <>
+          <Icon name="briefcase" size={25} color="rgb(92, 71, 205)" style={styles.icon} />
+          טיפול בבית העסק
+        </>
+      )}
+   {result.typeTritment.map((t, i) => (
+  <View key={i}>
+    <View style={styles.iconContainer}>
+      <MaterialCommunityIcons name="cash-multiple" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
+      <Text style={styles.text}>מחיר: {t.price} ₪</Text>
+    </View>
+    <View style={styles.iconContainer}>
+      <MaterialCommunityIcons name="clock-outline" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
+      <Text style={styles.text}>זמן הטיפול: {formatDuration(t.duration)}</Text>
+    </View>
+  </View>
+))}
       <Text style={styles.titleText}>שעות פנויות: </Text>
       <View style={styles.container1}>
       {finalHours.map((d, index) => (
@@ -470,19 +507,27 @@ const AvailableAppointmentToBook = (props) => {
         </Text>
       ))}
       <View style={styles.buttonContainer}>
-        <Button
-          title="צפה בפרופיל העסק"
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTitle}
-          onPress={handleBusinessProfilePOPUP}
-        />
-        <Button
-          title="הזמן תור"
-          buttonStyle={styles.buttonStyle}
-          titleStyle={styles.buttonTitle}
-          onPress={() => handleBusinessSchedulePOPUP()}
-        />
-      </View>
+  <View style={styles.buttonContent}>
+    <MaterialCommunityIcons name="store" size={25} color="rgb(92, 71, 205)" />
+    <Button
+    color={"rgb(92, 71, 205)"}
+      title="צפה בפרופיל העסק"
+      buttonStyle={styles.buttonStyle}
+      titleStyle={styles.buttonTitle}
+      onPress={handleBusinessProfilePOPUP}
+    />
+  </View>
+  <View style={styles.buttonContent}>
+    <MaterialCommunityIcons name="calendar-clock" size={24} color="rgb(92, 71, 205)" />
+    <Button
+    color={"rgb(92, 71, 205)"}
+      title="הזמן תור"
+      buttonStyle={styles.buttonStyle}
+      titleStyle={styles.buttonTitle}
+      onPress={() => handleBusinessSchedulePOPUP()}
+    />
+  </View>
+</View>
       {businessSchedulePOPUP && !businessProfilePOPUP && (
         <BusinessSchedule
           businessNumber={result.id}
@@ -514,7 +559,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   container: {
-    textAlign: "right",
+    textAlign: "left",
     backgroundColor: "#F5FCFF",
     padding: 20,
     borderRadius: 10,
@@ -523,10 +568,9 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   titleText: {
-    textAlign: "right",
+    textAlign: "left",
     fontSize: 18,
     fontWeight: "bold",
-    textAlign: "right",
     marginVertical: 10,
   },
   cube: {
@@ -541,9 +585,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
   text: {
-    textAlign: "right",
+    textAlign: "left",
     fontSize: 16,
-    textAlign: "right",
     marginVertical: 5,
   },
   buttonContainer: {
@@ -552,14 +595,30 @@ const styles = StyleSheet.create({
     marginTop: 10, // Adjust the margin as needed
   },
   buttonStyle: {
-    backgroundColor: "rgb(92, 71, 205)",
-    borderWidth: 2,
-    borderColor: "white",
-    borderRadius: 30,
-    width: "45%",
+    fontSize: 18, // שינוי הגודל
+    color: 'white', // שינוי הצבע
+    fontWeight: 'bold', // הופך את הטקסט לבולט
+    textShadowColor: 'rgba(0, 0, 0, 0.75)', // צללה שחורה
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
   },
   buttonTitle: {
-    fontWeight: "bold",
-    color: "white",
+    fontSize: 18, // שינוי הגודל
+    color: 'white', // שינוי הצבע
+    fontWeight: 'bold', // הופך את הטקסט לבולט
+    textShadowColor: 'rgba(0, 0, 0, 0.75)', // צללה שחורה
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10
+  },
+  iconContainer: {
+    flexDirection: "row",
+  },
+  icon: {
+    marginRight: 10,
+  },
+  buttonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

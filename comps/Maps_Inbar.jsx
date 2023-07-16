@@ -1591,9 +1591,9 @@ import * as Location from 'expo-location'
 //         "LongCordinate": 34.773688
 //     }
 // ]
-export default function Maps_Inbar(props) {
-    const { result } = props;
-
+export default function Maps_Inbar({ route }) {
+    const {result} = route.params;
+console.log(result)
     const Google_Api = "AIzaSyBuYjLYxY6iSSVfQ755luh6KPM0mD4QfrM";
 
     const [pickedLocation, setPickedLocation] = useState({ lat: '', lng: '' });
@@ -1637,19 +1637,16 @@ export default function Maps_Inbar(props) {
     }, []);
 
     return (
-        <View style={{ flex: 1 }}>
-            <GooglePlacesAutocomplete
+        <View style={{ flex: 1, backgroundColor: '#4B0082' }}>
+            {/* <GooglePlacesAutocomplete
                 placeholder='Search...'
                 autoFocus={true}
                 fetchDetails={true}
-                // listViewDisplayed='auto'    // true/false/undefined
                 GooglePlacesSearchQuery={{
-                    // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
                     rankby: 'distance',
-                    types: 'gym',//'food',
+                    types: 'gym',
                 }}
                 onPress={(data, details = null) => {
-                    // 'details' is provided when fetchDetails = true
                     console.log(data, details, "*******************************");
                     setPin({
                         latitude: details.geometry.location.lat,
@@ -1660,22 +1657,16 @@ export default function Maps_Inbar(props) {
                     key: Google_Api,
                     language: 'en',
                     components: "country:il",
-                    //	types:"establishment",
                     radius: 10000,
                     location: `${Number(region.latitude ? region.latitude : 32.34245547297243)}, ${Number(region.longitude ? region.longitude : 34.911549397360595)}`
                 }}
-            // styles={{ container: { flex: 1, position: 'absolute', top: '6.4%', width: '100%', zIndex: 1 } }}
-            // currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
-            //currentLocationLabel="Current location"
-            //nearbyPlacesAPI="GooglePlacesSearch"
-
-            />
+            /> */}
             <MapView
                 loadingEnabled={true}
                 style={{ flex: 9, top: '1%' }}
                 initialRegion={{
-                    latitude: Number(location && location.coords.latitude ? location.coords.longitude : 32.166313),//32.166313,
-                    longitude: Number(location && location.coords.longitude ? location.coords.longitude : 34.843311),//34.843311,
+                    latitude: Number(location && location.coords.latitude ? location.coords.longitude : 32.166313),
+                    longitude: Number(location && location.coords.longitude ? location.coords.longitude : 34.843311),
                     latitudeDelta: 0.0125,
                     longitudeDelta: 0.0121,
                 }}>
@@ -1683,9 +1674,8 @@ export default function Maps_Inbar(props) {
                     coordinate={region}
                     title="אתה נמצא כאן" />
                 <Marker
-
                     coordinate={pin}
-                    pinColor='blue'
+                    pinColor='red'
                     draggable={true}
                     onDragStart={(e) => { console.log("Drag start:", Number(e.nativeEvent.coordinate)); }}
                     onDragEnd={(e) => {
@@ -1694,41 +1684,32 @@ export default function Maps_Inbar(props) {
                             longitude: Number(e.nativeEvent.coordinate.longitude)
                         })
                     }}>
-
-                    <Callout>
-                        <Text>I Want to be Here!</Text>
-                    </Callout>
-
                 </Marker>
-
                 <Circle
                     center={region}
                     radius={1}
                 />
-                {result&&result.map(x => {
-                        if(x.LetCordinate&&x.LongCordinate){
-                            return(
-                                <Marker
-key={Number(x.LetCordinate)}
-                                coordinate={{ 
-                                  latitude: Number(x.LetCordinate),
-                                    longitude: Number(x.LongCordinate)}}
-                                pinColor='green'
-                                draggable={false}
-                           >
-            
+                {result && result.map(x => {
+                    console.log(x,"nmappppppppppppppppppppppp")
+                    if (x.LetCordinate && x.LongCordinate) {
+                        return (
+                            <Marker
+                                key={Number(x.LetCordinate)}
+                                coordinate={{
+                                    latitude: Number(x.LetCordinate),
+                                    longitude: Number(x.LongCordinate)
+                                }}
+                                pinColor='#800080'
+                                draggable={true}
+                            >
                                 <Callout>
-                                    <Text>{x.About}</Text>
+                                    <Text style={{color: '#E6E6FA'}}>{x.about}</Text>
                                 </Callout>
-            
                             </Marker>
-            
-                    
-                            )
-                        }
+                        )
+                    }
                 })}
             </MapView>
-
         </View>
     )
 }

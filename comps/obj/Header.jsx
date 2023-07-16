@@ -2,23 +2,25 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const Header = (props) => {
-    const {text, color, fontSize, backgroundColor, height, paddingTop} = props
+    const {text, color, fontSize, backgroundColor, height, paddingTop, marginTop} = props
 
     Header.defaultProps = {
       backgroundColor: 'transparent',
       fontSize: 30,
       color: 'black',
       height: 80,
-      paddingTop: 10
+      paddingTop: 10,
+      marginTop:10
     };
     
     const styles = StyleSheet.create({
       header: {
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         backgroundColor: backgroundColor,
         height: height,
         paddingTop: paddingTop,
+        marginTop: marginTop,
         shadowColor: '#000',
         shadowOffset: { width: 5, height: 5 },
         shadowOpacity: 0.2,

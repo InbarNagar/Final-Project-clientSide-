@@ -1,67 +1,70 @@
-// import React from 'react';
-// import { View, TextInput, Button, StyleSheet } from 'react-native';
-// import { PropsWithChildren } from 'react';
 
-// const ForgotPassword = () => {
-//   const [ID_number, setid] = React.useState('');
-
-//   const handleResetPassword = () => {
-//     // Handle reset password logic here
-//   };
-
-//   return (
-//     <View style={styles.container}>
-
-//       <View styles={styles.input}>
-//         <TextInput
-//           value={ID_number}
-//           onChangeText={setid}
-//           placeholder=" מייל"
-//           keyboardType="email-address"
-//           autoCapitalize="none"
-//         />
-//       </View>
-
-//       <Button title="שמור" onPress={handleResetPassword} />
-
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     padding: 40,
-//     textAlign: 'right',
-//     // backgroundColor: '#f8f8ff',
-//     flex: 1,
-//   },
-//   input: {
-//     padding: 20,
-//     textAlign: 'right',
-//     flexDirection: 'space-around',
-//     backgroundColor: 'red',
-//     alignSelf: 'flex-start',
-//   },
-
-// });
-// export default ForgotPassword;
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { forgotPassword } from '../obj/FunctionAPICode';
+import { resetPassword } from '../obj/FunctionAPICode';
+
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const [codefromS, setcodefromS] = useState('');
+  const [code, setcode] = useState('');
+  const [show, setshow] = useState('');
+  const [ID_number, setID_number] = useState('');
+  const [password, setPassword] = useState('');
+  const { navigation, route } = props
+
 
   const handleResetPassword = () => {
     if (email === '') {
       Alert.alert('שגיאה', 'אנא הזן כתובת אימייל');
       return;
     }
+    else {
+      forgotPassword(email).then((code) => {
+        setcodefromS(code)
+        setshow(true)
 
-    // כאן אתה יכול להוסיף את הקוד שלך לשליחת בקשת איפוס סיסמא לשרת
-    // לדוגמה:
-    // sendResetPasswordEmail(email);
+        Alert.alert('בקשת איפוס סיסמא נשלחה', `אנא בדוק את תיבת הדואר הנכנס שלך בכתובת ${email}`);
 
-    Alert.alert('בקשת איפוס סיסמא נשלחה', `אנא בדוק את תיבת הדואר הנכנס שלך בכתובת ${email}`);
+      }).catch((error) => {
+        console.log("error!", error);
+      }).finally(() => {
+        // setInterval(() => {
+        //   showLoading && setshowLoading(false)
+        // }, 4000);
+
+      });
+      // כאן אתה יכול להוסיף את הקוד שלך לשליחת בקשת איפוס סיסמא לשרת
+      // לדוגמה:
+      // sendResetPasswordEmail(email);
+    }
+
+  };
+  const handleResetPassword1 = () => {
+    if (code == codefromS) {
+
+      const data={
+        ID_number:ID_number,
+        password:password
+      }
+      resetPassword(data).then(() => {
+        Alert.alert("השינוים נשמרו בהצלחה");
+        navigation.navigate('LogInGenral')
+      }).catch((error) => {
+        console.log("error!", error);
+      }).finally(() => {
+        // setInterval(() => {
+        //   showLoading && setshowLoading(false)
+        // }, 4000);
+
+      });
+
+    }
+    else{
+      Alert.alert("הקוד אינו תקין, נסה שוב");
+    }
+
   };
 
   return (
@@ -76,9 +79,43 @@ const ForgotPassword = () => {
         autoCapitalize="none"
       />
       <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
-        <Text style={styles.buttonText}>אפס סיסמא</Text>
+        <Text style={styles.buttonText}>שלח</Text>
       </TouchableOpacity>
+
+     {show&& <View>
+        <TextInput
+          style={styles.input}
+          onChangeText={setcode}
+          value={email}
+          placeholder="הכנס קוד"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={setID_number}
+          value={ID_number}
+          placeholder="שם משתמש"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={setPassword}
+          value={password}
+          placeholder="הכנס סיסמא"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+
+        <TouchableOpacity style={styles.button} onPress={handleResetPassword1}>
+          <Text style={styles.buttonText}> אפס סיסמא</Text>
+        </TouchableOpacity>
+      </View>}
+
     </View>
+
+
   );
 };
 

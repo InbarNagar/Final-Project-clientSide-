@@ -8,7 +8,9 @@ const Button = (props) => {
       backgroundColor: "#98FB98",
       fontSize: 16,
       color: 'white',
-      borderRadius: 10 
+      borderRadius: 10,
+      alignItems: 'center',
+ 
     };
 
     const styles = StyleSheet.create({

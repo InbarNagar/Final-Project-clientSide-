@@ -8,23 +8,29 @@ import { useNavigation} from "@react-navigation/core";
 import { useFocusEffect } from '@react-navigation/native';
 import { AntDesign, Feather, FontAwesome } from "@expo/vector-icons";
 import { openURL, canOpenURL } from "expo-linking";
-
+import Loading from './CTools/Loading';
     
 
 
 
 const Profil_pro = (Props) => {
-
-    const [src, setsrc] = useState()
-    useFocusEffect(
+  const [showLoading,setshowLoading]=useState(true)
+    const [src, setsrc] = useState('');
+    useFocusEffect(     
         React.useCallback(() => {
+            setshowLoading(true)
        setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${userDetails.ID_number}.jpg`)
+       setInterval(() => {
+        showLoading&&setshowLoading(false)
+       },2000);
       },[]))
       
     const { userDetails, setUserDetails } = useContext(UserContext);
 const navigation=useNavigation();
 useEffect(()=>{
+
     console.log("profile pro = "+JSON.stringify(userDetails));
+   
 },[])
 
 
@@ -70,9 +76,9 @@ useEffect(()=>{
                  {/* <Image style={styles.img}  onError={({ currentTarget }) => {
                     setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg');
                 }} source={{ uri: src }} /> */}
-             <TouchableOpacity onPress={() => Props.navigation.navigate('CameraUse', { imageName: "profil" + userDetails.ID_number })}>
-  <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
-</TouchableOpacity>
+           <TouchableOpacity onPress={()=>Props.navigation.navigate('CameraUse',{imageName:"profil"+userDetails.ID_number})}> 
+       <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
+       </TouchableOpacity>
 
 {/*לא עובד כי בתחלה לא אישרתי להשתמש בטלפון בהגדרות אפליקציה*/}
   <View style={styles.iconContainer}> 
@@ -109,20 +115,18 @@ useEffect(()=>{
                     <Text style={styles.buttonText}> צפייה בביקורות על העסק </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() =>navigation.navigate('Update_MenuTreatment',{BusinessNumber:JSON.stringify(userDetails.Business_Number)})}>
+                <TouchableOpacity style={styles.button} onPress={() =>Props.navigation.navigate('Update_MenuTreatment')}>
                     <Text style={styles.buttonText}>הוספת טיפול לתפריט הטיפולים</Text>
                 </TouchableOpacity>
-
-               
-            {/* <TouchableOpacity style={styles.button} onPress={()=>Props.navigation.navigate('CameraUse',{imageName:"profil"+userDetails.ID_number})}>
-             
-                <Text style={styles.buttonText}>החלף תמונת פרופיל</Text>
-              
-
-            </TouchableOpacity> */}
        
+          
+            <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Photos_BUS')}>            
+                <Text style={styles.buttonText}>הוספת תמונה לאלבום תמונות</Text>           
+            </TouchableOpacity>
+            
             </View>
             <Menu_professional />
+            {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(!showLoading)}><Loading text='מביא את נתוני בעל העסק'/></TouchableOpacity>}
         </View>
     )
 }

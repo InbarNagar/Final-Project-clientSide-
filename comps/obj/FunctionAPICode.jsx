@@ -162,10 +162,31 @@ export const SaveTokenforIDPro= (ID_number,token) => {
 export const AllApointemtDetailes= () => {
     return Axios(`Appointment/AllAppointment`, 'post',{})
 }
+// //כל התורים שלי של הלקוח - כולל טבלת דירוג
+// export const AllApointemtDetailesForClient_With_BusinessReview= (ID_Client) => {
+//     return Axios(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'GET',{})
+// }
+
 //כל התורים שלי של הלקוח - כולל טבלת דירוג
-export const AllApointemtDetailesForClient_With_BusinessReview= (ID_Client) => {
+export const AllApointemtDetailesForClient_With_BusinessReview = (ID_Client) => {
+    console.log(`BusinessReview/AllAppointmentForClient/${ID_Client}`)
     return Fetch(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'GET')
 }
+
+export const DDD = (ID_Client) => {
+    console.log(`BusinessReview/AllAppointmentForClient/${ID_Client}`)
+    return Fetch(`BusinessReview/AllAppointmentForClient/${ID_Client}`, 'Get')
+}
+
+//מחזיר את כל סוגי הטיפולים של לקוח
+export const AllAppointmentForClientt = (clientID) => {
+    console.log(typeof clientID)
+    return Fetch(`Appointment/AllAppointmentForClientt/${parseInt(clientID)}`, 'Get')
+    // return Axios(`Appointment/AllAppointmentForClientt/${clientID}`, 'GET',{})
+}
+
+
+
 //כל התורים ללקוח
 export const AllApointemtDetailesForClient= (body) => {
     return Axios(`Appointment/AllAppointmentForClient`, 'post',body)
@@ -217,14 +238,39 @@ export const GetPhoto=(id)=>{
 
 }
 
+// //כל הדירוגים של העסק - לפי מספר עסק
+// export const AllBusinessReviews= (BusinessNumber) => {
+//     return Axios(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`, 'GET',{})
+// }
+
 //כל הדירוגים של העסק - לפי מספר עסק
-export const AllBusinessReviews= (BusinessNumber) => {
-    return Axios(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`, 'GET',{})
+export const AllBusinessReviews = (BusinessNumber) => {
+    console.log(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`)
+    return Fetch(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`, 'Get')
 }
+
+
 //דירוג עסק ע"י לקוח שבוצע לו טיפול
 export const AddNewAvailableHours=(body)=>{
     return Axios(`BusinessDiary/AddNewOption`, 'post',body)
 }
+
+// אלמנט חכם - מחזיר רשימה של העסקים לפי הדירוג שלהם
+export const RateBussines = () => {
+    console.log(`Business/getRank`)
+    return Fetch(`Business/getRank`,'get')
+}
+//איפוס סיסמט
+export const  forgotPassword= (mail) => {
+   
+    return Fetch(`user/sendMail/${mail}/sub/body`, 'Get')
+}
+//איפוס סיסמא
+export const  resetPassword= (mail,password) => {
+   
+    return Fetch(`user/sendMail/${mail}/${password}`, 'Get')
+}
+
 //פונקציית חיפוש חדשה לפי יומן עסק
 // export const ReviewBusiness=(body)=>{
 //     return Axios(`BusinessReview/NewBusinessReviewByClient`, 'post',body)
@@ -259,3 +305,4 @@ return out_Fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${nu
 //     console.log(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`)
 //     return Fetch(`Appointment/GetAllAppointmentForProWithClient/${businnes_number}`, 'Get')
 // }
+

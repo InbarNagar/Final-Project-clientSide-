@@ -7,20 +7,18 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { AntDesign, Ionicons, Feather } from "@expo/vector-icons";
-import {
-  AllApointemtDetailesForClient_With_BusinessReview
-} from "../obj/FunctionAPICode";
+import { AllApointemtDetailesForClient_With_BusinessReview } from "../obj/FunctionAPICode";
 import { UserContext } from "../UserDietails";
-import Geocoder from 'react-native-geocoding';
-import AppointmentCard_forClient from "./AppointmentCard_forClient";
+// import Geocoder from 'react-native-geocoding';
 import ClientProfile from "./ClientProfile";
 import SearchFiltersMenu from "./SearchFiltersMenu";
 import NewSearch3 from "./NewSearch3";
+import AppointmentCard_forClient from "./AppointmentCard_forClient";
 
 
 export default function Search3(props) {
   const { navigation } = props;
-  Geocoder.init('AIzaSyBMwN0NknaPibHnpv8laiFYUKmQFz1FHZY');
+  // Geocoder.init('AIzaSyBMwN0NknaPibHnpv8laiFYUKmQFz1FHZY');
 
   const [token, settoken] = useState();// ענבר
   const sorts = ["דירוג גבוהה תחילה", "דירוג נמוך תחילה"];
@@ -60,12 +58,14 @@ export default function Search3(props) {
   };
 
 
-  const [showSAppointmenthSection, setShowSAppointmenthSectionn] = useState(false); //להפעיל תצוגת תורים
-  
+  const [showSAppointmenthSection, setShowSAppointmenthSectionn] =
+    useState(false); //להפעיל תצוגת תורים
+
+
   const handleAppointmentToggleSection = () => {
     setShowSearchSection(false);
     setShowProfileSection(false);
-
+   setShowSAppointmenthSectionn(true);
 // const data={
 //   "AddressCity":userDetails.AddressCity ,
 //   "AddressHouseNumber":userDetails.AddressHouseNumber ,
@@ -84,20 +84,16 @@ export default function Search3(props) {
 //   "userType": "Cli"
 // }
 
-
-
     console.log("התורים שלי: " + showSAppointmenthSection);
-    setShowSAppointmenthSectionn(!showSAppointmenthSection);
-    console.log(": " + showSAppointmenthSection);
+   
+    console.log("התורים שלי: " + showSAppointmenthSection);
 console.log(userDetails,"&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
-console.log(userDetails.ID_number, "22222222222222222222222");
-   console.log(AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).data)
-
+console.log(userDetails.ID_number);
   AllApointemtDetailesForClient_With_BusinessReview(userDetails.ID_number).then((result) => {
 
     console.log("1111111111111111111111111111111111111111111")
        console.log(result.data,"**************************************************************************************");
-        setallAppointment(result.data)
+        setallAppointment(result)
     }, (error) => {
       console.log('error', error)
     })
@@ -144,6 +140,7 @@ console.log(userDetails.ID_number, "22222222222222222222222");
         !showProfileSection &&
         !showSearchSection && (
           <View style={styles.view1}>
+          <Text>11111111111111</Text>
             {allAppointment.map((appointment) => {
               console.log("key: "+appointment.Number_appointment);
               return (
@@ -152,7 +149,6 @@ console.log(userDetails.ID_number, "22222222222222222222222");
                   Review_Number={appointment.Review_Number}
                   Number_appointment={appointment.Number_appointment}
                   backgroundColor={"rgb(229, 222, 255)"}
-                  status={appointment.Appointment_status}
                   Date1={appointment.Date}
                   Start_time={appointment.Start_time}
                   End_time={appointment.End_time}
