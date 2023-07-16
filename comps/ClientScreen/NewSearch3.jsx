@@ -88,7 +88,7 @@ export default function NewSearch3({ navigation }) {
   function GetData(data) {
     let res = [];
     let obj = {
-      id: data[0].Business_Number,
+      id: data[0].Business_Number1,
       businessName: data[0].Name,
       streetAddress: data[0].AddressStreet,
       houseNumber: data[0].AddressHouseNumber,
@@ -124,7 +124,7 @@ export default function NewSearch3({ navigation }) {
     };
     let typeTritment = [data[0].Type_treatment_Number];
     for (let i = 1; i < data.length; i++) {
-      if (data[i].Business_Number == data[i - 1].Business_Number) {
+      if (data[i].Business_Number1 == data[i - 1].Business_Number1) {
         //בודק האם העסק שווה לקודם
         if (data[i].Date1 == obj.diary[obj.diary.length - 1].date) {
           // בודק האם יש עוד טווח שעות שונה באותו תאריך
@@ -162,18 +162,18 @@ export default function NewSearch3({ navigation }) {
           obj.apointemnt[obj.apointemnt.length - 1].number //////////////////////////////////////////////
         ) {
           //אם המספר תור שונה מקודמו
-          obj.apointemnt.push({
-            number: data[i].Number_appointment,  //////////////////////////////////////
-            status: data[i].Appointment_status,  ///////////////////////////////////////
-            date: data[i].Date,
-            time: data[i].Start_Hour + "-" + data[i].End_Hour,
-          });
+          obj.apointemnt[0].time.push(
+            // number: data[i].Number_appointment,
+            // status: data[i].Appointment_status,
+            // date: data[i].Date,
+            JSON.stringify(data[i].Start_Hour) + "-" + JSON.stringify(data[i].End_Hour)
+          );
         }
       } else {
         res.push(obj);
         typeTritment = [data[i].Type_treatment_Number];
         obj = {
-          id: data[i].Business_Number,
+          id: data[i].Business_Number1,
           businessName: data[i].Name,
           streetAddress: data[i].AddressStreet,
           houseNumber: data[i].AddressHouseNumber,
@@ -210,6 +210,7 @@ export default function NewSearch3({ navigation }) {
     }
     console.log(obj);
     res.push(obj);
+    console.log("res = "+JSON.stringify(res));
     SetResult(res);
     console.log("INBAR HERE",result)
     return res;

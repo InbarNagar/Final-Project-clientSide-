@@ -22,41 +22,27 @@ const BusinessProfilePOPUP = (props) => {
   const [On_time, SetOn_time] = useState();
   const [ShowReviewsSection, SetShowReviewsSection] = useState(false);
 
-
+const handleInstagramLink = async () => {
+  try {
+    // const url = 'https://www.instagram.com/your_instagram_account';
+    const url = `https://www.instagram.com/${businessDetails.Instagram_link}`;
+    await Linking.openURL(url);
+    console.log(Linking.openURL(url))
+  } catch (error) {
+    console.error('שגיאה בפתיחת האינסטגרם:', error);
+  }
+};
+const handleFacebookLink = async () => {
+  try {
+    // const url = 'https://www.instagram.com/your_instagram_account';
+    const url = `https://www.Facebook.com/${businessDetails.Facebook_link}`;
+    await Linking.openURL(url);
+    console.log(Linking.openURL(url))
+  } catch (error) {
+    console.error('שגיאה בפתיחת הפייסבוק:', error);
+  }
+};
   const [imagesExist, setImagesExist] = useState([]);
-
-  const [src, setsrc] = useState()
-  // useFocusEffect(
-  //     React.useCallback(() => {
-  //    setsrc(`http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil${businessDetails.Professional_ID_number}.jpg`)
-  //    console.log(src, "111111111111111")
-  //   },[]))
-
-  // useFocusEffect(
-
-
-  //   },[]))
-
-
-
-
-  // let onTimeSum = 0;
-  //         let professionalismSum = 0;
-  //         let cleanlinessSum = 0;
-  //         let overallRatingSum = 0;
-
-
-  // const handleInstagramLink = async () => {
-  //   try {
-  //     // const url = 'https://www.instagram.com/your_instagram_account';
-  //     const url = `https://www.instagram.com/${businessDetails.Instagram_link}`;
-  //     await Linking.openURL(url);
-  //     console.log(Linking.openURL(url))
-  //   } catch (error) {
-  //     console.error('שגיאה בפתיחת האינסטגרם:', error);
-  //   }
-  // };
-
 
 
   // const image =
@@ -129,11 +115,11 @@ useEffect(() => {
   //   // openURL(businessDetails.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
   //   openURL('https://www.instagram.com');}
 
-  function handleFacebookLink() {
+    // function handleFacebookLink() {
     // openURL(businessDetails.Facebook_link); // לשים משתנה של כתובת פייסבוק שהמשתמש יזין
-    openURL('https://www.facebook.com');
-
-  }
+//     openURL('https://www.facebook.com');
+  
+// }
 
   const dialNumber = (number) => { //לא עובד כי בתחלה לא אישרתי להשתמש בטלפון בהגדרות אפליקציה
     console.log(number);
@@ -228,8 +214,7 @@ useEffect(() => {
                 businessDetails.AddressCity}
             </Text>
             <Text>{businessDetails.about}</Text>
-
-
+          {/* האייקונים של אופיר */}
             <View style={styles.linksContainer}>
               <View style={styles.iconContainer}>
                 <TouchableOpacity onPress={() => Linking.openURL(`https://www.instagram.com/${businessDetails.Instagram_link}`)}>
@@ -275,7 +260,6 @@ useEffect(() => {
               </View>
             </View>
             {/* האייקונים של אופיר */}
-
             {/* <TouchableOpacity
               style={styles.link}
               onPress={() => Linking.openURL("https://waze.com/ul")}
