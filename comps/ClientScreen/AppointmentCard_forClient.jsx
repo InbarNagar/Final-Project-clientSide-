@@ -5,12 +5,14 @@ import { CancelAppointmentByClient } from "../obj/FunctionAPICode";
 import Review_Business from "../Review_Business";
 import { useNavigation } from '@react-navigation/native';
 import { toDate } from "date-fns";
-import { useState } from "react";
+import { useState,  useEffect } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from "react-native-gesture-handler";
+import { Post_SendPushNotification } from "../obj/FunctionAPICode";
 
 const AppointmentCard_forClient = (props) => {
-  const { Type_Treatment_Number,idb, token, Review_Number, Business_Number, ClientIDnumber, Number_appointment, AddressCity, AddressHouseNumber, AddressStreet, backgroundColor, Treatment_Type, Start_time, End_time, Date1, BusinessName, Appointment_status, phone, Is_client_house } = props;
+  const { Type_Treatment_Number,idb, token, Review_Number, Business_Number, ClientIDnumber, Number_appointment, AddressCity, AddressHouseNumber,
+     AddressStreet, backgroundColor, Treatment_Type, Start_time, End_time, Date1, BusinessName, Appointment_status, phone, Is_client_house } = props;
   const navigation = useNavigation();
   const [bookModalVisible, SetBookModalVisible] = useState(false);
   const [POPUP, SetPOPUP] = useState(false);
@@ -22,7 +24,7 @@ const AppointmentCard_forClient = (props) => {
       const body = {
         "to": tokenPro,
         "title": "BeautyMe",
-        "body": `לצערנו התור שקבעת התבטל`,
+        "body": Message,
         "badge": "0",
         "ttl": "1",
         "data": {
@@ -40,7 +42,7 @@ const AppointmentCard_forClient = (props) => {
   function cancelAppointment(Number_appointment) {
     CancelAppointmentByClient(Number_appointment).then((result) => {
       if (result.data) {
-        console.log(result.data, "**********************");
+        console.log(result.data, "***************************************************************************");
         Alert.alert(
           "התראה",
           "התור בוטל בהצלחה",
@@ -55,25 +57,19 @@ const AppointmentCard_forClient = (props) => {
       });
   }
 
-  // function handlePOPUP() {
-  //   SetBookModalVisible(!bookModalVisible);
-  //   SetPOPUP(!POPUP);
-  //   // console.log(POPUP, bookModalVisible, "popop", Number_appointment, ClientIDnumber, BusinessName, Business_Number )
-
-  // }
-
   const styles = StyleSheet.create({
     card: {
       alignItems: 'left',
       borderWidth: 1,
       borderRadius: 10,
       borderColor: '#d3d3d3',
-      padding: 10,
+      padding: 20,
       marginVertical: 5,
       backgroundColor: backgroundColor,
       flexDirection: 'row',
-      marginBottom:20,
-      flex: 2
+      flex: 1,
+      
+    
     },
     title: {
       fontWeight: 'bold',
@@ -150,7 +146,7 @@ const AppointmentCard_forClient = (props) => {
     if (((floatToTime(Start_time) <= currentTime ||floatToTime(End_time) <= currentTime) && today.setHours(0, 0, 0, 0) >= givenDate) && Review_Number != null) {
       // if ( Date1 < new Date() && Review_Number != null ) {
       return (
-        <><Text style={styles.title}>{Treatment_Type} תור שהסתיים </Text>
+        <>
           <Text style={styles.title}>העסק דורג!</Text>
         </>)
     }
@@ -159,8 +155,7 @@ const AppointmentCard_forClient = (props) => {
         <TouchableOpacity onPress={() => {
                     setToken(token);
                     setmes(`שלום,
-                    רצינו ליידע אותך שהתור מספר ${Number_appointment}, שהיה אמור להתקיים בתאריך ${Date1}, עם סוג הטיפול ${Treatment_Type}, בין השעות ${floatToTime(Start_time)} ל-${floatToTime(End_time)}, בוטל.
-                    אנא עדכן את לוח הזמנים שלך בהתאם.
+                    רצינו ליידע אותך שתור מספר ${Number_appointment}, שהיה אמור להתקיים בתאריך ${moment(Date1).format('DD/MM/YYYY')},לטיפול${Treatment_Type}, בין השעות ${floatToTime(Start_time)} ל-${floatToTime(End_time)}, בוטל.
                     תודה,
                    Beauty Me`)
                     cancelAppointment(Number_appointment);
@@ -180,7 +175,7 @@ const AppointmentCard_forClient = (props) => {
     return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
   }
   return (
-    <ScrollView  style={{ padding:0 }} >
+    <ScrollView>
     <View style={styles.card}>
 
       <View style={{ flex: 1 }}>
@@ -226,7 +221,7 @@ const AppointmentCard_forClient = (props) => {
           <Text style={styles.title}> {BusinessName}</Text>
         </View>
         <View style={{ flexDirection: 'row', alignItems: 'center',marginTop:-5,margin:10}}>
-            <Icon name="map-marker" size={25} color="rgb(92, 71, 205)" style={{margin:5,marginTop:-20}} />
+            <Icon name="map-marker" size={20} color="rgb(92, 71, 205)" style={{marginTop:-20}} />
             <Text style={styles.title1}>
               {`${AddressCity}, ${AddressStreet} ${AddressHouseNumber}`}
             </Text>

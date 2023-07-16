@@ -177,87 +177,47 @@ export default function My_Appintments() {
 
   const { userDetails, setUserDetails } = useContext(UserContext);
   const IDNumber = userDetails.ID_number;
-
-//   BussinesNumber
-
   const [allAppointment, setallAppointment] = useState([])
   const [allAppointmentAvilable, setallAppointmentAvilable] = useState([])
   const [allAppointmentEnd, setallAppointmentEnd] = useState([])
   const [FutureAppointment, setFutureAppointment] = useState([])
   const [Client, setclient] = useState([])
-
   const [showText, setShowText] = useState(false);
   const [showText2, setShowText2] = useState(false);
   const [showText3, setShowText3] = useState(false);
   const [showText4, setShowText4] = useState(false);
 
-  const namecli = "";
-
-  // const test = () => {
-
-  //   const body = {
-  //     "to": userDetails.Token,
-  //     "title": "BeautyMe",
-  //     "body": `${userDetails.First_name} הוספת תור חדש`,
-  //     "badge": "0",
-  //     "ttl": "1",// מספר שניות לשליחה
-  //     "data": {
-  //       "to": userDetails.Token
-  //     }
-  //   }
-  //   console.log({ userDetails })
-  //   Post_SendPushNotification(body).then(() => {
-
-  //   }).catch((error) => {
-  //     console.log("error", error);
-  //   })
-
-  // }
-
+ 
+  function floatToTime(floatNumber) {
+    let hours = Math.floor(floatNumber);
+    let minutes = Math.floor((floatNumber - hours) * 60);
+    return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+  }
+  
   const handleSubmit = () => {
-   
     AllAppointmentForClientt(userDetails.ID_number).then((result) => {
-
       if (result)
         setallAppointment(result)
         console.log(result, "1111")
-        console.log(result.data, "2222")
-        console.log(result.data)
      }, (error) => {
       console.log('error', error)
     })
-
     setShowText2(!showText2);
-
   }
 
-  // const handleSubmit2 = () => {
-  //   let filterresult1=""
-  //   AllAppointmentForClientt(userDetails.ID_number).then((result) => {
-
-  //     if (result) {
-  //       filterresult1= result.filter(apo=> apo.Appointment_status =="Awaiting_approval")
-  //       //console.log(filterresult1,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-  //       setallAppointmentAvilable(filterresult1)
-  //     }
-  //     console.log(allAppointmentAvilable.length, "*****")
-
-  //   }, (error) => {
-  //     console.log('error', error)
-  //   })
-
-  //   setShowText(!showText);
-  // }
-
   const handleSubmit4 = () => {
+
+    let today = new Date();
+    let currentHour = today.getHours(); 
+    let currentMinute = today.getMinutes(); 
+    let currentTime = `${currentHour}:${currentMinute}`;
 
     AllAppointmentForClientt(userDetails.ID_number).then((result) => {
         let filterresult=""
       if(result)
-     filterresult = result.filter(apo=> apo.Appointment_status =="Appointment_ended")
-    // console.log(filterresult,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+     filterresult = result.filter(apo=> ((floatToTime(apo.Start_Hour) <= currentTime ||floatToTime(apo.End_Hour) <= currentTime) && today.setHours(0, 0, 0, 0) >= apo.Date))
+   
     setallAppointmentEnd(result)
-
 
     }, (error) => {
       console.log('error', error)
@@ -271,25 +231,15 @@ export default function My_Appintments() {
     AllAppointmentForClientt(userDetails.ID_number).then((result) => {
         let filterresult3=""
       if(result)
-     filterresult3= result.filter(apo=> apo.Appointment_status =="confirmed")
-     console.log(filterresult3,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-     setFutureAppointment(filterresult3)
+     filterresult3= result.filter(apo=> (today.setHours(0, 0, 0, 0) == new Date(apo.Date).setHours(0, 0, 0, 0)))
+
+     setFutureAppointment(filterresult3)//תורים של היום הנוכחי
 
 
     }, (error) => {
       console.log('error', error)
     })
 
-    // FutureAppointmenB(BussinesNumber).then((result) => {
-
-    //   if (result.data)
-    //     console.log(result.data)
-    //   setFutureAppointment(result.data)
-    //   console.log("****", FutureAppointment.length)
-    // }, (error) => {
-    //   console.log('error', error)
-    // })
-    
     setShowText3(!showText3);
   }
 
@@ -297,23 +247,18 @@ export default function My_Appintments() {
 
   return (
     <>
-
       <ScrollView>
         <View style={styles.view}>
 
            <ScrollView horizontal={true}>
             <View style={styles.container}>
-
-              <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" color="rgb(92, 71, 205)" colortext="white"/>
-              {/* <Button title={showText ? 'Hide Text' : 'Show Text'} onPress={handleSubmit2} text="תורים שמחכים לאישור" color="rgb(92, 71, 205)" colortext="white"/> */}
-              <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים שנקבעו" color="rgb(92, 71, 205)" colortext="white"/>
-              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו" color="rgb(92, 71, 205)" colortext="white"  />
-              {/* <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={test} text=" cshev" color="#87CEFA" /> */}
+              <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" />
+              <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים להיום" />
+              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו"/>
              </View>
           </ScrollView> 
 
-          
-
+        
           {showText2 && <View style={styles.view1}>
             {allAppointment && allAppointment.length > 0 &&
               allAppointment.map((appointment) => {
@@ -339,46 +284,36 @@ export default function My_Appintments() {
                   token={appointment.token}
                   Number_appointment={appointment.Number_appointment}
                   idb={appointment.Professional_ID_number}
-                
                 />
               );
             })}
 
           </View>}
 
-          {showText && <View style={styles.view1}>
-            {allAppointmentAvilable &&
-              allAppointmentAvilable.map(x => {
-                
-                  return (
-                    <AppointmentCard_forProfessional_Calendar
-                    key={x.Number_appointment}
-                    Number_appointment={x.Number_appointment}  
-                      status={x.Appointment_status}
-                      Date={x.Date}
-                      Start_time={x.Start_Hour}
-                      End_time={x.End_Hour}
-                      Is_client_house1={x.Is_client_house1=="YES"?"טיפול בבית הלקוח":"טיפול בבית העסק"}
-                    />
-                  )
-              })}
-          </View>}
-
-
-          {showText4 && <View>
+          {showText4 && <View >
             {allAppointmentEnd && allAppointmentEnd.length > 0 &&
               allAppointmentEnd.map(x => {
-                if (x.Appointment_status == "Appointment_ended")
                   return (
                     <AppointmentCard_forProfessional_Calendar
-                    key={x.Number_appointment}
-                    Number_appointment={x.Number_appointment} 
-                    backgroundColor={"rgb(92, 71, 205)"}
-                      status={x.Appointment_status}
-                      Date={x.Date}
-                      Start_time={x.Start_Hour}
-                      End_time={x.End_Hour}
-                      Is_client_house1={x.Is_client_house1=="YES"?"טיפול בבית הלקוח":"טיפול בבית העסק"}
+                    key={appointment.Number_appointment}
+                    Review_Number={appointment.Review_Number}
+                    backgroundColor={"white"}
+                    Date1={appointment.Date}
+                    Start_time={appointment.Start_Hour}
+                    End_time={appointment.End_Hour}
+                    AddressStreet={appointment.AddressStreet}
+                    AddressHouseNumber={appointment.AddressHouseNumber}
+                    AddressCity={appointment.AddressCity}
+                    BusinessName={appointment.Name}
+                    Business_Number={appointment.Business_Number}
+                    ClientIDnumber={appointment.ID_Client}
+                    Type_Treatment_Number={appointment.Type_Treatment_Number}
+                    phone={appointment.phone}
+                    Is_client_house={appointment.Is_client_house1}
+                    Treatment_Type={appointment.Treatment_Name}
+                    token={appointment.token}
+                    Number_appointment={appointment.Number_appointment}
+                    idb={appointment.Professional_ID_number}
                     />
                   )
               })}
@@ -390,50 +325,57 @@ export default function My_Appintments() {
               FutureAppointment.map(x => {
                 return (
                   <AppointmentCard_forProfessional_Calendar
-                  key={x.Number_appointment}
-                    Number_appointment={x.Number_appointment} 
-                  backgroundColor={"rgb(92, 71, 205)"}
-                    status={x.Appointment_status}
-                    Date={x.Date}
-                    Start_time={x.Start_Hour}
-                    End_time={x.End_Hour}
-                    Client_Name={x.First_name_client}
-                    Client_Last_Name={x.Last_name_client}
-
-                    
+                  key={appointment.Number_appointment}
+                  Review_Number={appointment.Review_Number}
+                  backgroundColor={"white"}
+                  Date1={appointment.Date}
+                  Start_time={appointment.Start_Hour}
+                  End_time={appointment.End_Hour}
+                  AddressStreet={appointment.AddressStreet}
+                  AddressHouseNumber={appointment.AddressHouseNumber}
+                  AddressCity={appointment.AddressCity}
+                  BusinessName={appointment.Name}
+                  Business_Number={appointment.Business_Number}
+                  ClientIDnumber={appointment.ID_Client}
+                  Type_Treatment_Number={appointment.Type_Treatment_Number}
+                  phone={appointment.phone}
+                  Is_client_house={appointment.Is_client_house1}
+                  Treatment_Type={appointment.Treatment_Name}
+                  token={appointment.token}
+                  Number_appointment={appointment.Number_appointment}
+                  idb={appointment.Professional_ID_number}    
                   />
                 )
               })}
           </View>}    
-          {/* <New_Calendar/> */}
+        
         </View>
 
       </ScrollView>
-      <Menu_Client />
+
+      <Menu_Client/>
     </>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 12,
+    flex: 1,
     flexDirection: 'row',
-    // alignItems: 'center'
-
+    padding: 10,
   },
 
   view1: {
-    flex: 3,
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
     padding: 10,
-    //  borderColor:'#9acd32'
-
+    margin:10
   },
   view: {
     flex: 1,
     flexDirection: 'column',
-
+    padding: 10,
   },
   wel: {
     textAlign: "center",

@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#f2f2f2',
     height: 60,
     width: '100%',
-    position: 'absolute',
+    position:'absolute',
     bottom: 0,
     borderTopWidth: 1,
     borderTopColor: '#cccccc',

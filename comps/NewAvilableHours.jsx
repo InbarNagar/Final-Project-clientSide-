@@ -81,10 +81,12 @@ const NewAvailableHours = (Props) => {
 
     };
 
-    return (
+    return (<>
+    <ScrollView>
         <View style={styles.container}>
+
             {/* <ScrollView contentContainerStyle={styles.contentContainer}> */}
-            <Header text="הוספת שעות זמינות ליומן"  color={"rgb(92, 71, 205)"} />
+            <Header text="הוספת שעות זמינות ליומן"  color={"rgb(92, 71, 205)"} fontSize={24}/>
                 <View style={styles.dateContainer}>
                     <Button text="בחר תאריך" alignItems="center" onPress={showDatePicker} />
                     <DateTimePickerModal
@@ -137,10 +139,13 @@ const NewAvailableHours = (Props) => {
             <Image style={styles.image} source={require('../assets/logoo.png')}/>
             </View> */}
 
-            <Menu_professional/>
+          
         </View>
-
-
+ </ScrollView>
+ 
+  <Menu_professional/>
+ 
+</>
     );
 };
 
