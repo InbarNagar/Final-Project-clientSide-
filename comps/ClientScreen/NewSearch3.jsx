@@ -184,6 +184,7 @@ export default function NewSearch3({ navigation }) {
           instagram: data[i].Instagram_link,
           LongCordinate: data[i].LongCordinate,
           LetCordinate: data[i].LetCordinate,
+          Is_client_house: data[i].Is_client_house1,
           diary: [
             {
               date: data[i].Date1,
