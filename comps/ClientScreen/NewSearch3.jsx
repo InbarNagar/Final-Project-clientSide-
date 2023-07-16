@@ -1,6 +1,11 @@
 import { React, useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, TextInput, Button } from "react-native";
-import { NewSearchPost, Treatment_type_GET, Post_SendPushNotification, } from "../obj/FunctionAPICode";
+import {
+  NewSearchPost,
+  Treatment_type_GET,
+  Post_SendPushNotification,
+  RateBussines,
+} from "../obj/FunctionAPICode";
 import { ScrollView } from "react-native-gesture-handler";
 import AvailableAppointmentToBook from "./AvailableAppointmentToBook";
 import { UserContext } from "../UserDietails";
@@ -10,8 +15,8 @@ import { RadioButton } from "react-native-paper";
 import Maps_Inbar from "../Maps_Inbar";
 import { log } from "react-native-reanimated";
 import Menu_Client from "../obj/Menu_Client";
-import DropDownPicker from 'react-native-dropdown-picker';
-import { TouchableOpacity } from 'react-native';
+import DropDownPicker from "react-native-dropdown-picker";
+import { TouchableOpacity } from "react-native";
 import Header from "../obj/Header";
 import { useNavigation } from "@react-navigation/core";
 import Loading from "../CTools/Loading";
@@ -28,7 +33,7 @@ export default function NewSearch3({ navigation }) {
   const [AddressCity, setAddressCity] = useState(null);
   const [Is_client_house, setIs_client_house] = useState(null);
   // const [categories, setCategories] = useState(["קטגוריה"]);
-  const [showLoading,setshowLoading]=useState(true)
+  const [showLoading, setshowLoading] = useState(true);
 
   const [treatments, setTreatments] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -58,24 +63,24 @@ export default function NewSearch3({ navigation }) {
     }
   }, [token]);
 
-
   useEffect(() => {
-    setshowLoading(true)
-    Treatment_type_GET().then(
-      (result) => {
-        console.log("categories: ", result);
-        if (result) {
-          setCategories(result);
-          SetTreatmentNumber(result[0].Type_treatment_Number);
+    setshowLoading(true);
+    Treatment_type_GET()
+      .then(
+        (result) => {
+          console.log("categories: ", result);
+          if (result) {
+            setCategories(result);
+            SetTreatmentNumber(result[0].Type_treatment_Number);
+          }
+        },
+        (error) => {
+          console.log("error", error);
         }
-      },
-      (error) => {
-        console.log("error", error);
-      }
-    ).catch((error) => {
-      console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
-    })
-
+      )
+      .catch((error) => {
+        console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
+      });
   }, []);
 
   useEffect(() => {
@@ -85,7 +90,54 @@ export default function NewSearch3({ navigation }) {
 
     return () => clearTimeout(timer); // ניקוי הטיימר כאשר הקומפוננטה מתנתקת
   }, []);
+  function sortGetData(res,rank){
+    let final=[];
+var a= rank.find(x=>x.Business_Number===res[0].Business_Number1)
+var b;
+console.log("0 "+JSON.stringify(a));
+for (let i = 1; i < res.length; i++) {
+     b= rank.find(x=>x.Business_Number==res[i].Business_Number1)
+    console.log(i+" "+JSON.stringify(b));
+
+if(a.Business_Rank<b.Business_Rank){
+    console.log("if");
+    console.log("a: "+a.Business_Rank+" - b: "+b.Business_Rank);
+    let push=res.find(x=>x.Business_Number1==a.Business_Number)
+    a=b;
+    final.push(push);
+}    
+else{
+    console.log("else");
+    console.log("a: "+a.Business_Rank, a.Business_Number+" - b: "+b.Business_Rank, b.Business_Number);
+    let push=res.find(x=>x.Business_Number1==b.Business_Number)
+    final.push(push);
+}
+}
+if(a){
+    let push=res.find(x=>x.Business_Number1==a.Business_Number)
+final.push(push)}
+else{
+    let push=res.find(x=>x.Business_Number1==b.Business_Number)
+    final.push(push)
+}
+console.log("final: "+JSON.stringify(final));
+return final;
+  }
   function GetData(data) {
+    var rank;
+    RateBussines().then(
+      (result) => {
+        //   console.log("categories: ", result);
+        if (result) {
+          rank = result;
+          console.log(result, "raterate");
+          GetData(result.data);
+        }
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
     let res = [];
     let obj = {
       id: data[0].Business_Number1,
@@ -115,8 +167,8 @@ export default function NewSearch3({ navigation }) {
       ],
       apointemnt: [
         {
-          number: data[0].Number_appointment,    ///////////////////
-          status: data[0].Appointment_status,   /////////////////////////////
+          number: data[0].Number_appointment, ///////////////////
+          status: data[0].Appointment_status, /////////////////////////////
           date: data[0].Date,
           time: [data[0].Start_Hour + "-" + data[0].End_Hour],
         },
@@ -146,7 +198,7 @@ export default function NewSearch3({ navigation }) {
         }
         if (
           data[i].Type_treatment_Number !=
-          obj.typeTritment[obj.typeTritment.length - 1].type &&
+            obj.typeTritment[obj.typeTritment.length - 1].type &&
           !typeTritment.includes(data[i].Type_treatment_Number)
         ) {
           //אם הסוג טיפול שונה מקודמו
@@ -158,7 +210,7 @@ export default function NewSearch3({ navigation }) {
           });
         }
         if (
-          data[i].Number_appointment !=    //////////////////////////////////////////////////////
+          data[i].Number_appointment != //////////////////////////////////////////////////////
           obj.apointemnt[obj.apointemnt.length - 1].number //////////////////////////////////////////////
         ) {
           //אם המספר תור שונה מקודמו
@@ -166,7 +218,9 @@ export default function NewSearch3({ navigation }) {
             // number: data[i].Number_appointment,
             // status: data[i].Appointment_status,
             // date: data[i].Date,
-            JSON.stringify(data[i].Start_Hour) + "-" + JSON.stringify(data[i].End_Hour)
+            JSON.stringify(data[i].Start_Hour) +
+              "-" +
+              JSON.stringify(data[i].End_Hour)
           );
         }
       } else {
@@ -200,8 +254,8 @@ export default function NewSearch3({ navigation }) {
           ],
           apointemnt: [
             {
-              number: data[i].Number_appointment,   ////////////////////////////////////////
-              status: data[i].Appointment_status,   /////////////////////////////////////////
+              number: data[i].Number_appointment, ////////////////////////////////////////
+              status: data[i].Appointment_status, /////////////////////////////////////////
               date: data[i].Date,
               time: [data[i].Start_Hour + "-" + data[i].End_Hour],
             },
@@ -211,11 +265,11 @@ export default function NewSearch3({ navigation }) {
     }
     console.log(obj);
     res.push(obj);
-    console.log("res = "+JSON.stringify(res));
+    console.log("res = " + JSON.stringify(res));
+    res=sortGetData(res,rank);
     SetResult(res);
-    console.log("INBAR HERE",result)
+    console.log("INBAR HERE", result);
     return res;
-    
   }
   function btnSearch() {
     let num = 0;
@@ -232,11 +286,11 @@ export default function NewSearch3({ navigation }) {
     // });
     console.log(
       "AddressCity: " +
-      AddressCity +
-      "treatment Number: " +
-      treatmentNumber +
-      "Is_client_house: " +
-      Is_client_house
+        AddressCity +
+        "treatment Number: " +
+        treatmentNumber +
+        "Is_client_house: " +
+        Is_client_house
     );
     const obj = {
       AddressCity: AddressCity,
@@ -261,91 +315,92 @@ export default function NewSearch3({ navigation }) {
     // }
   }
   const RtlText = ({ text }) => (
-    <Text style={{ textAlign: 'left' }}>{text}</Text>
+    <Text style={{ textAlign: "left" }}>{text}</Text>
   );
 
   return (
     <>
-
-  <ScrollView>
-      <View style={styles.container}>
-        <View>
-          <Header text="חיפוש תורים פנויים" fontSize={40} color={"rgb(92, 71, 205)"} />
-          <Text style={styles.title}>בחר את הטיפול הרצוי: </Text>
-          <View style={{ flexDirection: "column", alignItems: 'flex-end'  }}>
-            <DropDownPicker
-           
-              open={open}
-              value={treatmentNumber}
-              items={categories.map((category, i) => ({
-                label: <RtlText text={category.Name} />,
-                value: category.Type_treatment_Number,
-                key: i + 'category',
-              }))}
-              setOpen={setOpen}
-              setValue={SetTreatmentNumber}
-              style={{
-               
-              }}
-              itemStyle={{
-                alignItems: 'flex-start',
-                textAlign: 'left'
-              }}
-              labelStyle={{
-                textAlign: 'left',
-              }}
-              activeItemStyle={{alignItems:'flex-start'}}
-              zIndex={9999}
-
+      <ScrollView>
+        <View style={styles.container}>
+          <View>
+            <Header
+              text="חיפוש תורים פנויים"
+              fontSize={40}
+              color={"rgb(92, 71, 205)"}
             />
+            <Text style={styles.title}>בחר את הטיפול הרצוי: </Text>
+            <View style={{ flexDirection: "column", alignItems: "flex-end" }}>
+              <DropDownPicker
+                open={open}
+                value={treatmentNumber}
+                items={categories.map((category, i) => ({
+                  label: <RtlText text={category.Name} />,
+                  value: category.Type_treatment_Number,
+                  key: i + "category",
+                }))}
+                setOpen={setOpen}
+                setValue={SetTreatmentNumber}
+                style={{}}
+                itemStyle={{
+                  alignItems: "flex-start",
+                  textAlign: "left",
+                }}
+                labelStyle={{
+                  textAlign: "left",
+                }}
+                activeItemStyle={{ alignItems: "flex-start" }}
+                zIndex={9999}
+              />
 
-
-            <View style={styles.buttonContainer}>
-
-
-
-              <View style={styles.containerBut}>
-                <TouchableOpacity style={styles.but} onPress={btnSearch}>
-                  <View style={styles.buttonContent}>
-                    <Text style={styles.thachtext}>חפש</Text>
-                    <Icon name="search" size={25} color="white" />
-                  </View>
-                </TouchableOpacity>
-              </View>
-
-              {result.length > 0 && (
+              <View style={styles.buttonContainer}>
                 <View style={styles.containerBut}>
-                <TouchableOpacity  style={styles.but} onPress={() => {
-                  navigation.navigate("Maps_Inbar",{
-                    result: result,
-                  });
-                }}>
-                  <View style={styles.buttonContent}>
-                    <Text style={styles.thachtext}>הצג במפה</Text>
-                    <Icon name="place" size={20} color="white" />
-                  </View>
-                </TouchableOpacity>
+                  <TouchableOpacity style={styles.but} onPress={btnSearch}>
+                    <View style={styles.buttonContent}>
+                      <Text style={styles.thachtext}>חפש</Text>
+                      <Icon name="search" size={25} color="white" />
+                    </View>
+                  </TouchableOpacity>
                 </View>
-                // <Maps_Inbar result={result}/>
-              )}
 
+                {result.length > 0 && (
+                  <View style={styles.containerBut}>
+                    <TouchableOpacity
+                      style={styles.but}
+                      onPress={() => {
+                        navigation.navigate("Maps_Inbar", {
+                          result: result,
+                        });
+                      }}
+                    >
+                      <View style={styles.buttonContent}>
+                        <Text style={styles.thachtext}>הצג במפה</Text>
+                        <Icon name="place" size={20} color="white" />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  // <Maps_Inbar result={result}/>
+                )}
+              </View>
             </View>
           </View>
+          <ScrollView>
+            {result.map((r) => (
+              <AvailableAppointmentToBook
+                key={r.id}
+                result={r}
+                treatmentNumber={treatmentNumber}
+              />
+            ))}
+          </ScrollView>
         </View>
-        <ScrollView>
-          {result.map((r) => (
-            <AvailableAppointmentToBook
-              key={r.id}
-              result={r}
-              treatmentNumber={treatmentNumber}
-            />
-          ))}
-        </ScrollView>
-      </View>
       </ScrollView>
       {/* {result&&result.length>0<Maps_Inbar result={result}/>} */}
       <Menu_Client />
-      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(!showLoading)}><Loading text='מביא נתונים..' /></TouchableOpacity>}
+      {showLoading && (
+        <TouchableOpacity onPress={() => setshowLoading(!showLoading)}>
+          <Loading text="מביא נתונים.." />
+        </TouchableOpacity>
+      )}
     </>
   );
 }
@@ -391,9 +446,8 @@ const styles = StyleSheet.create({
   },
   container: {
     // flex:1,
-    backgroundColor: '#e6e6fa',
+    backgroundColor: "#e6e6fa",
     // textAlign: "right",
-
   },
   titleText: {
     fontSize: 18,
@@ -423,22 +477,21 @@ const styles = StyleSheet.create({
     color: "white",
   },
   but: {
-    alignItems: 'center',
-    textAlign: 'center',
+    alignItems: "center",
+    textAlign: "center",
     borderRadius: 25,
     height: 45,
     // marginBottom: 20,
     backgroundColor: "rgb(92, 71, 205)",
     padding: 10,
-    margin:45, // שולט על הגודל של הכפתור
+    margin: 45, // שולט על הגודל של הכפתור
     marginTop: 5,
-
   },
   thachtext: {
-    textAlign: 'center',
-    color: '#fffaf0',
+    textAlign: "center",
+    color: "#fffaf0",
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     //borderRadius: 10,
     height: 20,
     // marginBottom: 20,
@@ -448,46 +501,34 @@ const styles = StyleSheet.create({
     // marginTop: 20,
   },
   buttonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   containerBut: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
     // alignItems: 'center',
-    width: '50%'
+    width: "50%",
   },
   labelStyle: {
-    textAlign:'left', // מגדיר את הטקסט להיות מימין לשמאל
+    textAlign: "left", // מגדיר את הטקסט להיות מימין לשמאל
   },
   containerStyle: {
     height: 40,
     width: 150,
-    marginRight:10,
+    marginRight: 10,
   },
   itemStyle: {
-    textAlign:'center',
-    justifyContent: 'flex-end' // מגדיר את הפריטים להיות ממורכזים לשמאל
+    textAlign: "center",
+    justifyContent: "flex-end", // מגדיר את הפריטים להיות ממורכזים לשמאל
   },
   picker: {
-  alignItems:'center'  },
+    alignItems: "center",
+  },
   dropDownContainerStyle: {
-    alignSelf: 'flex-start', // מגדיר את התפריט הנפתח להיות מימין לשמאל
+    alignSelf: "flex-start", // מגדיר את התפריט הנפתח להיות מימין לשמאל
   },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // import { React, useState, useEffect, useContext } from "react";
 // import { Text, View, StyleSheet, Button, TextInput } from "react-native";
