@@ -266,9 +266,9 @@ export const  forgotPassword= (mail) => {
     return Fetch(`user/sendMail/${mail}/sub/body`, 'Get')
 }
 //איפוס סיסמא
-export const  resetPassword= (mail,password) => {
+export const  resetPassword= (body) => {
    
-    return Fetch(`user/sendMail/${mail}/${password}`, 'Get')
+    return Axios(`user/ResetPassword`, 'post',body)
 }
 
 //פונקציית חיפוש חדשה לפי יומן עסק

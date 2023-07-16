@@ -12,7 +12,7 @@ const ForgotPassword = () => {
   const [show, setshow] = useState('');
   const [ID_number, setID_number] = useState('');
   const [password, setPassword] = useState('');
-  const { navigation, route } = props
+ 
 
 
   const handleResetPassword = () => {
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
       forgotPassword(email).then((code) => {
         setcodefromS(code)
         setshow(true)
-
+console.log(code)
         Alert.alert('בקשת איפוס סיסמא נשלחה', `אנא בדוק את תיבת הדואר הנכנס שלך בכתובת ${email}`);
 
       }).catch((error) => {
@@ -45,7 +45,7 @@ const ForgotPassword = () => {
     if (code == codefromS) {
 
       const data={
-        ID_number:ID_number,
+        Email:email,
         password:password
       }
       resetPassword(data).then(() => {
@@ -69,7 +69,8 @@ const ForgotPassword = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>שכחתי סיסמא</Text>
+      <Text style={styles.title}>איפוס סיסמא</Text>
+
       <TextInput
         style={styles.input}
         onChangeText={setEmail}
@@ -86,17 +87,8 @@ const ForgotPassword = () => {
         <TextInput
           style={styles.input}
           onChangeText={setcode}
-          value={email}
+          value={code}
           placeholder="הכנס קוד"
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          onChangeText={setID_number}
-          value={ID_number}
-          placeholder="שם משתמש"
-          keyboardType="email-address"
           autoCapitalize="none"
         />
         <TextInput
@@ -125,6 +117,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 20,
     backgroundColor: '#f5f5f5',
+    direction: 'rtl',
   },
   title: {
     fontSize: 28,
@@ -144,7 +137,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   button: {
-    backgroundColor: '#ff6347',
+    backgroundColor: "rgb(92, 71, 205)",
     padding: 15,
     alignItems: 'center',
     borderRadius: 5,
