@@ -39,7 +39,7 @@ export default function NewSearch3({ navigation }) {
   const [categories, setCategories] = useState([]);
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [openT, setOpenT] = useState(false);
-
+  const [rank, SetRank] = useState([]);
   const [open, setOpen] = useState(false); // משתנה הבודק אם הרשימה הנגללת פתוחה או סגורה
 
   // const navigation = useNavigation();
@@ -81,6 +81,21 @@ export default function NewSearch3({ navigation }) {
       .catch((error) => {
         console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
       });
+    RateBussines()
+      .then(
+        (result) => {
+          console.log("ranks arr: ", result);
+          if (result) {
+            SetRank(result);
+          }
+        },
+        (error) => {
+          console.log("error", error);
+        }
+      )
+      .catch((error) => {
+        console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
+      });
   }, []);
 
   useEffect(() => {
@@ -90,54 +105,8 @@ export default function NewSearch3({ navigation }) {
 
     return () => clearTimeout(timer); // ניקוי הטיימר כאשר הקומפוננטה מתנתקת
   }, []);
-  function sortGetData(res,rank){
-    let final=[];
-var a= rank.find(x=>x.Business_Number===res[0].Business_Number1)
-var b;
-console.log("0 "+JSON.stringify(a));
-for (let i = 1; i < res.length; i++) {
-     b= rank.find(x=>x.Business_Number==res[i].Business_Number1)
-    console.log(i+" "+JSON.stringify(b));
 
-if(a.Business_Rank<b.Business_Rank){
-    console.log("if");
-    console.log("a: "+a.Business_Rank+" - b: "+b.Business_Rank);
-    let push=res.find(x=>x.Business_Number1==a.Business_Number)
-    a=b;
-    final.push(push);
-}    
-else{
-    console.log("else");
-    console.log("a: "+a.Business_Rank, a.Business_Number+" - b: "+b.Business_Rank, b.Business_Number);
-    let push=res.find(x=>x.Business_Number1==b.Business_Number)
-    final.push(push);
-}
-}
-if(a){
-    let push=res.find(x=>x.Business_Number1==a.Business_Number)
-final.push(push)}
-else{
-    let push=res.find(x=>x.Business_Number1==b.Business_Number)
-    final.push(push)
-}
-console.log("final: "+JSON.stringify(final));
-return final;
-  }
   function GetData(data) {
-    var rank;
-    RateBussines().then(
-      (result) => {
-        //   console.log("categories: ", result);
-        if (result) {
-          rank = result;
-          console.log(result, "raterate");
-          GetData(result.data);
-        }
-      },
-      (error) => {
-        console.log("error", error);
-      }
-    );
     let res = [];
     let obj = {
       id: data[0].Business_Number1,
@@ -266,7 +235,41 @@ return final;
     console.log(obj);
     res.push(obj);
     console.log("res = " + JSON.stringify(res));
-    res=sortGetData(res,rank);
+    
+    let final = [];
+    console.log("rank: "+JSON.stringify(rank));
+var a = rank.find((x) => x.Business_Number === res[0].id);
+var b;
+console.log("0 " + JSON.stringify(a));
+for (let i = 1; i < res.length; i++) {
+b = rank.find((x) => x.Business_Number == res[i].id);
+console.log(i + " " + JSON.stringify(b));
+
+if (a.Business_Rank < b.Business_Rank) {
+  console.log("if");
+  console.log("a: " + a.Business_Rank + " - b: " + b.Business_Rank);
+  let push = res.find((x) => x.id == a.Business_Number);
+  a = b;
+  final.push(push);
+} else {
+  console.log("else");
+  console.log(
+    "a: " + a.Business_Rank,
+    a.Business_Number + " - b: " + b.Business_Rank,
+    b.Business_Number
+  );
+  let push = res.find((x) => x.id == b.Business_Number);
+  final.push(push);
+}
+}
+if (a) {
+let push = res.find((x) => x.id == a.Business_Number);
+final.push(push);
+} else {
+let push = res.find((x) => x.id == b.Business_Number);
+final.push(push);
+}
+console.log("final: " + JSON.stringify(final));
     SetResult(res);
     console.log("INBAR HERE", result);
     return res;
