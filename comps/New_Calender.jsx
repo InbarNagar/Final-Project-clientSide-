@@ -406,6 +406,8 @@ const New_Calendar = () => {
                       <Text style={styles.text}>שלח תזכורת</Text>
                     </View>
                   </TouchableOpacity>
+
+                  
                 </View>
 
                 <View style={{ flex: 1 }}>
