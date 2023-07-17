@@ -545,37 +545,37 @@ const AvailableAppointmentToBook = (props) => {
         ))}
         <Text style={styles.titleText}>שעות פנויות: </Text>
         <View style={styles.rowContainer}>
-          {finalHours.length > 0 &&
-            finalHours.map((d, index) => (
-              <View key={index} style={styles.iconContainer1}>
-                <View style={styles.column}>
-                  <TouchableOpacity
-                    style={[
-                      styles.cube,
-                      selected === index && styles.selectedCube,
-                    ]}
-                    onPress={() => handlePress(index)}
-                  >
-                    <View style={styles.row}>
-                      <Icon
-                        name="clock-o"
-                        size={20}
-                        color="rgb(92, 71, 205)"
-                        style={styles.icon}
-                      />
-                      <Text style={styles.title}>{floatToTime(d)}</Text>
-                    </View>
-                  </TouchableOpacity>
-                  {selected === index && (
-                    <Button
-                      title="הזמן תור"
-                      onPress={() => btnBookApiontment(d)}
-                    />
-                  )}
-                </View>
-              </View>
-            ))}
+  {finalHours.length > 0 &&
+    finalHours.map((d, index) => (
+      <View key={index} style={styles.iconContainer1}>
+        <View style={styles.column}>
+          <TouchableOpacity
+            style={[
+              styles.cube,
+              selected === index && styles.selectedCube,
+            ]}
+            onPress={() => handlePress(index)}
+          >
+            <View style={styles.row}>
+              <Icon
+                name="clock-o"
+                size={20}
+                color="rgb(92, 71, 205)"
+                style={styles.icon}
+              />
+              <Text style={styles.title}>{floatToTime(d)}</Text>
+            </View>
+          </TouchableOpacity>
+          {selected === index && (
+            <Button
+              title="הזמן תור"
+              onPress={() => btnBookApiontment(d)}
+            />
+          )}
         </View>
+      </View>
+    ))}
+</View>
 
         <Text style={styles.titleText}>טיפול:</Text>
         {result.typeTritment.map((t, i) => (
@@ -640,10 +640,6 @@ const AvailableAppointmentToBook = (props) => {
 export default AvailableAppointmentToBook;
 
 const styles = StyleSheet.create({
-  container1: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-  },
   row: {
     flexDirection: "row",
     alignItems: "center",
@@ -658,11 +654,15 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   rowContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    flexWrap: 'wrap', // this will allow the items to wrap to the next line
+    alignItems: 'flex-end', // this will align items to the end of the row (right side for LTR layouts)
   },
-
+  iconContainer1: {
+    flex: 1 / 3, // this will allow 3 items in a row
+    padding: 5, // add padding if needed
+    justifyContent: 'flex-end', // this will align items to the end of the column (bottom for LTR layouts)
+  },
   titleText: {
     textAlign: "left",
     fontSize: 18,
@@ -711,7 +711,7 @@ const styles = StyleSheet.create({
   },
   iconContainer1: {
     flexDirection: "row",
-    width: "23%",
+    width: "33%",
   },
   iconContainer: {
     flexDirection: "row",
