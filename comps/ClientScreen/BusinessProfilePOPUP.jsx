@@ -602,7 +602,7 @@ img2: {
     color: "#333",
     fontWeight: "bold",
     margin: 6,
-    marginLeft: -29
+   
   },
   customerCommentContainer: {
     flexDirection: "row"

@@ -566,23 +566,12 @@ const AvailableAppointmentToBook = (props) => {
               <Text style={styles.title}>{floatToTime(d)}</Text>
             </View>
           </TouchableOpacity>
-          {selected === index && (
-            <Button
-              title="הזמן תור"
-              onPress={() => btnBookApiontment(d)}
-            />
-          )}
         </View>
       </View>
     ))}
 </View>
 
-        <Text style={styles.titleText}>טיפול:</Text>
-        {result.typeTritment.map((t, i) => (
-          <Text style={styles.text} key={i}>
-            מחיר: {t.price} זמן: {t.duration}
-          </Text>
-        ))}
+       
         <View style={styles.buttonContainer}>
           <View style={styles.buttonContent}>
             <MaterialCommunityIcons

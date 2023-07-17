@@ -8,10 +8,13 @@ import { useState,  useEffect } from "react";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from "react-native-gesture-handler";
 import { Post_SendPushNotification } from "../obj/FunctionAPICode";
+import { Alert } from "react-native";
+import { Linking } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const AppointmentCard_forClient = (props) => {
   const { Type_Treatment_Number,idb, token, Review_Number, Business_Number, ClientIDnumber, Number_appointment, AddressCity, AddressHouseNumber,
-     AddressStreet, backgroundColor, Treatment_Type, Start_time, End_time, Date1, BusinessName, Appointment_status, phone, Is_client_house } = props;
+     AddressStreet, backgroundColor, Treatment_Type, Start_time, End_time, Date1, BusinessName, Appointment_status, phone, Is_client_house, Instagram_link,Facebook_link } = props;
   const navigation = useNavigation();
   const [bookModalVisible, SetBookModalVisible] = useState(false);
   const [POPUP, SetPOPUP] = useState(false);
@@ -62,13 +65,15 @@ const AppointmentCard_forClient = (props) => {
       borderWidth: 1,
       borderRadius: 10,
       borderColor: '#d3d3d3',
-      padding: 20,
+      padding: 10,
       marginVertical: 5,
       backgroundColor: backgroundColor,
       flexDirection: 'row',
       flex: 1,
-      
-    
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      shadowOffset: { width: 2, height: 2 },
+      shadowColor: '#000',
     },
     title: {
       fontWeight: 'bold',
@@ -80,7 +85,7 @@ const AppointmentCard_forClient = (props) => {
       fontWeight: 'bold',
       marginBottom: 5,
       marginTop:-10,
-    
+      fontSize: 15,
     },
     text: {
 
@@ -100,12 +105,7 @@ const AppointmentCard_forClient = (props) => {
 
 
   });
-  function timeToNumber(timeString) {
-    let parts = timeString.split(":");
-    let hours = parseInt(parts[0], 10);
-    let minutes = parseInt(parts[1], 10);
-    return hours * 60 + minutes;
-  }
+
 
   const massage = () => {
     let givenDate = new Date(Date1);
@@ -117,10 +117,12 @@ const AppointmentCard_forClient = (props) => {
 
 
     let currentTime = `${currentHour}:${currentMinute}`;
-    console.log(currentTime, End_time, timeToNumber(currentTime))
+    let oneHourFromNow = new Date(today.setHours(today.getHours() + 1));
+    let timeOneHourFromNow = `${oneHourFromNow.getHours()}:${oneHourFromNow.getMinutes()}`;
+    console.log(currentTime,floatToTime(Start_time), timeOneHourFromNow)
     console.log(givenDate, today, "aappppp")
 
-    if (((floatToTime(Start_time) <= currentTime ||floatToTime(End_time) <= currentTime) && today.setHours(0, 0, 0, 0) >= givenDate) && Review_Number == null) {
+    if (((floatToTime(Start_time) <= currentTime &&floatToTime(End_time) <= currentTime) && today.setHours(0, 0, 0, 0) >= givenDate) && Review_Number == null) {
       return (
         <>
 
@@ -142,15 +144,19 @@ const AppointmentCard_forClient = (props) => {
 
         </>)
     }
-    if (((floatToTime(Start_time) <= currentTime ||floatToTime(End_time) <= currentTime) && today.setHours(0, 0, 0, 0) >= givenDate) && Review_Number != null) {
-      // if ( Date1 < new Date() && Review_Number != null ) {
+    if ((floatToTime(Start_time) <= currentTime &&floatToTime(End_time) <= currentTime && today.setHours(0, 0, 0, 0) >= givenDate)||( today.setHours(0, 0, 0, 0) >= givenDate) 
+    && Review_Number != null) {
+    
       return (
         <>
           <Text style={styles.title}>העסק דורג!</Text>
         </>)
     }
-    else {
+    if((floatToTime(Start_time) >currentTime && today.setHours(0, 0, 0, 0) <= new Date(Date1).setHours(0, 0, 0, 0))&&
+   (floatToTime(Start_time) >=timeOneHourFromNow &&today.setHours(0, 0, 0, 0) <= new Date(Date1).setHours(0, 0, 0, 0)))
+     {
       return (<>
+      
         <TouchableOpacity onPress={() => {
                     setToken(token);
                     setmes(`שלום,
@@ -204,6 +210,12 @@ const AppointmentCard_forClient = (props) => {
           ) : (
             <>
               <Icon name="briefcase" size={20} color="rgb(92, 71, 205)" style={styles.icon} />
+              <View style={{ flexDirection: 'row', alignItems: 'center',marginTop:-5,margin:10}}>
+           <Icon name="map-marker" size={20} color="rgb(92, 71, 205)" style={{marginTop:-22}} /> 
+           <Text style={[styles.title1, {margin: 4}]}>
+           {`${AddressCity}, ${AddressStreet} ${AddressHouseNumber}`}
+            </Text>
+          </View> 
               טיפול בבית העסק
             </>
           )}
@@ -219,12 +231,61 @@ const AppointmentCard_forClient = (props) => {
 
           <Text style={styles.title}> {BusinessName}</Text>
         </View>
-        <View style={{ flexDirection: 'row', alignItems: 'center',marginTop:-5,margin:10}}>
-            <Icon name="map-marker" size={20} color="rgb(92, 71, 205)" style={{marginTop:-20}} />
-            <Text style={styles.title1}>
-              {`${AddressCity}, ${AddressStreet} ${AddressHouseNumber}`}
-            </Text>
-          </View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center',marginTop:-5,margin:38}}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Linking.openURL(`tel:${phone}`)
+                      }
+                    >
+                      <Icon
+                        name="phone"
+                        size={20}
+                        color="rgb(92, 71, 205)"
+                        style={styles.icon}
+                      />
+                    </TouchableOpacity>
+                    
+                      <TouchableOpacity
+                        onPress={() => Linking.openURL(Instagram_link)}
+                      >
+                        <Icon
+                          name="instagram"
+                          size={20}
+                          color="rgb(92, 71, 205)"
+                          style={styles.icon}
+                        />
+                      </TouchableOpacity>
+                   
+
+                
+                      <TouchableOpacity
+                        onPress={() => Linking.openURL(Facebook_link)}
+                      >
+                        <Icon
+                          name="facebook"
+                          size={20}
+                          color="rgb(92, 71, 205)"
+                          style={styles.icon}
+                        />
+                      </TouchableOpacity>
+                    
+                    <TouchableOpacity onPress={() => {
+                      const scheme = Platform.select({ ios: 'waze://', android: 'https://waze.com/ul' });
+                      const address = `${AddressCity},${AddressHouseNumber} ${AddressStreet} `
+                      const url = `${scheme}?q=${encodeURIComponent(address)}&navigate=yes`;
+
+                      Linking.canOpenURL(url).then((supported) => {
+                        if (supported) {
+                          return Linking.openURL(url);
+                        } else {
+                          console.log(`Can't handle url: ${url}`);
+                        }
+                      }).catch((err) => console.error('An error occurred', err));
+                    }}>
+                      <MaterialCommunityIcons name="waze" size={20} color="rgb(92, 71, 205)" />
+                    </TouchableOpacity>
+                  </View>
       </View>
     </View>
     </ScrollView>

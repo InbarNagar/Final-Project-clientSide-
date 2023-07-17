@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
+
 const Button = (props) => {
     const { onPress, text, color, fontSize, colortext, borderRadius, width } = props
 
@@ -10,7 +11,8 @@ const Button = (props) => {
       color: 'white',
       borderRadius: 10,
       alignItems: 'center',
- 
+      borderColor:"rgb(92, 71, 205)",
+      borderWidth: 1,
     };
 
     const styles = StyleSheet.create({

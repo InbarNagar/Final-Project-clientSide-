@@ -7,7 +7,7 @@ const Header = (props) => {
     Header.defaultProps = {
       backgroundColor: 'transparent',
       fontSize: 30,
-      color: 'black',
+      color: 'white',
       height: 80,
       paddingTop: 10,
       marginTop:10
