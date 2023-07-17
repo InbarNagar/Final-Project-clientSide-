@@ -319,7 +319,6 @@ useEffect(() => {
                       return (
                         <View key={bus.Number_appointment} style={styles.card}>
                           <View style={styles.rowContainer}>
-
                             <View style={styles.textContainer}>
                               <View style={styles.reviewRow}>
                                 <MaterialCommunityIcons
@@ -467,8 +466,8 @@ const styles = StyleSheet.create({
   img1: {
     borderRadius: 0,
     marginTop: 10,
-    width: 120,
-    height: 120,
+    width: 110,
+    height: 110,
 
   },
   view1: {
@@ -493,11 +492,6 @@ img2: {
     width: '100%',
     height: '100%',
 },
-
-
-
-
-
   profileImage: {
     width: 100,
     height: 100,
@@ -573,7 +567,7 @@ img2: {
     backgroundColor: "#f2f2f2",
     borderRadius: 10,
     marginBottom: 20,
-    padding: 0,
+    padding: 10,
   },
   reviewRow: {
     flexDirection: "row",

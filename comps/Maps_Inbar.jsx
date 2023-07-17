@@ -1,9 +1,9 @@
-import { View, Text } from 'react-native'
+import { View, Text ,ScrollView} from 'react-native'
 import React, { useState, useEffect } from 'react'
 import MapView, { Callout, Circle, Marker } from 'react-native-maps'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location'
-
+import AvailableAppointmentToBook from './ClientScreen/AvailableAppointmentToBook';
 
 // const result=[
 //     {
@@ -1592,8 +1592,8 @@ import * as Location from 'expo-location'
 //     }
 // ]
 export default function Maps_Inbar({ route }) {
-    const {result} = route.params;
-console.log(result)
+    const { result } = route.params;
+    console.log(result)
     const Google_Api = "AIzaSyBuYjLYxY6iSSVfQ755luh6KPM0mD4QfrM";
 
     const [pickedLocation, setPickedLocation] = useState({ lat: '', lng: '' });
@@ -1690,7 +1690,7 @@ console.log(result)
                     radius={1}
                 />
                 {result && result.map(x => {
-                    console.log(x,"nmappppppppppppppppppppppp")
+                    console.log(x, "nmappppppppppppppppppppppp")
                     if (x.LetCordinate && x.LongCordinate) {
                         return (
                             <Marker
@@ -1703,7 +1703,13 @@ console.log(result)
                                 draggable={true}
                             >
                                 <Callout>
-                                    <Text style={{color: '#E6E6FA'}}>{x.about}</Text>
+                                <ScrollView horizontal={true}>
+                                        <AvailableAppointmentToBook
+                                            key={x.id}
+                                            result={x}
+                                            treatmentNumber={x.treatmentNumber}
+                                        />
+                                   </ScrollView> 
                                 </Callout>
                             </Marker>
                         )
