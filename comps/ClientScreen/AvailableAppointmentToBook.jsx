@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, View, Button, Text, StyleSheet,TouchableOpacity } from "react-native";
+import {
+  Alert,
+  View,
+  Button,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { UserContext } from "../UserDietails";
 import BusinessProfilePOPUP from "./BusinessProfilePOPUP";
 import {
@@ -11,8 +18,8 @@ import {
 } from "../obj/FunctionAPICode";
 import BusinessSchedule from "./BusinessSchedule";
 import moment from "moment";
-import Icon from 'react-native-vector-icons/FontAwesome';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from "react-native-vector-icons/FontAwesome";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 const AvailableAppointmentToBook = (props) => {
   const [finalHours, setFinalHours] = useState([]); // שומר את המערך הסופי
 
@@ -145,8 +152,8 @@ const AvailableAppointmentToBook = (props) => {
             //לולאה שבודקת מינימום מקסימום
 
             const [start, end] = result.diary[i].time[j].split("-");
-            const startNumber = parseInt(start);
-            const endNumber = parseInt(end);
+            const startNumber = parseFloat(start);
+            const endNumber = parseFloat(end);
             if (startNumber < minNumber) {
               // במידה והתנאי מתקיים המינימום יהיה המספר
               minNumber = startNumber;
@@ -171,6 +178,23 @@ const AvailableAppointmentToBook = (props) => {
     // firstHour.push(betweenHours)
     console.log("Minimum number:", minNumber);
     console.log("Maximum number:", maxNumber);
+    var currentHour = new Date().getHours(); // מביא את השעה העגולה הנוכחית
+    if (currentHour > minNumber) {
+      if (isFloat(minNumber)) { // אם המספר עשרוני הוא יהפוך את השעה העכשווית לעשרונית
+        minNumber = currentHour + 0.5;
+      } else { // אם לא יישאר כמו שהוא
+        minNumber = currentHour;
+      }
+    }
+    function isFloat(n) { //מחזיר האם המספר הוא עשרוני או לא 
+      return Number(n) === n && n % 1 !== 0;
+    }
+    console.log(
+      "currentHour= " +
+        currentHour +
+        "minNumber after compare to furrentHour: " +
+        minNumber
+    );
     var hours = Array.from(
       { length: Math.ceil((maxNumber - minNumber) / duration) },
       (v, i) => minNumber + i * duration
@@ -240,8 +264,8 @@ const AvailableAppointmentToBook = (props) => {
           return x;
         }
       });
-      console.log("final Hours: "+finalArray);
-       setFinalHours(finalArray);
+      console.log("final Hours: " + finalHours.length + " - " + finalArray);
+      setFinalHours(finalArray);
     }
     // return;
 
@@ -300,6 +324,7 @@ const AvailableAppointmentToBook = (props) => {
     // setFinalHours(finalArray); // set finalHours instead of hours
     else {
       console.log("no occupied appointments.");
+      console.log("finalHours: " + hours);
       setFinalHours(hours);
     }
 
@@ -409,25 +434,31 @@ const AvailableAppointmentToBook = (props) => {
     }
   }, [token]);
   const handlePress = (index) => {
-    setSelected(prev => prev === index ? null : index);
+    setSelected((prev) => (prev === index ? null : index));
   };
 
   const btnBookApiontment = (d) => {
-    console.log(`book Appointment: start- ${d} end- ${d+duration} ${date} ${treatmentNumber} `);
+    console.log(
+      `book Appointment: start- ${d} end- ${
+        d + duration
+      } ${date} ${treatmentNumber} `
+    );
     const pickedApointment = {
       Date: date,
       ID_Client: userDetails.ID_number,
       Start_Hour: d,
-      End_Hour: d+duration,
+      End_Hour: d + duration,
       Business_Number: result.id,
       Is_client_house: result.Is_client_house,
-      Type_Treatment_Number:treatmentNumber
+      Type_Treatment_Number: treatmentNumber,
     };
     NewAppointmentToClient(pickedApointment).then(
       (result) => {
         if (result.data) {
           AllApointemtDetailes().then((res) => {
-            const appointment = res.data.find(ap => Number(result.data) === ap.Number_appointment);
+            const appointment = res.data.find(
+              (ap) => Number(result.data) === ap.Number_appointment
+            );
             if (appointment) settoken(appointment.token);
           });
           // alert(`${result.data}`);
@@ -439,96 +470,150 @@ const AvailableAppointmentToBook = (props) => {
         console.log("error", error);
       }
     );
-}
-
+  };
+  function floatToTime(floatNumber) {
+    let hours = Math.floor(floatNumber);
+    let minutes = Math.floor((floatNumber - hours) * 60);
+    return (
+      hours.toString().padStart(2, "0") +
+      ":" +
+      minutes.toString().padStart(2, "0")
+    );
+  }
   function formatDuration(duration) {
     const hours = Math.floor(duration);
     const minutes = (duration - hours) * 60;
-    let hoursText = 'שעה';
+    let hoursText = "שעה";
     if (hours > 1) {
-      hoursText = hours === 2 ? 'שעתיים' : hours + ' שעות';
+      hoursText = hours === 2 ? "שעתיים" : hours + " שעות";
     }
-    return `${hoursText} ${minutes > 0 ? `ו-${minutes} דקות` : ''}`;
+    return `${hoursText} ${minutes > 0 ? `ו-${minutes} דקות` : ""}`;
   }
   return (
-    <View style={styles.container} key={result.id}>
-      
-      <Text style={styles.titleText}>
-        {result.businessName},{result.city}
-      </Text>
-
-      {/* <Text style={styles.text}> {result.Is_client_house === "YES" ? "טיפול בבית הלקוח" : "טיפול בבית העסק"} </Text> */}
-
-      {result.Is_client_house === "YES" || "YES       " ? (
-        <View style={styles.iconContainer}>
-          <Icon name="home" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
-          <Text style={styles.text}>טיפול בבית הלקוח</Text>
-        </View>
-      ) : (
-        <>
-          <Icon name="briefcase" size={25} color="rgb(92, 71, 205)" style={styles.icon} />
-          טיפול בבית העסק
-        </>
-      )}
-   {result.typeTritment.map((t, i) => (
-  <View key={i}>
-    <View style={styles.iconContainer}>
-      <MaterialCommunityIcons name="cash-multiple" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
-      <Text style={styles.text}>מחיר: {t.price} ₪</Text>
-    </View>
-    <View style={styles.iconContainer}>
-      <MaterialCommunityIcons name="clock-outline" size={25} color="rgb(92, 71, 205)" style={styles.icon}/>
-      <Text style={styles.text}>זמן הטיפול: {formatDuration(t.duration)}</Text>
-    </View>
-  </View>
-))}
-      <Text style={styles.titleText}>שעות פנויות: </Text>
-      <View style={styles.container1}>
-      {finalHours.map((d, index) => (
-  <View key={index}>
-    <TouchableOpacity 
-      style={[styles.cube, selected === index && styles.selectedCube]} 
-      onPress={() => handlePress(index)}
-    >
-      <Text style={styles.text}>
-        {d}
-      </Text>
-    </TouchableOpacity>
-    {selected === index && 
-      <Button title="הזמן תור" onPress={() => btnBookApiontment(d)} />}
-  </View>
-))}
-    </View>
-
-      <Text style={styles.titleText}>טיפול:</Text>
-      {result.typeTritment.map((t, i) => (
-        <Text style={styles.text} key={i}>
-          מחיר: {t.price} זמן: {t.duration}
+    finalHours.length > 0 && (
+      <View style={styles.container} key={result.id}>
+        <Text style={styles.titleText}>
+          {result.businessName},{result.city}
         </Text>
-      ))}
-      <View style={styles.buttonContainer}>
-  <View style={styles.buttonContent}>
-    <MaterialCommunityIcons name="store" size={25} color="rgb(92, 71, 205)" />
-    <Button
-    color={"rgb(92, 71, 205)"}
-      title="צפה בפרופיל העסק"
-      buttonStyle={styles.buttonStyle}
-      titleStyle={styles.buttonTitle}
-      onPress={handleBusinessProfilePOPUP}
-    />
-  </View>
-  <View style={styles.buttonContent}>
-    <MaterialCommunityIcons name="calendar-clock" size={24} color="rgb(92, 71, 205)" />
-    <Button
-    color={"rgb(92, 71, 205)"}
-      title="הזמן תור"
-      buttonStyle={styles.buttonStyle}
-      titleStyle={styles.buttonTitle}
-      onPress={() => handleBusinessSchedulePOPUP()}
-    />
-  </View>
-</View>
-      {businessSchedulePOPUP && !businessProfilePOPUP && (
+
+        {/* <Text style={styles.text}> {result.Is_client_house === "YES" ? "טיפול בבית הלקוח" : "טיפול בבית העסק"} </Text> */}
+
+        {result.Is_client_house === "YES" || "YES       " ? (
+          <View style={styles.iconContainer}>
+            <Icon
+              name="home"
+              size={25}
+              color="rgb(92, 71, 205)"
+              style={styles.icon}
+            />
+            <Text style={styles.text}>טיפול בבית הלקוח</Text>
+          </View>
+        ) : (
+          <>
+            <Icon
+              name="briefcase"
+              size={25}
+              color="rgb(92, 71, 205)"
+              style={styles.icon}
+            />
+            טיפול בבית העסק
+          </>
+        )}
+        {result.typeTritment.map((t, i) => (
+          <View key={i}>
+            <View style={styles.iconContainer}>
+              <MaterialCommunityIcons
+                name="cash-multiple"
+                size={25}
+                color="rgb(92, 71, 205)"
+                style={styles.icon}
+              />
+              <Text style={styles.text}>מחיר: {t.price} ₪</Text>
+            </View>
+            <View style={styles.iconContainer}>
+              <MaterialCommunityIcons
+                name="clock-outline"
+                size={25}
+                color="rgb(92, 71, 205)"
+                style={styles.icon}
+              />
+              <Text style={styles.text}>
+                זמן הטיפול: {formatDuration(t.duration)}
+              </Text>
+            </View>
+          </View>
+        ))}
+        <Text style={styles.titleText}>שעות פנויות: </Text>
+        <View style={styles.rowContainer}>
+          {finalHours.length > 0 &&
+            finalHours.map((d, index) => (
+              <View key={index} style={styles.iconContainer1}>
+                <View style={styles.column}>
+                  <TouchableOpacity
+                    style={[
+                      styles.cube,
+                      selected === index && styles.selectedCube,
+                    ]}
+                    onPress={() => handlePress(index)}
+                  >
+                    <View style={styles.row}>
+                      <Icon
+                        name="clock-o"
+                        size={20}
+                        color="rgb(92, 71, 205)"
+                        style={styles.icon}
+                      />
+                      <Text style={styles.title}>{floatToTime(d)}</Text>
+                    </View>
+                  </TouchableOpacity>
+                  {selected === index && (
+                    <Button
+                      title="הזמן תור"
+                      onPress={() => btnBookApiontment(d)}
+                    />
+                  )}
+                </View>
+              </View>
+            ))}
+        </View>
+
+        <Text style={styles.titleText}>טיפול:</Text>
+        {result.typeTritment.map((t, i) => (
+          <Text style={styles.text} key={i}>
+            מחיר: {t.price} זמן: {t.duration}
+          </Text>
+        ))}
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonContent}>
+            <MaterialCommunityIcons
+              name="store"
+              size={25}
+              color="rgb(92, 71, 205)"
+            />
+            <Button
+              color={"rgb(92, 71, 205)"}
+              title="צפה בפרופיל העסק"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.buttonTitle}
+              onPress={handleBusinessProfilePOPUP}
+            />
+          </View>
+          <View style={styles.buttonContent}>
+            <MaterialCommunityIcons
+              name="calendar-clock"
+              size={24}
+              color="rgb(92, 71, 205)"
+            />
+            <Button
+              color={"rgb(92, 71, 205)"}
+              title="הזמן תור"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.buttonTitle}
+              onPress={() => handleBusinessSchedulePOPUP()}
+            />
+          </View>
+        </View>
+        {/* {businessSchedulePOPUP && !businessProfilePOPUP && (
         <BusinessSchedule
           businessNumber={result.id}
           hours={finalHours}
@@ -539,24 +624,29 @@ const AvailableAppointmentToBook = (props) => {
           isVisible={bookModalVisible}
           onClose={handleBusinessSchedulePOPUP}
         />
-      )}
-      {businessProfilePOPUP && !businessSchedulePOPUP && (
-        <BusinessProfilePOPUP
-          businessRankArr={businessRankArr}
-          isVisible={modalVisible}
-          onClose={handleBusinessProfilePOPUP}
-          Business_Number={JSON.stringify(result.id)}
-        />
-      )}
-    </View>
+      )} */}
+        {businessProfilePOPUP && !businessSchedulePOPUP && (
+          <BusinessProfilePOPUP
+            businessRankArr={businessRankArr}
+            isVisible={modalVisible}
+            onClose={handleBusinessProfilePOPUP}
+            Business_Number={JSON.stringify(result.id)}
+          />
+        )}
+      </View>
+    )
   );
 };
 export default AvailableAppointmentToBook;
 
 const styles = StyleSheet.create({
   container1: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
   },
   container: {
     textAlign: "left",
@@ -567,6 +657,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 10,
   },
+  rowContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+
   titleText: {
     textAlign: "left",
     fontSize: 18,
@@ -574,15 +670,18 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   cube: {
-    width: 50,
+    width: 70,
     height: 50,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
     margin: 5,
   },
+  column: {
+    flexDirection: "column",
+  },
   selectedCube: {
-    backgroundColor: 'green',
+    backgroundColor: "green",
   },
   text: {
     textAlign: "left",
@@ -596,19 +695,23 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     fontSize: 18, // שינוי הגודל
-    color: 'white', // שינוי הצבע
-    fontWeight: 'bold', // הופך את הטקסט לבולט
-    textShadowColor: 'rgba(0, 0, 0, 0.75)', // צללה שחורה
+    color: "white", // שינוי הצבע
+    fontWeight: "bold", // הופך את הטקסט לבולט
+    textShadowColor: "rgba(0, 0, 0, 0.75)", // צללה שחורה
     textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10
+    textShadowRadius: 10,
   },
   buttonTitle: {
     fontSize: 18, // שינוי הגודל
-    color: 'white', // שינוי הצבע
-    fontWeight: 'bold', // הופך את הטקסט לבולט
-    textShadowColor: 'rgba(0, 0, 0, 0.75)', // צללה שחורה
+    color: "white", // שינוי הצבע
+    fontWeight: "bold", // הופך את הטקסט לבולט
+    textShadowColor: "rgba(0, 0, 0, 0.75)", // צללה שחורה
     textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10
+    textShadowRadius: 10,
+  },
+  iconContainer1: {
+    flexDirection: "row",
+    width: "23%",
   },
   iconContainer: {
     flexDirection: "row",
@@ -617,8 +720,8 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   buttonContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });
