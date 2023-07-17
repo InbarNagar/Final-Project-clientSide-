@@ -1,4 +1,4 @@
-import { Switch, View, Text, StyleSheet, ScrollView, TouchableOpacity, Keyboard, TextInput, KeyboardAvoidingView, Image } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Keyboard, TextInput, KeyboardAvoidingView, Image } from 'react-native'
 import { Alert } from 'react-native';
 import { RadioButton } from "react-native-paper";
 import { UserContext } from './UserDietails';
@@ -8,7 +8,7 @@ import { UpdateapiBusiness } from './obj/FunctionAPICode';
 import Menu_professional from './obj/Menu_professional';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Sae } from 'react-native-textinput-effects';
-import { Input } from './obj/Input'
+import {Input} from './obj/Input'
 import { Kaede } from 'react-native-textinput-effects';
 import { Akira } from 'react-native-textinput-effects';
 
@@ -16,17 +16,7 @@ import { Akira } from 'react-native-textinput-effects';
 
 
 export default function Update_personal_details_Bussines() {
-  const [switchStatus, setSwitchStatus] = useState('NO');
 
-  const onToggleSwitch = () => {
-    if (switchStatus === 'NO') {
-      setSwitchStatus('YES');
-    } else {
-      setSwitchStatus('NO');
-      console.log(switchStatus,"$$$$$$$$$$$$$$$$$$$$$$$$")
-    }
-  };
-  
   const { userDetails, setUserDetails } = useContext(UserContext);
   const [Name, setName] = useState('');
   const [AddressStreet, setStreet] = useState('');
@@ -41,8 +31,9 @@ export default function Update_personal_details_Bussines() {
   const [DataDetails, setDetailsBus] = useState(null);
 
   useEffect(() => {
-    BusinessDetails(BussinesNumber).then((result) => {
+    BusinessDetails(userDetails.Business_Number).then((result) => {
       setDetailsBus(result.data);
+      
       setName(result.data.Name);
       setStreet(result.data.AddressStreet);
       setHouseNumber(result.data.AddressHouseNumber);
@@ -57,25 +48,25 @@ export default function Update_personal_details_Bussines() {
   }
 
   );
-
+console.log(DataDetails)
   const Update_Bussines = () => {
 
     const data = {
       Name: Name,
-      Is_client_house: switchStatus,
+      Is_client_house: Is_client_house,
       AddressStreet: AddressStreet,
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
       Professional_ID_number: Professional_ID_number,
-      Business_Number: BussinesNumber,
+      Business_Number: userDetails.Business_Number,
       About: About
     }
-
+   
     UpdateapiBusiness(data).then(
       (res) => {
 
         console.log('yes', res.data)
-        Alert.alert("הפרטים עודכנו בהצלחה")
+           Alert.alert("הפרטים עודכנו בהצלחה")
 
       }, (error) => {
         console.log('error', error)
@@ -85,97 +76,98 @@ export default function Update_personal_details_Bussines() {
   }
 
   return (
-    <>
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-        <ScrollView>
-          {/* <TouchableOpacity onPress={Keyboard.dismiss}> */}
-          <View style={styles.container}>
+<>
+<KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+    <ScrollView>
+      {/* <TouchableOpacity onPress={Keyboard.dismiss}> */}
+        <View style={styles.container}>
 
-            <Text style={styles.tit}>  עריכת פרופיל עסקי</Text>
-
-
-
-            <Akira
-              label={'    שם העסק'}
-              // this is used as active and passive border color
-              borderColor={"rgb(204, 204, 255)"}
-              inputPadding={16}
-              labelHeight={24}
-              labelStyle={{ color: '#ac83c4', textAlign: 'left' }}
-              placeholder={Name}
-              placeholderTextColor="#92a2bd"
-              // value={Name}
-              onChangeText={(text) => setName(text)}
-            />
-
-            <Akira
-              label={'    רחוב'}
-              // this is used as active and passive border color
-              borderColor={"rgb(204, 204, 255)"}
-              inputPadding={16}
-              labelHeight={24}
-              labelStyle={{ color: '#ac83c4', textAlign: 'left' }}
-              placeholder={AddressStreet}
-              placeholderTextColor="#92a2bd"
-              // value={AddressStreet}
-              onChangeText={(text) => setStreet(text)}
-            />
-
-            <Akira
-              label={'    מספר בית'}
-              // this is used as active and passive border color
-              borderColor={"rgb(204, 204, 255)"}
-              inputPadding={16}
-              labelHeight={24}
-              labelStyle={{ color: '#ac83c4', textAlign: 'left' }}
-              placeholder={AddressHouseNumber}
-              placeholderTextColor="#92a2bd"
-              // value={AddressHouseNumber}
-              onChangeText={(text) => setHouseNumber(text)}
-            />
-
-            <Akira
-              label={'    עיר'}
-              // this is used as active and passive border color
-              borderColor={"rgb(204, 204, 255)"}
-              inputPadding={16}
-              labelHeight={24}
-              labelStyle={{ color: '#ac83c4', textAlign: 'left' }}
-              placeholder={AddressCity}
-              placeholderTextColor="#92a2bd"
-              // value={AddressCity}
-              onChangeText={(text) => setCity(text)}
-            />
-
-           
-
-            <Akira
-              label={'אודות העסק'}
-              // this is used as active and passive border color
-              borderColor={"rgb(204, 204, 255)"}
-              inputPadding={16}
-              labelHeight={24}
-              labelStyle={{ color: '#ac83c4', textAlign: 'left' }}
-              placeholder={About}
-              placeholderTextColor="#92a2bd"
-              // value={AddressHouseNumber}
-              onChangeText={(text) => setAbout(text)}
-            />
-
-<View style={styles.switchContainer}>
-  <Text style={styles.switchText}>האם מגיע לבית הלקוח? {switchStatus}</Text>
-  
-  <Switch
-    trackColor={{ false: "#767577", true:  'rgb(92, 71, 205)' }}
-    thumbColor={switchStatus === 'YES' ? 'white' : "#f4f3f4"}
-    ios_backgroundColor="#3e3e3e"
-    onValueChange={onToggleSwitch}
-    value={switchStatus === 'YES'}
-  />
-</View>
+          <Text style={styles.tit}>  עריכת פרופיל עסקי</Text>
 
 
-            {/* <Text>{'\n'}</Text>
+
+              <Akira
+                  label={'שם העסק'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={Name}
+                  placeholderTextColor="#92a2bd"
+                  // value={Name}
+                  onChangeText={(text) => setName(text)}
+                /> 
+
+              <Akira
+                  label={'רחוב'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={AddressStreet}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressStreet}
+                  onChangeText={(text) => setStreet(text)}
+                /> 
+
+              <Akira
+                  label={'מספר בית'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={AddressHouseNumber}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressHouseNumber}
+                  onChangeText={(text) => setHouseNumber(text)}
+                /> 
+
+              <Akira
+                  label={'עיר'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left'}}
+                  placeholder={AddressCity}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressCity}
+                  onChangeText={(text) => setCity(text)}
+                /> 
+
+              <Akira
+                  label={'האם מגיע לבית הלקוח'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={Is_client_house}
+                  placeholderTextColor="#92a2bd"
+                  // value={Is_client_house}
+                  onChangeText={(text) => setLocation(text)}
+              />
+
+<Akira
+                  label={'אודות העסק'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={About}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressHouseNumber}
+                  onChangeText={(text) => setAbout(text)}
+                /> 
+
+
+
+
+                {/* <Text>{'\n'}</Text>
           <View style={styles.inp}>
             <TextInput style={styles.textInputS}
               placeholder={Name}
@@ -228,29 +220,25 @@ export default function Update_personal_details_Bussines() {
 
 
 
-            <View >
-              <TouchableOpacity
-
-                onPress={Update_Bussines}
-              >
-                <View style={styles.but}>
-                  <Text style={styles.thachtext}>עדכן</Text>
-                </View>
-
-              </TouchableOpacity>
+          <View>
+            <TouchableOpacity onPress={Update_Bussines} >
+              <View style={styles.but}>
+                <Text style={styles.thachtext}>עדכן</Text>
+              </View>
+            </TouchableOpacity>
             </View>
-
-            <View style={styles.image1}>
-              <Image style={styles.image} source={require('../assets/logoo.png')} />
-              {/* <Text style={styles.tit1}>see the beauty around you</Text>
+          
+<View style={styles.image1}>
+            <Image style={styles.image} source={require('../assets/logoo.png')}/>
+                 {/* <Text style={styles.tit1}>see the beauty around you</Text>
             <Text style={styles.tit1}>beautyMe - see the beauty around you</Text> */}
             </View>
-          </View>
-
-          {/* </TouchableOpacity> */}
-        </ScrollView>
-        <Menu_professional />
-      </KeyboardAvoidingView>
+        </View>
+        
+      {/* </TouchableOpacity> */}
+    </ScrollView>
+    <Menu_professional />
+    </KeyboardAvoidingView>
 
     </>
   )
@@ -296,10 +284,10 @@ const styles = StyleSheet.create({
     // justifyContent: 'space-between',
     backgroundColor: '#e6e6fa', // Material Design purple 200
     padding: 10,
-    paddingBottom: 150,
+    paddingBottom:150,
     // height: "100%"
   },
-  image1: {
+  image1:{
     alignItems: 'center',
 
   },
@@ -326,7 +314,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
 
-  tit1: {
+  tit1:{
     "fontSize": 15,
     "fontWeight": "500",
     "letterSpacing": 0.15,
@@ -334,38 +322,24 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgb(92, 71, 205)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 5,
-    opacity: 0.7
-  },
+    opacity:0.7
+    },
 
-  tit: {
-    textAlign: 'center',
-    "fontSize": 35,
-    "fontWeight": "500",
-    "letterSpacing": 0.15,
-    "lineHeight": 50,
-    textShadowColor: 'rgb(92, 71, 205)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
-    opacity: 0.7
-  },
-  image: {
-    width: 200,
-    height: 200,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  switchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 20,
-    padding: 10,
-    borderRadius: 10,
-    width: '80%',
-    alignSelf: 'center',
-  },
-  switchText: {
-    fontSize: 18,
-    color: '#ac83c4',
-  },
+    tit:{
+      textAlign: 'center',
+      "fontSize": 35,
+      "fontWeight": "500",
+      "letterSpacing": 0.15,
+      "lineHeight": 50,
+      textShadowColor: 'rgb(92, 71, 205)',
+      textShadowOffset: { width: 2, height: 2 },
+      textShadowRadius: 5,
+      opacity:0.7
+      },
+      image:{
+        width:200,
+        height:200,
+        alignItems: 'center', 
+        justifyContent: 'center',
+        },
 });

@@ -192,20 +192,10 @@
 
 
 
-import { View, ScrollView, StyleSheet, Text } from "react-native";
-import Header from "./obj/Header";
-import Button from "./obj/Button";
+import { View, ScrollView, StyleSheet} from "react-native";
 import Menu_professional from "./obj/Menu_professional";
-import moment from "moment";
-import { FutureAppointmentB, allApoB } from "./obj/FunctionAPICode";
-import { useState,useEffect } from "react";
 import { UserContext } from '../comps/UserDietails';
 import React, { useContext } from "react";
-import { FutureAppointmenB } from "./obj/FunctionAPICode";
-import { Post_SendPushNotification } from "./obj/FunctionAPICode";
-import AppointmentCard_forProfessional_Calendar from "./obj/AppointmentCard_forProfessional_Calendar";
-import { ClientDetailes } from "./obj/FunctionAPICode";
-import ShowReviews from "./ShowReviews";
 import New_Calendar from "./New_Calender";
 
 //מסך ראשי בעל עסק
@@ -213,12 +203,11 @@ export default function Calendar_professional() {
 
   const { userDetails, setUserDetails } = useContext(UserContext);
   
-
   return (
     <>
 
       <ScrollView>
-        <View style={styles.view}>
+        <View style={styles.view1}>
           <New_Calendar/>
         </View>
 

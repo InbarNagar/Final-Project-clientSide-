@@ -4,18 +4,14 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Linking } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { Alert } from 'react-native';
-import { Button } from 'react-native-paper';
 import { GetAllAppointmentForProWithClient } from './obj/FunctionAPICode';
-import { ConfirmAppointment } from './obj/FunctionAPICode';
-import { faSpa } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../comps/UserDietails';
 import { CancelAppointmentByClient } from './obj/FunctionAPICode';
 import { Post_SendPushNotification } from './obj/FunctionAPICode';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Loading from './CTools/Loading';
+
 const New_Calendar = () => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const BussinesNumber = userDetails.Business_Number;

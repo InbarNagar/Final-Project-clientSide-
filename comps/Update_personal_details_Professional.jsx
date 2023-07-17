@@ -97,7 +97,7 @@ export default function Update_personal_details_Professional(Props) {
             "AddressCity": AddressCity,
             "password": password,
             "Business_Number": Business_Number,
-            // "userType": 
+        
         }
 
         console.log(data)
