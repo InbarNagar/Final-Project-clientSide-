@@ -30,6 +30,7 @@ const Client_registration = (props) => {
   const [AddressCity, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [instagramUserName, setinstagramUserName] = useState('');
+  const [facebookUserName, setfacebookUserName] = useState('');
   
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -99,7 +100,6 @@ const Client_registration = (props) => {
   //   }
   // };
   const handleRegistrationC = () => {
-   
     const data = {
       ID_number: ID_number,
       First_name: First_name,
@@ -114,8 +114,9 @@ const Client_registration = (props) => {
       password: password,
       ProfilPic:"profil"+ID_number,
       Instagram_link: instagramUserName,
-      // Facebook_link: Facebook_link
+      Facebook_link: facebookUserName
     }
+    console.log("data: "+data);
     Cli_Registration(data).then((result) => {
 
       console.log('yes', result)
@@ -198,7 +199,7 @@ const handleConfirm = (date) => {
 // }
 
   return (
-    <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+    <KeyboardAvoidingView  style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
     <ScrollView>
     <View style={styles.container}>
 
@@ -276,7 +277,7 @@ const handleConfirm = (date) => {
                   onChangeText={(text) => setLastName(text)}
                   style={styles.akira}
                 /> 
-                   <Akira
+                   {/* <Akira
                   label={'    מין'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
@@ -285,7 +286,28 @@ const handleConfirm = (date) => {
                   labelStyle={{ color: '#ac83c4'}}
                   onChangeText={(text) => setGender(text)}
                   style={styles.akira}
-                /> 
+                />  */}
+                <View style={styles.container1}>
+      <Text style={styles.label1}>מין</Text>
+      <View style={styles.radioButtonContainer}>
+        <View style={styles.radioButtonGroup}>
+          <Text>זכר</Text>
+          <RadioButton
+            value="M"
+            status={ gender === 'M' ? 'checked' : 'unchecked' }
+            onPress={() => setGender('M')}
+          />
+        </View>
+        <View style={styles.radioButtonGroup}>
+          <Text>נקבה</Text>
+          <RadioButton
+            value="F"
+            status={ gender === 'F' ? 'checked' : 'unchecked' }
+            onPress={() => setGender('F')}
+          />
+        </View>
+      </View>
+    </View>
                 <Text>{'\n'}</Text>
                
 
@@ -482,7 +504,7 @@ const handleConfirm = (date) => {
                   </View>
 
                  <Akira
-                  label={'    פאלפון'}
+                  label={'    פלאפון'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
@@ -543,13 +565,23 @@ const handleConfirm = (date) => {
                 /> 
 
                   <Akira
-                  label={'    שם המשתמש באינסטגרם'}
+                  label={'    לינק לאינסטגרם'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
                   labelHeight={24}
                   labelStyle={{ color: '#ac83c4'}}
                   onChangeText={(text) => setinstagramUserName(text)}
+                  style={styles.akira}
+                /> 
+                <Akira
+                  label={'    לינק לפייסבוק'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4'}}
+                  onChangeText={(text) => setfacebookUserName(text)}
                   style={styles.akira}
                 /> 
                 </View>
@@ -667,6 +699,14 @@ thachtext: {
     border:1
 
   },
+  radioButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  radioButtonGroup: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   textInputS: {
     // height: 40,
     // width: "80%",
@@ -737,6 +777,21 @@ thachtext: {
     // padding: 15,
     // margin: 10,
     // marginTop: 20,
+  },
+  container1: {
+    marginTop:10,
+    alignItems: 'center',
+  },
+  label1: {
+    fontSize: 18,
+    color: '#ac83c4'
+    // marginBottom: 5,
+  },
+  radioGroup1: {
+    flexDirection: 'row',
+  },
+  radioButton1: {
+    marginRight: 10,
   },
 
 });

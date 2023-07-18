@@ -1,13 +1,15 @@
 import React, { useContext, useState } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Button, Keyboard, TextInput, KeyboardAvoidingView} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Button, Keyboard, TextInput, KeyboardAvoidingView, Alert} from 'react-native';
 import { UserContext } from './UserDietails';
 import { UpdateClient } from './obj/FunctionAPICode';
+import { useNavigation } from '@react-navigation/native';
 import { Akira } from 'react-native-textinput-effects';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Update_ClientDetailes() {
     const { userDetails, setUserDetails } = useContext(UserContext);
 
+    const navigation=useNavigation();
     const [ID_number, setIDNumber] = useState(userDetails.ID_number);
     const [firstName, setFirstName] = useState(userDetails.First_name);
     const [lastName, setLastName] = useState(userDetails.Last_name);
@@ -37,11 +39,12 @@ export default function Update_ClientDetailes() {
             "Instagram_link": Instagram_link,
             "Facebook_link": Facebook_link
         };
-
         UpdateClient(data).then(
             (res) => {
-                console.log('yes', res)
-                setUserDetails(data)
+                console.log('yes', res.data)
+                // setUserDetails(data)
+                Alert.alert("הפרטים עודכנו בהצלחה!");
+                navigation.goBack();
 
             }, (error) => {
                 console.log('error', error)
@@ -52,7 +55,8 @@ export default function Update_ClientDetailes() {
 
     return (
 
-        <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+        <KeyboardAvoidingView  style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
         <ScrollView>
         <View style={styles.container}>
                 <Text style={styles.title}>עריכת פרטים אישים</Text>

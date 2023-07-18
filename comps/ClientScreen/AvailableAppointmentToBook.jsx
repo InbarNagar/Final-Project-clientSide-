@@ -421,7 +421,7 @@ const AvailableAppointmentToBook = (props) => {
       const body = {
         to: token,
         title: "BeautyMe",
-        body: `תור חדש הוזמן ע"י ${userDetails.First_name} ${userDetails.Last_name} `,
+        body: `תור חדש הוזמן ע"י ${userDetails.First_name} ${userDetails.Last_name}, ניתן לצפות בפרטי התור במסך היומן שלי. ניתן לבטל את התור עד לשעה למועד התחלתו! `,
         badge: "0",
         ttl: "1",
         data: {
@@ -548,11 +548,12 @@ const AvailableAppointmentToBook = (props) => {
   {finalHours.length > 0 &&
     finalHours.map((d, index) => (
       <View key={index} style={styles.iconContainer1}>
-        <View style={styles.column}>
+        <View style={[styles.column,{flexDirection:'column'}]}>
           <TouchableOpacity
             style={[
               styles.cube,
               selected === index && styles.selectedCube,
+              { alignSelf: 'flex-end' }, 
             ]}
             onPress={() => handlePress(index)}
           >
@@ -567,15 +568,26 @@ const AvailableAppointmentToBook = (props) => {
             </View>
           </TouchableOpacity>
           {selected === index && (
+            <View style={styles.buttonContent}>
+            <MaterialCommunityIcons
+              name="calendar-clock"
+              size={24}
+              color="rgb(92, 71, 205)"
+            />
             <Button
+              color={"rgb(92, 71, 205)"}
               title="הזמן תור"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.buttonTitle}
               onPress={() => btnBookApiontment(d)}
             />
+          </View>
           )}
         </View>
       </View>
     ))}
 </View>
+
 
         <Text style={styles.titleText}>טיפול:</Text>
         {result.typeTritment.map((t, i) => (
@@ -598,33 +610,7 @@ const AvailableAppointmentToBook = (props) => {
               onPress={handleBusinessProfilePOPUP}
             />
           </View>
-          <View style={styles.buttonContent}>
-            <MaterialCommunityIcons
-              name="calendar-clock"
-              size={24}
-              color="rgb(92, 71, 205)"
-            />
-            <Button
-              color={"rgb(92, 71, 205)"}
-              title="הזמן תור"
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.buttonTitle}
-              onPress={() => handleBusinessSchedulePOPUP()}
-            />
-          </View>
         </View>
-        {/* {businessSchedulePOPUP && !businessProfilePOPUP && (
-        <BusinessSchedule
-          businessNumber={result.id}
-          hours={finalHours}
-          duration={duration}
-          typeTreatmentNumber={treatmentNumber}
-          date={date}
-          Is_client_house={result.Is_client_house}
-          isVisible={bookModalVisible}
-          onClose={handleBusinessSchedulePOPUP}
-        />
-      )} */}
         {businessProfilePOPUP && !businessSchedulePOPUP && (
           <BusinessProfilePOPUP
             businessRankArr={businessRankArr}
@@ -655,11 +641,11 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // this will allow the items to wrap to the next line
-    alignItems: 'flex-end', // this will align items to the end of the row (right side for LTR layouts)
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start', // Align items to the right
   },
   iconContainer1: {
-    flex: 1 / 3, // this will allow 3 items in a row
+    flex: 1 / 2, // this will allow 3 items in a row
     padding: 5, // add padding if needed
     justifyContent: 'flex-end', // this will align items to the end of the column (bottom for LTR layouts)
   },
@@ -670,12 +656,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   cube: {
-    width: 70,
-    height: 50,
+    width: 60,
+    height: 40,
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    margin: 5,
   },
   column: {
     flexDirection: "column",

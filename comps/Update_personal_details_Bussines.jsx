@@ -76,7 +76,7 @@ export default function Update_personal_details_Bussines() {
 
   return (
 <>
-<KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+<KeyboardAvoidingView  style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
     <ScrollView>
       {/* <TouchableOpacity onPress={Keyboard.dismiss}> */}
         <View style={styles.container}>

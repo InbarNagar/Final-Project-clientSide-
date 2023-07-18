@@ -41,6 +41,16 @@ const handleInstagramLink = async () => {
     console.error('שגיאה בפתיחת האינסטגרם:', error);
   }
 };
+const handleFacebookLink = async () => {
+  try {
+    // const url = 'https://www.instagram.com/your_instagram_account';
+    const url = `https://www.facebook.com/${userDetails.Facebook_link}`;
+    await Linking.openURL(url);
+    console.log(Linking.openURL(url))
+  } catch (error) {
+    console.error('שגיאה בפתיחת הפייסבוק:', error);
+  }
+};
 
 const dialNumber = (number) => { //אם לא עובד זה כי צריך לאשר בהגדרות שימוש בטלפון לאפליקציה
   console.log(number);
@@ -128,6 +138,10 @@ else{
 <TouchableOpacity onPress={handleInstagramLink}>
 <FontAwesome name="instagram" size={24} color="black" style={{ marginRight: 100 }} />
 </TouchableOpacity>
+<TouchableOpacity onPress={handleFacebookLink}>
+<Feather name="facebook" size={24} color="black" style={{ marginRight: 100 }}/>
+{/* <FontAwesome name="facebook" size={24} color="black"  /> */}
+</TouchableOpacity>
 <TouchableOpacity
   style={styles.link}
   onPress={() => dialNumber(userDetails.phone)}
@@ -145,7 +159,15 @@ else{
 
         <Text style={styles.buttonText}>עריכת פרטים אישים </Text>
     </TouchableOpacity>
-
+    <Button title="מחיקת חשבון" onPress={handleDeleteSection} buttonStyle={{backgroundColor:'red',margin:10}}/>
+    {deleteSection &&
+       <View>
+        <Text>כדי למחוק את החשבון יש לכתוב DELETE</Text>
+        <TextInput placeholder="כתוב DELETE" value={confirmID} onChangeText={(value)=>SetConfirmID(value)}/>
+      <TouchableOpacity onPress={deleteAccount}>
+      <AntDesign name="delete" size={24} color="black" />
+      </TouchableOpacity>
+      </View>}
     {/* </View> */}
     </View>
     </View>

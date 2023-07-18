@@ -1,23 +1,17 @@
-
 import { View, ScrollView, StyleSheet, Text } from "react-native";
-import Header from "../obj/Header";
 import Button from "../obj/Button";
-import Menu_professional from "../obj/Menu_professional";
-import { FutureAppointmentB, allApoB } from "../obj/FunctionAPICode";
-import { useState } from "react";
+import { useState,useRef  } from "react";
 import { UserContext } from '../UserDietails';
 import React, { useContext } from "react";
-import { FutureAppointmenB, AllAppointmentForClientt } from "../obj/FunctionAPICode";
-import { Post_SendPushNotification } from "../obj/FunctionAPICode";
-import AppointmentCard_forProfessional_Calendar from "../obj/AppointmentCard_forProfessional_Calendar";
-import { ClientDetailes } from "../obj/FunctionAPICode";
-import ShowReviews from "../ShowReviews";
-import New_Calendar from "../New_Calender";
-import { AllApointemtDetailesForClient_With_BusinessReview } from "../obj/FunctionAPICode";
+import {  AllAppointmentForClientt } from "../obj/FunctionAPICode";
 import Menu_Client from "../obj/Menu_Client";
-import {DDD } from "../obj/FunctionAPICode";
 import AppointmentCard_forClient from "./AppointmentCard_forClient";
+import Header from "../obj/Header";
 
+import * as Animatable from 'react-native-animatable';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
+const AnimatedButton = Animatable.createAnimatableComponent(TouchableOpacity);
 
 
 // const all = [
@@ -173,7 +167,25 @@ import AppointmentCard_forClient from "./AppointmentCard_forClient";
 
 //מסך ראשי בעל עסק
 export default function My_Appintments() {
+  
+  
+  const buttonRef2 = useRef();
+  const buttonRef3 = useRef();
+  const buttonRef4 = useRef();
+  
+  const handlePressIn = (buttonRef) => {
+    buttonRef.current.animate({
+      0: { scale: 1 },
+      1: { scale: 0.9 },
+    });
+  };
 
+  const handlePressOut = (buttonRef) => {
+    buttonRef.current.animate({
+      0: { scale: 0.9 },
+      1: { scale: 1 },
+    });
+  };
 
   const { userDetails, setUserDetails } = useContext(UserContext);
   const IDNumber = userDetails.ID_number;
@@ -187,7 +199,12 @@ export default function My_Appintments() {
   const [showText3, setShowText3] = useState(false);
   const [showText4, setShowText4] = useState(false);
 
- 
+  let today = new Date();
+  let currentHour = today.getHours(); 
+  let currentMinute = today.getMinutes(); 
+  let currentTime = `${currentHour}:${currentMinute}`;
+console.log(userDetails)
+
   function floatToTime(floatNumber) {
     let hours = Math.floor(floatNumber);
     let minutes = Math.floor((floatNumber - hours) * 60);
@@ -196,9 +213,17 @@ export default function My_Appintments() {
   
   const handleSubmit = () => {
     AllAppointmentForClientt(userDetails.ID_number).then((result) => {
-      if (result)
-        setallAppointment(result)
-        console.log(result, "1111")
+      if (result) {
+    let sortedResult = result.sort((a, b) => {
+      let dateA = new Date(a.Date + ' ' + a.Start_Hour);
+      let dateB = new Date(b.Date + ' ' + b.Start_Hour);
+      return dateA - dateB;
+    });
+    sortedResult = sortedResult.reverse(); // הופך את הסדר של המערך
+    setallAppointment(sortedResult);
+    console.log(sortedResult, "1111");
+      }
+        
      }, (error) => {
       console.log('error', error)
     })
@@ -207,18 +232,20 @@ export default function My_Appintments() {
 
   const handleSubmit4 = () => {
 
-    let today = new Date();
-    let currentHour = today.getHours(); 
-    let currentMinute = today.getMinutes(); 
-    let currentTime = `${currentHour}:${currentMinute}`;
-
     AllAppointmentForClientt(userDetails.ID_number).then((result) => {
         let filterresult=""
       if(result)
-     filterresult = result.filter(apo=> ((floatToTime(apo.Start_Hour) <= currentTime ||floatToTime(apo.End_Hour) <= currentTime) && today.setHours(0, 0, 0, 0) >= apo.Date))
-   
-    setallAppointmentEnd(result)
-
+      {
+          let sortedResult = result.sort((a, b) => {
+            let dateA = new Date(a.Date + ' ' + a.Start_Hour);
+            let dateB = new Date(b.Date + ' ' + b.Start_Hour);
+            return dateA - dateB;
+          });
+          sortedResult = sortedResult.reverse();
+     filterresult =  sortedResult.filter(apo=>((floatToTime(apo.Start_Hour) <= currentTime &&floatToTime(apo.End_Hour) <= currentTime) && today.setHours(0, 0, 0, 0) >=  new Date(apo.Date).setHours(0, 0, 0, 0)))
+ 
+    setallAppointmentEnd(filterresult)
+}
     }, (error) => {
       console.log('error', error)
     })
@@ -230,11 +257,13 @@ export default function My_Appintments() {
 
     AllAppointmentForClientt(userDetails.ID_number).then((result) => {
         let filterresult3=""
-      if(result)
+      if(result){
      filterresult3= result.filter(apo=> (today.setHours(0, 0, 0, 0) == new Date(apo.Date).setHours(0, 0, 0, 0)))
 
      setFutureAppointment(filterresult3)//תורים של היום הנוכחי
 
+     
+}
 
     }, (error) => {
       console.log('error', error)
@@ -247,18 +276,54 @@ export default function My_Appintments() {
 
   return (
     <>
-      <ScrollView>
+      <ScrollView style={{ backgroundColor:"#e6e6fa"}}>
         <View style={styles.view}>
+        <ScrollView horizontal={true}>
+  <View style={styles.container}>
+    <AnimatedButton
+      ref={buttonRef2}
+      onPressIn={() => {
+        handlePressIn(buttonRef2);
+        handleSubmit();
+      }}
+      onPressOut={() => handlePressOut(buttonRef2)}
+      style={{ backgroundColor: showText2 ? 'rgb(92, 71, 205)' : 'white', padding: 15, borderRadius: 70, marginHorizontal: 10 }}
+    >
+      <Text style={{ color: showText2 ? 'white' : 'black' }}>כל התורים</Text>
+    </AnimatedButton>
 
-           <ScrollView horizontal={true}>
-            <View style={styles.container}>
-              <Button title={showText2 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit} text="כל התורים" />
-              <Button title={showText3 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit3} text="תורים להיום" />
-              <Button title={showText4 ? 'Hide Text' : 'Show Text'} onPress={handleSubmit4} text="תורים שנגמרו"/>
-             </View>
-          </ScrollView> 
+    <AnimatedButton
+      ref={buttonRef3}
+      onPressIn={() => {
+        handlePressIn(buttonRef3);
+        handleSubmit3();
+      }}
+      onPressOut={() => handlePressOut(buttonRef3)}
+      style={{ backgroundColor: showText3 ? 'rgb(92, 71, 205)' : 'white', padding: 15, borderRadius: 70, marginHorizontal: 10 }}
+    >
+      <Text style={{ color: showText3 ? 'white' : 'black' }}>תורים להיום</Text>
+    </AnimatedButton>
 
-        
+    <AnimatedButton
+      ref={buttonRef4}
+      onPressIn={() => {
+        handlePressIn(buttonRef4);
+        handleSubmit4();
+      }}
+      onPressOut={() => handlePressOut(buttonRef4)}
+      style={{ backgroundColor: showText4 ? 'rgb(92, 71, 205)' : 'white', padding: 15, borderRadius: 70, marginHorizontal: 10 }}
+    >
+      <Text style={{ color: showText4 ? 'white' : 'black' }}> היסטורית תורים</Text>
+    </AnimatedButton>
+  </View>
+</ScrollView>
+<Header 
+  fontSize={23} 
+  height={50} 
+  color={"rgb(92, 71, 205)"}  
+  text={`שלום ${userDetails.First_name}, ${showText3 ? 'אלו התורים שהזמנת להיום' : ''}`}
+/>
+           
           {showText2 && <View style={styles.view1}>
             {allAppointment && allAppointment.length > 0 &&
               allAppointment.map((appointment) => {
@@ -284,17 +349,19 @@ export default function My_Appintments() {
                   token={appointment.token}
                   Number_appointment={appointment.Number_appointment}
                   idb={appointment.Professional_ID_number}
+                  Instagram_link={appointment.Instagram_link}
+                  Facebook_link={appointment.Facebook_link}
                 />
               );
             })}
 
           </View>}
 
-          {showText4 && <View >
+          {showText4 && <View style={styles.view1}>
             {allAppointmentEnd && allAppointmentEnd.length > 0 &&
-              allAppointmentEnd.map(x => {
+              allAppointmentEnd.map((appointment)=> {
                   return (
-                    <AppointmentCard_forProfessional_Calendar
+                    <AppointmentCard_forClient
                     key={appointment.Number_appointment}
                     Review_Number={appointment.Review_Number}
                     backgroundColor={"white"}
@@ -322,9 +389,9 @@ export default function My_Appintments() {
 
           {showText3 && <View style={styles.view1}>
             {FutureAppointment && FutureAppointment.length > 0 &&
-              FutureAppointment.map(x => {
+              FutureAppointment.map((appointment)=> {
                 return (
-                  <AppointmentCard_forProfessional_Calendar
+                  <AppointmentCard_forClient
                   key={appointment.Number_appointment}
                   Review_Number={appointment.Review_Number}
                   backgroundColor={"white"}
@@ -350,7 +417,7 @@ export default function My_Appintments() {
           </View>}    
         
         </View>
-
+        <View style={{ height: 50 }} />
       </ScrollView>
 
       <Menu_Client/>
@@ -369,13 +436,12 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
-    padding: 10,
     margin:10
   },
   view: {
     flex: 1,
     flexDirection: 'column',
-    padding: 10,
+    backgroundColor:"#e6e6fa"
   },
   wel: {
     textAlign: "center",
@@ -385,9 +451,8 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "center",
     fontSize: 20,
-    color:"white"
+    color:"rgb(92, 71, 205)"
   }
-
 
 });
 

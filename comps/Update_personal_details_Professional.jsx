@@ -130,7 +130,7 @@ return (
 
     <>
         {/* {alert && alert} */}
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         {/* <ScrollView contentContainerStyle={styles.scrollView}> */}
         <ScrollView>
             <View style={styles.container}>
