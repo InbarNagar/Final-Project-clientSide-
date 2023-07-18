@@ -289,7 +289,7 @@ const AvailableAppointmentToBook = (props) => {
     //       (x) => x.time == newArray[i].value
     //     );
     //     console.log(`o = ${JSON.stringify(o)}`);
-    //     //o= 10,1 ***** o=18,1
+    //     //o= 10,1 *** o=18,1
     //     if (o && newArray[i].origin_number + o.gap == newArray[i + 1].value) {
     //       finalArray = finalArray.filter(
     //         (item) => item.value != newArray[i].value
@@ -302,7 +302,7 @@ const AvailableAppointmentToBook = (props) => {
     //       newArray[i + 1].value < newArray[i].origin_number + o.gap
     //     ) {
     //       let j = 0;
-    //       console.log("****");
+    //       console.log("**");
     //       console.log("newArray" + JSON.stringify(newArray));
     //       console.log("finalArray" + JSON.stringify(finalArray));
 
@@ -421,7 +421,7 @@ const AvailableAppointmentToBook = (props) => {
       const body = {
         to: token,
         title: "BeautyMe",
-        body: `תור חדש הוזמן ע"י ${userDetails.First_name} ${userDetails.Last_name} `,
+        body: `תור חדש הוזמן ע"י ${userDetails.First_name} ${userDetails.Last_name}, ניתן לצפות בפרטי התור במסך היומן שלי. ניתן לבטל את התור עד לשעה למועד התחלתו! `,
         badge: "0",
         ttl: "1",
         data: {
@@ -519,6 +519,7 @@ const AvailableAppointmentToBook = (props) => {
             טיפול בבית העסק
           </>
         )}
+        
         {result.typeTritment.map((t, i) => (
           <View key={i}>
             <View style={styles.iconContainer}>
@@ -543,36 +544,7 @@ const AvailableAppointmentToBook = (props) => {
             </View>
           </View>
         ))}
-        <Text style={styles.titleText}>שעות פנויות: </Text>
-        <View style={styles.rowContainer}>
-  {finalHours.length > 0 &&
-    finalHours.map((d, index) => (
-      <View key={index} style={styles.iconContainer1}>
-        <View style={styles.column}>
-          <TouchableOpacity
-            style={[
-              styles.cube,
-              selected === index && styles.selectedCube,
-            ]}
-            onPress={() => handlePress(index)}
-          >
-            <View style={styles.row}>
-              <Icon
-                name="clock-o"
-                size={20}
-                color="rgb(92, 71, 205)"
-                style={styles.icon}
-              />
-              <Text style={styles.title}>{floatToTime(d)}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
-    ))}
-</View>
-
-       
-        <View style={styles.buttonContainer}>
+         <View style={styles.buttonContainer}>
           <View style={styles.buttonContent}>
             <MaterialCommunityIcons
               name="store"
@@ -587,7 +559,33 @@ const AvailableAppointmentToBook = (props) => {
               onPress={handleBusinessProfilePOPUP}
             />
           </View>
-          <View style={styles.buttonContent}>
+        </View>
+        <Text style={styles.titleText}>שעות פנויות: </Text>
+        <View style={styles.rowContainer}>
+  {finalHours.length > 0 &&
+    finalHours.map((d, index) => (
+      <View key={index} style={styles.iconContainer1}>
+        <View style={[styles.column,{flexDirection:'column'}]}>
+          <TouchableOpacity
+            style={[
+              styles.cube,
+              selected === index && styles.selectedCube,
+              { alignSelf: 'flex-end' }, 
+            ]}
+            onPress={() => handlePress(index)}
+          >
+            <View style={styles.row}>
+              <Icon
+                name="clock-o"
+                size={20}
+                color="rgb(92, 71, 205)"
+                style={styles.icon}
+              />
+              <Text style={styles.title}>{floatToTime(d)}</Text>
+            </View>
+          </TouchableOpacity>
+          {selected === index && (
+            <View style={styles.buttonContent}>
             <MaterialCommunityIcons
               name="calendar-clock"
               size={24}
@@ -598,22 +596,38 @@ const AvailableAppointmentToBook = (props) => {
               title="הזמן תור"
               buttonStyle={styles.buttonStyle}
               titleStyle={styles.buttonTitle}
-              onPress={() => handleBusinessSchedulePOPUP()}
+              onPress={() => btnBookApiontment(d)}
             />
           </View>
+          )}
         </View>
-        {/* {businessSchedulePOPUP && !businessProfilePOPUP && (
-        <BusinessSchedule
-          businessNumber={result.id}
-          hours={finalHours}
-          duration={duration}
-          typeTreatmentNumber={treatmentNumber}
-          date={date}
-          Is_client_house={result.Is_client_house}
-          isVisible={bookModalVisible}
-          onClose={handleBusinessSchedulePOPUP}
-        />
-      )} */}
+      </View>
+    ))}
+</View>
+
+
+        {/* <Text style={styles.titleText}>טיפול:</Text>
+        {result.typeTritment.map((t, i) => (
+          <Text style={styles.text} key={i}>
+            מחיר: {t.price} זמן: {t.duration}
+          </Text>
+        ))} */}
+        {/* <View style={styles.buttonContainer}>
+          <View style={styles.buttonContent}>
+            <MaterialCommunityIcons
+              name="store"
+              size={25}
+              color="rgb(92, 71, 205)"
+            />
+            <Button
+              color={"rgb(92, 71, 205)"}
+              title="צפה בפרופיל העסק"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.buttonTitle}
+              onPress={handleBusinessProfilePOPUP}
+            />
+          </View>
+        </View> */}
         {businessProfilePOPUP && !businessSchedulePOPUP && (
           <BusinessProfilePOPUP
             businessRankArr={businessRankArr}
@@ -644,11 +658,11 @@ const styles = StyleSheet.create({
   },
   rowContainer: {
     flexDirection: 'row',
-    flexWrap: 'wrap', // this will allow the items to wrap to the next line
-    alignItems: 'flex-end', // this will align items to the end of the row (right side for LTR layouts)
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start', // Align items to the right
   },
   iconContainer1: {
-    flex: 1 / 3, // this will allow 3 items in a row
+    flex: 1 / 2, // this will allow 3 items in a row
     padding: 5, // add padding if needed
     justifyContent: 'flex-end', // this will align items to the end of the column (bottom for LTR layouts)
   },
@@ -659,12 +673,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   cube: {
-    width: 70,
-    height: 50,
+    width: 60,
+    height: 40,
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    margin: 5,
   },
   column: {
     flexDirection: "column",
@@ -680,7 +693,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10, // Adjust the margin as needed
+    marginTop:-10, // Adjust the margin as needed
   },
   buttonStyle: {
     fontSize: 18, // שינוי הגודל

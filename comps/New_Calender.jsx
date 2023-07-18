@@ -350,8 +350,8 @@ const New_Calendar = () => {
                     </>
                   )}
 
-                  {(floatToTime(appointment.Start_Hour) > currentTime && today.setHours(0, 0, 0, 0) <= new Date(Date1).setHours(0, 0, 0, 0)) &&
-                    (floatToTime(appointment.Start_Hour) >= timeOneHourFromNow && today.setHours(0, 0, 0, 0) <= new Date(Date1).setHours(0, 0, 0, 0)) &&
+                  {(floatToTime(appointment.Start_Hour) > currentTime && today.setHours(0, 0, 0, 0) <= new Date(appointment.Date).setHours(0, 0, 0, 0)) &&
+                    (floatToTime(appointment.Start_Hour) >= timeOneHourFromNow && today.setHours(0, 0, 0, 0) <= new Date(appointment.Date).setHours(0, 0, 0, 0)) &&
                     <View>
                       <TouchableOpacity onPress={() => {
                         setToken(appointment.Client.token);

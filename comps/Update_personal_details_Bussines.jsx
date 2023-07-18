@@ -45,9 +45,9 @@ export default function Update_personal_details_Bussines() {
     }, (error) => {
       console.log('error', error)
     })
-  }
+  }, []);
 
-  );
+ 
 console.log(DataDetails)
   const Update_Bussines = () => {
 

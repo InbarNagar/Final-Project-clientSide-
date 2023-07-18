@@ -1,678 +1,345 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Keyboard, TextInput, KeyboardAvoidingView, Image } from 'react-native'
+import { Alert } from 'react-native';
+import { RadioButton } from "react-native-paper";
 import { UserContext } from './UserDietails';
-import { UpdateClient } from './obj/FunctionAPICode';
+import React, { useState, useEffect, useContext } from 'react';
+import { BusinessDetails } from './obj/FunctionAPICode';
+import { UpdateapiBusiness } from './obj/FunctionAPICode';
+import Menu_professional from './obj/Menu_professional';
+import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import { Sae } from 'react-native-textinput-effects';
+import {Input} from './obj/Input'
+import { Kaede } from 'react-native-textinput-effects';
 import { Akira } from 'react-native-textinput-effects';
-import { ScrollView } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
-import Alert from './Alert';
-export default function Update_ClientDetailes() {
+
+
+
+
+export default function Update_personal_details_Bussines() {
 
   const { userDetails, setUserDetails } = useContext(UserContext);
+  const [Name, setName] = useState('');
+  const [AddressStreet, setStreet] = useState('');
+  const [AddressHouseNumber, setHouseNumber] = useState('');
+  const [AddressCity, setCity] = useState('');
+  const [Is_client_house, setLocation] = useState('');
+  const [Professional_ID_number, setIdPro] = useState('');
+  const [About, setAbout] = useState('');
 
-  const navigation = useNavigation();
+  const BussinesNumber = userDetails.Business_Number;
 
-  const [ID_number, setIDNumber] = useState(userDetails.ID_number);
-  const [firstName, setFirstName] = useState(userDetails.First_name);
-  const [lastName, setLastName] = useState(userDetails.Last_name);
-  const [birthDate, setBirthDate] = useState(userDetails.birth_date);
-  const [gender, setGender] = useState(userDetails.gender);
-  const [phone, setPhone] = useState(userDetails.phone);
-  const [email, setEmail] = useState(userDetails.Email);
-  const [addressStreet, setAddressStreet] = useState(userDetails.AddressStreet);
-  const [addressHouseNumber, setAddressHouseNumber] = useState(userDetails.AddressHouseNumber);
-  const [addressCity, setAddressCity] = useState(userDetails.AddressCity);
-  const [password, setPassword] = useState(userDetails.password);
-  const [Instagram_link, setInstagram_link] = useState(userDetails.Instagram_link);
-  const [Facebook_link, setFacebook_link] = useState(userDetails.Facebook_link)
+  const [DataDetails, setDetailsBus] = useState(null);
 
-  const handle = () => {
+  useEffect(() => {
+    BusinessDetails(userDetails.Business_Number).then((result) => {
+      setDetailsBus(result.data);
+      
+      setName(result.data.Name);
+      setStreet(result.data.AddressStreet);
+      setHouseNumber(result.data.AddressHouseNumber);
+      setCity(result.data.AddressCity);
+      setLocation(result.data.Is_client_house);
+      setIdPro(result.data.Professional_ID_number);
+      setAbout(result.data.About);
+
+    }, (error) => {
+      console.log('error', error)
+    })
+  }, []);
+
+ 
+console.log(DataDetails)
+  const Update_Bussines = () => {
+
     const data = {
-      "ID_number": ID_number,
-      "First_name": firstName,
-      "Last_name": lastName,
-      "phone": phone,
-      "Email": email,
-      "AddressStreet": addressStreet,
-      "AddressHouseNumber": addressHouseNumber,
-      "AddressCity": addressCity,
-      "gender": gender,
-      "birth_date": birthDate,
-      "Instagram_link": Instagram_link,
-      "Facebook_link": Facebook_link
-    };
-
-    UpdateClient(data).then(
+      Name: Name,
+      Is_client_house: Is_client_house,
+      AddressStreet: AddressStreet,
+      AddressHouseNumber: AddressHouseNumber,
+      AddressCity: AddressCity,
+      Professional_ID_number: Professional_ID_number,
+      Business_Number: userDetails.Business_Number,
+      About: About
+    }
+   
+    UpdateapiBusiness(data).then(
       (res) => {
+
         console.log('yes', res.data)
+           Alert.alert("הפרטים עודכנו בהצלחה")
 
       }, (error) => {
         console.log('error', error)
-      });
 
-  };
+
+      });
+  }
 
   return (
-
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-      <ScrollView>
+<>
+<KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+    <ScrollView>
+      {/* <TouchableOpacity onPress={Keyboard.dismiss}> */}
         <View style={styles.container}>
-          <Text style={styles.title}>עריכת פרטים אישים</Text>
 
-          <Akira
-            label={'    תעודת זהות'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="תעודת זהות"
-            value={ID_number}
-            onChangeText={setIDNumber}
-            style={styles.akira}
-          />
+          <Text style={styles.tit}>  עריכת פרופיל עסקי</Text>
 
-          <Akira
-            label={'    שם פרטי'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="שם פרטי"
-            value={firstName}
-            onChangeText={setFirstName}
-            style={styles.akira}
-          />
 
-          <Akira
-            label={'    שם משפחה'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="שם משפחה"
-            value={lastName}
-            onChangeText={setLastName}
-            style={styles.akira}
-          />
 
-          <Akira
-            label={'    פאלפון'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="פלאפון"
-            value={phone}
-            onChangeText={setPhone}
-            style={styles.akira}
-          />
+              <Akira
+                  label={'שם העסק'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={Name}
+                  placeholderTextColor="#92a2bd"
+                  // value={Name}
+                  onChangeText={(text) => setName(text)}
+                /> 
 
-          <Akira
-            label={'    Email'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="אימייל" value={email}
-            onChangeText={setEmail}
-            style={styles.akira}
-          />
+              <Akira
+                  label={'רחוב'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={AddressStreet}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressStreet}
+                  onChangeText={(text) => setStreet(text)}
+                /> 
 
-          <Akira
-            label={'    רחוב'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="רחוב"
-            value={addressStreet}
-            onChangeText={setAddressStreet}
-            style={styles.akira}
-          />
+              <Akira
+                  label={'מספר בית'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={AddressHouseNumber}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressHouseNumber}
+                  onChangeText={(text) => setHouseNumber(text)}
+                /> 
 
-          <Akira
-            label={'    מספר בית'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="מספר בית"
-            value={addressHouseNumber}
-            onChangeText={setAddressHouseNumber}
-            style={styles.akira}
-          />
+              <Akira
+                  label={'עיר'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left'}}
+                  placeholder={AddressCity}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressCity}
+                  onChangeText={(text) => setCity(text)}
+                /> 
 
-          <Akira
-            label={'    עיר'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="עיר"
-            value={addressCity}
-            onChangeText={setAddressCity}
-            style={styles.akira}
-          />
+              <Akira
+                  label={'האם מגיע לבית הלקוח'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={Is_client_house}
+                  placeholderTextColor="#92a2bd"
+                  // value={Is_client_house}
+                  onChangeText={(text) => setLocation(text)}
+              />
 
-          <Akira
-            label={'    סיסמה'}
-            // this is used as active and passive border color
-            borderColor={"rgb(204, 204, 255)"}
-            inputPadding={16}
-            labelHeight={24}
-            labelStyle={{ color: '#ac83c4' }}
-            placeholder="סיסמא"
-            value={password}
-            onChangeText={setPassword}
-            style={styles.akira}
-          />
+<Akira
+                  label={'אודות העסק'}
+                  // this is used as active and passive border color
+                  borderColor={"rgb(204, 204, 255)"}
+                  inputPadding={16}
+                  labelHeight={24}
+                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
+                  placeholder={About}
+                  placeholderTextColor="#92a2bd"
+                  // value={AddressHouseNumber}
+                  onChangeText={(text) => setAbout(text)}
+                /> 
 
+
+
+
+                {/* <Text>{'\n'}</Text>
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder={Name}
+              placeholderTextColor="#92a2bd"
+             // value={Name}
+              onChangeText={(text) => setName(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder={AddressStreet}
+              placeholderTextColor="#92a2bd"
+             // value={AddressStreet}
+              onChangeText={(text) => setStreet(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder={AddressHouseNumber}
+              placeholderTextColor="#92a2bd"
+             // value={AddressHouseNumber}
+              onChangeText={(text) => setHouseNumber(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder={AddressCity}
+              placeholderTextColor="#92a2bd"
+             // value={AddressCity}
+              onChangeText={(text) => setCity(text)}
+            />
+
+          </View>
+
+          <View style={styles.inp}>
+            <TextInput style={styles.textInputS}
+              placeholder={Is_client_house}
+              placeholderTextColor="#92a2bd"
+             // value={Is_client_house}
+              onChangeText={(text) => setLocation(text)}
+            />
+
+          </View> */}
 
 
 
           <View>
-            <TouchableOpacity onPress={handle()}>
+            <TouchableOpacity onPress={Update_Bussines} >
               <View style={styles.but}>
-                <Text style={styles.thachtext}>עדכן שינויים</Text>
+                <Text style={styles.thachtext}>עדכן</Text>
               </View>
-
             </TouchableOpacity>
-          </View>
-
+            </View>
+          
+<View style={styles.image1}>
+            <Image style={styles.image} source={require('../assets/logoo.png')}/>
+                 {/* <Text style={styles.tit1}>see the beauty around you</Text>
+            <Text style={styles.tit1}>beautyMe - see the beauty around you</Text> */}
+            </View>
         </View>
-      </ScrollView>
+        
+      {/* </TouchableOpacity> */}
+    </ScrollView>
+    <Menu_professional />
     </KeyboardAvoidingView>
 
-
-  );
+    </>
+  )
 }
 
 const styles = StyleSheet.create({
+  inp: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    width: '80%',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 30,
+    backgroundColor: '#f3e5f5' // Material Design light purple 100
+  },
+  textInputS: {
+    color: '#808080',
+    fontSize: 20,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    opacity: 0.5,
+  },
+  title: {
+    padding: 10,
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#ba68c8', // Material Design purple 300
+    fontWeight: 'bold',
+  },
+  titp: {
+    textAlign: 'center',
+    color: '#f3e5f5', // Material Design light purple 100
+    fontSize: 17,
+    padding: 20,
+  },
   container: {
     flex: 1,
     justifyContent: 'flex-start',
-
+    // width: '100%',
+    // padding:40,
+    // alignItems: 'center',
+    // justifyContent: 'space-between',
     backgroundColor: '#e6e6fa', // Material Design purple 200
     padding: 10,
-    paddingBottom: 150,
+    paddingBottom:150,
+    // height: "100%"
   },
-  wrapper: {
-    backgroundColor: '#f8f8ff',
-    padding: 20,
-    width: '80%',
-    borderRadius: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 30,
-  },
-  inputContainer: {
-    flexDirection: 'row',
+  image1:{
     alignItems: 'center',
-    marginBottom: 15,
+
   },
-  label: {
-    fontSize: 16,
-    marginRight: 10,
-    textAlign: 'right',
-  },
-  textInput: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    paddingHorizontal: 10,
-    height: 40,
-    borderRadius: 5,
-    textAlign: 'right',
+  text: {
+    textAlign: 'left',
+    paddingBottom: 10,
   },
   but: {
     textAlign: 'center',
-    alignItems: 'center',
     borderRadius: 25,
     height: 50,
     // marginBottom: 20,
     backgroundColor: "rgb(92, 71, 205)", // Material Design purple 100
     padding: 15,
     margin: 10,
-    marginTop: 50,
+    marginTop: 20,
     width: "90%",
   },
   thachtext: {
     textAlign: 'center',
-    alignItems: 'center',
     color: '#f3e5f5', // Material Design light purple 100
     fontSize: 25,
     fontWeight: 'bold',
     height: 50,
   },
+
+  tit1:{
+    "fontSize": 15,
+    "fontWeight": "500",
+    "letterSpacing": 0.15,
+    "lineHeight": 50,
+    textShadowColor: 'rgb(92, 71, 205)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 5,
+    opacity:0.7
+    },
+
+    tit:{
+      textAlign: 'center',
+      "fontSize": 35,
+      "fontWeight": "500",
+      "letterSpacing": 0.15,
+      "lineHeight": 50,
+      textShadowColor: 'rgb(92, 71, 205)',
+      textShadowOffset: { width: 2, height: 2 },
+      textShadowRadius: 5,
+      opacity:0.7
+      },
+      image:{
+        width:200,
+        height:200,
+        alignItems: 'center', 
+        justifyContent: 'center',
+        },
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////// גרסה עובדת לפני עיצוב
-// import React, { useContext, useState } from 'react';
-// import {
-//     View,
-//     Text,
-//     StyleSheet,
-//     TouchableOpacity,
-//     Button,
-//     Keyboard,
-//     TextInput,
-// } from 'react-native';
-
-// import { UserContext } from './UserDietails';
-// import { UpdateClient } from './obj/FunctionAPICode';
-// export default function Update_ClientDetailes() {
-//     const { userDetails, setUserDetails } = useContext(UserContext);
-
-//     const [ID_number, setIDNumber] = useState(userDetails.ID_number);
-//     const [firstName, setFirstName] = useState(userDetails.First_name);
-//     const [lastName, setLastName] = useState(userDetails.Last_name);
-//     const [birthDate, setBirthDate] = useState(userDetails.birth_date);
-//     const [gender, setGender] = useState(userDetails.gender);
-//     const [phone, setPhone] = useState(userDetails.phone);
-//     const [email, setEmail] = useState(userDetails.Email);
-//     const [addressStreet, setAddressStreet] = useState(userDetails.AddressStreet);
-//     const [addressHouseNumber, setAddressHouseNumber] = useState(userDetails.AddressHouseNumber);
-//     const [addressCity, setAddressCity] = useState(userDetails.AddressCity);
-//     const [password, setPassword] = useState(userDetails.password);
-//     const [Instagram_link, setInstagram_link] = useState(userDetails.Instagram_link);
-//     const [Facebook_link, setFacebook_link] = useState(userDetails.Facebook_link)
-
-//     const handleUpdateDetails = () => {
-//         const data = {
-//             "ID_number": ID_number,
-//             "First_name": firstName,
-//             "Last_name": lastName,
-//             "phone": phone,
-//             "Email": email,
-//             "AddressStreet": addressStreet,
-//             "AddressHouseNumber": addressHouseNumber,
-//             "AddressCity": addressCity,
-//             "gender": gender,
-//             "birth_date": birthDate,
-//             "Instagram_link": Instagram_link,
-//             "Facebook_link": Facebook_link
-//         };
-
-//         UpdateClient(data).then(
-//             (res) => {
-//                 console.log('yes', res)
-//                 setUserDetails(data)
-
-//             }, (error) => {
-//                 console.log('error', error)
-//             });
-
-//         // Perform update logic here
-//     };
-
-//     return (
-//         <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
-//             <View style={styles.wrapper}>
-//                 <Text style={styles.title}>עריכת פרטים אישים</Text>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="תעודת זהות"
-//                         value={ID_number}
-//                         onChangeText={setIDNumber}
-//                     />
-//                     <Text style={styles.label}>תעודת זהות</Text>
-//                 </View>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="שם פרטי"
-//                         value={firstName}
-//                         onChangeText={setFirstName}
-//                     />
-//                     <Text style={styles.label}>שם פרטי</Text>
-//                 </View>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="שם משפחה"
-//                         value={lastName}
-//                         onChangeText={setLastName}
-//                     />
-//                     <Text style={styles.label}>שם משפחה</Text>
-//                 </View>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="פלאפון"
-//                         value={phone}
-//                         onChangeText={setPhone}
-//                     />
-//                     <Text style={styles.label}>פלאפון</Text>
-//                 </View>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="אימייל" value={email}
-//                         onChangeText={setEmail}
-//                     />
-//                     <Text style={styles.label}>אימייל</Text>
-//                 </View>
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="רחוב"
-//                         value={addressStreet}
-//                         onChangeText={setAddressStreet}
-//                     />
-//                     <Text style={styles.label}>רחוב</Text>
-//                 </View>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="מספר בית"
-//                         value={addressHouseNumber}
-//                         onChangeText={setAddressHouseNumber}
-//                     />
-//                     <Text style={styles.label}>מספר בית</Text>
-//                 </View>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="עיר"
-//                         value={addressCity}
-//                         onChangeText={setAddressCity}
-//                     />
-//                     <Text style={styles.label}>עיר</Text>
-//                 </View>
-
-//                 <View style={styles.inputContainer}>
-//                     <TextInput
-//                         style={styles.textInput}
-//                         placeholder="סיסמא"
-//                         value={password}
-//                         onChangeText={setPassword}
-//                         secureTextEntry={true}
-//                     />
-//                     <Text style={styles.label}>סיסמא</Text>
-//                 </View>
-
-//                 <Button
-//                     color="#9acd32"
-//                     title="עדכן שינוים"
-//                     onPress={handleUpdateDetails}
-//                 />
-//             </View>
-//         </TouchableOpacity>
-//     );
-// }
-
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//     },
-//     wrapper: {
-//         backgroundColor: '#f8f8ff',
-//         padding: 20,
-//         width: '80%',
-//         borderRadius: 10,
-//     },
-//     title: {
-//         fontSize: 24,
-//         fontWeight: 'bold',
-//         textAlign: 'center',
-//         marginBottom: 30,
-//     },
-//     inputContainer: {
-//         flexDirection: 'row',
-//         alignItems: 'center',
-//         marginBottom: 15,
-//     },
-//     label: {
-//         fontSize: 16,
-//         marginRight: 10,
-//         textAlign: 'right',
-//     },
-//     textInput: {
-//         flex: 1,
-//         borderWidth: 1,
-//         borderColor: '#cccccc',
-//         paddingHorizontal: 10,
-//         height: 40,
-//         borderRadius: 5,
-//         textAlign: 'right',
-//     },
-// });
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////
-// import { View, Text ,StyleSheet,TouchableOpacity, Button, Keyboard,TextInput} from 'react-native'
-// import React from 'react'
-// import { useState,useContext } from 'react';
-// import { UserContext } from './UserDietails';
-// export default function Update_ClientDetailes() {
-
-//      const { userDetails, setUserDetails } = useContext(UserContext);
-
-
-//     const [ID_number, setid] = useState(userDetails.ID_number);
-//     const [First_name, setFirstName] = useState(userDetails.First_name);
-//     const [Last_name, setLastName] = useState(userDetails.Last_name);
-//     const [birth_date, setDateOfBirth] = useState(userDetails.birth_date);
-//     const [gender, setGender] = useState(userDetails.gender);
-//     const [phone, setPhone] = useState(userDetails.phone);
-//     const [Email, setEmail] = useState(userDetails.Email);
-//     const [AddressStreet, setStreet] = useState(userDetails.AddressStreet);
-//     const [AddressHouseNumber, setHouseNumber] = useState(userDetails.AddressHouseNumber);
-//     const [AddressCity, setCity] = useState(userDetails.AddressCity);
-//     const [password, setPassword] = useState(userDetails.password);
-
-//     const Update_Diteails = () => {
-
-//         const data = {
-//             "ID_number": ID_number,
-//             "First_name": First_name,
-//             "Last_name": Last_name,
-//             "birth_date": birth_date,
-//             "gender": gender,
-//             "phone": phone,
-//             "Email": Email,
-//             "AddressStreet": AddressStreet,
-//             "AddressHouseNumber": AddressHouseNumber,
-//             "AddressCity": AddressCity,
-//             "password": password,
-//             "Business_Number": Business_Number,
-//             // "userType":
-//         }
-
-// }
-
-//   return (
-//     <TouchableOpacity style={styles.container} onPress={Keyboard.dismiss}>
-//     <View style={{backgroundColor:'#f8f8ff' }}>
-//       <Text style={styles.title}>עריכת פרטים אישים</Text>
-
-
-//       <View style={styles.inp}>
-//          <TextInput style={styles.textInputS}
-//            placeholder="תעודת זהות"
-//            value={ID_number}
-//            onChangeText={(text) => setid(text)}
-//          />
-//          <Text>תעודת זהות:</Text>
-//       </View>
-
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="שם פרטי"
-//           value={First_name}
-//           onChangeText={(text) => setFirstName(text)}
-//         />
-//         <Text>שם פרטי</Text>
-//       </View>
-
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="שם משפחה"
-//           value={Last_name}
-//           onChangeText={(text) => setLastName(text)}
-//         />
-//         <Text>שם משפחה</Text>
-//       </View>
-
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="פלאפון"
-//           value={phone}
-//           onChangeText={(text) => setPhone(text)}
-//         />
-//         <Text>פלאפון</Text>
-//       </View>
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="אימייל"
-//           value={Email}
-//           onChangeText={(text) => setEmail(text)}
-//         />
-//         <Text>איימיל</Text>
-//       </View>
-
-
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="רחוב"
-//           value={AddressStreet}
-//           onChangeText={(text) => setStreet(text)}
-//         />
-//         <Text>רחוב</Text>
-//       </View>
-
-
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="מספר בית"
-//           value={AddressHouseNumber}
-//           onChangeText={(text) => setHouseNumber(text)}
-//         />
-//         <Text>מספר בית</Text>
-//       </View>
-
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="עיר"
-//           value={AddressCity}
-//           onChangeText={(text) => setCity(text)}
-//         />
-//         <Text>עיר</Text>
-//       </View>
-
-//       <View style={styles.inp}>
-//         <TextInput style={styles.textInputS}
-//           placeholder="סיסמא"
-//           value={password}
-//           onChangeText={(text) => setPassword(text)}
-//           secureTextEntry={true}
-//         />
-//         <Text>סיסמא</Text>
-//       </View>
-
-//       <Button color='#9acd32' title="סיום הרשמה" onPress={Update_Diteails} />
-//     </View>
-//     </TouchableOpacity>
-//   )
-// }
-
-// const styles = StyleSheet.create({
-//   inp: {
-//     flexDirection: 'row',
-//     padding: 15,
-//     justifyContent: 'space-between',
-//     color: 'red',
-//   },
-//   textInputS: {
-//     borderWidth: 1,
-//     borderColor: '#cccccc',
-//     width: "80%",
-//     marginRight: 8,
-//   },
-//   title: {
-//     padding: 60,
-//     justifyContent: 'center',
-//     textAlign: 'center'
-//   },
-//   titp: {
-//     textAlign: 'center',
-//     Color: '#9acd32'
-//   }
-// });
-
-
-// const handleUpdateDetails = () => {
-//     const data = {
-//       ID_number:ID_number,
-//       First_name: firstName,
-//       Last_name: lastName,
-//       birth_date: birthDate,
-//       gender:gender,
-//       phone:phone,
-//       Email: email,
-//       AddressStreet: addressStreet,
-//       AddressHouseNumber: addressHouseNumber,
-//       AddressCity: addressCity,
-//       password:password,
-//     };
-
-//     UpdateClient(data).then(
-//         (res) => {
-//             console.log('yes', res)
-//             setUserDetails(data)
-
-//         }, (error) => {
-//             console.log('error', error)
-//         });
-
-//     // Perform update logic here
-//   };
