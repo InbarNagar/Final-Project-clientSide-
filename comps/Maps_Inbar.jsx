@@ -1,10 +1,10 @@
-import { View, Text ,ScrollView} from 'react-native'
+import { View, Text, ScrollView,StyleSheet,Button } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import MapView, { Callout, Circle, Marker } from 'react-native-maps'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import * as Location from 'expo-location'
-import AvailableAppointmentToBook from './ClientScreen/AvailableAppointmentToBook';
 
+import BusinessProfilePOPUP_Map from './ClientScreen/BusinessProfilePOPUP_Map';
 // const result=[
 //     {
 //         "Number_appointment": 1169,
@@ -1598,6 +1598,9 @@ export default function Maps_Inbar({ route }) {
 
     const [pickedLocation, setPickedLocation] = useState({ lat: '', lng: '' });
     const [location, setLocation] = useState();
+
+    const [businessProfilePOPUP, SetBusinessProfilePOPUP] = useState(false);
+    const [modalVisible, SetModalVisible] = useState(false);
     // const [locationPermissionInformation, requestPermission]= useForegroundPermissions();
     const [pin, setPin] = useState({
         latitude: 32.34245547297243,
@@ -1635,7 +1638,14 @@ export default function Maps_Inbar({ route }) {
         })
             ();
     }, []);
-
+    function handleBusinessProfilePOPUP() {
+        console.log("open pop-up window");
+        SetModalVisible(!modalVisible);
+        console.log("modalVisible - ", modalVisible);
+        SetBusinessProfilePOPUP(!businessProfilePOPUP);
+        console.log("businessProfilePOPUP - ", businessProfilePOPUP);
+        console.log("business number: " + JSON.stringify(result.id));
+      }
     return (
         <View style={{ flex: 1, backgroundColor: '#4B0082' }}>
             {/* <GooglePlacesAutocomplete
@@ -1703,13 +1713,24 @@ export default function Maps_Inbar({ route }) {
                                 draggable={true}
                             >
                                 <Callout>
-                                <ScrollView horizontal={true}>
-                                        <AvailableAppointmentToBook
-                                            key={x.id}
-                                            result={x}
-                                            treatmentNumber={x.treatmentNumber}
+                                    <ScrollView horizontal={true}>
+                                        <Button
+                                            color={"rgb(92, 71, 205)"}
+                                            title="צפה בפרופיל העסק"
+                                            buttonStyle={styles.buttonStyle}
+                                            titleStyle={styles.buttonTitle}
+                                            onPress={handleBusinessProfilePOPUP}
                                         />
-                                   </ScrollView> 
+                                        {businessProfilePOPUP && (
+                                            < BusinessProfilePOPUP_Map
+                                                x={x}
+                                                isVisible={modalVisible}
+                                                onClose={handleBusinessProfilePOPUP}
+                                                Business_Number={x.id}
+                                            />
+                                        )}
+
+                                    </ScrollView>
                                 </Callout>
                             </Marker>
                         )
@@ -1719,3 +1740,23 @@ export default function Maps_Inbar({ route }) {
         </View>
     )
 }
+const styles = StyleSheet.create({
+    buttonStyle: {
+        fontSize: 18, // שינוי הגודל
+        color: "white", // שינוי הצבע
+        fontWeight: "bold", // הופך את הטקסט לבולט
+        textShadowColor: "rgba(0, 0, 0, 0.75)", // צללה שחורה
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 10,
+     
+      },
+      buttonTitle: {
+        fontSize: 18, // שינוי הגודל
+        color: "white", // שינוי הצבע
+        fontWeight: "bold", // הופך את הטקסט לבולט
+        textShadowColor: "rgba(0, 0, 0, 0.75)", // צללה שחורה
+        textShadowOffset: { width: -1, height: 1 },
+        textShadowRadius: 10,
+      },
+   
+  });
