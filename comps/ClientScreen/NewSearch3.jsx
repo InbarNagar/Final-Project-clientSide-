@@ -296,7 +296,7 @@ console.log("final: " + JSON.stringify(final));
         Is_client_house
     );
     const obj = {
-      AddressCity: AddressCity,
+      AddressCity:userDetails.AddressCity,
       TreatmentNumber: treatmentNumber,
       // sort: "דירוג גבוהה תחילה",
       // Is_client_house: Is_client_house,
