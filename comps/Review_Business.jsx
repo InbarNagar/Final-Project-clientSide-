@@ -208,7 +208,7 @@ const Review_Business = ({ route }) => {
                 />
 
 
-                <TouchableOpacity  style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName:"profil"+ Number_appointment })}>
+                <TouchableOpacity  style={styles.but}  onPress={() => navigation.navigate('CameraUse', { imageName:"profil"+ Number_appointment })}>
                 <View>
                   <Text>צלם</Text>
                 </View>
@@ -287,6 +287,17 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     backgroundColor: 'rgb(92, 71, 205)',
+  },
+  but: {
+    textAlign: 'center',
+    borderRadius: 25,
+    height: 50,
+    marginBottom: 20,
+    backgroundColor: "rgb(92, 71, 205)",
+    padding: 8,
+    margin: 10,
+    marginTop: 10,
+    
   },
 });
 

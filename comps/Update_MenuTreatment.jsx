@@ -188,8 +188,8 @@ const Update_MenuTreatment = (Props) => {
         console.log(result.data)
         console.log(result.status)
         Alert.alert(
-          'העסק נוסף בהצלחה',
-          'שמחים שהצטרפתם למשפחת Beauty Me. ' +
+          'הטיפול נוסף בהצלחה',
+        "Beauty Me." +
           'תרצו להוסיף טיפול נוסף?',
           [
             {

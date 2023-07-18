@@ -12,7 +12,7 @@ import { CheckBox } from 'react-native-elements';
 import { Feather, SimpleLineIcons, AntDesign, Ionicons } from '@expo/vector-icons';
 import axios from 'axios';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
-
+import { Alert } from 'react-native';
 
 
 

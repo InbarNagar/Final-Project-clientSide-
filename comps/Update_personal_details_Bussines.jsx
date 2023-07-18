@@ -31,8 +31,9 @@ export default function Update_personal_details_Bussines() {
   const [DataDetails, setDetailsBus] = useState(null);
 
   useEffect(() => {
-    BusinessDetails(BussinesNumber).then((result) => {
+    BusinessDetails(userDetails.Business_Number).then((result) => {
       setDetailsBus(result.data);
+      
       setName(result.data.Name);
       setStreet(result.data.AddressStreet);
       setHouseNumber(result.data.AddressHouseNumber);
@@ -47,7 +48,7 @@ export default function Update_personal_details_Bussines() {
   }
 
   );
-
+console.log(DataDetails)
   const Update_Bussines = () => {
 
     const data = {
@@ -57,7 +58,7 @@ export default function Update_personal_details_Bussines() {
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
       Professional_ID_number: Professional_ID_number,
-      Business_Number: BussinesNumber,
+      Business_Number: userDetails.Business_Number,
       About: About
     }
    
@@ -65,7 +66,7 @@ export default function Update_personal_details_Bussines() {
       (res) => {
 
         console.log('yes', res.data)
-        Alert.alert("הפרטים עודכנו בהצלחה")
+           Alert.alert("הפרטים עודכנו בהצלחה")
 
       }, (error) => {
         console.log('error', error)
@@ -86,7 +87,7 @@ export default function Update_personal_details_Bussines() {
 
 
               <Akira
-                  label={'    שם העסק'}
+                  label={'שם העסק'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
@@ -99,7 +100,7 @@ export default function Update_personal_details_Bussines() {
                 /> 
 
               <Akira
-                  label={'    רחוב'}
+                  label={'רחוב'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
@@ -112,7 +113,7 @@ export default function Update_personal_details_Bussines() {
                 /> 
 
               <Akira
-                  label={'    מספר בית'}
+                  label={'מספר בית'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
@@ -125,7 +126,7 @@ export default function Update_personal_details_Bussines() {
                 /> 
 
               <Akira
-                  label={'    עיר'}
+                  label={'עיר'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
@@ -138,7 +139,7 @@ export default function Update_personal_details_Bussines() {
                 /> 
 
               <Akira
-                  label={'    האם מגיע לבית הלקוח'}
+                  label={'האם מגיע לבית הלקוח'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
@@ -151,7 +152,7 @@ export default function Update_personal_details_Bussines() {
               />
 
 <Akira
-                  label={'    אודות העסק'}
+                  label={'אודות העסק'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
                   inputPadding={16}
@@ -220,14 +221,10 @@ export default function Update_personal_details_Bussines() {
 
 
           <View>
-            <TouchableOpacity
-
-              onPress={Update_Bussines}
-            >
+            <TouchableOpacity onPress={Update_Bussines} >
               <View style={styles.but}>
                 <Text style={styles.thachtext}>עדכן</Text>
               </View>
-
             </TouchableOpacity>
             </View>
           
@@ -342,8 +339,7 @@ const styles = StyleSheet.create({
       image:{
         width:200,
         height:200,
-        alignItems: 'center',
-        textAlign: 'center',    
+        alignItems: 'center', 
         justifyContent: 'center',
         },
 });

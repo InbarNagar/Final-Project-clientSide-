@@ -152,8 +152,7 @@ height={100}
 
 element={ 
   <>    
-    <Text style={styles.title()}>  הוספת תמונה
-  {/* {imageName.includes("Ingredient")?'Ingredient':imageName.includes("REVIEW")?'ביקורת':'תמונת פרופיל'}  */}
+    <Text style={styles.title()}> {imageName.includes("Ingredient")?'Ingredient':imageName.includes("REVIEW")?'ביקורת':'הוספת תמונה'}  
     </Text>
 <TouchableOpacity style={styles.pic} onPress={PickImage}>
        {image==null ?

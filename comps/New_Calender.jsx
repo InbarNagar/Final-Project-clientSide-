@@ -4,18 +4,14 @@ import { Calendar, LocaleConfig } from 'react-native-calendars';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Linking } from 'react-native';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
 import { Alert } from 'react-native';
-import { Button } from 'react-native-paper';
 import { GetAllAppointmentForProWithClient } from './obj/FunctionAPICode';
-import { ConfirmAppointment } from './obj/FunctionAPICode';
-import { faSpa } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../comps/UserDietails';
 import { CancelAppointmentByClient } from './obj/FunctionAPICode';
 import { Post_SendPushNotification } from './obj/FunctionAPICode';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Loading from './CTools/Loading';
+
 const New_Calendar = () => {
   const { userDetails, setUserDetails } = useContext(UserContext);
   const BussinesNumber = userDetails.Business_Number;
@@ -27,7 +23,7 @@ const New_Calendar = () => {
   const [tokenClient, setToken] = useState();
   const [markedDates, setMarkedDates] = useState({});
   const [selectedDay, setSelectedDay] = useState(null);
-  const [showLoading,setshowLoading]=useState(true)
+  const [showLoading, setshowLoading] = useState(true)
 
   useEffect(() => {
     if (tokenClient) {
@@ -118,13 +114,13 @@ const New_Calendar = () => {
       })
       .catch((error) => {
         console.log("error!!!!!!!!!!!!!!!!!!!!!!!!!!!", error);
-       })
-      // .finally(()=>{
-      //   setInterval(() => {
-      //       showLoading&&setshowLoading(false)
-      //      },5000);
+      })
+    // .finally(()=>{
+    //   setInterval(() => {
+    //       showLoading&&setshowLoading(false)
+    //      },5000);
 
-      // });
+    // });
   }, []);
 
   useEffect(() => {
@@ -167,8 +163,17 @@ const New_Calendar = () => {
         moment(appointment.Date).format() === moment(selectedDate).format()
     );
 
+    let sortedResult = selectedAppointments.sort((a, b) => {
+      let dateA = new Date(a.Date + ' ' + a.Start_Hour);
+      let dateB = new Date(b.Date + ' ' + b.Start_Hour);
+      return dateA - dateB;
+    });
+    sortedResult = sortedResult.reverse();
+
+
+
     setSelectedDate(selectedDate);
-    setSelectedAppointments(selectedAppointments);
+    setSelectedAppointments(sortedResult);
     setSelectedDay(selectedDate); // עדכון התאריך הנבחר
 
     const updatedMarkedDates = { ...markedDates }; // יצירת מערך חדש כדי לא לשנות את המערך המקורי
@@ -202,35 +207,6 @@ const New_Calendar = () => {
   };
 
 
-  // const confirmStatus = (Number_appointment, token) => {
-  //   ConfirmAppointment(Number_appointment)
-  //     .then((result) => {
-  //       if (result.data) {
-  //         console.log(result.data);
-  //         setAlert(
-  //           <Alert
-  //             text="התור אושר בהצלחה, נשלחה הודעה ללקוח"
-  //             type="worng"
-  //             time={1000}
-  //             bottom={100}
-  //           />
-  //         );
-  //         setToken(token);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("error", error);
-  //       setAlert(
-  //         <Alert
-  //           text="לא הצלחנו לאשר, אנא נסה שוב מאוחר יותר"
-  //           type="worng"
-  //           time={1000}
-  //           bottom={100}
-  //         />
-  //       );
-  //     });
-  // };
-
 
   const cancel = (Number_appointment) => {
     CancelAppointmentByClient(Number_appointment).then((result) => {
@@ -253,7 +229,7 @@ const New_Calendar = () => {
       });
   };
 
-  const send=(token,Name_type,Date,Start_Hour,End_Hour)=>{
+  const send = (token, Name_type, Date, Start_Hour, End_Hour) => {
     const body = {
       "to": token,
       "title": "BeautyMe",
@@ -263,7 +239,8 @@ const New_Calendar = () => {
       "ttl": "1",
       "data": {
         "to": token
-      }}
+      }
+    }
     Post_SendPushNotification(body).then
       (() => {
         console.log("נשלחה התראה", token)
@@ -271,7 +248,20 @@ const New_Calendar = () => {
       )
   };
 
- 
+  function floatToTime(floatNumber) {
+    let hours = Math.floor(floatNumber);
+    let minutes = Math.floor((floatNumber - hours) * 60);
+    return hours.toString().padStart(2, '0') + ':' + minutes.toString().padStart(2, '0');
+  }
+
+
+  let today = new Date();
+  let currentHour = today.getHours(); // השעה של עכשיו
+  let currentMinute = today.getMinutes(); // הדקות של עכשיו
+  let currentTime = `${currentHour}:${currentMinute}`;
+
+  let oneHourFromNow = new Date(today.setHours(today.getHours() + 1));
+  let timeOneHourFromNow = `${oneHourFromNow.getHours()}:${oneHourFromNow.getMinutes()}`;
 
   LocaleConfig.locales["he"] = {
     monthNames: [
@@ -345,33 +335,6 @@ const New_Calendar = () => {
 
                   </View>
 
-                  {/* 
-                  {appointment.Appointment_status === "confirmed" ? (
-                    <View style={styles.iconContainer}>
-                      <Text style={styles.text}>התור אושר </Text>
-                      <Icon name="check-circle" size={20} color="green" />
-                    </View>
-                  ) : (
-                    <View style={styles.columnContainer}>
-                      <View style={styles.iconContainer}>
-                        <Text style={styles.text}>התור ממתין לאישור </Text>
-                        <Icon name="hourglass" size={20} color="orange" />
-                      </View>
-                      <TouchableOpacity
-                        onPress={() =>
-                          confirmStatus(
-                            appointment.Number_appointment,
-                            appointment.Client.token
-                          )
-                        }
-                      >
-                        <Text style={styles.linkText}>
-                          לחץ כאן לאישור התור
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  )} */}
-
 
                   {appointment.Is_client_house === "YES" || "YES       " ? (
                     <View style={styles.iconContainer}>
@@ -387,25 +350,30 @@ const New_Calendar = () => {
                     </>
                   )}
 
-                  <TouchableOpacity onPress={() => {
-                    setToken(appointment.Client.token);
-                    cancel(appointment.Number_appointment);
-                  }}>
-                    <View style={styles.iconContainer}>
-                      <Icon name="times-circle" size={20} color="#900" style={styles.icon} />
-                      <Text style={styles.text}>ביטול תור</Text>
-                    </View>
-                  </TouchableOpacity>
+                  {(floatToTime(appointment.Start_Hour) > currentTime && today.setHours(0, 0, 0, 0) <= new Date(Date1).setHours(0, 0, 0, 0)) &&
+                    (floatToTime(appointment.Start_Hour) >= timeOneHourFromNow && today.setHours(0, 0, 0, 0) <= new Date(Date1).setHours(0, 0, 0, 0)) &&
+                    <View>
+                      <TouchableOpacity onPress={() => {
+                        setToken(appointment.Client.token);
+                        cancel(appointment.Number_appointment);
+                      }}>
+                        <View style={styles.iconContainer}>
+                          <Icon name="times-circle" size={20} color="#900" style={styles.icon} />
+                          <Text style={styles.text}>ביטול תור</Text>
+                        </View>
+                      </TouchableOpacity>
 
-                  <TouchableOpacity onPress={() => {
-                    send(appointment.Client.token,appointment.Name_type, appointment.Date, appointment.Start_Hour, appointment.End_Hour);
-                  }}>
-                    <View style={styles.iconContainer}>
-                      <MaterialCommunityIcons
-                        name="bell" size={20} color="#FFA500" style={styles.icon} />
-                      <Text style={styles.text}>שלח תזכורת</Text>
-                    </View>
-                  </TouchableOpacity>
+                      <TouchableOpacity onPress={() => {
+                        send(appointment.Client.token, appointment.Name_type, appointment.Date, appointment.Start_Hour, appointment.End_Hour);
+                      }}>
+                        <View style={styles.iconContainer}>
+                          <MaterialCommunityIcons
+                            name="bell" size={20} color="#FFA500" style={styles.icon} />
+                          <Text style={styles.text}>שלח תזכורת</Text>
+                        </View>
+                      </TouchableOpacity>
+                    </View>}
+
                 </View>
 
                 <View style={{ flex: 1 }}>
@@ -494,7 +462,7 @@ const New_Calendar = () => {
           </View>
         ))}
       </View>
-      {showLoading&&<TouchableOpacity onPress={()=>setshowLoading(!showLoading)}><Loading text='מביא את נתוני בעל העסק'/></TouchableOpacity>}
+      {showLoading && <TouchableOpacity onPress={() => setshowLoading(!showLoading)}><Loading text='מביא את נתוני בעל העסק' /></TouchableOpacity>}
     </ScrollView>
   );
 };
@@ -505,8 +473,10 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     borderColor: "rgb(92, 71, 205)",
     padding: 20,
-    marginVertical: 5,
     backgroundColor: "white",
+    padding: 10,
+      marginVertical: 5,
+      margin:10,
   },
   title: {
     fontWeight: "bold",
@@ -556,6 +526,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     color: "black",
+    fontWeight: "bold",
   },
   dateTextWithEvents: {
     fontSize: 18,

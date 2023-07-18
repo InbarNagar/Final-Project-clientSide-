@@ -587,8 +587,6 @@ const AvailableAppointmentToBook = (props) => {
       </View>
     ))}
 </View>
-
-
         <Text style={styles.titleText}>טיפול:</Text>
         {result.typeTritment.map((t, i) => (
           <Text style={styles.text} key={i}>

@@ -396,6 +396,7 @@ console.log("final: " + JSON.stringify(final));
             ))}
           </ScrollView>
         </View>
+         <View style={{ height: 70 }} />
       </ScrollView>
       {/* {result&&result.length>0<Maps_Inbar result={result}/>} */}
       <Menu_Client />
