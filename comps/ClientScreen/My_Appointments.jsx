@@ -1,4 +1,3 @@
-
 import { View, ScrollView, StyleSheet, Text } from "react-native";
 import Button from "../obj/Button";
 import { useState,useRef  } from "react";

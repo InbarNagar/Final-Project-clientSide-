@@ -100,6 +100,9 @@ export const FutureAppointmenB = (Business_Numberr) => {
 export const DeleteClient=(clientID_number)=>{
     return Fetch(`Client/DeleteClient/${clientID_number}`,'DELETE')
 }
+export const DeleteProAndBusiness=(proffesionalId)=>{
+    return Fetch(`Proffesional/DeleteProffesional/${proffesionalId}`,'DELETE')
+}
 //מחיקת עסק קיים
 export const DeleteBusiness=(businessNumber)=>{
     return Fetch(`Business/DeleteBusinesss/${businessNumber}`,'DELETE')

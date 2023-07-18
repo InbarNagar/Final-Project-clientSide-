@@ -94,7 +94,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { Alert, View, StyleSheet, KeyboardAvoidingView,TouchableOpacity } from 'react-native';
+import { Alert, View, StyleSheet, KeyboardAvoidingView, TouchableOpacity ,Image} from 'react-native';
 import { Text, Button, TextInput, Provider as PaperProvider, Card, Title, Paragraph } from 'react-native-paper';
 import { Rating } from 'react-native-ratings';
 import { useNavigation } from '@react-navigation/native';
@@ -164,8 +164,11 @@ const Review_Business = ({ route }) => {
   }
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-      <ScrollView>
+
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <ScrollView  style={{ backgroundColor:'#e6e6fa' }}>
+
         <PaperProvider>
           <View style={styles.container}>
             <Card style={styles.card}>
@@ -208,16 +211,18 @@ const Review_Business = ({ route }) => {
                 />
 
 
-                <TouchableOpacity  style={styles.but}  onPress={() => navigation.navigate('CameraUse', { imageName:"profil"+ Number_appointment })}>
-                <View>
-                  <Text>צלם</Text>
-                </View>
-              </TouchableOpacity>
-          
-                 {/* <Button
+                <Button style={styles.button}
+              
+                  mode='contained' onPress={() => navigation.navigate('CameraUse', { imageName: "profil" + Number_appointment })}>
+
+
+                  הוספת תמונה לביקורת
+                </Button>
+
+                {/* <Button
             style={styles.button}  onPress={() => navigation.navigate('CameraUse', { imageName: "REVIEW" + Business_Number })}
             >הוסף תמונה</Button>  */}
-{/* 
+                {/* 
                 <Button
                   style={styles.button} onPress={() => navigation.navigate('CameraUse', { imageName: Number_appointment })}
                 > 
@@ -240,6 +245,9 @@ const Review_Business = ({ route }) => {
                 </Button>
               </Card.Content>
             </Card>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <Image style={styles.image} source={require('../assets/logoo.png')}/>
+            </View>
           </View>
         </PaperProvider>
       </ScrollView>
@@ -267,8 +275,10 @@ const styles = StyleSheet.create({
   title: {
     color: 'rgb(92, 71, 205)',
     fontWeight: 'bold',
-    alignItems: 'center',
-    justifyContent: 'center',
+    fontSize: 24,
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 10,
     textAlign: 'center'
   },
   subtitle: {
@@ -287,6 +297,7 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     backgroundColor: 'rgb(92, 71, 205)',
+    color:"white"
   },
   but: {
     textAlign: 'center',
@@ -297,8 +308,16 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 10,
     marginTop: 10,
-    
+
   },
+  text: {
+    color: "white"
+  },
+  image:{
+    width:100,
+    height:100,
+    alignItems:'center'
+  }
 });
 
 export default Review_Business;

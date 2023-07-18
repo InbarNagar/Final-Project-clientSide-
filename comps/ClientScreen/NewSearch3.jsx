@@ -235,7 +235,7 @@ export default function NewSearch3({ navigation }) {
     console.log(obj);
     res.push(obj);
     console.log("res = " + JSON.stringify(res));
-    
+
     let final = [];
     console.log("rank: "+JSON.stringify(rank));
 var a = rank.find((x) => x.Business_Number === res[0].id);
@@ -296,7 +296,7 @@ console.log("final: " + JSON.stringify(final));
         Is_client_house
     );
     const obj = {
-      AddressCity: AddressCity,
+      AddressCity:userDetails.AddressCity,
       TreatmentNumber: treatmentNumber,
       // sort: "דירוג גבוהה תחילה",
       // Is_client_house: Is_client_house,
@@ -354,7 +354,7 @@ console.log("final: " + JSON.stringify(final));
                 activeItemStyle={{ alignItems: "flex-start" }}
                 zIndex={9999}
               />
-
+<View style={{ height: 65 }} />
               <View style={styles.buttonContainer}>
                 <View style={styles.containerBut}>
                   <TouchableOpacity style={styles.but} onPress={btnSearch}>

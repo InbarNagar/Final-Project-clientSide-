@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, TextInput,  Text, Keyboard, TouchableOpacity, KeyboardAvoidingView, ScrollView, Linking} from 'react-native';
+import { StyleSheet, View, TextInput, Text, Keyboard, TouchableOpacity, KeyboardAvoidingView, ScrollView, Linking } from 'react-native';
 import { Cli_Registration } from './obj/FunctionAPICode';
 import { Akira } from 'react-native-textinput-effects';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 // import Button from './CTools/Button';
-import { Button} from 'react-native';
+import { Button } from 'react-native';
 
 import moment from "moment";
 import { RadioButton } from 'react-native-paper';
@@ -13,8 +13,7 @@ import { Feather, SimpleLineIcons, AntDesign, Ionicons } from '@expo/vector-icon
 import axios from 'axios';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { Alert } from 'react-native';
-
-
+import { useNavigation } from '@react-navigation/native';
 
 
 const Client_registration = (props) => {
@@ -30,13 +29,13 @@ const Client_registration = (props) => {
   const [AddressCity, setCity] = useState('');
   const [password, setPassword] = useState('');
   const [instagramUserName, setinstagramUserName] = useState('');
-  
+  const navigation = useNavigation();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [isFemaleChecked, setFemaleChecked] = useState(false);
   const [isMaleChecked, setMaleChecked] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
-
+  const [facebookUserName, setfacebookUserName] = useState('');
   const [instagramUri, setInstagramUri] = useState('');
   const [facebookUri, setFacebookUri] = useState('');
 
@@ -51,7 +50,7 @@ const Client_registration = (props) => {
   //   }
   // };
 
-// בגלל שאני לא מצליחה לקבל את הURI של פייסבוק אז זה לא שימושי
+  // בגלל שאני לא מצליחה לקבל את הURI של פייסבוק אז זה לא שימושי
   // const handleFacebookLink = async () => {
   //   try {
   //     const url = 'https://www.facebook.com/your_facebook_account';
@@ -99,7 +98,7 @@ const Client_registration = (props) => {
   //   }
   // };
   const handleRegistrationC = () => {
-   
+
     const data = {
       ID_number: ID_number,
       First_name: First_name,
@@ -112,55 +111,56 @@ const Client_registration = (props) => {
       AddressHouseNumber: AddressHouseNumber,
       AddressCity: AddressCity,
       password: password,
-      ProfilPic:"profil"+ID_number,
+      ProfilPic: "profil" + ID_number,
       Instagram_link: instagramUserName,
+      Facebook_link: facebookUserName
       // Facebook_link: Facebook_link
     }
     Cli_Registration(data).then((result) => {
 
       console.log('yes', result)
 
-      if(result.status==200){
+      if (result.status == 200) {
         // Notificationss("OK", "התור נוסף בהצלחה") 
         Alert.alert(
-           'ישששש',
+          'ישששש',
           'שמחים שהצטרפת למשפחת Beauty Me',
           [
-            { text: 'ייאאלה בואו נתחיל', onPress: () => navigation.navigate('LogInGenral') },
+            { text: 'ייאאלה בואו נתחיל', onPress: () => { navigation.navigate('LogInGenral', { userType: 'Pro' }) } },
           ],
           { cancelable: false }
         );
       }
     }).catch(error => {
-        console.log(error);
-        Alert.alert(
-          'אופס',
-         'אחד הפרטים לא נכונים'+ error ,
-         [
-           { text: 'נסה שוב'},
-         ],
-         { cancelable: false }
-       );
+      console.log(error);
+      Alert.alert(
+        'אופס',
+        'אחד הפרטים לא נכונים' + error,
+        [
+          { text: 'נסה שוב' },
+        ],
+        { cancelable: false }
+      );
     });
-      
-    
+
+
   };
 
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
-};
+  };
 
-const hideDatePicker = () => {
+  const hideDatePicker = () => {
     setDatePickerVisibility(false);
-};
+  };
 
-const handleConfirm = (date) => {
+  const handleConfirm = (date) => {
     //  setSelectedDate(moment(date).format('DD/MM/YYYY'));
     setDateOfBirth(moment(date).format('YYYY-MM-DD'))
     hideDatePicker();
-    
-};
+
+  };
 
 
   // const handleConfirm = (date) => {
@@ -186,25 +186,25 @@ const handleConfirm = (date) => {
     }
   };
 
-//   const handleInstagramLink = () => {
-//     Linking.openURL(ClientData.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
-//   };
-//   const [deleteSection, SetDeleteSection] = useState(false);
-//   const[confirmID,SetConfirmID]=useState('');
-//   const handleDeleteSection = () => SetDeleteSection(prevState => !prevState);
-//   function exitApp() {
-//     BackHandler.exitApp();
-//     return true;
-// }
+  //   const handleInstagramLink = () => {
+  //     Linking.openURL(ClientData.Instagram_link); //לשים משתנה של כתובת אינסטגרם שהמשתמש יזין
+  //   };
+  //   const [deleteSection, SetDeleteSection] = useState(false);
+  //   const[confirmID,SetConfirmID]=useState('');
+  //   const handleDeleteSection = () => SetDeleteSection(prevState => !prevState);
+  //   function exitApp() {
+  //     BackHandler.exitApp();
+  //     return true;
+  // }
 
   return (
-    <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
-    <ScrollView>
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <ScrollView>
+        <View style={styles.container}>
 
 
 
-    {/* <TextInput    ניסיונות לאינסטגרם... 
+          {/* <TextInput    ניסיונות לאינסטגרם... 
         placeholder="הכנס URI של אינסטגרם"
         placeholderTextColor={'black'}
         onChangeText={(text) => setInstagramUri(text)}
@@ -215,8 +215,8 @@ const handleConfirm = (date) => {
       <Button title="קישור לפייסבוק שלך" onPress={handleFacebookLink} /> */}
 
 
-      {/* // שני כפתורים שמנסים לקבל את ה URI של הפייסבוק של המשתמש... שולחות לפונקציות שלא עובדות...  */}
-      {/* <LoginButton
+          {/* // שני כפתורים שמנסים לקבל את ה URI של הפייסבוק של המשתמש... שולחות לפונקציות שלא עובדות...  */}
+          {/* <LoginButton
         onLoginFinished={async (error, result) => {
           if (error) {
             console.log('התחברות לפייסבוק נכשלה:', error);
@@ -228,9 +228,9 @@ const handleConfirm = (date) => {
         }}
       /> */}
 
-      {/* <Button title="התחברות דרך פייסבוק" onPress={handleFacebookLogin} /> */}
+          {/* <Button title="התחברות דרך פייסבוק" onPress={handleFacebookLogin} /> */}
 
-{/* 
+          {/* 
     <View style={styles.iconContainer}>
         <TouchableOpacity onPress={handleInstagramLink}>
           <FontAwesome name="instagram" size={24} color="black" />
@@ -240,43 +240,43 @@ const handleConfirm = (date) => {
 
 
 
-      <Text style={styles.title}>איזה כיף שהחלטת להצטרף לקהילת הלקוחות שלנו!</Text>
-      <Text style={styles.titp}> אנא מלא/י את הפרטים הבאים:</Text>
+          <Text style={styles.title}>איזה כיף שהחלטת להצטרף לקהילת הלקוחות שלנו!</Text>
+          <Text style={styles.titp}> אנא מלא/י את הפרטים הבאים:</Text>
 
-        {/* <Input styleText={styles.title} styleView={styles.inp} styleTextInput={styles.input} placeholder="תעודת זהות" value={ID_number} onBlur={(text) => setid(text)} textt="תעודת זהות:" /> */}
+          {/* <Input styleText={styles.title} styleView={styles.inp} styleTextInput={styles.input} placeholder="תעודת זהות" value={ID_number} onBlur={(text) => setid(text)} textt="תעודת זהות:" /> */}
 
-        <View style={styles.akiraContainer}>
-        <Akira
-                  label={'    תעודת זהות'}
-                  // this is used as active and passive border color
-                  // borderColor={"rgb(92, 71, 205)"}
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setid(text)}
-                /> 
-                <Akira 
-                  label={'    שם פרטי'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setFirstName(text)}
-                  style={styles.akira}
-                /> 
-                <Akira
-                  label={'    שם משפחה'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setLastName(text)}
-                  style={styles.akira}
-                /> 
-                   <Akira
+          <View style={styles.akiraContainer}>
+            <Akira
+              label={'    תעודת זהות'}
+              // this is used as active and passive border color
+              // borderColor={"rgb(92, 71, 205)"}
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setid(text)}
+            />
+            <Akira
+              label={'    שם פרטי'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setFirstName(text)}
+              style={styles.akira}
+            />
+            <Akira
+              label={'    שם משפחה'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setLastName(text)}
+              style={styles.akira}
+            />
+            {/* <Akira
                   label={'    מין'}
                   // this is used as active and passive border color
                   borderColor={"rgb(204, 204, 255)"}
@@ -285,11 +285,13 @@ const handleConfirm = (date) => {
                   labelStyle={{ color: '#ac83c4'}}
                   onChangeText={(text) => setGender(text)}
                   style={styles.akira}
-                /> 
-                <Text>{'\n'}</Text>
-               
+                />  */}
 
-{/* <Text>{'\n'}</Text>
+
+            <Text>{'\n'}</Text>
+
+
+            {/* <Text>{'\n'}</Text>
 <View>
   <View style={{ borderWidth: 5, borderColor: "rgb(204, 204, 255)", paddingVertical: 16, flexDirection: 'row-reverse', justifyContent: 'space-between' }}>
     <Text style={{ color: "#ac83c4", textAlign: 'right', fontWeight: 'bold', fontSize: 14 }}>   מין:</Text>
@@ -429,7 +431,7 @@ const handleConfirm = (date) => {
 
 
 
-          {/* <Text>מין:</Text>
+            {/* <Text>מין:</Text>
                 <Button
                   title="נקבה"
                   onPress={() => setGender('F')}
@@ -440,7 +442,7 @@ const handleConfirm = (date) => {
                 />
                 <Text>מין: {gender}</Text> */}
 
-                {/* <View style={styles.dateContainer}>   ///// עובד אבל מכוער ולא צריך
+            {/* <View style={styles.dateContainer}>   ///// עובד אבל מכוער ולא צריך
                     <Button text="תאריך לידה" onPress={showDatePicker} />
                     <DateTimePickerModal
                         isVisible={isDatePickerVisible}
@@ -454,109 +456,145 @@ const handleConfirm = (date) => {
                     <Text style={styles.selectedDate}>{Date}</Text>
                 </View> */}
 
-                <View>
-                <TouchableOpacity style={styles.dateContainer} onPress={showDatePicker}>
-                      <View
-                        style={{
-                          borderWidth: 5,
-                          borderColor: "rgb(204, 204, 255)",
-                          paddingVertical: 16,
-                        }}
-                      >
-                        <Text style={{ color: "#ac83c4",  textAlign: 'center', fontWeight: 'bold', fontSize: 14  }}>{selectedDate ? selectedDate : "תאריך לידה"}</Text>
-                      </View>
-                    </TouchableOpacity>
-
-                  <DateTimePickerModal
-                    isVisible={isDatePickerVisible}
-                    mode="date"
-                    onConfirm={(date) => {
-                        setSelectedDate(date.toLocaleDateString("he-IL"));
-                        handleConfirm(date);
-                      }}
-                    onCancel={hideDatePicker}
-                    confirmTextIOS="אישור"
-                    cancelTextIOS="ביטול"
-                    locale="he"
-                  />
-                  </View>
-
-                 <Akira
-                  label={'    פאלפון'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setPhone(text)}
-                  style={styles.akira}
-                /> 
-                 <Akira
-                  label={'Email'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setEmail(text)}
-                  style={styles.akira}
-                /> 
-                 <Akira
-                  label={'    רחוב'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setStreet(text)}
-                  style={styles.akira}
-                /> 
-                 <Akira
-                  label={'    מספר בית'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setHouseNumber(text)}
-                  style={styles.akira}
-                /> 
-                 <Akira
-                  label={'    עיר'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setCity(text)}
-                  style={styles.akira}
-                /> 
-                 <Akira
-                  label={'    סיסמה'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setPassword(text)}
-                  style={styles.akira}
-                /> 
-
-                  <Akira
-                  label={'    שם המשתמש באינסטגרם'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4'}}
-                  onChangeText={(text) => setinstagramUserName(text)}
-                  style={styles.akira}
-                /> 
+            <View>
+              <TouchableOpacity style={styles.dateContainer} onPress={showDatePicker}>
+                <View
+                  style={{
+                    borderWidth: 5,
+                    borderColor: "rgb(204, 204, 255)",
+                    paddingVertical: 16,
+                  }}
+                >
+                  <Text style={{ color: "#ac83c4", textAlign: 'center', fontWeight: 'bold', fontSize: 14 }}>{selectedDate ? selectedDate : "תאריך לידה"}</Text>
                 </View>
+              </TouchableOpacity>
 
-                {/* //החלק של המצלמה... עובד!!! אבל לא יודעת למה כשהוא לא בהערה אז הכפתור "סיים הרשמה" שמתחתיו לא מופיע בדף!!! */}
-                
-                 {/* <Text>{'\n'}</Text>     
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={(date) => {
+                  setSelectedDate(date.toLocaleDateString("he-IL"));
+                  handleConfirm(date);
+                }}
+                onCancel={hideDatePicker}
+                confirmTextIOS="אישור"
+                cancelTextIOS="ביטול"
+                locale="he"
+              />
+            </View>
+
+            <Akira
+              label={'    פאלפון'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setPhone(text)}
+              style={styles.akira}
+            />
+            <Akira
+              label={'Email'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setEmail(text)}
+              style={styles.akira}
+            />
+            <Akira
+              label={'    רחוב'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setStreet(text)}
+              style={styles.akira}
+            />
+            <Akira
+              label={'    מספר בית'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setHouseNumber(text)}
+              style={styles.akira}
+            />
+            <Akira
+              label={'    עיר'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setCity(text)}
+              style={styles.akira}
+            />
+            <Akira
+              label={'    סיסמה'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setPassword(text)}
+              style={styles.akira}
+            />
+
+            <Akira
+              label={'    שם המשתמש באינסטגרם'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setinstagramUserName(text)}
+              style={styles.akira}
+            />
+
+            <Akira
+              label={'    לינק לפייסבוק'}
+              // this is used as active and passive border color
+              borderColor={"rgb(204, 204, 255)"}
+              inputPadding={16}
+              labelHeight={24}
+              labelStyle={{ color: '#ac83c4' }}
+              onChangeText={(text) => setfacebookUserName(text)}
+              style={styles.akira}
+            />
+
+
+            <View style={styles.container1}>
+              <Text style={styles.label1}>בחר מין</Text>
+              <View style={styles.radioButtonContainer}>
+                <View style={styles.radioButtonGroup}>
+                  <Text>זכר</Text>
+                  <RadioButton
+                    value="M"
+                    status={gender === 'M' ? 'checked' : 'unchecked'}
+                    onPress={() => setGender('M')}
+                  />
+                </View>
+                <View style={styles.radioButtonGroup}>
+                  <Text>נקבה</Text>
+                  <RadioButton
+                    value="F"
+                    status={gender === 'F' ? 'checked' : 'unchecked'}
+                    onPress={() => setGender('F')}
+                  />
+                </View>
+              </View>
+            </View>
+
+          </View>
+
+
+          {/* //החלק של המצלמה... עובד!!! אבל לא יודעת למה כשהוא לא בהערה אז הכפתור "סיים הרשמה" שמתחתיו לא מופיע בדף!!! */}
+
+          {/* <Text>{'\n'}</Text>     
                 <Text style={{ color: "#ac83c4",  textAlign: 'center', fontWeight: 'bold', fontSize: 14  }}>הוספת תמונת פרופיל</Text>
               <Button
                   element={<SimpleLineIcons name="camera" size={30} color="black" />}
@@ -570,27 +608,27 @@ const handleConfirm = (date) => {
                   onPress={()=>props.navigation.navigate('CameraUse',{imageName:"profil"+ID_number})} 
                   /> */}
 
-                  <Text>{'\n'}</Text>     
-                  <Text style={{ color: "#ac83c4",  textAlign: 'center', fontWeight: 'bold', fontSize: 25  }}>הוספת תמונת פרופיל</Text>
-                  <TouchableOpacity style={styles.roundButton} onPress={() => props.navigation.navigate('CameraUse', { imageName: "profil" + ID_number })}>
-                    <SimpleLineIcons name="camera" size={30} color="black" />
-                  </TouchableOpacity>
+          <Text>{'\n'}</Text>
+          <Text style={{ color: "#ac83c4", textAlign: 'center', fontWeight: 'bold', fontSize: 25 }}>הוספת תמונת פרופיל</Text>
+          <TouchableOpacity style={styles.roundButton} onPress={() => props.navigation.navigate('CameraUse', { imageName: "profil" + ID_number })}>
+            <SimpleLineIcons name="camera" size={30} color="black" />
+          </TouchableOpacity>
 
-              
-           
-      
-          <Text>{'\n'}</Text> 
 
-      {/* <Button color='#9acd32' title="סיום הרשמה" onPress={handleRegistrationC} /> */}
-      <View>
+
+
+          <Text>{'\n'}</Text>
+
+          {/* <Button color='#9acd32' title="סיום הרשמה" onPress={handleRegistrationC} /> */}
+          <View>
             <TouchableOpacity style={styles.but} onPress={handleRegistrationC}>
-                <View>
-                    <Text style={styles.thachtext}>סיים הרשמה</Text>
-                </View>
+              <View>
+                <Text style={styles.thachtext}>סיים הרשמה</Text>
+              </View>
             </TouchableOpacity>
-      </View>
-    </View>
-    </ScrollView>
+          </View>
+        </View>
+      </ScrollView>
     </KeyboardAvoidingView>
 
   )
@@ -604,7 +642,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#e6e6fa',
     justifyContent: 'flex-start',
     // width: '100%',
-    padding:20,
+    padding: 20,
   },
   roundButton: {
     width: 70,
@@ -620,11 +658,11 @@ const styles = StyleSheet.create({
     borderColor: "rgb(204, 204, 255)"
 
   },
-  akira:{
+  akira: {
     // borderRadius: 10,
     // borderWidth: 2, // עובי הגבול
-    paddingLeft:10,
-    paddingRight:10,
+    paddingLeft: 10,
+    paddingRight: 10,
     borderRadius: 10,
     borderColor: "rgb(204, 204, 255)"
   },
@@ -639,8 +677,8 @@ const styles = StyleSheet.create({
     margin: 10,
     marginTop: 10,
 
-},
-thachtext: {
+  },
+  thachtext: {
     textAlign: 'center',
     color: '#fffaf0',
     fontSize: 30,
@@ -653,7 +691,7 @@ thachtext: {
     // padding: 15,
     // margin: 10,
     // marginTop: 20,
-},
+  },
   inp: {
     flexDirection: 'row',
     padding: 15,
@@ -662,9 +700,9 @@ thachtext: {
     borderRadius: 25,
     height: 45,
     marginBottom: 10,
-    borderColor:"rgb(92, 71, 205)",
+    borderColor: "rgb(92, 71, 205)",
     backgroundColor: 'white',
-    border:1
+    border: 1
 
   },
   textInputS: {
@@ -679,7 +717,7 @@ thachtext: {
     textAlign: 'right',
     fontWeight: 'bold',
     opacity: 0.5,
-    
+
 
   },
   title: {
@@ -700,7 +738,7 @@ thachtext: {
     color: '#fffaf0',
     fontSize: 15,
     color: "rgb(92, 71, 205)",
-    padding:10
+    padding: 10
   },
 
   // container: {
@@ -723,20 +761,47 @@ thachtext: {
     padding: 8,
     margin: 10,
     marginTop: 10,
-    
+
   },
   thachtext: {
     textAlign: 'center',
     color: '#fffaf0',
-    fontSize:20,
-    fontWeight:'bold',
+    fontSize: 20,
+    fontWeight: 'bold',
     //borderRadius: 10,
-     height: 50,
+    height: 50,
     // marginBottom: 20,
     // backgroundColor: '#fffaf0',
     // padding: 15,
     // margin: 10,
     // marginTop: 20,
+  },
+  container1: {
+    marginTop: 10,
+    alignItems: 'center',
+
+  },
+  label1: {
+    fontSize: 18,
+    color: '#ac83c4'
+    // marginBottom: 5,
+  },
+  radioGroup1: {
+    flexDirection: 'row',
+  },
+  radioButton1: {
+    marginRight: 10,
+  },
+  radioButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderRadius: 25,
+    border: 1,
+    borderColor: "rgb(92, 71, 205)",
+  },
+  radioButtonGroup: {
+    flexDirection: 'column',
+    alignItems: 'center',
   },
 
 });
@@ -775,7 +840,7 @@ export default Client_registration;
         <Text>שם משפחה</Text>
       </View>*/}
 
-      {/* <View style={styles.inp}>
+{/* <View style={styles.inp}>
         <TextInput style={styles.textInputS}
           placeholder="מין"
           value={gender}
@@ -811,7 +876,7 @@ export default Client_registration;
       </View> */}
 
 
-      {/* <View style={styles.inp}>
+{/* <View style={styles.inp}>
         <TextInput style={styles.textInputS}
           placeholder="רחוב"
           value={AddressStreet}
