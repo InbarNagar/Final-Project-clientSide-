@@ -108,7 +108,7 @@ const Create_Business_Pro = (props) => {
 
 
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <ScrollView>
         <View style={styles.container}>
 

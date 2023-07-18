@@ -128,7 +128,8 @@ if(userDetails){
  
   return (
     <>
-        <KeyboardAvoidingView  style={{ flex: 1 }} behavior="padding">
+        <KeyboardAvoidingView  style={{ flex: 1 }}       behavior={Platform.OS === "ios" ? "padding" : "height"}
+>
         <ScrollView>
     {alert && alert}
     <View style={styles.container}>

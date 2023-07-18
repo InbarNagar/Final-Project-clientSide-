@@ -164,9 +164,11 @@ const Review_Business = ({ route }) => {
   }
 
   return (
+
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView  style={{ backgroundColor:'#e6e6fa' }}>
+
         <PaperProvider>
           <View style={styles.container}>
             <Card style={styles.card}>
