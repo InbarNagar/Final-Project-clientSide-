@@ -244,6 +244,13 @@ const New_Calendar = () => {
     Post_SendPushNotification(body).then
       (() => {
         console.log("נשלחה התראה", token)
+        Alert.alert(
+          "התראה",
+          "נשלחה הודעת תזכורת ללקוח",
+          [
+            { text: "אישור", onPress: () => console.log("אישור Pressed") }
+          ]
+        )
       }
       )
   };
