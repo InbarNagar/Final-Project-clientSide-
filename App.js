@@ -94,16 +94,14 @@ function App() {
           <Stack.Screen name="Menu_professional" component={Menu_professional} />
           <Stack.Screen name="NewAppointment" component={NewAppointment} options={{ title: 'הוספת תור חדש' }} />
           <Stack.Screen name="Calendar_professional" component={Calendar_professional}options={{ title: 'היומן שלי' }}/>
-
           <Stack.Screen name="Menu_treatment_forAppointment" component={Menu_treatment_forAppointment} options={{ title: ''}}  />
           {/* <Stack.Screen name="Search3" component={Search3} options={{ title: 'דף הבית' }} /> */}
           <Stack.Screen name="My_Appintments" component={My_Appintments} options={{ title: 'התורים שלי'}} />
           <Stack.Screen name="Map" component={Map} />
-          
           <Stack.Screen name='Professional_registration' component={Professional_registration}options={{ title: 'הרשמת בעל עסק פרטים אישים' }} />
           <Stack.Screen name='Client_registration' component={Client_registration} options={{ title: ''}}  />
-          <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} options={{ title: ' הרשמת בעל עסק  ' }} />
-          <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} options={{ title: ' הרשמת בעל עסק  ' }}/>
+          <Stack.Screen name='Create_Business_Pro' component={Create_Business_Pro} options={{ title: 'הרשמת בעל עסק' }} />
+          <Stack.Screen name="Menu_treatment_registration" component={Menu_treatment_registration} options={{ title: ' הרשמת בעל עסק' }}/>
           <Stack.Screen name="SearchOnMap" component={SearchOnMap} />
           <Stack.Screen name="Profil_pro" component={Profil_pro} options={{ title: 'אזור אישי' }} />
           <Stack.Screen name="Update_personal_details_Professional" component={Update_personal_details_Professional} options={{ title: ''}}  />
@@ -113,7 +111,7 @@ function App() {
           <Stack.Screen name="ClientProfile" component={ClientProfile} options={{ title: ''}} />
           <Stack.Screen name="Review_Business" component={Review_Business} options={{ title: ''}} />
           <Stack.Screen name="NewSearch3" component={NewSearch3} options={{ title: ''}} />
-          <Stack.Screen name="CameraUse" component={CameraUse} options={{ title:'מצלמה'}} />
+          <Stack.Screen name="CameraUse" component={CameraUse} options={{ title:''}} />
           <Stack.Screen name="ShowReviews" component={ShowReviews} options={{ title: ''}} />
           <Stack.Screen name="AvailableAppointmentToBook" component={AvailableAppointmentToBook} options={{ title: ''}} />
           <Stack.Screen name="NewAvilableHours" component={NewAvilableHours} options={{ title:'הוספת זמינות לפרסום'}} />
@@ -124,7 +122,7 @@ function App() {
           <Stack.Screen name="AvailableAppointmentToBook_New" component={AvailableAppointmentToBook_New}/>
           <Stack.Screen name="Update_MenuTreatment" component={Update_MenuTreatment} options={{ title: 'עדכון'}} />
           <Stack.Screen name="AvailableAppointmentForTreatment" component={AvailableAppointmentForTreatment}/>
-          <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity} options={{ title: '1111111111'}} />
+          <Stack.Screen name="AvailableAppointmentForTreatmentAndCity" component={AvailableAppointmentForTreatmentAndCity} options={{ title: ''}} />
           <Stack.Screen name="Photos_BUS" component={Photos_BUS} options={{ title: 'אלבום תמונות'}} />
           <Stack.Screen name="ForgotPassword" component={ForgotPassword} options={{ title: 'שכחתי סיסמא'}} />
           <Stack.Screen name="BusinessProfilePOPUP_Map" component={BusinessProfilePOPUP_Map} options={{ title: ' '}} />

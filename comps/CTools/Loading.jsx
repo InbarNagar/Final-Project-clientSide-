@@ -22,7 +22,7 @@ export default function Loading(props) {
       {text && <Text style={{ position: 'relative', top: '95%', flexWrap: 'wrap', fontSize: 18, textAlign: 'center' }}>{text}</Text>}
     </ImageBackground>
   </View>;
-// C:\Users\Asus\Documents\beautyme2\beautyMe_clientSide\assets\logoo.png
+
 
   return (<PopUp
     width={200}

@@ -177,7 +177,7 @@ const Menu_treatment_registration = (props) => {
         Category_Number: selectedCategory,
         Business_Number: idNumberbusiness,
         Price: Number(price),
-        Treatment_duration: duration
+        duration: duration
         //.toLocaleTimeString(),
       };
       console.log(newTreatment, "**********************************");

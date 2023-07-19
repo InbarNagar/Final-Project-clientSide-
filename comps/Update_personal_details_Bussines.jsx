@@ -142,18 +142,20 @@ console.log(DataDetails)
       <Text style={styles.label1}>היכן מטפל?</Text>
       <View style={styles.radioButtonContainer}>
         <View style={styles.radioButtonGroup}>
-          <Text>בית העסק</Text>
+        <Text>  </Text>
+          <Text>בית  העסק  </Text>
           <RadioButton
             value="NO"
-            status={ location === 'NO' ? 'checked' : 'unchecked' }
+            status={  Is_client_house === 'NO' ? 'checked' : 'unchecked' }
             onPress={() => setLocation('NO')}
           />
         </View>
         <View style={styles.radioButtonGroup}>
-          <Text>בית הלקוח</Text>
+        <Text>  </Text>
+          <Text>   בית הלקוח </Text>
           <RadioButton
             value="YES"
-            status={ location === 'YES' ? 'checked' : 'unchecked' }
+            status={  Is_client_house === 'YES' ? 'checked' : 'unchecked' }
             onPress={() => setLocation('YES')}
           />
         </View>

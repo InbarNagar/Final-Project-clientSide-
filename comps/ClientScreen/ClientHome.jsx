@@ -353,7 +353,7 @@ SetResultgetdata(res);  //SetResult
           ))}
         </ScrollView> */}
 
-         <Header text="העסקים המובילים של היום:" fontSize={40}  color={"rgb(92, 71, 205)"} />
+         <Header text="העסקים המובילים של היום:" fontSize={30}  color={"rgb(92, 71, 205)"} />
 
 
           <Carousel
