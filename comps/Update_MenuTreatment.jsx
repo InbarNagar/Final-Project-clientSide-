@@ -200,7 +200,7 @@ const Update_MenuTreatment = (Props) => {
                 setDuration(null)
               }
             },
-            { text: ' חזור', onPress: () =>{Props.navigation.navigate('Profil_pro')}},
+            { text: ' חזור', onPress: () =>{Props.navigation.navigate('Calendar_professional')}},
           ],
           { cancelable: false }
         );

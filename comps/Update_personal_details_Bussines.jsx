@@ -138,18 +138,28 @@ console.log(DataDetails)
                   onChangeText={(text) => setCity(text)}
                 /> 
 
-              <Akira
-                  label={'האם מגיע לבית הלקוח'}
-                  // this is used as active and passive border color
-                  borderColor={"rgb(204, 204, 255)"}
-                  inputPadding={16}
-                  labelHeight={24}
-                  labelStyle={{ color: '#ac83c4', textAlign:'left' }}
-                  placeholder={Is_client_house}
-                  placeholderTextColor="#92a2bd"
-                  // value={Is_client_house}
-                  onChangeText={(text) => setLocation(text)}
-              />
+<View style={styles.container1}>
+      <Text style={styles.label1}>היכן מטפל?</Text>
+      <View style={styles.radioButtonContainer}>
+        <View style={styles.radioButtonGroup}>
+          <Text>בית העסק</Text>
+          <RadioButton
+            value="NO"
+            status={ location === 'NO' ? 'checked' : 'unchecked' }
+            onPress={() => setLocation('NO')}
+          />
+        </View>
+        <View style={styles.radioButtonGroup}>
+          <Text>בית הלקוח</Text>
+          <RadioButton
+            value="YES"
+            status={ location === 'YES' ? 'checked' : 'unchecked' }
+            onPress={() => setLocation('YES')}
+          />
+        </View>
+      </View>
+    </View>
+
 
 <Akira
                   label={'אודות העסק'}
@@ -324,8 +334,7 @@ const styles = StyleSheet.create({
     textShadowRadius: 5,
     opacity:0.7
     },
-
-    tit:{
+   tit:{
       textAlign: 'center',
       "fontSize": 35,
       "fontWeight": "500",
@@ -341,5 +350,22 @@ const styles = StyleSheet.create({
         height:200,
         alignItems: 'center', 
         justifyContent: 'center',
+        },
+        label1: {
+          fontSize: 18,
+          color: '#ac83c4'
+          // marginBottom: 5,
+        },
+      radioButtonGroup: {
+          flexDirection: 'column',
+          alignItems: 'center',
+        },
+      container1: {
+          marginTop:10,
+          alignItems: 'center',
+        },
+      radioButtonContainer: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         },
 });

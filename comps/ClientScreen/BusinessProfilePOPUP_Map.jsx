@@ -381,7 +381,7 @@ useEffect(() => {
                                   color="gray"
                                   style={styles.parameterIcon}
                                 />
-                                <Text style={styles.customerComment}>"{bus.Comment}"</Text>
+                                <Text style={styles.customerComment}>{bus.Comment}</Text>
                               </View>
                             </View>
                             <View style={styles.imageContainer}>
