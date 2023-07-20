@@ -13,6 +13,7 @@ import { Feather, SimpleLineIcons, AntDesign, Ionicons } from '@expo/vector-icon
 import axios from 'axios';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
 import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 
@@ -40,7 +41,7 @@ const Client_registration = (props) => {
 
   const [instagramUri, setInstagramUri] = useState('');
   const [facebookUri, setFacebookUri] = useState('');
-
+const navigation = useNavigation();
   // const handleInstagramLink = async () => {
   //   try {
   //     // const url = 'https://www.instagram.com/your_instagram_account';

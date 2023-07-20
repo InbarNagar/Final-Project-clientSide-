@@ -180,7 +180,7 @@ const Update_MenuTreatment = (Props) => {
         Category_Number: selectedCategory,
         Business_Number: userDetails.Business_Number,
         Price: Number(price),
-        Treatment_duration: duration
+        duration: duration
         //.toLocaleTimeString(),
       };
       console.log(newTreatment, "**********************************");

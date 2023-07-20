@@ -289,7 +289,7 @@ const AvailableAppointmentToBook = (props) => {
     //       (x) => x.time == newArray[i].value
     //     );
     //     console.log(`o = ${JSON.stringify(o)}`);
-    //     //o= 10,1 ***** o=18,1
+    //     //o= 10,1 * o=18,1
     //     if (o && newArray[i].origin_number + o.gap == newArray[i + 1].value) {
     //       finalArray = finalArray.filter(
     //         (item) => item.value != newArray[i].value
@@ -302,7 +302,7 @@ const AvailableAppointmentToBook = (props) => {
     //       newArray[i + 1].value < newArray[i].origin_number + o.gap
     //     ) {
     //       let j = 0;
-    //       console.log("****");
+    //       console.log("**");
     //       console.log("newArray" + JSON.stringify(newArray));
     //       console.log("finalArray" + JSON.stringify(finalArray));
 
@@ -403,6 +403,7 @@ const AvailableAppointmentToBook = (props) => {
     console.log("businessProfilePOPUP - ", businessProfilePOPUP);
     console.log("business number: " + JSON.stringify(result.id));
   }
+  
   //הצגה של יומן עסק
   function handleBusinessSchedulePOPUP() {
     console.log("book appointment POPUP");
@@ -463,7 +464,7 @@ const AvailableAppointmentToBook = (props) => {
           });
           // alert(`${result.data}`);
         }
-        Alert.alert(`${result.data}    התור נקבע!  `);
+        Alert.alert(` התור נקבע תוכל לצפות בפרטי התור בתורים שלי  `);
         // חוזר לעמוד הבא
       },
       (error) => {
@@ -519,6 +520,7 @@ const AvailableAppointmentToBook = (props) => {
             טיפול בבית העסק
           </>
         )}
+        
         {result.typeTritment.map((t, i) => (
           <View key={i}>
             <View style={styles.iconContainer}>
@@ -543,6 +545,22 @@ const AvailableAppointmentToBook = (props) => {
             </View>
           </View>
         ))}
+         <View style={styles.buttonContainer}>
+          <View style={styles.buttonContent}>
+            <MaterialCommunityIcons
+              name="store"
+              size={25}
+              color="rgb(92, 71, 205)"
+            />
+            <Button
+              color={"rgb(92, 71, 205)"}
+              title="צפה בפרופיל העסק"
+              buttonStyle={styles.buttonStyle}
+              titleStyle={styles.buttonTitle}
+              onPress={handleBusinessProfilePOPUP}
+            />
+          </View>
+        </View>
         <Text style={styles.titleText}>שעות פנויות: </Text>
         <View style={styles.rowContainer}>
   {finalHours.length > 0 &&
@@ -553,14 +571,14 @@ const AvailableAppointmentToBook = (props) => {
             style={[
               styles.cube,
               selected === index && styles.selectedCube,
-              { alignSelf: 'flex-end' }, 
+              { alignSelf: 'flex-start' }, 
             ]}
             onPress={() => handlePress(index)}
           >
             <View style={styles.row}>
               <Icon
                 name="clock-o"
-                size={20}
+                size={18}
                 color="rgb(92, 71, 205)"
                 style={styles.icon}
               />
@@ -587,12 +605,14 @@ const AvailableAppointmentToBook = (props) => {
       </View>
     ))}
 </View>
-        <Text style={styles.titleText}>טיפול:</Text>
+
+
+        {/* <Text style={styles.titleText}>טיפול:</Text>
         {result.typeTritment.map((t, i) => (
           <Text style={styles.text} key={i}>
             מחיר: {t.price} זמן: {t.duration}
           </Text>
-        ))}
+        ))} */}
         <View style={styles.buttonContainer}>
           <View style={styles.buttonContent}>
             <MaterialCommunityIcons
@@ -617,6 +637,7 @@ const AvailableAppointmentToBook = (props) => {
             Business_Number={JSON.stringify(result.id)}
           />
         )}
+       
       </View>
     )
   );
@@ -627,15 +648,25 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "center",
+    borderRadius: 10,
+    borderColor:"rgb(92, 71, 205)",
+    borderWidth: 1,
+    padding:5,
+    backgroundColor:"white",
   },
   container: {
     textAlign: "left",
-    backgroundColor: "#F5FCFF",
+    backgroundColor: "white",
     padding: 20,
     borderRadius: 10,
     borderColor: "#000",
     borderWidth: 1,
     margin: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 1, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   rowContainer: {
     flexDirection: 'row',
@@ -646,6 +677,7 @@ const styles = StyleSheet.create({
     flex: 1 / 2, // this will allow 3 items in a row
     padding: 5, // add padding if needed
     justifyContent: 'flex-end', // this will align items to the end of the column (bottom for LTR layouts)
+   
   },
   titleText: {
     textAlign: "left",
@@ -654,17 +686,20 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   cube: {
-    width: 60,
+    width: 70,
     height: 40,
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10,
+    padding: 5,
   },
   column: {
     flexDirection: "column",
+    margin:-1,
   },
   selectedCube: {
-    backgroundColor: "green",
+    backgroundColor: "#00FF00",
   },
   text: {
     textAlign: "left",
@@ -674,7 +709,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 10, // Adjust the margin as needed
+    marginTop:-10, // Adjust the margin as needed
   },
   buttonStyle: {
     fontSize: 18, // שינוי הגודל
@@ -683,6 +718,7 @@ const styles = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 0, 0.75)", // צללה שחורה
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 10,
+ 
   },
   buttonTitle: {
     fontSize: 18, // שינוי הגודל
@@ -700,7 +736,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   icon: {
-    marginRight: 10,
+    marginRight: 5,
   },
   buttonContent: {
     flexDirection: "row",

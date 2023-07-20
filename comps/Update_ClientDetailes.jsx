@@ -6,6 +6,7 @@ import { Akira } from 'react-native-textinput-effects';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 import Alert from './Alert';
+
 export default function Update_ClientDetailes() {
 
   const { userDetails, setUserDetails } = useContext(UserContext);
@@ -45,6 +46,7 @@ export default function Update_ClientDetailes() {
     UpdateClient(data).then(
       (res) => {
         console.log('yes', res.data)
+        // navigation.goBack();
 
       }, (error) => {
         console.log('error', error)
@@ -54,7 +56,7 @@ export default function Update_ClientDetailes() {
 
   return (
 
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"}>
       <ScrollView>
         <View style={styles.container}>
           <Text style={styles.title}>עריכת פרטים אישים</Text>
@@ -99,7 +101,7 @@ export default function Update_ClientDetailes() {
           />
 
           <Akira
-            label={'    פאלפון'}
+            label={'    פלאפון'}
             // this is used as active and passive border color
             borderColor={"rgb(204, 204, 255)"}
             inputPadding={16}
