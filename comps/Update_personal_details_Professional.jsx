@@ -4,7 +4,7 @@ import Menu_professional from './obj/Menu_professional';
 import { UserContext } from './UserDietails';
 import { useState, useEffect, useContext } from 'react';
 import Header from './obj/Header';
-import Alert from './Alert';
+
 import { UpdateProffesional } from './obj/FunctionAPICode';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import { Akira } from 'react-native-textinput-effects';
@@ -45,7 +45,7 @@ export default function Update_personal_details_Professional(Props) {
     const Business_Number = userDetails.Business_Number;
 
 
-    const [alert, setAlert] = useState()
+
     // useEffect(() => {
     //     if (userDetails)
     //     setid(userDetails.ID_number)
@@ -103,23 +103,13 @@ export default function Update_personal_details_Professional(Props) {
         console.log(data)
         UpdateProffesional(data).then(
             (res) => {
-                setAlert(<Alert
-                    text="השינוים נשמרו"
-                    type='succes'
-                    time={1000}
-                    bottom={100}
-                />)
+             alert("השינוים נשמרו בהצלחה")
                 console.log('yes', res)
                 setUserDetails(data)
                 
             }, (error) => {
                 console.log('error', error)
-                setAlert(<Alert
-                    text='  השינוים לא נשמרו, נסו שוב'
-                    type='worng'
-                    time={1000}
-                    bottom={100}
-                />)
+              alert("נסה שנית")
 
             });
     
@@ -242,6 +232,7 @@ return (
 
 
             </View>
+          
         </ScrollView>
         </KeyboardAvoidingView>
         <Menu_professional />

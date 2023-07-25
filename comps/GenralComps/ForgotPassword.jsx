@@ -78,6 +78,7 @@ console.log(code)
         placeholder="הזן את כתובת האימייל שלך"
         keyboardType="email-address"
         autoCapitalize="none"
+        color="black"
       />
       <TouchableOpacity style={styles.button} onPress={handleResetPassword}>
         <Text style={styles.buttonText}>שלח</Text>
@@ -90,6 +91,7 @@ console.log(code)
           value={code}
           placeholder="הכנס קוד"
           autoCapitalize="none"
+          color="black"
         />
         <TextInput
           style={styles.input}
