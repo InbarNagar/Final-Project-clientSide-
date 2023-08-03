@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Modal, View, Button, Text, StyleSheet, TouchableOpacity, Image, ScrollView, Platform, Linking } from "react-native";
-import { GetOneBusiness } from "../obj/FunctionAPICode";
+import { GetOneBusiness, AllBusinessReviews } from "../obj/FunctionAPICode";
 import { FontAwesome5, AntDesign, FontAwesome } from "@expo/vector-icons";
 import { openURL, canOpenURL } from "expo-linking";
 import { useFocusEffect } from '@react-navigation/native';
@@ -11,11 +11,12 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Swiper from 'react-native-swiper';
 
-const BusinessProfilePOPUP = (props) => {
+const BusinessProfilePOPUP_Map = (props) => {
 
-  const { isVisible, onClose, Business_Number, businessRankArr } = props;
+  const { isVisible, onClose, Business_Number,x} = props;
+  
   const [businessDetails, SetBusinessDetails] = useState({});
-  // const [businessRankArr, SetBusinessRankArr] = useState();
+   const [businessRankArr, SetBusinessRankArr] = useState();
   const [Overall_rating, SetOverall_rating] = useState();
   const [Professionalism, SetProfessionalism] = useState();
   const [Cleanliness, SetCleanliness] = useState();
@@ -49,7 +50,7 @@ const handleFacebookLink = async () => {
   // const image =
   //   "https://www.google.com/imgres?imgurl=https%3A%2F%2Fmedias.timeout.co.il%2Fwww%2Fuploads%2F2017%2F03%2F%25D7%259E%25D7%25A8%25D7%259E%25D7%2595%25D7%25A8%25D7%25A7_17_T-1140x641.jpg&tbnid=uEfqyzHNmhL4UM&vet=12ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ..i&imgrefurl=https%3A%2F%2Ftimeout.co.il%2F%25D7%2594%25D7%259E%25D7%25A1%25D7%25A4%25D7%25A8%25D7%2595%25D7%25AA-%25D7%2594%25D7%259B%25D7%2599-%25D7%2598%25D7%2595%25D7%2591%25D7%2595%25D7%25AA%2F&docid=BMiIRS3jiJIo_M&w=1140&h=641&q=%D7%9E%D7%A1%D7%A4%D7%A8%D7%94&ved=2ahUKEwi1qeq93aH_AhVDmycCHYoMB54QMygFegUIARDMAQ";
 
-  imageUrls = [
+  const imageUrls = [
     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil1${Business_Number}.jpg`,
     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil2${Business_Number}.jpg`,
     `http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profil3${Business_Number}.jpg`,
@@ -75,7 +76,18 @@ useEffect(() => {
 
 
   useEffect(() => {
-    console.log(businessRankArr, "gggggggggggggggggggggggggg");
+    var rankarr=[]
+    AllBusinessReviews(Business_Number).then(
+      (result) => {
+        console.log("yes", "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh", result);
+        rankarr=result;
+        SetBusinessRankArr(result)
+      },
+      (error) => {
+        console.log("error", error);
+      }
+    );
+
     GetOneBusiness(Business_Number).then(
       (result) => {
         console.log("yes", result.data);
@@ -88,28 +100,27 @@ useEffect(() => {
       }
     );
 
-
     let onTimeSum = 0;
     let professionalismSum = 0;
     let cleanlinessSum = 0;
     let overallRatingSum = 0;
-    businessRankArr.map(bus => {
+    rankarr.map(bus => {
       onTimeSum += bus.On_time;
       professionalismSum += bus.Professionalism;
       cleanlinessSum += bus.Cleanliness;
       overallRatingSum += bus.Overall_rating;
     });
 
-    SetOn_time(onTimeSum / businessRankArr.length);
+    SetOn_time(onTimeSum /rankarr.length);
     console.log(On_time);
-    SetProfessionalism(professionalismSum / businessRankArr.length);
+    SetProfessionalism(professionalismSum /rankarr.length);
     console.log(Professionalism);
-    SetCleanliness(cleanlinessSum / businessRankArr.length);
+    SetCleanliness(cleanlinessSum / rankarr.length);
     console.log(Cleanliness);
-    SetOverall_rating(overallRatingSum / businessRankArr.length);
+    SetOverall_rating(overallRatingSum / rankarr.length);
     console.log(Overall_rating);
 
-  }, [businessRankArr]);
+  }, []);
 
 
   // function handleInstagramLink() {
@@ -237,7 +248,7 @@ useEffect(() => {
               </View>
               <View style={styles.iconContainer}>
                 <TouchableOpacity style={styles.link} onPress={() =>
-                  Linking.openURL(`tel:${businessDetails.phoneNumber}`)
+                  Linking.openURL(`tel:${x.phone}`)
                 }>
                   <AntDesign name="phone" size={24} color="rgb(92, 71, 205)" style={{ marginRight: 50 }} />
                 </TouchableOpacity>
@@ -623,7 +634,7 @@ img2: {
   },
 });
 
-export default BusinessProfilePOPUP;
+export default  BusinessProfilePOPUP_Map;
 
 
 //  {/* <View style={styles.card}>

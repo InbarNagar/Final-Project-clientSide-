@@ -273,6 +273,10 @@ export const  resetPassword= (body) => {
    
     return Axios(`user/ResetPassword`, 'post',body)
 }
+export const  DeleteAvailability= (body) => {
+   
+    return Axios(`BusinessDiary/DeleteDate`, 'Delete',body)
+}
 
 //פונקציית חיפוש חדשה לפי יומן עסק
 // export const ReviewBusiness=(body)=>{

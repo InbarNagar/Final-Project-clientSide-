@@ -267,132 +267,14 @@ const AvailableAppointmentToBook = (props) => {
       console.log("final Hours: " + finalHours.length + " - " + finalArray);
       setFinalHours(finalArray);
     }
-    // return;
-
-    // let numberArray = hours.map((x) => ({
-    //   value: parseInt(x),
-    //   origin_number: x,
-    // }));
-    // let newArray = numberArray;
-    // for (let i = 0; i < newArray.length; i++) {
-    //   console.log("newArray[i]" + newArray[i].value);
-    //   if (firstHour.includes(newArray[i].value)) {
-    //     console.log(
-    //       "occupiedHoursWithGap" + JSON.stringify(occupiedHoursWithGap)
-    //     );
-    //     console.log(
-    //       `in first hour: ${JSON.stringify(
-    //         newArray[i].value
-    //       )} ${JSON.stringify(newArray[i].origin_number)}`
-    //     );
-    //     const o = occupiedHoursWithGap.find(
-    //       (x) => x.time == newArray[i].value
-    //     );
-    //     console.log(`o = ${JSON.stringify(o)}`);
-    //     //o= 10,1 * o=18,1
-    //     if (o && newArray[i].origin_number + o.gap == newArray[i + 1].value) {
-    //       finalArray = finalArray.filter(
-    //         (item) => item.value != newArray[i].value
-    //       );
-    //       console.log("finalArray" + JSON.stringify(finalArray));
-
-    //       console.log(`${newArray[i].value} is deleted from finalArray`);
-    //     } else if (
-    //       o &&
-    //       newArray[i + 1].value < newArray[i].origin_number + o.gap
-    //     ) {
-    //       let j = 0;
-    //       console.log("**");
-    //       console.log("newArray" + JSON.stringify(newArray));
-    //       console.log("finalArray" + JSON.stringify(finalArray));
-
-    //       // for(; j <=o.gap/duration; j++){
-
-    //       // finalArray = finalArray.filter((item) => item.value != newArray[i+j].value);
-    //       // }
-    //       // i=i+j;
-    //     }
-    //   } else {
-    //     //   finalArray.push(newArray[i]);
-    //     //   console.log("pushing to finalArray = "+ newArray[i])
-    //   }
-    // }
-    // finalArray = [...new Set(finalArray)];
-    // finalArray = finalArray.filter((item) => !lastHours.includes(item));
-    // console.log("finalArray" + JSON.stringify(finalArray));
-
-    // setFinalHours(finalArray); // set finalHours instead of hours
     else {
       console.log("no occupied appointments.");
       console.log("finalHours: " + hours);
       setFinalHours(hours);
     }
-
-    // else{
-    //   console.log("entered to 2 opened hours");
-    //   if (occupiedHoursWithGap.length > 0) {
-    //   let finalArray = [];
-
-    //   for (let i = 0; i < newArray.length; i++) {
-    //     if (firstHour.includes(newArray[i])) {
-    //       const o = occupiedHoursWithGap.find((x) => x.time === newArray[i]);
-
-    //       if (o&&hours[i] + o.gap === newArray[i + 1]) {
-    //         newArray = newArray.filter((num) => num !== newArray[i]);
-    //       }
-    //        else if(o&&!mergedArray.includes(newArray[i] + o.gap) &&  newArray[i+1]<newArray[i] + o.gap) {
-    //         newArray[i + 1] = newArray[i] + o.gap;
-    //       }
-    //     }
-    //      else {
-    //       finalArray.push(newArray[i]);
-    //     }
-    //   }
-    //   SetNewArr(finalArray); // set finalHours instead of hours
-    // }
-    // else{
-    //   SetNewArr(newArray)
-    // }
-    // console.log("else "+result.id);
-    // for (let i = 0; i < hours.length; i++) {
-    //   console.log(i+ " "+ hours[i] + "str= "+str);
-    //   if(!firstHour.includes(hours[i])){
-    //   if(!endHour.includes(hours[i])){
-    //     if(!betweenHours.includes(hours[i])){
-    //   if(str===""){
-    //     console.log(i+" :"+hours[i]);
-    //     str=`${hours[i]}`;
-    //   }}}}
-    //   else if(str!=="" || betweenHours.includes(hours[i]+duration)){
-    //     console.log("else if : "+hours[i]);
-    //     str+=`-${hours[i]}`;
-    //     tempArr.push(str);
-    //     str="";
-    //   }
-    //    if(str==="" && hours[i]===hours[hours.length-1] && !endHour.includes(hours[hours.length-1])){
-    //     console.log("else if 3: "+hours[i]);
-    //     str=`${hours[i]}-${hours[hours.length-1]+duration}`
-    //     tempArr.push(str);
-    //   }
-    //   if((endHour.includes(hours[i]) && str==="" )&&
-    //   !betweenHours.includes(hours[i]+duration)&&!firstHour.includes(hours[i])){
-    //     console.log("last if");
-    //     console.log(i+" :"+hours[i]);
-    //     str=`${hours[i]}`;
-    //   }
-    // }
-
-    // if(str!==""){
-    //   console.log(str+" = last hour to add"+hours[hours.length-1]+duration);
-    // str+=`-${hours[hours.length-1]+duration}`;
-    // tempArr.push(str);
-    // }
-    // }
-    // update newArr state variable with new values
-    // SetNewArr(tempArr);
     console.log("array of diary to print: " + typeof newArr[1]);
     SetDiary(diaryArr);
-  }, [result]);
+  }, [btnBookApiontment]);
 
   //הצגה של פרופיל עסק
   function handleBusinessProfilePOPUP() {
@@ -422,7 +304,7 @@ const AvailableAppointmentToBook = (props) => {
       const body = {
         to: token,
         title: "BeautyMe",
-        body: `תור חדש הוזמן ע"י ${userDetails.First_name} ${userDetails.Last_name}, ניתן לצפות בפרטי התור במסך היומן שלי. ניתן לבטל את התור עד לשעה למועד התחלתו! `,
+        body: `הוזמן תור לשעה ${d} ע"י הלקוח/ה ${userDetails.First_name} ${userDetails.Last_name}`,
         badge: "0",
         ttl: "1",
         data: {
@@ -472,6 +354,7 @@ const AvailableAppointmentToBook = (props) => {
       }
     );
   };
+
   function floatToTime(floatNumber) {
     let hours = Math.floor(floatNumber);
     let minutes = Math.floor((floatNumber - hours) * 60);
@@ -481,6 +364,7 @@ const AvailableAppointmentToBook = (props) => {
       minutes.toString().padStart(2, "0")
     );
   }
+
   function formatDuration(duration) {
     const hours = Math.floor(duration);
     const minutes = (duration - hours) * 60;
@@ -490,6 +374,7 @@ const AvailableAppointmentToBook = (props) => {
     }
     return `${hoursText} ${minutes > 0 ? `ו-${minutes} דקות` : ""}`;
   }
+  
   return (
     finalHours.length > 0 && (
       <View style={styles.container} key={result.id}>
@@ -613,7 +498,7 @@ const AvailableAppointmentToBook = (props) => {
             מחיר: {t.price} זמן: {t.duration}
           </Text>
         ))} */}
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <View style={styles.buttonContent}>
             <MaterialCommunityIcons
               name="store"
@@ -628,7 +513,7 @@ const AvailableAppointmentToBook = (props) => {
               onPress={handleBusinessProfilePOPUP}
             />
           </View>
-        </View>
+        </View> */}
         {businessProfilePOPUP && !businessSchedulePOPUP && (
           <BusinessProfilePOPUP
             businessRankArr={businessRankArr}

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "beautymee",
-    "slug": "beautymee",
+    "name": "Beauty Me",
+    "slug": "Beauty-Me",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
