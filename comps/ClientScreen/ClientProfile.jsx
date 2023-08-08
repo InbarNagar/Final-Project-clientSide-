@@ -44,7 +44,7 @@ const handleInstagramLink = async () => {
 const handleFacebookLink = async () => {
   try {
     // const url = 'https://www.instagram.com/your_instagram_account';
-    const url = `https://www.facebook.com/${userDetails.Facebook_link}`;
+    const url = `${userDetails.Facebook_link}`;
     await Linking.openURL(url);
     console.log(Linking.openURL(url))
   } catch (error) {

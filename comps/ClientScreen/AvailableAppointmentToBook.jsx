@@ -183,7 +183,7 @@ const AvailableAppointmentToBook = (props) => {
       if (isFloat(minNumber)) { // אם המספר עשרוני הוא יהפוך את השעה העכשווית לעשרונית
         minNumber = currentHour + 0.5;
       } else { // אם לא יישאר כמו שהוא
-        minNumber = currentHour;
+        minNumber = currentHour+1;
       }
     }
     function isFloat(n) { //מחזיר האם המספר הוא עשרוני או לא 

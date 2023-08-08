@@ -422,7 +422,7 @@ const New_Calendar = () => {
                     </TouchableOpacity>
                     {appointment.Client.Instagram_link ? (
                       <TouchableOpacity
-                        onPress={() => Linking.openURL(appointment.Instagram_link)}
+                        onPress={() => Linking.openURL(`https://www.instagram.com/${appointment.Client.Instagram_link}`)}
                       >
                         <Icon
                           name="instagram"

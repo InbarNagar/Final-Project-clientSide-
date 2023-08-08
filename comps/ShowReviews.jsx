@@ -64,7 +64,7 @@ const ShowReviews = () => {
                 </View>
                 <View style={styles.commentContainer}>
                   <MaterialCommunityIcons name="comment" size={24} color="gray" />
-                  <Text style={styles.commentText}>"{review.Comment}"</Text>
+                  <Text style={styles.commentText}>{review.Comment}</Text>
                 </View>
               </View>
 

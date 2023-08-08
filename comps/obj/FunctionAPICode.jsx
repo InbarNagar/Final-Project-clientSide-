@@ -251,6 +251,10 @@ export const AllBusinessReviews = (BusinessNumber) => {
     console.log(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`)
     return Fetch(`BusinessReview/AllAppointmentForBusiness/${BusinessNumber}`, 'Get')
 }
+export const  DeleteAvailability= (body) => {
+   
+    return Axios(`BusinessDiary/DeleteDate`, 'Delete',body)
+}
 
 
 //דירוג עסק ע"י לקוח שבוצע לו טיפול

@@ -10,7 +10,7 @@ import { AntDesign, Feather, FontAwesome } from "@expo/vector-icons";
 import { openURL, canOpenURL } from "expo-linking";
 import Loading from './CTools/Loading';
 import { DeleteClient, DeleteProAndBusiness } from './obj/FunctionAPICode';
-    
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 
@@ -104,15 +104,23 @@ return (
               <Image style={styles.img} onError={({ currentTarget }) => setsrc('http://proj.ruppin.ac.il/cgroup93/prod/uploadFile2/profilUser.jpeg')} source={{ uri: src }} />
           </TouchableOpacity>
           <View style={styles.iconContainer}> 
-              <TouchableOpacity onPress={handleInstagramLink}>
-                  <FontAwesome name="instagram" size={24} color="black" style={{ marginRight: 100 }} />
+              <TouchableOpacity style={styles.link} onPress={handleInstagramLink}>
+                  <FontAwesome name="instagram" size={24} color="black" style={{ marginRight: 50 }} />
               </TouchableOpacity>
+              <TouchableOpacity
+             
+             onPress={() => Linking.openURL(userDetails.Facebook_link)}
+           > 
+           <Feather name="facebook" size={24} color="black" style={{ marginRight:50 }}/>  
+           </TouchableOpacity>
               <TouchableOpacity
                   style={styles.link}
                   onPress={() => dialNumber(userDetails.phone)}
               >
                   <AntDesign name="phone" size={24} color="black" />
               </TouchableOpacity>
+
+       
           </View>
       </View>
       <View style={styles.container}>
@@ -260,13 +268,14 @@ const styles = StyleSheet.create({
     opacity:0.7
     },
     iconContainer: {
-        flexDirection: "row",
-        // justifyContent: "space-around",
-        alignItems: "center",
-        width: "100%",
-        // width: "50%",
-        marginTop: 10,
-        marginBottom: 10,
+      flexDirection: "row",
+      // justifyContent: "space-around",
+      alignItems: "center",
+      width: "100%",
+      // width: "50%",
+      marginTop: 10,
+      marginBottom: 10,
+  
       },
 });
 

@@ -24,10 +24,10 @@ const Menu_Client = () => {
         <Text style={styles.menuText}>חיפוש</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('ClientHome')}>
+      {/* <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('ClientHome')}>
       <Ionicons name="home" size={24} color="white" />
         <Text style={styles.menuText}>מסך הבית</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate('My_Appintments')}>
         <Ionicons name="calendar-outline" size={24} color="white" />

@@ -247,7 +247,7 @@ const AppointmentCard_forClient = (props) => {
                     </TouchableOpacity>
                     
                       <TouchableOpacity
-                        onPress={() => Linking.openURL(Instagram_link)}
+                        onPress={() => Linking.openURL(`https://www.instagram.com/${Instagram_link}`)}
                       >
                         <Icon
                           name="instagram"
